@@ -186,4 +186,8 @@ protected:
    \sa Update
    */
   CStdString m_strFilterPath;
+
+#if defined(HAS_VIDONME)
+	CStdString	m_itemType;
+#endif
 };

@@ -723,6 +723,10 @@ bool CGUIMediaWindow::GetDirectory(const CStdString &strDirectory, CFileItemList
 // This function calls OnPrepareFileItems() and OnFinalizeFileItems()
 bool CGUIMediaWindow::Update(const CStdString &strDirectory, bool updateFilterPath /* = true */)
 {
+  // TODO: OnInitWindow calls Update() before window path has been set properly.
+  if (strDirectory == "?")
+    return false;
+
 #if defined(HAS_VIDONME)
 	CStdString strDVDFolderPath, strBDFolderPath;
 
@@ -746,10 +750,6 @@ bool CGUIMediaWindow::Update(const CStdString &strDirectory, bool updateFilterPa
 		m_itemType = "NONE";
 	}
 #endif
-
-  // TODO: OnInitWindow calls Update() before window path has been set properly.
-  if (strDirectory == "?")
-    return false;
 
   // get selected item
   int iItem = m_viewControl.GetSelectedItem();
@@ -949,29 +949,6 @@ bool CGUIMediaWindow::OnClick(int iItem)
   if ( iItem < 0 || iItem >= (int)m_vecItems->Size() ) return true;
   CFileItemPtr pItem = m_vecItems->Get(iItem);
 
-#if defined(HAS_VIDONME)
-	if( m_itemType == "DVDFolder" || m_itemType == "BDFolder")
-	{
-		CStdString strPath = pItem->GetPath();
-
-		if (m_itemType == "DVDFolder")
-		{
-			strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS");
-			strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS.IFO");
-		}
-		else if (m_itemType == "BDFolder")
-		{
-			strPath = URIUtils::AddFileToFolder(strPath, "BDMV");
-			strPath = URIUtils::AddFileToFolder(strPath, "index.bdmv");
-		}
-
-		pItem->SetPath(strPath);
-
-		pItem->SetProperty("type",m_itemType);
-		return OnPlayMedia(iItem);
-	}
-#endif
-
   if (pItem->IsParentFolder())
   {
     GoParentFolder();
@@ -1052,6 +1029,29 @@ bool CGUIMediaWindow::OnClick(int iItem)
     CFileItem directory(*pItem);
     if (!Update(directory.GetPath()))
       ShowShareErrorMessage(&directory);
+
+#if defined(HAS_VIDONME)
+		if( m_itemType == "DVDFolder" || m_itemType == "BDFolder")
+		{
+			CStdString strPath = pItem->GetPath();
+
+			if (m_itemType == "DVDFolder")
+			{
+				strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS");
+				strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS.IFO");
+			}
+			else if (m_itemType == "BDFolder")
+			{
+				strPath = URIUtils::AddFileToFolder(strPath, "BDMV");
+				strPath = URIUtils::AddFileToFolder(strPath, "index.bdmv");
+			}
+
+			pItem->SetPath(strPath);
+
+			pItem->SetProperty("type",m_itemType);
+			return OnPlayMedia(iItem);
+		}
+#endif
 
     return true;
   }

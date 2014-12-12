@@ -681,6 +681,14 @@ int CVideoDatabase::AddFile(const CStdString& strFileNameAndPath)
     CStdString strFileName, strPath;
     SplitPath(strFileNameAndPath,strPath,strFileName);
 
+#if defined (HAS_VIDONME)
+		if (strFileName.empty())
+		{
+			strPath			= URIUtils::GetParentPath(strFileNameAndPath);
+			strFileName	= StringUtils::Mid(strFileNameAndPath, strPath.size());
+		}
+#endif
+
     int idPath = AddPath(strPath);
     if (idPath < 0)
       return -1;

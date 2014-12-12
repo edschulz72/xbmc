@@ -1035,6 +1035,8 @@ bool CGUIMediaWindow::OnClick(int iItem)
 		{
 			CStdString strPath = pItem->GetPath();
 
+			pItem->SetProperty("original_listitem_url", strPath);
+
 			if (m_itemType == "DVDFolder")
 			{
 				strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS");

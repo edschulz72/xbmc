@@ -56,7 +56,11 @@ bool CSaveFileStateJob::DoWork()
   {
     // only use original_listitem_url for Python, UPnP and Bluray sources
     CStdString original = m_item.GetProperty("original_listitem_url").asString();
+#if defined (HAS_VIDONME)
+		if (URIUtils::IsPlugin(original) || URIUtils::IsUPnP(original) || URIUtils::IsBluray(m_item.GetPath()) || m_item.GetProperty("type") == "DVDFolder" || m_item.GetProperty("type") == "BDFolder")
+#else
     if (URIUtils::IsPlugin(original) || URIUtils::IsUPnP(original) || URIUtils::IsBluray(m_item.GetPath()))
+#endif
       progressTrackingFile = original;
   }
 
@@ -100,8 +104,19 @@ bool CSaveFileStateJob::DoWork()
             m_item.SetOverlayImage(CGUIListItem::ICON_OVERLAY_UNWATCHED, true);
             updateListing = true;
           }
-          else
-            videodatabase.UpdateLastPlayed(m_item);
+					else
+#if defined (HAS_VIDONME)
+					{
+						CStdString strPath = m_item.GetProperty("original_listitem_url").asString();
+						if (m_item.HasProperty("original_listitem_url") && m_item.GetPath() != strPath)
+						{
+							m_item.SetPath(strPath);
+						}
+						videodatabase.UpdateLastPlayed(m_item);
+					}
+#else
+						videodatabase.UpdateLastPlayed(m_item);
+#endif
 
           if (!m_item.HasVideoInfoTag() || m_item.GetVideoInfoTag()->m_resumePoint.timeInSeconds != m_bookmark.timeInSeconds)
           {

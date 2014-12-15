@@ -729,6 +729,30 @@ bool CGUIMediaWindow::Update(const std::string &strDirectory, bool updateFilterP
   if (strDirectory == "?")
     return false;
 
+#if defined(HAS_VIDONME)
+	CStdString strDVDFolderPath, strBDFolderPath;
+
+	strDVDFolderPath	= URIUtils::AddFileToFolder(strDirectory, "VIDEO_TS");
+	strDVDFolderPath	= URIUtils::AddFileToFolder(strDVDFolderPath, "VIDEO_TS.IFO");
+	strBDFolderPath		= URIUtils::AddFileToFolder(strDirectory, "BDMV");
+	strBDFolderPath		= URIUtils::AddFileToFolder(strBDFolderPath, "index.bdmv");
+
+	if (XFILE::CFile::Exists(strDVDFolderPath))
+	{
+		m_itemType = "DVDFolder";
+		return true;
+	}
+	else if (XFILE::CFile::Exists(strBDFolderPath))
+	{
+		m_itemType = "BDFolder";
+		return true;
+	}
+	else
+	{
+		m_itemType = "NONE";
+	}
+#endif
+
   // get selected item
   int iItem = m_viewControl.GetSelectedItem();
   std::string strSelectedItem;

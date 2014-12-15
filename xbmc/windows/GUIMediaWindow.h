@@ -185,5 +185,9 @@ protected:
 
    \sa Update
    */
-  std::string m_strFilterPath;
+	std::string m_strFilterPath;
+
+#if defined(HAS_VIDONME)
+	CStdString	m_itemType;
+#endif
 };

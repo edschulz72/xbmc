@@ -925,7 +925,17 @@ bool CGUIWindowVideoBase::OnSelect(int iItem)
 
   CFileItemPtr item = m_vecItems->Get(iItem);
 
-  CStdString path = item->GetPath();
+	CStdString path = item->GetPath();
+
+#if defined (HAS_VIDONME)
+	if ((item->GetVideoInfoTag()->m_resumePoint.timeInSeconds > 0 || !item->m_bIsFolder) && 
+		path != "add" && path != "addons://more/video" &&
+		!StringUtils::StartsWith(path, "newsmartplaylist://") &&
+		!StringUtils::StartsWith(path, "newplaylist://") &&
+		!StringUtils::StartsWith(path, "newtag://"))
+		return OnFileAction(iItem, CSettings::Get().GetInt("myvideos.selectaction"));
+#endif
+
   if (!item->m_bIsFolder && path != "add" && path != "addons://more/video" &&
       !StringUtils::StartsWith(path, "newsmartplaylist://") &&
       !StringUtils::StartsWith(path, "newplaylist://") &&
@@ -1167,7 +1177,10 @@ bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item, const CStdString
 
     if(item_new->m_bIsFolder == false)
     {
-      item.reset(new CFileItem(*item));
+			item.reset(new CFileItem(*item));
+#if defined (HAS_VIDONME)
+			if (item->GetProperty("type") != "DVDFolder" && item->GetProperty("type") != "BDFolder")
+#endif
       item->SetProperty("original_listitem_url", item->GetPath());
       item->SetPath(item_new->GetPath());
       return true;
@@ -1189,7 +1202,11 @@ bool CGUIWindowVideoBase::OnResumeItem(int iItem)
   if (iItem < 0 || iItem >= m_vecItems->Size()) return true;
   CFileItemPtr item = m_vecItems->Get(iItem);
 
-  if (item->m_bIsFolder)
+#if defined (HAS_VIDONME)
+	if (item->m_bIsFolder && !(item->GetVideoInfoTag()->m_resumePoint.timeInSeconds > 0))
+#else
+	if (item->m_bIsFolder)
+#endif
   {
     // resuming directories isn't supported yet. play.
     PlayItem(iItem);

@@ -25,6 +25,20 @@
 #include "windowing/WinEvents.h"
 #include "android/jni/KeyCharacterMap.h"
 
+#if defined(HAS_VIDONME)
+
+#if defined AKEYCODE_AUDIO
+#undef AKEYCODE_AUDIO
+#endif
+#define AKEYCODE_AUDIO 10003
+
+#if defined AKEYCODE_SUBTITLE
+#undef AKEYCODE_SUBTITLE
+#endif
+#define AKEYCODE_SUBTITLE 10002
+
+#endif
+
 
 typedef struct {
   int32_t nativeKey;
@@ -152,7 +166,11 @@ static KeyMap keyMap[] = {
   { AKEYCODE_INSERT          , XBMCK_INSERT },
   { AKEYCODE_FORWARD         , XBMCK_MEDIA_FASTFORWARD },
   { AKEYCODE_MEDIA_PLAY      , XBMCK_MEDIA_PLAY_PAUSE },
-  { AKEYCODE_MEDIA_EJECT     , XBMCK_EJECT },
+	{ AKEYCODE_MEDIA_EJECT     , XBMCK_EJECT },
+#if defined(HAS_VIDONME)
+	{ AKEYCODE_AUDIO           , XBMCK_AUDIO },
+	{ AKEYCODE_SUBTITLE        , XBMCK_SUBTITLE },
+#endif
 };
 
 bool CAndroidKey::onKeyboardEvent(AInputEvent *event)

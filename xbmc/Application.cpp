@@ -2394,9 +2394,11 @@ bool CApplication::OnKey(const CKey& key)
   {
     // current active window is full screen video.
     if (g_application.m_pPlayer->IsInMenu())
-    {
+		{
+#if !defined (HAS_VIDONME)
       // if player is in some sort of menu, (ie DVDMENU) map buttons differently
       action = CButtonTranslator::GetInstance().GetAction(WINDOW_VIDEO_MENU, key);
+#endif
     }
     else if (g_PVRManager.IsStarted() && g_application.CurrentFileItem().HasPVRChannelInfoTag())
     {

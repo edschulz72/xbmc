@@ -98,6 +98,15 @@
       <end>LastPage</end>
       <power>ActivateWindow(shutdownmenu)</power>
       <sleep>ActivateWindow(shutdownmenu)</sleep>
+	  
+      <!--	HAS_VIDONME		Begin-->
+      <audio>AudioNextLanguage</audio>
+      <subtitle>nextsubtitle</subtitle>
+      <info>info</info>
+      <fastforward>fastforward</fastforward>
+      <rewind>rewind</rewind>
+      <!--	HASVIDONME		End-->
+      
       <!-- PVR windows -->
       <e>XBMC.ActivateWindowAndFocus(MyPVR, 31,0, 10,0)</e>
       <h>XBMC.ActivateWindowAndFocus(MyPVR, 32,0, 11,0)</h>
@@ -233,9 +242,19 @@
       <l>NextSubtitle</l>
       <left>StepBack</left>
       <right>StepForward</right>
-      <up>ChapterOrBigStepForward</up>
-      <down>ChapterOrBigStepBack</down>
-      <a>AudioDelay</a>
+	  
+      <!--	HAS_VIDONME		Begin-->
+      <up>BigStepForward</up>
+      <down>BigStepBack</down>
+      <audio>AudioNextLanguage</audio>
+      <subtitle>nextsubtitle</subtitle>
+      <info>info</info>
+	  <menu>OSD</menu>
+      <fastforward>fastforward</fastforward>
+      <rewind>rewind</rewind>
+      <!--	HASVIDONME		End-->
+      
+	  <a>AudioDelay</a>
       <escape>Fullscreen</escape>
       <c>Playlist</c>
       <v>XBMC.ActivateWindow(Teletext)</v>
@@ -375,6 +394,11 @@
   <VideoOSD>
     <keyboard>
       <m>Back</m>
+	  
+	  <!--	HAS_VIDONME		Begin-->
+	  <menu>Back</menu>
+	  <!--	HAS_VIDONME		End-->
+	  
       <g mod="ctrl">Back</g> <!-- MCE Guide button -->
       <i>Info</i>
       <o>CodecInfo</o>

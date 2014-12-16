@@ -129,8 +129,12 @@ void CGUIDialogAudioSubtitleSettings::OnSettingChanged(const CSetting *setting)
   }
   else if (settingId == SETTING_AUDIO_VOLUME_AMPLIFICATION)
   {
-    videoSettings.m_VolumeAmplification = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+		videoSettings.m_VolumeAmplification = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+#if defined(HAS_VIDONME)
+		g_application.m_pPlayer->SetDynamicRangeCompression((long)(videoSettings.m_VolumeAmplification));
+#else
     g_application.m_pPlayer->SetDynamicRangeCompression((long)(videoSettings.m_VolumeAmplification * 100));
+#endif
   }
   else if (settingId == SETTING_AUDIO_DELAY)
   {

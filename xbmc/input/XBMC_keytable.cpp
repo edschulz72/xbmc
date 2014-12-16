@@ -226,6 +226,14 @@ static const XBMCKEYTABLE XBMCKeyTable[] =
 , { XBMCK_PRINT,                  0,    0, XBMCVK_PRINTSCREEN,   "printscreen" }
 , { XBMCK_POWER,                  0,    0, XBMCVK_POWER,         "power" }
 , { XBMCK_SLEEP,                  0,    0, XBMCVK_SLEEP,         "sleep" }
+
+#if defined (HAS_VIDONME)
+, { XBMCK_AUDIO,                  0,    0, XBMCVK_AUDIO,          "audio"}
+, { XBMCK_SUBTITLE,               0,    0, XBMCVK_SUBTITLE,       "subtitle"}
+, { XBMCK_INFO,                   0,    0, XBMCVK_INFO,           "info"}
+, { XBMCK_FASTFORWARD,            0,    0, XBMCVK_FASTFORWARD,    "fastforward"}
+, { XBMCK_REWIND,                 0,    0, XBMCVK_REWIND,         "rewind"}
+#endif
 };
 
 static int XBMCKeyTableSize = sizeof(XBMCKeyTable)/sizeof(XBMCKEYTABLE);

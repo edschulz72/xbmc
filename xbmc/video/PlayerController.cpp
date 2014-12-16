@@ -67,7 +67,21 @@ bool CPlayerController::OnAction(const CAction &action)
         CStdString sub, lang;
         if (CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn)
         {
-          SPlayerSubtitleStreamInfo info;
+					SPlayerSubtitleStreamInfo info;
+
+#if defined (HAS_VIDONME)
+
+					if(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream < 0)
+					{
+						CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream = g_application.m_pPlayer->GetSubtitle();
+					}
+
+					if (CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream >= g_application.m_pPlayer->GetSubtitleCount())
+					{
+						CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream = 0;
+					}
+#endif
+
           g_application.m_pPlayer->GetSubtitleStreamInfo(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream, info);
           if (!g_LangCodeExpander.Lookup(lang, info.language))
             lang = g_localizeStrings.Get(13205); // Unknown

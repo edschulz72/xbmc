@@ -1,0 +1,11 @@
+#!/bin/sh
+
+export SDKROOT=/opt/android-sdk-linux
+export NDKROOT=/opt/android-ndk-r9c
+export TOOLCHAINROOT=/opt/android-toolchain/android-14
+export VMC_DEPENDS=$(cd $(dirname $0)/../..; pwd)/vmc-depends
+export TARBALLS=/opt/xbmc-tarballs
+export DISABLE_DEBUG=no
+export THIRD_PARTY=/opt/third_party
+export FEATURE_SUPPORT=beta
+export NDK_R9_PLUS=yes

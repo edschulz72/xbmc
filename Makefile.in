@@ -743,3 +743,39 @@ else
 check testsuite testframework:
 	@echo "Google Test Framework not configured, skipping testsuite check."
 endif
+
+
+.PHONY : wget-playercore
+wget-playercore:
+	cd @prefix@; \
+	rm -f lib.tgz; \
+	wget http://10.10.2.201:9003/develop/vidon.xbmc/android/gotham/lib.tgz; \
+	tar xvf lib.tgz
+
+.PHONY : playercore
+playercore:
+	cd $(PLAYERCOREROOT); \
+	git reset --hard; \
+	git pull; \
+	cd $(PLAYERCOREROOT)/xbmc/build_amlogic; \
+	./build.sh; \
+	cp -v obj/local/armeabi/libvdmplayer*.so  @prefix@/lib
+	cd $(PLAYERCOREROOT)/xbmc/build_allwinner; \
+        ./build.sh; \
+        cp -v obj/local/armeabi/libvdmplayer*.so  @prefix@/lib \
+
+.PHONY : libdvdnav
+libdvdnav:
+	cd $(DVDNAVROOT); \
+	git reset --hard; \
+	git pull; \
+	cp -v android/release/*.so  @prefix@/lib \
+
+.PHONY : libbdjvm
+libbdjvm:
+	cd $(BDJVMROOT); \
+	git reset --hard; \
+	git pull; \
+	cp -v android/release/*.so @prefix@/lib
+	
+

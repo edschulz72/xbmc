@@ -246,8 +246,12 @@ void CGUIDialogAudioSubtitleSettings::OnSettingChanged(SettingInfo &setting)
   if (setting.id == AUDIO_SETTINGS_VOLUME)
     g_application.SetVolume(m_volume, false); //false - value is not in percent
   else if (setting.id == AUDIO_SETTINGS_VOLUME_AMPLIFICATION)
-  {
-    g_application.m_pPlayer->SetDynamicRangeCompression((long)(CMediaSettings::Get().GetCurrentVideoSettings().m_VolumeAmplification * 100));
+	{
+#if defined(HAS_VIDONME)
+		g_application.m_pPlayer->SetDynamicRangeCompression((long)(CMediaSettings::Get().GetCurrentVideoSettings().m_VolumeAmplification));
+#else
+		g_application.m_pPlayer->SetDynamicRangeCompression((long)(CMediaSettings::Get().GetCurrentVideoSettings().m_VolumeAmplification * 100));
+#endif
   }
   else if (setting.id == AUDIO_SETTINGS_DELAY)
   {

@@ -119,6 +119,13 @@
       <prev_track>SkipPrevious</prev_track>
       <stop>Stop</stop>
       <play_pause>PlayPause</play_pause>
+	  
+      <!--	HAS_VIDONME		Begin-->
+      <audio>AudioNextLanguage</audio>
+      <subtitle>nextsubtitle</subtitle>
+      <info>info</info>
+      <!--	HASVIDONME		End-->
+      
       <fastforward>FastForward</fastforward>
       <rewind>Rewind</rewind>
       <record/>
@@ -265,6 +272,14 @@
       <right>StepForward</right>
       <up>ChapterOrBigStepForward</up>
       <down>ChapterOrBigStepBack</down>
+	  
+      <!--	HAS_VIDONME		Begin-->
+      <audio>AudioNextLanguage</audio>
+      <subtitle>nextsubtitle</subtitle>
+      <info>info</info>
+	  <menu>OSD</menu>
+      <!--	HASVIDONME		End-->
+      
       <a>AudioDelay</a>
       <escape>Fullscreen</escape>
       <c>Playlist</c>
@@ -405,6 +420,11 @@
   <VideoOSD>
     <keyboard>
       <m>Back</m>
+	  
+	  <!--	HAS_VIDONME		Begin-->
+	  <menu>Back</menu>
+	  <!--	HAS_VIDONME		End-->
+	  
       <g mod="ctrl">Back</g> <!-- MCE Guide button -->
       <i>Info</i>
       <o>CodecInfo</o>

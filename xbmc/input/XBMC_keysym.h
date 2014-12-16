@@ -42,7 +42,14 @@ typedef enum {
   XBMCK_TAB         = 0x09,
   XBMCK_CLEAR       = 0x0C,
   XBMCK_RETURN      = 0x0D,
-  XBMCK_PAUSE       = 0x13,
+	XBMCK_PAUSE       = 0x13,
+
+#if defined (HAS_VIDONME)
+	XBMCK_SUBTITLE		= 0x12,
+	XBMCK_AUDIO				= 0x14,
+	XBMCK_INFO				= 0x15,
+#endif
+
   XBMCK_ESCAPE      = 0x1B,
   XBMCK_SPACE       = 0x20,
   XBMCK_EXCLAIM     = 0x21,

@@ -4955,6 +4955,13 @@ bool CApplication::OnMessage(CGUIMessage& message)
         g_windowManager.PreviousWindow();
       }
 
+#if defined(HAS_VIDONME) && defined(TARGET_ANDROID)
+			if (CXBMCApp::InvokedByFileManager())
+			{
+				CApplicationMessenger::Get().Quit();
+			}  
+#endif
+
       if (IsEnableTestMode())
         CApplicationMessenger::Get().Quit();
       return true;

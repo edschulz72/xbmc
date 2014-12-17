@@ -318,8 +318,12 @@ void CXBMCApp::XBMC_Pause(bool pause)
 {
   android_printf("XBMC_Pause(%s)", pause ? "true" : "false");
   // Only send the PAUSE action if we are pausing XBMC and something is currently playing
-  if (pause && g_application.m_pPlayer->IsPlaying() && !g_application.m_pPlayer->IsPaused())
-    CApplicationMessenger::Get().SendAction(CAction(ACTION_PAUSE), WINDOW_INVALID, true);
+	if (pause && g_application.m_pPlayer->IsPlaying() && !g_application.m_pPlayer->IsPaused())
+#if defined (HAS_VIDONME) && defined (TARGET_ANDROID)
+		CApplicationMessenger::Get().SendAction(CAction(ACTION_STOP), WINDOW_INVALID, true);
+#else
+		CApplicationMessenger::Get().SendAction(CAction(ACTION_PAUSE), WINDOW_INVALID, true);
+#endif
 }
 
 void CXBMCApp::XBMC_Stop()

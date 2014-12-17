@@ -32,6 +32,14 @@
 
 using namespace PVR;
 
+#if defined (HAS_VIDONME)
+#define CONTROL_BUTTON_PREVIOUS		200
+#define CONTROL_BUTTON_PAUSE			202
+#define CONTROL_BUTTON_NEXT				205
+#define CONTROL_SLIDER_SEEK				87
+#define CONTROL_BUTTON_CLOSE			1000
+#endif
+
 CGUIDialogVideoOSD::CGUIDialogVideoOSD(void)
     : CGUIDialog(WINDOW_DIALOG_VIDEO_OSD, "VideoOSD.xml")
 {
@@ -68,6 +76,38 @@ bool CGUIDialogVideoOSD::OnAction(const CAction &action)
     Close();
     return true;
   }
+
+#if defined (HAS_VIDONME)
+	if (action.GetID() == ACTION_MOVE_UP)
+	{
+		if (GetFocusedControlID() >= CONTROL_BUTTON_PREVIOUS && GetFocusedControlID() <= CONTROL_BUTTON_NEXT)
+		{
+			SET_CONTROL_FOCUS(CONTROL_SLIDER_SEEK, 0);
+			return true;
+		}
+
+		if (GetFocusedControlID() == CONTROL_SLIDER_SEEK)
+		{
+			SET_CONTROL_FOCUS(CONTROL_BUTTON_CLOSE, 0);
+			return true;
+		}
+	}
+
+	if (action.GetID() == ACTION_MOVE_DOWN)
+	{
+		if (GetFocusedControlID() == CONTROL_SLIDER_SEEK)
+		{
+			SET_CONTROL_FOCUS(CONTROL_BUTTON_PAUSE, 0);
+			return true;
+		}
+
+		if (GetFocusedControlID() == CONTROL_BUTTON_CLOSE)
+		{
+			SET_CONTROL_FOCUS(CONTROL_SLIDER_SEEK, 0);
+			return true;
+		}
+	}
+#endif
 
   return CGUIDialog::OnAction(action);
 }

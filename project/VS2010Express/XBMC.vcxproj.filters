@@ -313,6 +313,9 @@
     <Filter Include="settings\lib">
       <UniqueIdentifier>{4de9ae04-448d-4ebe-bde5-5ec2a61270c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vidonme">
+      <UniqueIdentifier>{21c4b861-816c-4785-8d3b-d1432187b694}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xbmc\win32\pch.cpp">
@@ -3103,6 +3106,9 @@
     </ClCompile>
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodec.cpp">
       <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp">
+      <Filter>vidonme</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -6093,6 +6099,9 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\win32\IMMNotificationClient.h">
       <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h">
+      <Filter>vidonme</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -95,6 +95,10 @@
 #include "osx/DarwinUtils.h"
 #endif// defined(TARGET_DARWIN_OSX)
 
+#if defined (HAS_VIDONME)
+#include "vidonme/VDMSettingsManager.h"
+#endif
+
 #define SETTINGS_XML_FOLDER "special://xbmc/system/settings/"
 #define SETTINGS_XML_ROOT   "settings"
 
@@ -448,6 +452,10 @@ void CSettings::Uninitialize()
   m_settingsManager->UnregisterCallback(&PERIPHERALS::CPeripherals::Get());
 #if defined(TARGET_DARWIN_OSX)
   m_settingsManager->UnregisterCallback(&XBMCHelper::GetInstance());
+#endif
+
+#if defined (HAS_VIDONME)
+	m_settingsManager->UnregisterCallback(&CVDMSettingsManager::Get());
 #endif
 
   // cleanup the settings manager
@@ -987,7 +995,11 @@ void CSettings::InitializeISettingsHandlers()
 #if defined(TARGET_LINUX) && !defined(TARGET_ANDROID) && !defined(__UCLIBC__)
   m_settingsManager->RegisterSettingsHandler(&g_timezone);
 #endif
-  m_settingsManager->RegisterSettingsHandler(&CMediaSettings::Get());
+	m_settingsManager->RegisterSettingsHandler(&CMediaSettings::Get());
+
+#if defined (HAS_VIDONME)
+	m_settingsManager->RegisterSettingsHandler(&CVDMSettingsManager::Get());
+#endif
 }
 
 void CSettings::InitializeISubSettings()
@@ -1173,6 +1185,15 @@ void CSettings::InitializeISettingCallbacks()
   settingSet.clear();
   settingSet.insert("input.appleremotemode");
   m_settingsManager->RegisterCallback(&XBMCHelper::GetInstance(), settingSet);
+#endif
+
+#if defined (HAS_VIDONME)
+	settingSet.clear();
+	settingSet.insert("d3.mode");
+	settingSet.insert("debugging.upload");
+	settingSet.insert("debugging.viewlog");
+	settingSet.insert("upgrade.website");
+	m_settingsManager->RegisterCallback(&CVDMSettingsManager::Get(), settingSet);
 #endif
 }
 

@@ -26,6 +26,10 @@
 #include "utils/StdString.h"
 #include "guilib/Geometry.h"
 
+#if defined (HAS_VIDONME)
+#include "settings/VideoSettings.h"
+#endif
+
 struct TextCacheStruct_t;
 class TiXmlElement;
 class CStreamDetails;
@@ -246,6 +250,12 @@ public:
    \brief define the subtitle capabilities of the player
    */
   virtual void GetSubtitleCapabilities(std::vector<int> &subCaps) { subCaps.assign(1,IPC_SUBS_ALL); };
+
+#ifdef HAS_VIDONME
+
+	virtual void SetPlayMode(DIMENSIONMODE mode) { return;}
+
+#endif 
 
 protected:
   IPlayerCallback& m_callback;

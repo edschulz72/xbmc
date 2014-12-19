@@ -56,6 +56,10 @@ using namespace std;
 #define SETTINGS_APPEARANCE             WINDOW_SETTINGS_APPEARANCE - WINDOW_SETTINGS_START
 #define SETTINGS_PVR                    WINDOW_SETTINGS_MYPVR - WINDOW_SETTINGS_START
 
+#if defined(HAS_VIDONME)
+#define SETTINGS_VIDONME                VDM_WINDOW_SETTINGS_VIDONME - WINDOW_SETTINGS_START
+#endif
+
 #define SETTING_DELAY                   1500
 
 #define CONTROL_SETTINGS_LABEL          2
@@ -87,7 +91,10 @@ static const SettingGroup s_settingGroupMap[] = { { SETTINGS_PICTURES,    "pictu
                                                   { SETTINGS_SYSTEM,      "system" },
                                                   { SETTINGS_VIDEOS,      "videos" },
                                                   { SETTINGS_SERVICE,     "services" },
-                                                  { SETTINGS_APPEARANCE,  "appearance" },
+																									{ SETTINGS_APPEARANCE,  "appearance" },
+																									#if defined (HAS_VIDONME)
+																									{ SETTINGS_VIDONME,			"vidonme" },
+																									#endif
                                                   { SETTINGS_PVR,         "pvr" } };
                                                   
 #define SettingGroupSize sizeof(s_settingGroupMap) / sizeof(SettingGroup)
@@ -121,7 +128,11 @@ CGUIWindowSettingsCategory::CGUIWindowSettingsCategory(void)
   m_idRange.push_back(WINDOW_SETTINGS_MYVIDEOS);
   m_idRange.push_back(WINDOW_SETTINGS_SERVICE);
   m_idRange.push_back(WINDOW_SETTINGS_APPEARANCE);
-  m_idRange.push_back(WINDOW_SETTINGS_MYPVR);
+	m_idRange.push_back(WINDOW_SETTINGS_MYPVR);
+
+#if defined (HAS_VIDONME)
+	m_idRange.push_back(VDM_WINDOW_SETTINGS_VIDONME);
+#endif
 }
 
 CGUIWindowSettingsCategory::~CGUIWindowSettingsCategory(void)
@@ -634,8 +645,21 @@ void CGUIWindowSettingsCategory::UpdateSettings()
     if (pSetting == NULL || pControl == NULL)
       continue;
 
-    pSettingControl->Update();
-  }
+		pSettingControl->Update();
+
+#if defined (HAS_VIDONME)
+		if (pSetting->GetId() == "debugging.player")
+		{
+#ifdef _DEBUG
+			pSetting->SetVisible(true);
+			pControl->SetVisible(true);
+#else
+			pSetting->SetVisible(false);
+			pControl->SetVisible(false);
+#endif
+		}
+#endif
+	}
 }
 
 void CGUIWindowSettingsCategory::SetDescription(const CVariant &label)

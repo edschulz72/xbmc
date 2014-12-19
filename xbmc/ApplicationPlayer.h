@@ -24,6 +24,10 @@
 #include "threads/SingleLock.h"
 #include "cores/playercorefactory/PlayerCoreFactory.h"
 
+#if defined (HAS_VIDONME)
+#include "settings/VideoSettings.h"
+#endif
+
 typedef enum
 {
   PLAYBACK_CANCELED = -1,
@@ -144,4 +148,11 @@ public:
   bool  SwitchChannel(const PVR::CPVRChannel &channel);
   void  ToFFRW(int iSpeed = 0);
   void  UnRegisterAudioCallback();
+
+#ifdef HAS_VIDONME
+
+	void SetPlayMode(DIMENSIONMODE mode);
+
+#endif 
+
 };

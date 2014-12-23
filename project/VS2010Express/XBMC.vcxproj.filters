@@ -322,6 +322,9 @@
     <Filter Include="video\videosync">
       <UniqueIdentifier>{9775d5c0-c640-4606-a625-e6cdcf9f959e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vidonme">
+      <UniqueIdentifier>{4500f9e4-71cf-4f55-a9d3-7dc4296f480a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xbmc\win32\pch.cpp">
@@ -3079,6 +3082,9 @@
     </ClCompile>
     <ClCompile Include="..\..\xbmc\cores\DataCacheCore.cpp">
       <Filter>cores</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp">
+      <Filter>vidonme</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -6027,6 +6033,9 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\cores\DataCacheCore.h">
       <Filter>cores</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h">
+      <Filter>vidonme</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

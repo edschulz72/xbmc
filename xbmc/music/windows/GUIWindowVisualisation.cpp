@@ -101,23 +101,17 @@ bool CGUIWindowVisualisation::OnAction(const CAction &action)
       m_initTimer.StartZero();
       g_infoManager.SetShowInfo(true);
     }
-    break;
-    // TODO: These should be mapped to it's own function - at the moment it's overriding
-    // the global action of fastforward/rewind and OSD.
-/*  case KEY_BUTTON_Y:
-    g_application.m_CdgParser.Pause();
-    return true;
-    break;
+		break;
 
-    case ACTION_ANALOG_FORWARD:
-    // calculate the speed based on the amount the button is held down
-    if (action.GetAmount())
-    {
-      float AVDelay = g_application.m_CdgParser.GetAVDelay();
-      g_application.m_CdgParser.SetAVDelay(AVDelay - action.GetAmount() / 4.0f);
-      return true;
-    }
-    break;*/
+#if defined (HAS_VIDONME)
+	case ACTION_NEXT_ITEM:
+	case ACTION_PREV_ITEM:
+	{
+		Close();
+		g_windowManager.ActivateWindow(WINDOW_VISUALISATION);
+		break;
+	}
+#endif
   }
 
   if (passToVis)

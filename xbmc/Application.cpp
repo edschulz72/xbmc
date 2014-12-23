@@ -4950,10 +4950,10 @@ bool CApplication::OnMessage(CGUIMessage& message)
       }
 
 #if defined(HAS_VIDONME) && defined(TARGET_ANDROID)
-	  if (CXBMCApp::InvokedByFileManager())
-	  {
-		  CApplicationMessenger::Get().Quit();
-	  }
+			if (CXBMCApp::InvokedByFileManager())
+			{
+				CApplicationMessenger::Get().Quit();
+			}
 #endif
 
       if (IsEnableTestMode())

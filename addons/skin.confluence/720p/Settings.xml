@@ -170,6 +170,14 @@
 						<onclick>ActivateWindow(SystemSettings)</onclick>
 						<icon>-</icon>
 					</item>
+          <!--HAS_VIDONME-->
+          <item id="10">
+            <label>70024</label>
+            <label2>70025</label2>
+            <onclick>ActivateWindow(vidonme)</onclick>
+            <icon>-</icon>
+          </item>
+          <!--HAS_VIDONME-->
 				</content>
 			</control>
 			<control type="image">

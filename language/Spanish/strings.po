@@ -13080,3 +13080,411 @@ msgstr "Determina como deben abrirse y reproducirse los discos Blu-ray. Los menu
 msgctxt "#38010"
 msgid "GPU accelerated"
 msgstr "Aceleración GPU"
+
+
+
+
+
+msgctxt "#70000"
+msgid "Welcome to VidOn XBMC Demo"
+msgstr "Bienvenida a VidOn XBMC Demo"
+
+msgctxt "#70001"
+msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr " VidOn.me ofrece el XMBC más completo y seguro en Android, con funciones y características optimizada. Además de la function tradicional de administrar recurso multimedia, nuestro XBMC tiene muchas características únicas tales como la navegación por menú de Blu-ray, salida de HD audio , y más."
+
+msgctxt "#70002"
+msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\nPara actualizar a VidOn XBMC Pro, por favor visite: [COLOR=blue]http://es.vidon.me/ [/COLOR] "
+
+msgctxt "#70003"
+msgid "OK"
+msgstr "Aceptar"
+
+msgctxt "#70004"
+msgid "Dolby/DTS codec package is required to play the video, or audio may be lost. Download and install Dolby/DTS codec package now?"
+msgstr "Para reproducir el vídeo, necesita el paquete de codec de Dolby/DTS, si no, el audio puede perderse, ¿descargar e instalar el paquete de codec de Dolby/DTS ahora?"
+
+msgctxt "#70005"
+msgid "Failed to connect to the Internet. Please check the network connection."
+msgstr "Fallo en conectar al red. Verifique la conexión al red por favor."
+
+msgctxt "#70006"
+msgid "Account/password verification failed. Please re-enter."
+msgstr "Fallo en verificar Ccuenta/contraseña. Intente de nuevo por favor"
+
+msgctxt "#70007"
+msgid "Welcome to VidOn XBMC"
+msgstr " Bienvenida a VidOn XBMC"
+
+msgctxt "#70008"
+msgid "You are using the free version of VidOn XBMC."
+msgstr "Está usando la versión gratuita de VidOn XBMC."
+
+msgctxt "#70009"
+msgid "You already have a top-up card. Complete the binding to upgrade immediately to the Pro version!"
+msgstr "Tiene una Tarjeta de Recarga. Complete la vinculación para actualizar a la versión Pro inmediatamente."
+
+msgctxt "#70010"
+msgid "You already have a top-up card. You can use advanced features after the binding!"
+msgstr "Tiene una tarjeta de recarga. Puede disfrutar de características avanzadas después de la vinculación."
+
+msgctxt "#70011"
+msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding to upgrade to the Pro version!"
+msgstr "No hay tarjeta de recarga disponible en su cuenta. Puede entrar el código de la tarjeta manualmente para completar la vinculación y actualizar a la versión Pro."
+
+msgctxt "#70012"
+msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding."
+msgstr " No hay tarjeta de recarga disponible en su cuenta. Puede entrar el código de la tarjeta manualmente para completar la vinculación." 
+
+msgctxt "#70013"
+msgid "Username and password must not be empty."
+msgstr "Nombre de usuario y contraseña no puede ser vacío."
+
+msgctxt "#70014"
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+msgctxt "#70015"
+msgid "Successful!"
+msgstr "¡Completado!"
+
+msgctxt "#70016"
+msgid "Failed to bind!"
+msgstr "¡Fallo en la vinculación!"
+
+msgctxt "#70017"
+msgid "Your license is due to expire on %s. Please go to the official website to top it up as soon as possible."
+msgstr "Su licencia expirará en %s. Visite el sitio web official para regarcar lo antes posible por favor."
+
+msgctxt "#70018"
+msgid "License term"
+msgstr "Duración de Licencia "
+
+msgctxt "#70019"
+msgid "Bind"
+msgstr "Vincular"
+
+msgctxt "#70020"
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgctxt "#70021"
+msgid "VidOn.me Account"
+msgstr "Cuenta de VidOn.me"
+
+msgctxt "#70022"
+msgid "Password"
+msgstr "Contraseña"
+
+msgctxt "#70023"
+msgid "Login"
+msgstr "Iniciar Sesión"
+
+msgctxt "#70024"
+msgid "VidOn"
+msgstr "VidOn"
+
+msgctxt "#70025"
+msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file 路 Send dump file 路 Default settings for 3D playback"
+msgstr "[B]CONFIGURAR LOS AJUSTES DE VIDON [/B][CR][CR]Enviar archivo log ·Enviar archivo dump · Ajustes para reproducción de 3D por defecto"
+
+msgctxt "#70026"
+msgid "Debugging"
+msgstr "Depuración"
+
+msgctxt "#70027"
+msgid "Send log file and dump file to us. View your log file in browser."
+msgstr "Envíenos archivo log y dump.Vea su archivo log por navegador."
+
+msgctxt "#70028"
+msgid "Send log file and dump file now"
+msgstr " Envíe archivo log y dump ahora"
+
+msgctxt "#70029"
+msgid "Sending log file and dump file can help us find out the unexpected error quickly."
+msgstr " Enviar archivo log y dump puede ayudarnos encontrar errores desesperado con eficaz."
+
+msgctxt "#70030"
+msgid "Send log file and dump file to us once an unexpected error occurs"
+msgstr " Envíenos archivo log y dump una vez que ocurre un error desesperado"
+
+msgctxt "#70031"
+msgid "View log file"
+msgstr "Ver archivo log"
+
+msgctxt "#70032"
+msgid "View log file in browse."
+msgstr " Ver archivo log por navegador."
+
+msgctxt "#70033"
+msgid "3D playback"
+msgstr "Reproducción de 3D "
+
+msgctxt "#70034"
+msgid "Set default play mode of 3D source."
+msgstr "Ajuste modo por defecto para reproducción de 3D recurso."
+
+msgctxt "#70035"
+msgid "Set 2D/3D Mode"
+msgstr "Ajuste 2D/3D Modo"
+
+msgctxt "#70036"
+msgid "2D"
+msgstr "2D"
+
+msgctxt "#70037"
+msgid "2D Left Half"
+msgstr "2D la mitad izquierda"
+
+msgctxt "#70038"
+msgid "2D Upper Half"
+msgstr "2D la mitad superior"
+
+msgctxt "#70039"
+msgid "3D Left/Right"
+msgstr "3D Izquierdo-Derecho"
+
+msgctxt "#70040"
+msgid "3D Top/Bottom"
+msgstr "3D Superior-Inferior"
+
+msgctxt "#70041"
+msgid "3D"
+msgstr "3D"
+
+msgctxt "#70042"
+msgid "3D Line Interlacing"
+msgstr "3D Entrelazado por Línea"
+
+msgctxt "#70043"
+msgid "3D Column Interlacing"
+msgstr "3D Entrelazado por Columna"
+
+msgctxt "#70044"
+msgid "Region Code"
+msgstr "Código de Región"
+
+msgctxt "#70045"
+msgid "Region A"
+msgstr "Región A"
+
+msgctxt "#70046"
+msgid "Region B"
+msgstr "Región B"
+
+msgctxt "#70047"
+msgid "Region C"
+msgstr " Región C"
+
+msgctxt "#70048"
+msgid "Set region for Blu-ray playback."
+msgstr "Ajustar región para la reproducción de Blu-ray."
+
+msgctxt "#70049"
+msgid "Chose a Player"
+msgstr "Elige un Reproductor "
+
+msgctxt "#70050"
+msgid "Chose VidOn Player or XBMC Player to play."
+msgstr " Elige VidOn Player o XBMC Player para la reproducción."
+
+msgctxt "#70051"
+msgid "VidOn Player"
+msgstr "VidOn Player"
+
+msgctxt "#70052"
+msgid "XBMC Player"
+msgstr "XBMC Player"
+
+msgctxt "#70053"
+msgid "Blu-ray"
+msgstr "Blu-ray"
+
+msgctxt "#70054"
+msgid "Settings about Blu-ray playback."
+msgstr "Ajustes sobre la reproducción de Blu-ray."
+
+msgctxt "#70055"
+msgid "User Center"
+msgstr "Panel de Usuario"
+
+msgctxt "#70056"
+msgid "Show username, email and license information. User can be switched."
+msgstr "Mostrar el nombre de usuario y información de licencia. Se puede cambiar la cuenta."
+
+msgctxt "#70057"
+msgid "Username"
+msgstr "Nombre de Usuario"
+
+msgctxt "#70058"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "#70059"
+msgid "Expiration Date"
+msgstr "Fecha de Expiración"
+
+msgctxt "#70060"
+msgid "License ID"
+msgstr " ID de Licencia"
+
+msgctxt "#70061"
+msgid "Switch User"
+msgstr "Cambiar Usuario"
+
+msgctxt "#70062"
+msgid "Please enter other username and password to switch user."
+msgstr "Para cambiar usuario, por favor entre el nombre de usuario y la contraseña de que quería usar."
+
+msgctxt "#70063"
+msgid "Upgrade"
+msgstr "Actualizar"
+
+msgctxt "#70064"
+msgid "Show info of current version and check for new version."
+msgstr "Mostrar la info de versión actual y verifique por nueva versión."
+
+msgctxt "#70065"
+msgid "Version"
+msgstr "Versión"
+
+msgctxt "#70066"
+msgid "Website"
+msgstr "Sitio web"
+
+msgctxt "#70067"
+msgid "Visit our official website."
+msgstr "Visite nuestro sitio web official."
+
+msgctxt "#70068"
+msgid "Forum"
+msgstr "Foro"
+
+msgctxt "#70069"
+msgid "Visit our official forum."
+msgstr "Visite nuestro foro official."
+
+msgctxt "#70070"
+msgid "Check new version"
+msgstr "Verifique versión nueva"
+
+msgctxt "#70071"
+msgid "Check new version from our official website."
+msgstr " Verifique versión nueva desde nuestro sitio web official."
+
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70072"
+msgid "Installing..."
+msgstr "Instalando..."
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70073"
+msgid "File download failed"
+msgstr "Fallo en descargar archivo"
+
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70074"
+msgid "File verification failed"
+msgstr "Fallo en verificar el archivo"
+
+
+#: xbmc/vidonme/VDMDialogVersionCheck.cpp
+msgctxt "#70075"
+msgid "New Version"
+msgstr "Nueva versi贸n"
+
+
+#: xbmc/settings/windows/GUIWindowSettingsCategory.cpp
+msgctxt "#70076"
+msgid "Downloading"
+msgstr "Descargando"
+
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70077"
+msgid "Send log file and dump file"
+msgstr "Cargar archivo log y dump"
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70078"
+msgid "Network connection error"
+msgstr "Error en conexi贸n al red"
+
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70079"
+msgid "Succeeded to send log file and dump file"
+msgstr "Se han cargado archivo log y dump correctamente"
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70080"
+msgid "Failed to collect the log file"
+msgstr "Fallo en recoger el archivo log"
+
+
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70081"
+msgid "Current Version"
+msgstr "Versi贸n Actual"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70082"
+msgid "Checking for the latest version..."
+msgstr "Verificando la versi贸n m谩s reciente ..."
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70083"
+msgid "Network connection error"
+msgstr "Error en conexi贸n al red"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70084"
+msgid "Retry"
+msgstr "Reintentar"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+#: msgctxt "#70085"
+#: msgid "Cancel"
+#: msgstr "Cancelar"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70086"
+msgid "Already the latest version"
+msgstr "Ya es la versi贸n m谩s reciente"
+
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70087"
+msgid "Close"
+msgstr "Cerrar"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70088"
+msgid "Update"
+msgstr "Actualizar"
+
+msgctxt "#70089"
+msgid "Without account?"
+msgstr "驴No tiene cuenta?"
+
+msgctxt "#70090"
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/ [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]Visite nuestro sitio web oficial por favor[/COLOR] http://es.vidon.me/ [COLOR=white]para registrar.[/COLOR] "
+
+#: system/settings/settings.xml
+msgctxt "#70091"
+msgid "Build Time"
+msgstr "Tiempo de Contrucción"
+
+msgctxt "#70092"
+msgid "Unlicensed"
+msgstr "No licenciado"
+
+
+msgctxt "#70095" 
+msgid "Play main title" 
+msgstr "Reproduce título principal" 

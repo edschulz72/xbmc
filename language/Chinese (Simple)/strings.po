@@ -13080,3 +13080,409 @@ msgstr "指定蓝光打开/播放方式。光盘菜单尚未完全支持，可�
 msgctxt "#38010"
 msgid "GPU accelerated"
 msgstr "GPU 加速"
+
+
+
+msgctxt "#70000"
+msgid "Welcome to VidOn XBMC Demo"
+msgstr "欢迎使用VidOn XBMC Demo版"
+
+msgctxt "#70001"
+msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr "VidOn.me致力于为用户提供最完整、最可靠的Android XBMC。我们的XBMC经过极度优化，在传统的媒体管理功能基础上还具备了蓝光菜单导航和HD音频输出等独家功能。 "
+
+msgctxt "#70002"
+msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\n想要升级成VidOn XBMC Pro版，请访问：[COLOR=blue]http://cn.vidon.me/ [/COLOR] "
+
+msgctxt "#70003"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#70004"
+msgid "Dolby/DTS codec package is required to play the video, or audio may be lost. Download and install Dolby/DTS codec package now?"
+msgstr "需要使用Dolby/DTS解码包播放视频，否则可能无声音。立即下载并安装解码包？"
+
+msgctxt "#70005"
+msgid "Failed to connect to the Internet. Please check the network connection."
+msgstr "连接到网络失败。请检查网络连接。"
+
+msgctxt "#70006"
+msgid "Account/password verification failed. Please re-enter."
+msgstr "账户/密码验证失败。请重新输入。"
+
+msgctxt "#70007"
+msgid "Welcome to VidOn XBMC"
+msgstr "欢迎使用VidOn XBMC"
+
+msgctxt "#70008"
+msgid "You are using the free version of VidOn XBMC."
+msgstr "您正在使用免费版VidOn XBMC."
+
+msgctxt "#70009"
+msgid "You already have a top-up card. Complete the binding to upgrade immediately to the Pro version!"
+msgstr "您已经拥有一张充值卡。完成绑定就可立即升级成Pro版！"
+
+msgctxt "#70010"
+msgid "You already have a top-up card. You can use advanced features after the binding!"
+msgstr "您已经拥有一张充值卡。完成绑定后就可以使用高级功能！"
+
+msgctxt "#70011"
+msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding to upgrade to the Pro version!"
+msgstr "您的账户内没有可用的充值卡。您可以手动输入卡号完成绑定，从而升级成Pro版！"
+
+msgctxt "#70012"
+msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding."
+msgstr "您的账户内没有可用的充值卡。您可以手动输入卡号完成绑定。"
+
+msgctxt "#70013"
+msgid "Username and password must not be empty."
+msgstr "用户名和密码必须填写。"
+
+msgctxt "#70014"
+msgid "Login"
+msgstr "登录"
+
+msgctxt "#70015"
+msgid "Successful!"
+msgstr "成功！"
+
+msgctxt "#70016"
+msgid "Failed to bind!"
+msgstr "绑定失败！"
+
+msgctxt "#70017"
+msgid "Your license is due to expire on %s. Please go to the official website to top it up as soon as possible."
+msgstr "您的授权码将于 %s过期，请尽快到官方网站进行充值。"
+
+msgctxt "#70018"
+msgid "License term"
+msgstr "授权码有效期"
+
+msgctxt "#70019"
+msgid "Bind"
+msgstr "绑定"
+
+msgctxt "#70020"
+msgid "Cancel"
+msgstr "取消"
+
+msgctxt "#70021"
+msgid "VidOn.me Account"
+msgstr "VidOn.me 账户"
+
+msgctxt "#70022"
+msgid "Password"
+msgstr "密码"
+
+msgctxt "#70023"
+msgid "Login"
+msgstr "登录"
+
+msgctxt "#70024"
+msgid "VidOn"
+msgstr "VidOn"
+
+msgctxt "#70025"
+msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file 路 Send dump file 路 Default settings for 3D playback"
+msgstr "[B]设置VidOn选项[/B][CR][CR]发送日志文件·发送dump文件·3D电影默认播放设置"
+
+msgctxt "#70026"
+msgid "Debugging"
+msgstr "调试"
+
+msgctxt "#70027"
+msgid "Send log file and dump file to us. View your log file in browser."
+msgstr "发送日志文件和dump文件给我们。用浏览器查看您的日志文件。"
+
+msgctxt "#70028"
+msgid "Send log file and dump file now"
+msgstr "立即发送日志文件和dump文件"
+
+msgctxt "#70029"
+msgid "Sending log file and dump file can help us find out the unexpected error quickly."
+msgstr "发送日志文件和dump文件可以帮助我们快速找到意外的错误。"
+
+msgctxt "#70030"
+msgid "Send log file and dump file to us once an unexpected error occurs"
+msgstr "一旦发生意外错误发送日志文件和dump文件给我们"
+
+msgctxt "#70031"
+msgid "View log file"
+msgstr "查看日志文件"
+
+msgctxt "#70032"
+msgid "View log file in browse."
+msgstr "通过浏览器查看日志文件"
+
+msgctxt "#70033"
+msgid "3D playback"
+msgstr "3D播放"
+
+msgctxt "#70034"
+msgid "Set default play mode of 3D source."
+msgstr "将3D源设成默认播放模式"
+
+msgctxt "#70035"
+msgid "Set 2D/3D Mode"
+msgstr "设置2D/3D模式"
+
+msgctxt "#70036"
+msgid "2D"
+msgstr "2D"
+
+msgctxt "#70037"
+msgid "2D Left Half"
+msgstr "2D左半"
+
+msgctxt "#70038"
+msgid "2D Upper Half"
+msgstr "2D上半"
+
+msgctxt "#70039"
+msgid "3D Left/Right"
+msgstr "3D 左/右"
+
+msgctxt "#70040"
+msgid "3D Top/Bottom"
+msgstr "3D上/下"
+
+msgctxt "#70041"
+msgid "3D"
+msgstr "3D"
+
+msgctxt "#70042"
+msgid "3D Line Interlacing"
+msgstr "3D行交错"
+
+msgctxt "#70043"
+msgid "3D Column Interlacing"
+msgstr "3D 列交错"
+
+msgctxt "#70044"
+msgid "Region Code"
+msgstr "区域码"
+
+msgctxt "#70045"
+msgid "Region A"
+msgstr "A区"
+
+msgctxt "#70046"
+msgid "Region B"
+msgstr "B区"
+
+msgctxt "#70047"
+msgid "Region C"
+msgstr "C区"
+
+msgctxt "#70048"
+msgid "Set region for Blu-ray playback."
+msgstr "设置蓝光文件的播放区域。"
+
+msgctxt "#70049"
+msgid "Chose a Player"
+msgstr "选择播放器"
+
+msgctxt "#70050"
+msgid "Chose VidOn Player or XBMC Player to play."
+msgstr "选择威动播放器或者XBMC播放器播放。"
+
+msgctxt "#70051"
+msgid "VidOn Player"
+msgstr "威动播放器"
+
+msgctxt "#70052"
+msgid "XBMC Player"
+msgstr "XBMC播放器"
+
+msgctxt "#70053"
+msgid "Blu-ray"
+msgstr "蓝光"
+
+msgctxt "#70054"
+msgid "Settings about Blu-ray playback."
+msgstr "设置如何播放蓝光电影"
+
+msgctxt "#70055"
+msgid "User Center"
+msgstr "用户中心"
+
+msgctxt "#70056"
+msgid "Show username, email and license information. User can be switched."
+msgstr "显示用户名、电子邮箱和授权码信息。可切换用户。"
+
+msgctxt "#70057"
+msgid "Username"
+msgstr "用户名"
+
+msgctxt "#70058"
+msgid "Email"
+msgstr "电子邮箱"
+
+msgctxt "#70059"
+msgid "Expiration Date"
+msgstr "到期时间"
+
+msgctxt "#70060"
+msgid "License ID"
+msgstr "授权码ID"
+
+msgctxt "#70061"
+msgid "Switch User"
+msgstr "切换用户"
+
+msgctxt "#70062"
+msgid "Please enter other username and password to switch user."
+msgstr "切换用户, 输入其他用户名和密码."
+
+msgctxt "#70063"
+msgid "Upgrade"
+msgstr "升级"
+
+msgctxt "#70064"
+msgid "Show info of current version and check for new version."
+msgstr "显示当前版本信息并检查最新版。"
+
+msgctxt "#70065"
+msgid "Version"
+msgstr "版本"
+
+msgctxt "#70066"
+msgid "Website"
+msgstr "网站"
+
+msgctxt "#70067"
+msgid "Visit our official website."
+msgstr "访问我们的官方网站。"
+
+msgctxt "#70068"
+msgid "Forum"
+msgstr "论坛"
+
+msgctxt "#70069"
+msgid "Visit our official forum."
+msgstr "访问我们的官方论坛。"
+
+msgctxt "#70070"
+msgid "Check new version"
+msgstr "查看新版本"
+
+msgctxt "#70071"
+msgid "Check new version from our official website."
+msgstr "从我们的官方网站查看新版本。"
+
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70072"
+msgid "Installing..."
+msgstr "正在安装..."
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70073"
+msgid "File download failed"
+msgstr "文件下载失败"
+
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70074"
+msgid "File verification failed"
+msgstr "文件认证失败"
+
+
+#: xbmc/vidonme/VDMDialogVersionCheck.cpp
+msgctxt "#70075"
+msgid "New Version"
+msgstr "新版本"
+
+
+#: xbmc/settings/windows/GUIWindowSettingsCategory.cpp
+msgctxt "#70076"
+msgid "Downloading"
+msgstr "正在下载"
+
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70077"
+msgid "Send log file and dump file"
+msgstr "发送日志文件和dump文件"
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70078"
+msgid "Network connection error"
+msgstr "网络连接错误"
+
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70079"
+msgid "Succeeded to send log file and dump file"
+msgstr "成功发送日志文件和dump文件"
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70080"
+msgid "Failed to collect the log file"
+msgstr "收集日志文件失败"
+
+
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+#: "current version: V13.2"
+msgctxt "#70081"
+msgid "Current Version"
+msgstr "当前版本"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70082"
+msgid "Checking for the latest version..."
+msgstr "正在检查版本 ..."
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70083"
+msgid "Network connection error"
+msgstr "网络连接错误"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70084"
+msgid "Retry"
+msgstr "重试"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+#: msgctxt "#70085"
+#: msgid "Cancel"
+#: msgstr "取消"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70086"
+msgid "Already the latest version"
+msgstr "暂无新版本"
+
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70087"
+msgid "Close"
+msgstr "关闭"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70088"
+msgid "Update"
+msgstr "升级"
+
+msgctxt "#70089"
+msgid "Without account?"
+msgstr "没有账户?"
+
+msgctxt "#70090"
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/ [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]请访问官方网站[/COLOR] http://cn.vidon.me/ [COLOR=white]完成注册.[/COLOR] "
+
+#: system/settings/settings.xml
+msgctxt "#70091"
+msgid "Build Time"
+msgstr "编译时间"
+
+msgctxt "#70092"
+msgid "Unlicensed"
+msgstr "未授权"
+
+msgctxt "#70095" 
+msgid "Play main title" 
+msgstr "播放主标题" 

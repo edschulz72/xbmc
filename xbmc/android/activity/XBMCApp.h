@@ -134,4 +134,10 @@ private:
   void XBMC_Stop();
   bool XBMC_DestroyDisplay();
   bool XBMC_SetupDisplay();
+
+#if defined (HAS_VIDONME)
+public:
+	static bool InvokedByFileManager();
+	static bool m_InvokedByFileManager;
+#endif
 };

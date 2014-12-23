@@ -92,6 +92,10 @@ int CXBMCApp::m_initialVolume = 0;
 CCriticalSection CXBMCApp::m_applicationsMutex;
 std::vector<androidPackage> CXBMCApp::m_applications;
 
+#if defined (HAS_VIDONME)
+bool CXBMCApp::m_InvokedByFileManager = NULL;
+#endif
+
 
 CXBMCApp::CXBMCApp(ANativeActivity* nativeActivity)
   : CJNIContext(nativeActivity)
@@ -268,6 +272,10 @@ void CXBMCApp::run()
   SetupEnv();
   XBMC::Context context;
 
+#if defined(HAS_VIDONME)
+  m_InvokedByFileManager = false;
+#endif
+
   m_initialVolume = GetSystemVolume();
 
   CJNIIntent startIntent = getIntent();
@@ -286,6 +294,10 @@ void CXBMCApp::run()
 
     CAppParamParser appParamParser;
     appParamParser.Parse((const char **)argv, argc);
+
+#if defined(HAS_VIDONME)
+	m_InvokedByFileManager = true;
+#endif
 
     free(argv);
   }
@@ -687,3 +699,10 @@ const ANativeWindow** CXBMCApp::GetNativeWindow(int timeout)
   m_windowCreated.WaitMSec(timeout);
   return (const ANativeWindow**)&m_window;
 }
+
+#if defined (HAS_VIDONME)
+bool CXBMCApp::InvokedByFileManager()
+{
+	return m_InvokedByFileManager;
+}
+#endif

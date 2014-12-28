@@ -1496,7 +1496,13 @@ void CGUIMediaWindow::OnInitWindow()
   bool updateStartDirectory = (m_startDirectory == m_vecItems->GetPath());
   Refresh();
   if (updateStartDirectory)
+  {
+    // reset the start directory to the path of the items
     m_startDirectory = m_vecItems->GetPath();
+
+    // reset the history based on the path of the items
+    SetHistoryForPath(m_startDirectory);
+  }
 
   m_rootDir.SetAllowThreads(true);
 

@@ -27,12 +27,23 @@
 typedef std::vector<unsigned int     > AESampleRateList;
 typedef std::vector<enum AEDataFormat> AEDataFormatList;
 
+#if defined(TARGET_ANDROID) && defined(HAS_VIDONME)
 enum AEDeviceType {
-  AE_DEVTYPE_PCM,
-  AE_DEVTYPE_IEC958,
-  AE_DEVTYPE_HDMI,
-  AE_DEVTYPE_DP
+	AE_DEVTYPE_PCM,
+	AE_DEVTYPE_IEC958,
+	AE_DEVTYPE_HDMI,
+	AE_DEVTYPE_DP,
+	AE_DEVTYPE_PASSTHROUGH_IEC958,
+	AE_DEVTYPE_PASSTHROUGH_HDMI
 };
+#else
+enum AEDeviceType {
+	AE_DEVTYPE_PCM,
+	AE_DEVTYPE_IEC958,
+	AE_DEVTYPE_HDMI,
+	AE_DEVTYPE_DP
+};
+#endif
 
 /**
  * This classt provides the details of what the audio output hardware is capable of

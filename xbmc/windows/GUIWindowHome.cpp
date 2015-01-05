@@ -30,6 +30,17 @@
 #include "guilib/GUIWindowManager.h"
 #include "Application.h"
 
+#if defined(HAS_VIDONME)
+#include "guilib/LocalizeStrings.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/DLLVidonUtils.h"
+#include "vidonme/VDMUserInfo.h"
+#include "guilib/GUIImage.h"
+#include "addons/Skin.h"
+#include "GUIUserMessages.h"
+#define CONTROL_IMAGE_LOGO 101
+#endif
+
 using namespace ANNOUNCEMENT;
 
 CGUIWindowHome::CGUIWindowHome(void) : CGUIWindow(WINDOW_HOME, "Home.xml"), 
@@ -39,7 +50,11 @@ CGUIWindowHome::CGUIWindowHome(void) : CGUIWindow(WINDOW_HOME, "Home.xml"),
 {
   m_updateRA = (Audio | Video | Totals);
   m_loadType = KEEP_IN_MEMORY;
-  
+
+#if defined(HAS_VIDONME)
+	m_bFirstRun = true;
+#endif
+
   CAnnouncementManager::AddAnnouncer(this);
 }
 
@@ -61,6 +76,27 @@ bool CGUIWindowHome::OnAction(const CAction &action)
   return CGUIWindow::OnAction(action);
 }
 
+#if defined(HAS_VIDONME)
+void CGUIWindowHome::UpdateVidonLogo()
+{
+	if( g_SkinInfo->ID() == "skin.confluence" && g_SkinInfo->IsInUse() )
+	{
+		CGUIImage* pLogoImage = (CGUIImage*)GetControl(CONTROL_IMAGE_LOGO);
+		if( pLogoImage != NULL )
+		{
+			if( CVDMUserInfo::Instance().MaybeProVersion() )
+			{
+				pLogoImage->SetFileName( "special://xbmc/media/VDMResource/vidonxbmc_logo_pro.png" );
+			}
+			else
+			{
+				pLogoImage->SetFileName( "xbmc-logo.png" );
+			}
+		}
+	}
+}
+#endif //#if defined(HAS_VIDONME)
+
 void CGUIWindowHome::OnInitWindow()
 {  
   // for shared databases (ie mysql) always force an update on return to home
@@ -69,6 +105,26 @@ void CGUIWindowHome::OnInitWindow()
        g_advancedSettings.m_databaseMusic.type.Equals("mysql") )
     m_updateRA = (Audio | Video | Totals);
   AddRecentlyAddedJobs( m_updateRA );
+
+#if defined(HAS_VIDONME)
+	if (m_bFirstRun)
+	{
+		CStdString strUserName;
+		CStdString strPassword;
+
+		if( CVDMUserInfo::Instance().GetUsernameAndPassword( strUserName, strPassword ) )
+		{
+			CVDMUserInfo::Instance().DoLogin( strUserName, strPassword, false );
+		}
+		else
+		{
+			CGUIMessage showmsg(GUI_MSG_VISIBLE, GetID(), VDM_WINDOW_DIALOG_LOGIN);
+			g_windowManager.SendThreadMessage(showmsg, VDM_WINDOW_DIALOG_LOGIN);
+		}
+
+		m_bFirstRun = false;
+	}
+#endif
 
   CGUIWindow::OnInitWindow();
 }
@@ -181,6 +237,12 @@ bool CGUIWindowHome::OnMessage(CGUIMessage& message)
         m_updateRA |= updateRA;
     }
     break;
+
+#if defined(HAS_VIDONME)
+	case GUI_MSG_UPDATE_VIDON_LOGO:
+		UpdateVidonLogo();
+		break;
+#endif //#if defined(HAS_VIDONME)
 
   default:
     break;

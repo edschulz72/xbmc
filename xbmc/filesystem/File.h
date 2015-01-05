@@ -142,6 +142,12 @@ public:
   static bool Delete(const CStdString& strFileName);
   static bool Rename(const CStdString& strFileName, const CStdString& strNewFileName);
   static bool Cache(const CStdString& strFileName, const CStdString& strDest, XFILE::IFileCallback* pCallback = NULL, void* pContext = NULL);
+
+#if defined(HAS_VIDONME)
+	static bool Cache_Internal(const CStdString& strFileName, const CStdString& strDest, XFILE::IFileCallback* pCallback, void* pContext, bool bKeepCache);
+	static bool KeepCache(const CStdString& strFileName, const CStdString& strDest, XFILE::IFileCallback* pCallback = NULL, void* pContext = NULL);
+#endif
+
   static bool SetHidden(const CStdString& fileName, bool hidden);
 
 private:

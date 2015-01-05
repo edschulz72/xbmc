@@ -91,6 +91,12 @@ namespace XFILE
       void ClearRequestHeaders();
       void SetBufferSize(unsigned int size);
 
+#if defined(HAS_VIDONME)
+			void SetRequestFormData(const CStdString& name, const CStdString& data);
+			void SetRequestFormFile(const CStdString& name, const CStdString& file);
+			void ClearRequestFormList();
+#endif
+
       const CHttpHeader& GetHttpHeader() { return m_state->m_httpheader; }
       std::string GetServerReportedCharset(void);
 
@@ -132,6 +138,10 @@ namespace XFILE
           struct XCURL::curl_slist* m_curlHeaderList;
           struct XCURL::curl_slist* m_curlAliasList;
 
+#if defined(HAS_VIDONME)
+					struct XCURL::curl_httppost* m_curlFormList;
+#endif
+
           size_t ReadCallback(char *buffer, size_t size, size_t nitems);
           size_t WriteCallback(char *buffer, size_t size, size_t nitems);
           size_t HeaderCallback(void *ptr, size_t size, size_t nmemb);
@@ -151,6 +161,11 @@ namespace XFILE
       void ParseAndCorrectUrl(CURL &url);
       void SetCommonOptions(CReadState* state);
       void SetRequestHeaders(CReadState* state);
+
+#if defined(HAS_VIDONME)
+			void SetRequestFormList(CReadState* state);
+#endif
+
       void SetCorrectHeaders(CReadState* state);
       bool Service(const CStdString& strURL, CStdString& strHTML);
 
@@ -200,5 +215,16 @@ namespace XFILE
       MAPHTTPHEADERS m_requestheaders;
 
       long            m_httpresponse;
+
+#if defined(HAS_VIDONME)
+		public:
+			void SetSecureFile(const CStdString& strSecureFile) { m_strSecureFile = strSecureFile;}
+			const CStdString& GetSecureFile( void ) const { return m_strSecureFile; }
+		protected:
+			MAPHTTPHEADERS m_requestformdatalist;
+			MAPHTTPHEADERS m_requestformfilelist;
+		private:
+			CStdString m_strSecureFile;
+#endif
   };
 }

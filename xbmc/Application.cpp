@@ -348,6 +348,17 @@
 #include "utils/AMLUtils.h"
 #endif
 
+#if defined (HAS_VIDONME)
+#include "vidonme/VDMSettingsManager.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/VDMUserInfo.h"
+#include "vidonme/DLLVidonUtils.h"
+#include "vidonme/VDMDialogVersionCheck.h"
+#define VIDONME_COMMON_ROOT							"/mnt/sdcard/Android/data/org.vidonme.common"
+#define VIDONME_COMMON_XBMC_FOLDER       VIDONME_COMMON_ROOT"/vidon-xbmc"
+
+#endif
+
 using namespace std;
 using namespace ADDON;
 using namespace XFILE;
@@ -1320,6 +1331,20 @@ bool CApplication::Initialize()
   g_curlInterface.Load();
   g_curlInterface.Unload();
 
+#if defined(HAS_VIDONME)
+	g_DllVidonUtils.Load();
+	if( g_DllVidonUtils.IsLoaded() )
+	{
+		libVidonUtils::LibVidonUtilsConfig config;
+		CStdString strUserData = CSpecialProtocol::TranslatePath( CProfilesManager::Get().GetUserDataFolder() );
+		CStdString strBinPath = CSpecialProtocol::TranslatePath( "special://xbmc/system/" );
+
+		strncpy( config.bindatapath, strBinPath.c_str(), sizeof(config.bindatapath) / sizeof(config.bindatapath[0]) );
+		strncpy( config.userdatapath, strUserData.c_str(), sizeof(config.userdatapath) / sizeof(config.userdatapath[0]) );
+		g_DllVidonUtils.LibVidonUtilsInit( &config );
+	}
+#endif //#if defined(HAS_VIDONME)
+
   // initialize (and update as needed) our databases
   CDatabaseManager::Get().Initialize();
 
@@ -1444,6 +1469,11 @@ bool CApplication::Initialize()
     g_windowManager.Add(new CGUIWindowScreensaver);
     g_windowManager.Add(new CGUIWindowWeather);
     g_windowManager.Add(new CGUIWindowStartup);
+
+#if defined (HAS_VIDONME)
+		g_windowManager.Add(new CVDMDialogLogin);
+		g_windowManager.Add(new CVDMDialogVersionCheck);
+#endif
 
     /* window id's 3000 - 3100 are reserved for python */
 
@@ -3444,6 +3474,10 @@ bool CApplication::Cleanup()
     g_windowManager.Remove(WINDOW_DIALOG_SEEK_BAR);
     g_windowManager.Remove(WINDOW_DIALOG_VOLUME_BAR);
 
+#if defined (HAS_VIDONME)
+		g_windowManager.Remove(VDM_WINDOW_DIALOG_LOGIN);
+		g_windowManager.Remove(VDM_DIALOG_VERSIONCHECK);
+#endif
     CAddonMgr::Get().DeInit();
 
 #if defined(HAS_LIRC) || defined(HAS_IRSERVERSUITE)
@@ -3496,6 +3530,14 @@ bool CApplication::Cleanup()
 
     delete m_network;
     m_network = NULL;
+
+#if defined(HAS_VIDONME)
+		if( g_DllVidonUtils.IsLoaded() )
+		{
+			g_DllVidonUtils.LibVidonUtilsDeInit();
+		}
+		g_DllVidonUtils.Unload();
+#endif //#if defined(HAS_VIDONME)
 
     return true;
   }

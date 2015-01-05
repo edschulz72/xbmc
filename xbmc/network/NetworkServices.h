@@ -35,6 +35,10 @@ class CHTTPWebinterfaceAddonsHandler;
 #endif // HAS_WEB_INTERFACE
 #endif // HAS_WEB_SERVER
 
+#if defined(HAS_VIDONME)
+class CHTTPFileHandler;
+#endif
+
 class CNetworkServices : public ISettingCallback
 {
 public:
@@ -105,5 +109,9 @@ private:
   CHTTPWebinterfaceHandler& m_httpWebinterfaceHandler;
   CHTTPWebinterfaceAddonsHandler& m_httpWebinterfaceAddonsHandler;
 #endif
+#endif
+
+#if defined(HAS_VIDONME)
+	CHTTPFileHandler& m_httpFileHandler;
 #endif
 };

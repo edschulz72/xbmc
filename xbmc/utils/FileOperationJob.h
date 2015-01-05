@@ -72,7 +72,11 @@ private:
   private:
     FileAction m_action;
     CStdString m_strFileA, m_strFileB;
-    int64_t m_time;
+		int64_t m_time;
+#if defined(HAS_VIDONME)
+	public:
+		bool m_bKeepCache;
+#endif
   };
   friend class CFileOperation;
   typedef std::vector<CFileOperation> FileOperationList;
@@ -89,5 +93,9 @@ private:
   CGUIDialogProgressBarHandle* m_handle;
   bool m_displayProgress;
   int m_heading;
-  int m_line;
+	int m_line;
+#if defined(HAS_VIDONME)
+public:
+	bool m_bKeepCache;
+#endif
 };

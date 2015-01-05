@@ -52,6 +52,10 @@
 #include "linux/RBP.h"
 #endif
 
+#if defined(HAS_VIDONME)
+#include "vidonme/DLLVidonUtils.h"
+#endif
+
   CXBMCRenderManager g_renderManager;
   CLangInfo          g_langInfo;
   CLangCodeExpander  g_LangCodeExpander;
@@ -87,3 +91,6 @@
 #endif
   CZipManager g_ZipManager;
 
+#if defined(HAS_VIDONME)
+	DLLVidonUtils g_DllVidonUtils;
+#endif

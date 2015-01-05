@@ -44,7 +44,11 @@ using namespace XFILE;
 CFileOperationJob::CFileOperationJob()
 {
   m_handle = NULL;
-  m_displayProgress = false;
+	m_displayProgress = false;
+
+#if defined(HAS_VIDONME)
+	m_bKeepCache = false;
+#endif
 }
 
 CFileOperationJob::CFileOperationJob(FileAction action, CFileItemList & items,
@@ -88,8 +92,16 @@ bool CFileOperationJob::DoWork()
   double opWeight = 100.0 / totalTime;
   double current = 0.0;
 
-  for (unsigned int i = 0; i < size && success; i++)
-    success &= ops[i].ExecuteOperation(this, current, opWeight);
+#if defined(HAS_VIDONME)
+	for (unsigned int i = 0; i < size && success; i++)
+	{
+		ops[i].m_bKeepCache = m_bKeepCache;
+		success &= ops[i].ExecuteOperation(this, current, opWeight);
+	}
+#else
+	for (unsigned int i = 0; i < size && success; i++)
+		success &= ops[i].ExecuteOperation(this, current, opWeight);
+#endif
 
   if (m_handle)
     m_handle->MarkFinished();
@@ -263,7 +275,11 @@ bool CFileOperationJob::CFileOperation::ExecuteOperation(CFileOperationJob *base
     {
       CLog::Log(LOGDEBUG,"FileManager: copy %s -> %s\n", m_strFileA.c_str(), m_strFileB.c_str());
 
-      bResult = CFile::Cache(m_strFileA, m_strFileB, this, &data);
+#if defined(HAS_VIDONME)
+			bResult = CFile::Cache_Internal(m_strFileA, m_strFileB, this, &data, m_bKeepCache);
+#else
+			bResult = CFile::Cache(m_strFileA, m_strFileB, this, &data);
+#endif
     }
     break;
     case ActionMove:
@@ -271,9 +287,12 @@ bool CFileOperationJob::CFileOperation::ExecuteOperation(CFileOperationJob *base
       CLog::Log(LOGDEBUG,"FileManager: move %s -> %s\n", m_strFileA.c_str(), m_strFileB.c_str());
 
       if (CanBeRenamed(m_strFileA, m_strFileB))
-        bResult = CFile::Rename(m_strFileA, m_strFileB);
-      else if (CFile::Cache(m_strFileA, m_strFileB, this, &data))
-        bResult = CFile::Delete(m_strFileA);
+				bResult = CFile::Rename(m_strFileA, m_strFileB);
+#if defined(HAS_VIDONME)
+			else if (CFile::Cache_Internal(m_strFileA, m_strFileB, this, &data, m_bKeepCache))
+#else
+			else if (CFile::Cache(m_strFileA, m_strFileB, this, &data))
+#endif
       else
         bResult = false;
     }

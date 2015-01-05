@@ -1,0 +1,13 @@
+SRCS=SynchroMethod.cpp \
+     VDMDialogLogin.cpp \
+     VDMDialogVersionCheck.cpp \
+	 VDMLogReportUpload.cpp \
+     VDMRegionFeature.cpp \
+	 VDMSettingsManager.cpp\
+	 VDMUserInfo.cpp\
+	 VDMVersionUpdate.cpp\
+
+LIB=vidonme.a
+
+include @abs_top_srcdir@/Makefile.include
+-include $(patsubst %.cpp,%.P,$(patsubst %.c,%.P,$(SRCS)))

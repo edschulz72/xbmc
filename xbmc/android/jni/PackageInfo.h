@@ -20,36 +20,23 @@
  */
 
 #include "JNIBase.h"
-#include "List.h"
-
-#if defined (HAS_VIDONME)
 #include "string.h"
-#include "PackageInfo.h"
-#endif
+#include "ApplicationInfo.h"
+using namespace  jni;
 
-class CJNIIntent;
-class CJNIDrawable;
-class CJNIApplicationInfo;
-class CJNICharSequence;
-
-class CJNIPackageManager : public CJNIBase
+class CJNIPackageInfo : public CJNIBase
 {
 public:
-  CJNIPackageManager(const jni::jhobject &object) : CJNIBase(object) {};
-  ~CJNIPackageManager() {};
+  CJNIPackageInfo(const jni::jhobject &object);
+  ~CJNIPackageInfo(){};
 
-  CJNIIntent        getLaunchIntentForPackage(const std::string &package);
-  CJNIDrawable      getApplicationIcon(const std::string &package);
-  CJNIList<CJNIApplicationInfo> getInstalledApplications(int flags);
-  CJNICharSequence  getApplicationLabel(const CJNIApplicationInfo &info);
+	std::string								packageName;
+	std::string								versionName;
+	int												versionCode;
+	long											firstInstallTime;
+	long											lastUpdateTime;
 
-#if defined (HAS_VIDONME)
-  CJNIPackageInfo		getPackageInfo(std::string packageName, int flags);
-#endif
-
-  static void       PopulateStaticFields();
-  static int        GET_ACTIVITIES;
 
 private:
-  CJNIPackageManager();
+	CJNIPackageInfo();
 };

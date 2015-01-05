@@ -1190,9 +1190,12 @@ void CSettings::InitializeISettingCallbacks()
 #if defined (HAS_VIDONME)
 	settingSet.clear();
 	settingSet.insert("d3.mode");
+	settingSet.insert("usercenter.switchuser");
 	settingSet.insert("debugging.upload");
 	settingSet.insert("debugging.viewlog");
 	settingSet.insert("upgrade.website");
+	settingSet.insert("upgrade.forum");
+	settingSet.insert("upgrade.check");
 	m_settingsManager->RegisterCallback(&CVDMSettingsManager::Get(), settingSet);
 #endif
 }

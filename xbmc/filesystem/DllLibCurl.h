@@ -53,6 +53,10 @@ namespace XCURL
     virtual void multi_cleanup(CURL_HANDLE * handle )=0;
     virtual struct curl_slist* slist_append(struct curl_slist *, const char *)=0;
     virtual void  slist_free_all(struct curl_slist *)=0;
+
+#if defined(HAS_VIDONME)
+		virtual void formfree(struct curl_httppost * form)=0;
+#endif
   };
 
   class DllLibCurl : public DllDynamic, DllLibCurlInterface
@@ -83,6 +87,10 @@ namespace XCURL
     DEFINE_METHOD1(void, crypto_set_id_callback, (unsigned long (*p1)(void)))
     DEFINE_METHOD1(void, crypto_set_locking_callback, (void (*p1)(int, int, const char *, int)))
 #endif
+#if defined(HAS_VIDONME)
+		DEFINE_METHOD_FP(CURLFORMcode, formadd, (struct curl_httppost **p1, struct curl_httppost **p2, ...))
+		DEFINE_METHOD1(void, formfree, (struct curl_httppost * p1));
+#endif
     BEGIN_METHOD_RESOLVE()
       RESOLVE_METHOD_RENAME(curl_global_init, global_init)
       RESOLVE_METHOD_RENAME(curl_global_cleanup, global_cleanup)
@@ -108,6 +116,10 @@ namespace XCURL
 #if defined(HAS_CURL_STATIC)
       RESOLVE_METHOD_RENAME(CRYPTO_set_id_callback, crypto_set_id_callback)
       RESOLVE_METHOD_RENAME(CRYPTO_set_locking_callback, crypto_set_locking_callback)
+#endif
+#if defined(HAS_VIDONME)
+			RESOLVE_METHOD_RENAME_FP(curl_formadd, formadd)
+			RESOLVE_METHOD_RENAME(curl_formfree, formfree)
 #endif
     END_METHOD_RESOLVE()
 

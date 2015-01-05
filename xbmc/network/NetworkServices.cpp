@@ -79,6 +79,10 @@
 #include "utils/log.h"
 #include "utils/RssManager.h"
 
+#if defined(HAS_VIDONME)
+#include "network/httprequesthandler/HTTPFileHandler.h"
+#endif
+
 using namespace std;
 #ifdef HAS_JSONRPC
 using namespace JSONRPC;
@@ -104,6 +108,10 @@ CNetworkServices::CNetworkServices()
   , m_httpWebinterfaceAddonsHandler(*new CHTTPWebinterfaceAddonsHandler)
 #endif // HAS_WEB_INTERFACE
 #endif // HAS_WEB_SERVER
+
+#if defined(HAS_VIDONME)
+	m_httpFileHandler(*new CHTTPFileHandler),
+#endif
 {
 #ifdef HAS_WEB_SERVER
   CWebServer::RegisterRequestHandler(&m_httpImageHandler);
@@ -116,6 +124,10 @@ CNetworkServices::CNetworkServices()
   CWebServer::RegisterRequestHandler(&m_httpWebinterfaceHandler);
 #endif // HAS_WEB_INTERFACE
 #endif // HAS_WEB_SERVER
+
+#if defined(HAS_VIDONME)
+	CWebServer::RegisterRequestHandler(&m_httpFileHandler);
+#endif
 }
 
 CNetworkServices::~CNetworkServices()
@@ -138,6 +150,11 @@ CNetworkServices::~CNetworkServices()
 #endif // HAS_WEB_INTERFACE
   delete &m_webserver;
 #endif // HAS_WEB_SERVER
+
+#if defined(HAS_VIDONME)
+	CWebServer::UnregisterRequestHandler(&m_httpFileHandler);
+	delete &m_httpFileHandler;
+#endif
 }
 
 CNetworkServices& CNetworkServices::Get()

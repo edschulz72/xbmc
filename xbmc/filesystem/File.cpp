@@ -135,8 +135,12 @@ void* auto_buffer::detach(void)
 }
 
 
+#if defined(HAS_VIDONME)
+bool CFile::Cache_Internal(const CStdString& strFileName, const CStdString& strDest, XFILE::IFileCallback* pCallback, void* pContext, bool bKeepCache)
+#else
 // This *looks* like a copy function, therefor the name "Cache" is misleading
 bool CFile::Cache(const CStdString& strFileName, const CStdString& strDest, XFILE::IFileCallback* pCallback, void* pContext)
+#endif
 {
   CFile file;
 
@@ -180,22 +184,49 @@ bool CFile::Cache(const CStdString& strFileName, const CStdString& strDest, XFIL
           CDirectory::Create(strCurrPath);
         }
       }
-    }
-    if (CFile::Exists(strDest))
-      CFile::Delete(strDest);
-    if (!newFile.OpenForWrite(strDest, true))  // overwrite always
-    {
-      file.Close();
-      return false;
-    }
+		}
+
+#if defined(HAS_VIDONME)
+		bool bExistsDest = CFile::Exists(strDest);
+		if ( !bKeepCache && bExistsDest )
+		{
+			CFile::Delete(strDest);
+			bExistsDest = false;
+		}
+		if (!newFile.OpenForWrite(strDest, !bExistsDest))  // overwrite always
+		{
+			file.Close();
+			return false;
+		}
+
+		if (bExistsDest)
+		{
+			newFile.Seek(-1, SEEK_END);
+			file.Seek(newFile.GetPosition(), SEEK_CUR);
+		}
+#else
+		if (CFile::Exists(strDest))
+			CFile::Delete(strDest);
+		if (!newFile.OpenForWrite(strDest, true))  // overwrite always
+		{
+			file.Close();
+			return false;
+		}
+#endif
 
     int iBufferSize = 128 * 1024;
 
     auto_buffer buffer(iBufferSize);
     int iRead, iWrite;
 
-    UINT64 llFileSize = file.GetLength();
+		UINT64 llFileSize = file.GetLength();
+
+#if defined(HAS_VIDONME)
+		UINT64 llStartPos = bExistsDest ? newFile.GetPosition() : 0;
+		UINT64 llPos = llStartPos;
+#else
     UINT64 llPos = 0;
+#endif
 
     CStopWatch timer;
     timer.StartZero();
@@ -239,7 +270,12 @@ bool CFile::Cache(const CStdString& strFileName, const CStdString& strDest, XFIL
       {
         start = end;
 
-        float averageSpeed = llPos / end;
+#if defined(HAS_VIDONME)
+				float averageSpeed = (llPos - llStartPos) / end;
+#else
+				float averageSpeed = llPos / end;
+#endif
+
         int ipercent = 0;
         if(llFileSize)
           ipercent = 100 * llPos / llFileSize;
@@ -259,14 +295,33 @@ bool CFile::Cache(const CStdString& strFileName, const CStdString& strDest, XFIL
 
     /* verify that we managed to completed the file */
     if (llFileSize && llPos != llFileSize)
-    {
-      CFile::Delete(strDest);
+		{
+#if defined(HAS_VIDONME)
+			if (llPos>llFileSize)
+				CFile::Delete(strDest);
+#else
+			CFile::Delete(strDest);
+#endif
       return false;
     }
     return true;
   }
   return false;
 }
+
+#if defined(HAS_VIDONME)
+
+bool CFile::Cache(const CStdString& strFileName, const CStdString& strDest, XFILE::IFileCallback* pCallback, void* pContext)
+{
+	return Cache_Internal(strFileName, strDest, pCallback, pContext, false);
+}
+
+bool CFile::KeepCache(const CStdString& strFileName, const CStdString& strDest, XFILE::IFileCallback* pCallback, void* pContext)
+{
+	return Cache_Internal(strFileName, strDest, pCallback, pContext, true);
+}
+
+#endif
 
 //*********************************************************************************************
 bool CFile::Open(const CStdString& strFileName, const unsigned int flags)

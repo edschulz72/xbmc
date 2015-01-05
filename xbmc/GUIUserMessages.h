@@ -136,3 +136,7 @@
 // Sent to text field to support 'input method'
 #define GUI_MSG_INPUT_TEXT            GUI_MSG_USER + 37
 #define GUI_MSG_INPUT_TEXT_EDIT       GUI_MSG_USER + 38
+
+#if defined(HAS_VIDONME)
+#define GUI_MSG_UPDATE_VIDON_LOGO     GUI_MSG_USER + 200
+#endif //if defined(HAS_VIDONME)

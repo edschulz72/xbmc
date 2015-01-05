@@ -34,6 +34,10 @@ CAsyncFileCopy::CAsyncFileCopy() : CThread("AsyncFileCopy")
   m_running = false;
   m_percent = 0;
   m_speed = 0;
+
+#if defined(HAS_VIDONME)
+	m_bKeepCache = false;
+#endif
 }
 
 CAsyncFileCopy::~CAsyncFileCopy()
@@ -101,8 +105,12 @@ bool CAsyncFileCopy::OnFileCallback(void *pContext, int ipercent, float avgSpeed
 void CAsyncFileCopy::Process()
 {
   try
-  {
-    m_succeeded = XFILE::CFile::Cache(m_from, m_to, this);
+	{
+#if defined(HAS_VIDONME)
+		m_succeeded = XFILE::CFile::Cache_Internal(m_from, m_to, this, NULL, m_bKeepCache);
+#else
+		m_succeeded = XFILE::CFile::Cache(m_from, m_to, this);
+#endif
   }
   catch (...)
   {

@@ -34,6 +34,10 @@
 #include "android/jni/BroadcastReceiver.h"
 #include "threads/Event.h"
 
+#if defined (HAS_VIDONME)
+#include "android/jni/PackageInfo.h"
+#endif
+
 // forward delares
 class CJNIWakeLock;
 class CAESinkAUDIOTRACK;
@@ -83,6 +87,10 @@ public:
   static const ANativeWindow** GetNativeWindow(int timeout);
   static int SetBuffersGeometry(int width, int height, int format);
   static int android_printf(const char *format, ...);
+
+#if defined (HAS_VIDONME)
+  static ANativeActivity *GetCurrentActivity();
+#endif
   
   static int GetBatteryLevel();
   static bool StartActivity(const std::string &package, const std::string &intent = std::string(), const std::string &dataType = std::string(), const std::string &dataURI = std::string());
@@ -139,5 +147,6 @@ private:
 public:
 	static bool InvokedByFileManager ();
 	static bool m_InvokedByFileManager;
+	static CJNIPackageInfo GetPackageInfo( const std::string& packageName = "org.vidonme.xbmc13" );
 #endif
 };

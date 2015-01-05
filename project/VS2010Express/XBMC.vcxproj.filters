@@ -3110,6 +3110,27 @@
     <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp">
       <Filter>vidonme</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\SynchroMethod.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogLogin.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMLogReportUpload.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMRegionFeature.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserInfo.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\xbmc\win32\pch.h">
@@ -6101,6 +6122,36 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\CommonHeader.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\DLLVidonUtils.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\libVidonUtils.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\SynchroMethod.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogLogin.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMLogReportUpload.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMRegionFeature.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserInfo.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMVersionUpdate.h">
       <Filter>vidonme</Filter>
     </ClInclude>
   </ItemGroup>

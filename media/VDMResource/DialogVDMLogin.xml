@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+  <defaultcontrol>2</defaultcontrol>
+  <coordinates>
+    <system>1</system>
+    <left>240</left>
+    <top>100</top>
+  </coordinates>
+  <animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+  <controls>
+    <control type="group" id="1">
+      <animation effect="fade" time="300">Visible</animation>
+		  <animation effect="fade" time="300">Hidden</animation>
+      <control type="image">
+        <description>background image</description>
+        <left>0</left>
+        <top>0</top>
+        <width>800</width>
+        <height>500</height>
+        <texture border="40">special://xbmc/media/VDMResource/DialogBack.png</texture>
+      </control>
+      <control type="image">
+        <description>Dialog Header image</description>
+        <left>40</left>
+        <top>16</top>
+        <width>720</width>
+        <height>40</height>
+        <texture>special://xbmc/media/VDMResource/dialogheader.png</texture>
+      </control>
+      <control type="label" id="100">
+        <description>header label</description>
+        <left>40</left>
+        <top>20</top>
+        <width>720</width>
+        <height>30</height>
+        <font>font13_title</font>
+        <label>$INFO[ListItem.Property(HeaderLabel)]</label>
+        <align>center</align>
+        <aligny>center</aligny>
+        <textcolor>FFEB9E17</textcolor>
+        <shadowcolor>black</shadowcolor>
+      </control>
+      <control type="button">
+        <description>Close Window button</description>
+        <left>700</left>
+        <top>15</top>
+        <width>64</width>
+        <height>32</height>
+        <label>-</label>
+        <font>-</font>
+        <onclick>PreviousMenu</onclick>
+        <texturefocus>special://xbmc/media/VDMResource/DialogCloseButton-focus.png</texturefocus>
+        <texturenofocus>special://xbmc/media/VDMResource/DialogCloseButton.png</texturenofocus>
+        <onleft>3</onleft>
+        <onright>3</onright>
+        <onup>3</onup>
+        <ondown>3</ondown>
+        <visible>system.getbool(input.enablemouse)+!IsEmpty(ListItem.Property(AllowClose))</visible>
+      </control>
+      <control type="group" id="2">
+        <control type="group">
+          <visible>IsEmpty(ListItem.Property(HideInputUserName))</visible>
+          <control type="label">
+            <description>User Name</description>
+            <left>40</left>
+            <top>120</top>
+            <width>250</width>
+            <height>50</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <label>[B]$LOCALIZE[70021][/B]</label>
+            <textcolor>white</textcolor>
+          </control>
+          <control type="edit" id="400">
+            <description>Please Input Your User Name</description>
+            <left>290</left>
+            <top>120</top>
+            <width>460</width>
+            <height>50</height>
+            <font>font13</font>
+            <align>justify</align>
+            <textcolor>white</textcolor>
+            <aligny>center</aligny>
+            <label></label>
+            <texturefocus border="5">special://xbmc/media/VDMResource/button-focus2.png</texturefocus>
+            <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+            <ondown>401</ondown>
+            <onup>402</onup>
+          </control>
+          <control type="label">
+            <description>Password</description>
+            <left>40</left>
+            <top>220</top>
+            <width>250</width>
+            <height>50</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <label>[B]$LOCALIZE[70022][/B]</label>
+            <textcolor>white</textcolor>
+          </control>
+          <control type="edit" id="401">
+            <description>Please Input Your Passowrd</description>
+            <left>290</left>
+            <top>220</top>
+            <width>460</width>
+            <height>50</height>
+            <font>font13</font>
+            <align>justify</align>
+            <aligny>center</aligny>
+            <textcolor>white</textcolor>
+            <label></label>
+            <texturefocus border="5">special://xbmc/media/VDMResource/button-focus2.png</texturefocus>
+            <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+            <onup>400</onup>
+            <ondown>701</ondown>
+          </control>
+          <control type="label" id="404">
+            <visible>!IsEmpty(ListItem.Property(ErrorDesc))</visible>
+            <description>Error Description</description>
+            <left>40</left>
+            <top>290</top>
+            <width>720</width>
+            <height>40</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <label>$INFO[ListItem.Property(ErrorDesc)]</label>
+            <textcolor>red</textcolor>
+          </control>
+          <control type="button" id="405">
+            <visible>IsEmpty(ListItem.Property(ErrorDesc))</visible>
+            <left>40</left>
+            <top>290</top>
+            <width>720</width>
+            <height>40</height>
+            <align>center</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <label>$LOCALIZE[70090]</label>
+            <textcolor>white</textcolor>
+            <focusedcolor>blue</focusedcolor>
+            <texturefocus></texturefocus>
+            <texturenofocus></texturenofocus>
+            <onup>401</onup>
+            <ondown>403</ondown>
+            <onclick>VDMOpenURL(http://vidon.me)</onclick>
+          </control>
+          <control type="radiobutton" id="701">
+      			<description>Default RadioButton</description>
+      			<left>40</left>
+      			<top>340</top>
+      			<height>40</height>
+      			<width>720</width>
+      			<font>font13</font>
+      			<textcolor>white</textcolor>
+      			<focusedcolor>white</focusedcolor>
+      			<textoffsetx>7</textoffsetx>
+      			<texturefocus border="0,2,0,2">special://xbmc/media/VDMResource/MenuItemFO.png</texturefocus>
+      			<texturenofocus border="0,2,0,2">special://xbmc/media/VDMResource/MenuItemNF.png</texturenofocus>
+      			<label>我是中国用户</label>
+      			<align>left</align>
+      			<pulseonselect>no</pulseonselect>
+      			<textoffsetx>7</textoffsetx>
+      			<onup>401</onup>
+            <ondown>402</ondown>
+      		</control>
+          <control type="button" id="402">
+            <description>Login</description>
+            <left>160</left>
+            <top>400</top>
+            <width>180</width>
+            <height>50</height>
+            <label>$LOCALIZE[70023]</label>
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <focusedcolor>white</focusedcolor>
+            <align>center</align>
+            <texturefocus>special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+            <texturenofocus>special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+            <textoffsetx>7</textoffsetx>
+            <pulseonselect>no</pulseonselect>
+            <onup>701</onup>
+            <ondown>400</ondown>
+            <onleft>403</onleft>
+            <onright>403</onright>
+          </control>
+          <control type="button" id="403">
+            <description>note</description>
+            <left>460</left>
+            <top>400</top>
+            <width>180</width>
+            <height>50</height>
+            <label>$LOCALIZE[70089]</label>
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <focusedcolor>white</focusedcolor>
+            <align>center</align>
+            <texturefocus>special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+            <texturenofocus>special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+            <textoffsetx>7</textoffsetx>
+            <pulseonselect>no</pulseonselect>
+            <onup>405</onup>
+            <ondown>400</ondown>
+            <onleft>402</onleft>
+            <onright>402</onright>
+          </control>
+        </control>
+  
+        <control type="group">
+          <visible>!IsEmpty(ListItem.Property(HideInputUserName))+IsEmpty(ListItem.Property(ShowTrialTips))</visible>
+          <control type="label" id="101">
+            <description>Register Status</description>
+            <left>40</left>
+            <top>80</top>
+            <width>720</width>
+            <height>70</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font13</font>
+            <label>[B]$INFO[ListItem.Property(RegisterStatus)][/B]</label>
+            <wrapmultiline>true</wrapmultiline>
+            <textcolor>white</textcolor>
+          </control>
+          <control type="group" id="500">
+            <control type="edit" id="300">
+              <description>Please Input Your Card ID</description>
+              <visible>IsEmpty(ListItem.Property(ExistCode))</visible>
+              <left>40</left>
+              <top>220</top>
+              <width>720</width>
+              <height>50</height>
+              <font>font13</font>
+              <align>justify</align>
+              <aligny>center</aligny>
+              <textcolor>white</textcolor>
+              <label></label>
+              <texturefocus border="5">special://xbmc/media/VDMResource/button-focus2.png</texturefocus>
+              <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+              <ondown>202</ondown>
+              <onup>202</onup>
+              <onright>202</onright>
+              <onleft>202</onleft>
+            </control>
+            <control type="label" id="301">
+              <visible>!IsEmpty(ListItem.Property(BindErrorDesc))+IsEmpty(ListItem.Property(ExistCode))</visible>
+              <description>Error Description</description>
+              <left>40</left>
+              <top>320</top>
+              <width>720</width>
+              <height>50</height>
+              <align>left</align>
+              <aligny>center</aligny>
+              <font>font13</font>
+              <label>$INFO[ListItem.Property(BindErrorDesc)]</label>
+              <textcolor>red</textcolor>
+            </control>
+            <control type="list" id="201">
+              <visible>!IsEmpty(ListItem.Property(ExistCode))</visible>
+              <left>40</left>
+              <top>150</top>
+              <width>720</width>
+              <height>200</height>
+              <orientation>vertical</orientation>
+              <onright>202</onright>
+              <ondown>202</ondown>
+              <pagecontrol>60</pagecontrol>
+              <scrolltime>200</scrolltime>
+              <itemlayout height="50" width="700">
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>700</width>
+                  <height>51</height>
+                  <texture border="0,2,0,2">special://xbmc/media/VDMResource/MenuItemNF.png</texture>
+                </control>
+                <control type="label">
+                  <left>10</left>
+                  <top>0</top>
+                  <width>500</width>
+                  <height>50</height>
+                  <font>font13</font>
+                  <textcolor>grey2</textcolor>
+                  <selectedcolor>FFEB9E17</selectedcolor>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <textoffsetx>20</textoffsetx>
+                  <info>ListItem.Label</info>
+                </control>
+                <control type="label">
+                  <left>510</left>
+                  <top>0</top>
+                  <width>180</width>
+                  <height>50</height>
+                  <font>font13</font>
+                  <textcolor>grey2</textcolor>
+                  <selectedcolor>FFEB9E17</selectedcolor>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <info>ListItem.Property(Date)</info>
+                </control>
+              </itemlayout>
+              <focusedlayout height="50" width="700">
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>700</width>
+                  <height>51</height>
+                  <texture border="0,2,0,2">special://xbmc/media/VDMResource/MenuItemNF.png</texture>
+                  <visible>!Control.HasFocus(201)</visible>
+                  <animation effect="fade" time="300">Visible</animation>
+		            <animation effect="fade" time="300">Hidden</animation>
+                </control>
+                <control type="image">
+                  <left>0</left>
+                  <top>0</top>
+                  <width>700</width>
+                  <height>51</height>
+                  <texture border="0,2,0,2">special://xbmc/media/VDMResource/MenuItemFO.png</texture>
+                  <visible>Control.HasFocus(201)</visible>
+                  <animation effect="fade" time="300">Visible</animation>
+		            <animation effect="fade" time="300">Hidden</animation>
+                </control>
+                <control type="label">
+                  <left>10</left>
+                  <top>0</top>
+                  <width>500</width>
+                  <height>50</height>
+                  <font>font13</font>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <textoffsetx>20</textoffsetx>
+                  <textcolor>white</textcolor>
+                  <selectedcolor>FFEB9E17</selectedcolor>
+                  <info>ListItem.Label</info>
+                </control>
+                <control type="label">
+                  <left>510</left>
+                  <top>0</top>
+                  <width>180</width>
+                  <height>50</height>
+                  <font>font13</font>
+                  <textcolor>white</textcolor>
+                  <selectedcolor>FFEB9E17</selectedcolor>
+                  <align>left</align>
+                  <aligny>center</aligny>
+                  <info>ListItem.Property(Date)</info>
+                </control>
+              </focusedlayout>
+            </control>
+          </control>
+          <control type="button" id="202">
+            <description>Bind</description>
+            <left>235</left>
+            <top>400</top>
+            <width>140</width>
+            <height>50</height>
+            <label>$LOCALIZE[70019]</label>
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <focusedcolor>white</focusedcolor>
+            <align>center</align>
+            <texturefocus>special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+            <texturenofocus>special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+            <textoffsetx>7</textoffsetx>
+            <pulseonselect>no</pulseonselect>
+            <onup>500</onup>
+            <ondown>203</ondown>
+            <onright>203</onright>
+            <onleft>203</onleft>
+          </control>
+          <control type="button" id="203">
+            <description>Cancel</description>
+            <left>425</left>
+            <top>400</top>
+            <width>140</width>
+            <height>50</height>
+            <label>$LOCALIZE[70020]</label>
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <focusedcolor>white</focusedcolor>
+            <align>center</align>
+            <texturefocus>special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+            <texturenofocus>special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+            <textoffsetx>7</textoffsetx>
+            <pulseonselect>no</pulseonselect>
+            <onleft>202</onleft>
+            <onup>500</onup>
+            <ondown>500</ondown>
+            <onright>202</onright>
+          </control>
+        </control>
+        
+        <control type="group">
+        	<visible>!IsEmpty(ListItem.Property(HideInputUserName))+!IsEmpty(ListItem.Property(ShowTrialTips))</visible>
+          <control type="label" id="601">
+            <description>Trial Tips</description>
+            <left>40</left>
+            <top>80</top>
+            <width>720</width>
+            <height>300</height>
+            <align>left</align>
+            <aligny>center</aligny>
+            <font>font14</font>
+            <label>$INFO[ListItem.Property(ShowTrialTips)]</label>
+            <wrapmultiline>true</wrapmultiline>
+            <textcolor>white</textcolor>
+          </control>
+          <control type="button" id="602">
+            <description>OK</description>
+            <left>330</left>
+            <top>400</top>
+            <width>140</width>
+            <height>50</height>
+            <label>$LOCALIZE[186]</label>
+            <font>font13</font>
+            <textcolor>white</textcolor>
+            <focusedcolor>white</focusedcolor>
+            <align>center</align>
+            <onclick>PreviousMenu</onclick>
+	    <texturefocus>special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+            <texturenofocus>special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+            <textoffsetx>7</textoffsetx>
+            <pulseonselect>no</pulseonselect>
+          </control>
+        </control>
+      </control>
+    </control>
+  </controls>
+</window>

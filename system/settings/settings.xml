@@ -42,7 +42,7 @@
         </setting>
         <setting id="lookandfeel.font" type="string" parent="lookandfeel.skin" label="13303" help="36107">
           <level>1</level>
-          <default>Default</default>
+          <default>Arial</default>
           <constraints>
             <options>skinfonts</options>
           </constraints>
@@ -3019,6 +3019,46 @@
         </setting>
       </group>
     </category>
+    <category id="usercenter" label="70055" help="70056">
+      <group id="1">
+        <setting id="usercenter.name" type="string" label="70057" help="0">
+          <level>0</level>
+          <default>user-name</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="button" format="string" />
+        </setting>
+        <setting id="usercenter.email" type="string" label="70058" help="0">
+          <level>0</level>
+          <default>E-Mail</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="button" format="string" />
+        </setting>
+        <setting id="usercenter.licensetime" type="string" label="70059" help="0">
+          <level>0</level>
+          <default>$LOCALIZE[70092]</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="button" format="string" />
+        </setting>
+        <setting id="usercenter.licenseid" type="string" label="70060" help="0">
+          <level>0</level>
+          <default>$LOCALIZE[70092]</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="button" format="string" />
+        </setting>
+        <setting id="usercenter.switchuser" type="action" label="70061" help="70062">
+          <level>0</level>
+          <control type="button" format="action" />
+        </setting>
+      </group>
+    </category>
     <category id="debugging" label="70026" help="70027">
       <group id="1">
         <setting id="debugging.upload" type="action" label="70028" help="70029">
@@ -3049,6 +3089,29 @@
         </setting>
       </group>
     </category>
-  </section>
-  <!--HAS_VIDONME-->
-</settings>
+    <category id="upgrade" label="70063" help="70064">
+      <group id="1">
+        <setting id="upgrade.currVerName" type="action" label="70065" help="0">
+          <level>0</level>
+          <control type="edit" format="readonly"/>
+        </setting>
+        <setting id="upgrade.currVerTime" type="action" label="70091" help="0">
+          <level>0</level>
+          <control type="edit" format="readonly"/>
+        </setting>
+        <setting id="upgrade.website" type="action" label="70066" help="70067">
+          <level>0</level>
+          <control type="edit" format="readonly"/>
+        </setting>
+        <setting id="upgrade.forum" type="action" label="70068" help="70069">
+          <level>0</level>
+          <control type="edit" format="readonly"/>
+        </setting>
+        <setting id="upgrade.versioncheck" type="action" label="70070" help="70071">
+          <level>0</level>
+          <control type="edit" format="readonly" />
+        </setting>
+      </group>
+    </category>
+  </section><!--HAS_VIDONME-->
+ </settings>

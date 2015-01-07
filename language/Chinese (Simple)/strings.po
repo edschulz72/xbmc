@@ -13065,6 +13065,14 @@ msgctxt "#70092"
 msgid "Unlicensed"
 msgstr "未授权"
 
+msgctxt "#70093"
+msgid "You've got VidOn Membership Experience Qualification"
+msgstr "您获得了VidOn会员体验资格"
+
+msgctxt "#70094"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgstr "恭喜！您获得了VidOn会员体验资格，体验资格将于2015-01-01到期，期间内可以免费使用蓝光导航等高级功能，快去体验吧！"
+
 msgctxt "#70095" 
 msgid "Play main title" 
 msgstr "播放主标题" 

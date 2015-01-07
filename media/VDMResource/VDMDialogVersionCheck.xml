@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+  <coordinates>
+    <system>1</system>
+    <left>240</left>
+    <top>100</top>
+  </coordinates>
+  <animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+  <controls>
+    <control type="image">
+      <description>background image</description>
+      <left>0</left>
+      <top>0</top>
+      <width>800</width>
+      <height>500</height>
+      <texture border="40">special://xbmc/media/VDMResource/DialogBack.png</texture>
+    </control>
+    <control type="image">
+      <description>Dialog Header image</description>
+      <left>40</left>
+      <top>16</top>
+      <width>720</width>
+      <height>40</height>
+      <texture>special://xbmc/media/VDMResource/dialogheader.png</texture>
+    </control>
+    <control type="label" id="301">
+      <description>header label</description>
+      <left>40</left>
+      <top>16</top>
+      <width>720</width>
+      <height>40</height>
+      <font>font24_title</font>
+      <label>VidOn XBMC</label>
+      <align>center</align>
+      <aligny>center</aligny>
+      <textcolor>FFEB9E17</textcolor>
+      <shadowcolor>black</shadowcolor>
+    </control>
+
+    <control type="label" id="302">
+      <description>version label</description>
+      <left>20</left>
+      <top>80</top>
+      <width>760</width>
+      <height>30</height>
+      <align>center</align>
+      <aligny>center</aligny>
+      <font>font16</font>
+      <label>70081</label>
+      <!-- TODO -->
+    </control>
+
+    <!-- checking -->
+    <control type="group" id="101">
+      <left>40</left>
+      <top>100</top>
+      <width>720</width>
+      <height>370</height>
+
+      <control type="label" id="301">
+        <description>version checking</description>
+        <left>0</left>
+        <top>0</top>
+        <width>720</width>
+        <height>300</height>
+        <font>font16</font>
+        <label>70082</label>
+        <align>center</align>
+        <aligny>center</aligny>
+        <!-- TODO -->
+      </control>
+    </control>
+
+    <!-- failed -->
+    <control type="group" id="102">
+      <left>40</left>
+      <top>100</top>
+      <width>720</width>
+      <height>370</height>
+
+      <control type="label">
+        <description>Network communication error</description>
+        <left>0</left>
+        <top>0</top>
+        <width>720</width>
+        <height>300</height>
+        <font>font16</font>
+        <label>70083</label>
+        <align>center</align>
+        <aligny>center</aligny>
+        <!-- TODO -->
+      </control>
+
+      <control type="button" id="201">
+        <description>Ok Button</description>
+        <left>150</left>
+        <top>280</top>
+        <width>200</width>
+        <height>40</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+        <texturefocus border="5">special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+        <textoffsetx>7</textoffsetx>
+        <pulseonselect>no</pulseonselect>
+        <label>70084</label>
+        <!-- TODO -->
+        <font>font12_title</font>
+        <onup>202</onup>
+        <onleft>202</onleft>
+        <onright>202</onright>
+        <ondown>202</ondown>
+      </control>
+      <control type="button" id="202">
+        <description>Cancel Button</description>
+        <left>350</left>
+        <top>280</top>
+        <width>200</width>
+        <height>40</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+        <texturefocus border="5">special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+        <label>222</label>
+        <textoffsetx>7</textoffsetx>
+        <pulseonselect>no</pulseonselect>
+        <!-- TODO -->
+        <font>font12_title</font>
+        <onup>201</onup>
+        <onleft>201</onleft>
+        <onright>201</onright>
+        <ondown>201</ondown>
+      </control>
+
+    </control>
+
+    <!-- no update -->
+    <control type="group" id="103">
+      <left>40</left>
+      <top>130</top>
+      <width>720</width>
+      <height>370</height>
+
+      <control type="label">
+        <description>Network communication error</description>
+        <left>0</left>
+        <top>0</top>
+        <width>720</width>
+        <height>300</height>
+        <font>font16</font>
+        <label>70086</label>
+        <align>center</align>
+        <aligny>center</aligny>
+        <!-- TODO -->
+      </control>
+      
+      <control type="button" id="203">
+        <description>Cancel Button</description>
+        <left>270</left>
+        <top>280</top>
+        <width>200</width>
+        <height>40</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+        <texturefocus border="5">special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+        <label>70087</label>
+        <textoffsetx>7</textoffsetx>
+        <pulseonselect>no</pulseonselect>
+        <!-- TODO -->
+        <font>font12_title</font>
+        <onup>203</onup>
+        <onleft>203</onleft>
+        <onright>203</onright>
+        <ondown>203</ondown>
+      </control>
+      
+    </control>
+
+    <!-- has new version -->
+    <control type="group" id="104">
+      <left>40</left>
+      <top>130</top>
+      <width>720</width>
+      <height>370</height>
+      
+      <control type="label" id="304">
+        <description>change log title</description>
+        <left>40</left>
+        <top>0</top>
+        <width>640</width>
+        <height>30</height>
+        <font>font16</font>
+        <label></label>
+        <align>left</align>
+        <aligny>center</aligny>
+      </control>
+
+      <control type="textbox" id="305">
+        <description>change log text</description>
+        <left>40</left>
+        <top>40</top>
+        <width>615</width>
+        <height>170</height>
+        <label></label>
+        <font>font13</font>
+        <align>justify</align>
+        <textcolor>white</textcolor>
+        <shadowcolor>black</shadowcolor>
+        <pagecontrol>61</pagecontrol>
+      </control>
+      
+      <control type="scrollbar" id="61">
+        <left>655</left>
+        <top>40</top>
+        <width>25</width>
+        <height>180</height>
+        <texturesliderbackground border="0,14,0,14">special://xbmc/media/VDMResource/ScrollBarV.png</texturesliderbackground>
+        <texturesliderbar border="0,14,0,14">special://xbmc/media/VDMResource/ScrollBarV_bar.png</texturesliderbar>
+        <texturesliderbarfocus border="0,14,0,14">special://xbmc/media/VDMResource/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+        <textureslidernib>special://xbmc/media/VDMResource/ScrollBarNib.png</textureslidernib>
+        <textureslidernibfocus>special://xbmc/media/VDMResource/ScrollBarNib.png</textureslidernibfocus>
+        <onleft>205</onleft>
+        <onright>204</onright>
+        <ondown>61</ondown>
+        <onup>61</onup>
+		<showonepage>false</showonepage>
+        <orientation>vertical</orientation>
+      </control>
+
+      <control type="button" id="204">
+        <description>Ok Button</description>
+        <left>110</left>
+        <top>280</top>
+        <width>200</width>
+        <height>40</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+        <texturefocus border="5">special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+        <label>70088</label>
+        <textoffsetx>7</textoffsetx>
+        <pulseonselect>no</pulseonselect>
+        <font>font12_title</font>
+        <onup>204</onup>
+        <onleft>61</onleft>
+        <onright>205</onright>
+        <ondown>204</ondown>
+      </control>
+      <control type="button" id="205">
+        <description>Cancel Button</description>
+        <left>410</left>
+        <top>280</top>
+        <width>200</width>
+        <height>40</height>
+        <align>center</align>
+        <aligny>center</aligny>
+        <texturenofocus border="5">special://xbmc/media/VDMResource/button-nofocus.png</texturenofocus>
+        <texturefocus border="5">special://xbmc/media/VDMResource/button-focus.png</texturefocus>
+        <label>222</label>
+        <textoffsetx>7</textoffsetx>
+        <pulseonselect>no</pulseonselect>
+        <font>font12_title</font>
+        <onup>205</onup>
+        <onleft>204</onleft>
+        <onright>61</onright>
+        <ondown>205</ondown>
+      </control>
+    </control>
+
+  </controls>
+</window>

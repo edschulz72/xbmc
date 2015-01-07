@@ -28,7 +28,10 @@ namespace XCURL
 {
   typedef void CURL_HANDLE;
   typedef void CURLM;
-  struct curl_slist;
+	struct curl_slist;
+#if defined(HAS_VIDONME)
+	struct curl_httppost;
+#endif
 }
 
 namespace XFILE

@@ -15900,14 +15900,13 @@ msgctxt "#70092"
 msgid "Unlicensed"
 msgstr "Unlicensed"
 
-
 msgctxt "#70093"
-msgid "You've Got VidOn Membership Experience Qualification"
-msgstr "You've Got VidOn Membership Experience Qualification"
+msgid "You've got VidOn Membership Experience Qualification"
+msgstr "You've got VidOn Membership Experience Qualification"
 
 msgctxt "#70094"
-msgid "Congratulations! You've got the qualification to experience VidOn Membership.The experience qualification, due to %s allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
-msgstr "Congratulations! You've got the qualification to experience VidOn Membership.The experience qualification, due to %s allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgstr "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
 
 msgctxt "#70095"
 msgid "Play main title"

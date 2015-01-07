@@ -293,6 +293,7 @@ bool CFileOperationJob::CFileOperation::ExecuteOperation(CFileOperationJob *base
 #else
 			else if (CFile::Cache(m_strFileA, m_strFileB, this, &data))
 #endif
+				bResult = CFile::Delete(m_strFileA);
       else
         bResult = false;
     }

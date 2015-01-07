@@ -13065,6 +13065,13 @@ msgctxt "#70092"
 msgid "Unlicensed"
 msgstr "Ohne Lizenz"
 
+msgctxt "#70093"
+msgid "You've got VidOn Membership Experience Qualification"
+msgstr "Sie haben die VidOn Mitgliedschaft Erleben-Qualifikation erhalten"
+
+msgctxt "#70094"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgstr "Herzlichen Glückwunsch! Sie haben die Qualifikation zum Erleben derVidOn Mitgliedschaft bekommen. Die Qualifikation, mit dem Ablaufdatum %s, erlaubt Ihnen die Blu-ray Menü-Navigation und andere erweiterten Funktionen kostenlos zu genießen. Versuchen Sie es jetzt!"
 
 msgctxt "#70095" 
 msgid "Play main title" 

@@ -110,6 +110,10 @@ public:
 
   static std::string GetErrorDescription(HRESULT hr);
 
+  /*! brief get D3D to outer, add by HAS_VIDONME
+   */
+  LPDIRECT3D9 GetD3D() { return m_pD3D; }
+
 protected:
   bool CreateDevice();
   void DeleteDevice();

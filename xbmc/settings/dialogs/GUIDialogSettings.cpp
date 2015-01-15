@@ -30,6 +30,11 @@
 #include "utils/StringUtils.h"
 #include "guilib/GUIKeyboardFactory.h"
 
+#if defined(HAS_VIDONME)
+#include "vidonme/VDMUserInfo.h"
+#include "vidonme/VDMDialogLogin.h"
+#endif //if defined(HAS_VIDONME)
+
 #define CONTROL_GROUP_LIST          5
 #define CONTROL_SETTINGS_LABEL      2
 #define CONTROL_NONE_AVAILABLE      3
@@ -299,6 +304,24 @@ void CGUIDialogSettings::OnClick(int iID)
   else if (setting.type == SettingInfo::CHECK)
   {
     CGUIRadioButtonControl *pControl = (CGUIRadioButtonControl *)GetControl(iID);
+#if defined(HAS_VIDONME)
+    if( setting.name == "Enable passthrough" )
+    {
+      if( pControl->IsSelected() )
+      {
+        if( !CVDMUserInfo::Instance().IsCurrentLicenseAvailable() )
+        {
+          CVDMDialogLogin::ShowLoginTip();
+          if( !CVDMUserInfo::Instance().IsCurrentLicenseAvailable() )
+          {
+            SET_CONTROL_SELECTED(GetID(), iID, false);
+            return;
+          }
+        }
+      }
+    }
+#endif //HAS_VIDONME
+
     if (setting.data) *(bool *)setting.data = pControl->IsSelected();
   }
   else if (setting.type == SettingInfo::CHECK_UCHAR)

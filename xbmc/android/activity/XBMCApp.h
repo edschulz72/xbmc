@@ -32,6 +32,7 @@
 #include "xbmc.h"
 #include "android/jni/Context.h"
 #include "android/jni/BroadcastReceiver.h"
+#include "android/jni/PackageInfo.h"
 #include "threads/Event.h"
 
 #if defined (HAS_VIDONME)
@@ -146,6 +147,8 @@ private:
 #if defined (HAS_VIDONME)
 public:
 	static bool InvokedByFileManager ();
+	static bool StartBrowserActivity(const std::string& url, const std::string& browser = "com.android.browser");
+
 	static bool m_InvokedByFileManager;
 	static CJNIPackageInfo GetPackageInfo( const std::string& packageName = "org.vidonme.xbmc13" );
 #endif

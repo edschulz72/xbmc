@@ -140,7 +140,7 @@ bool CXBMCApp::m_InvokedByFileManager = NULL;
 
 CXBMCApp::CXBMCApp(ANativeActivity* nativeActivity)
   : CJNIContext(nativeActivity)
-  , CJNIBroadcastReceiver("org/xbmc/xbmc/XBMCBroadcastReceiver")
+  , CJNIBroadcastReceiver("org/vidonme/xbmc13/XBMCBroadcastReceiver")
   , m_wakeLock(NULL)
 {
   m_activity = nativeActivity;
@@ -156,6 +156,12 @@ CXBMCApp::CXBMCApp(ANativeActivity* nativeActivity)
 
 CXBMCApp::~CXBMCApp()
 {
+}
+
+
+ANativeActivity *CXBMCApp::GetCurrentActivity ()
+{
+  return m_activity;
 }
 
 void CXBMCApp::onStart()
@@ -298,7 +304,7 @@ bool CXBMCApp::getWakeLock()
   if (m_wakeLock)
     return true;
 
-  m_wakeLock = new CJNIWakeLock(CJNIPowerManager(getSystemService("power")).newWakeLock("org.xbmc.xbmc"));
+  m_wakeLock = new CJNIWakeLock(CJNIPowerManager(getSystemService("power")).newWakeLock("org.vidonme.xbmc13"));
 
   return true;
 }
@@ -674,7 +680,7 @@ void CXBMCApp::SetupEnv()
   std::string externalDir;
   CJNIFile androidPath = getExternalFilesDir("");
   if (!androidPath)
-    androidPath = getDir("org.xbmc.xbmc", 1);
+    androidPath = getDir("org.vidonme.xbmc13", 1);
 
   if (androidPath)
     externalDir = androidPath.getAbsolutePath();
@@ -724,6 +730,35 @@ const ANativeWindow** CXBMCApp::GetNativeWindow(int timeout)
 }
 
 #if defined (HAS_VIDONME)
+bool CXBMCApp::StartBrowserActivity(const string& url, const std::string& browser)
+{
+	CJNIIntent newIntent = GetPackageManager().getLaunchIntentForPackage(browser);
+
+	if (!newIntent)
+		return false;
+
+	if (!url.empty())
+	{
+		CJNIURI jniURI = CJNIURI::parse(url);
+
+		if (!jniURI)
+			return false;
+
+		newIntent.setAction("android.intent.action.VIEW");
+		newIntent.setData(jniURI);   
+	}
+
+	startActivity(newIntent);
+	if (xbmc_jnienv()->ExceptionOccurred())
+	{
+		CLog::Log(LOGERROR, "CXBMCApp::StartActivity - ExceptionOccurred launching %s", url.c_str());
+		xbmc_jnienv()->ExceptionClear();
+		return false;
+	}
+
+	return true;
+}
+
 bool CXBMCApp::InvokedByFileManager ()
 {
 	return m_InvokedByFileManager;

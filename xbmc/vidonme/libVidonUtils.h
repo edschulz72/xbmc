@@ -90,7 +90,7 @@ namespace libVidonUtils
     virtual ErrorCode GetConnectErrorCode();
     virtual const char* GetUserEmail();
     virtual const char* GetUserPortrait();
-    virtual const char* GetUserName();
+    virtual const char* GetUsername();
 
     virtual int GetCurrentLicenseCount();
     virtual CurrentLicense GetCurrentLicense( int index );
@@ -144,6 +144,8 @@ namespace libVidonUtils
   DLL_LIBVIDONUTILS_API void Vidon_ClearParams( VidonUploadReportHandle hReport );
   DLL_LIBVIDONUTILS_API bool Vidon_UploadReport( VidonUploadReportHandle hReport );
 
+  class CVidonPlayerManager;
+  DLL_LIBVIDONUTILS_API CVidonPlayerManager* GetVidonPlayerManagerInstance();
 
 #ifdef __cplusplus
 }

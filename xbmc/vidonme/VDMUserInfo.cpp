@@ -468,7 +468,7 @@ bool CVDMUserInfo::ParseLicenseInfo( libVidonUtils::LicenseManager* pLicenseMana
       }
       m_strEmail = pLicenseManager->GetUserEmail() != NULL ? pLicenseManager->GetUserEmail(): "";
       m_strPortrait = pLicenseManager->GetUserPortrait() != NULL ? pLicenseManager->GetUserPortrait(): "";
-      m_strUserName = pLicenseManager->GetUserName() != NULL ? pLicenseManager->GetUserName(): "";
+      m_strUserName = pLicenseManager->GetUsername() != NULL ? pLicenseManager->GetUsername(): "";
       m_bLogin = true;
       bRet = true;
     }

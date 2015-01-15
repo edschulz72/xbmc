@@ -3,8 +3,10 @@
 #ifndef __DLLVIDONUTILS_H__
 #define __DLLVIDONUTILS_H__
 
+#include "system.h"
 #include "DynamicDll.h"
 #include "libVidonUtils.h"
+
 
 #if defined( TARGET_WINDOWS )
 #define DLL_PATH_LIBVIDONUTILS "special://xbmcbin/system/libVidonUtils.dll"
@@ -14,6 +16,7 @@
 #error NO Support Other OS
 #endif
 
+class CVidonPlayerManager;
 class DLLVidonUtilsInterface
 {
 public:
@@ -50,6 +53,9 @@ public:
   virtual bool Vidon_PushUploadFileParam( VidonUploadReportHandle hReport, const char* filepath ) = 0;
   virtual void Vidon_ClearParams( VidonUploadReportHandle hReport ) = 0;
   virtual bool Vidon_UploadReport( VidonUploadReportHandle hReport ) = 0;
+
+
+  virtual CVidonPlayerManager* GetVidonPlayerManagerInstance() = 0;
 };
 
 class DLLVidonUtils:public DllDynamic, DLLVidonUtilsInterface
@@ -87,6 +93,9 @@ class DLLVidonUtils:public DllDynamic, DLLVidonUtilsInterface
   DEFINE_METHOD1( void, Vidon_ClearParams, ( VidonUploadReportHandle p1 ) )
   DEFINE_METHOD1( bool, Vidon_UploadReport, ( VidonUploadReportHandle p1 ) )
 
+
+  DEFINE_METHOD0( CVidonPlayerManager*, GetVidonPlayerManagerInstance )
+
   BEGIN_METHOD_RESOLVE()
   RESOLVE_METHOD(LibVidonUtilsInit)
   RESOLVE_METHOD(LibVidonUtilsDeInit)
@@ -115,6 +124,9 @@ class DLLVidonUtils:public DllDynamic, DLLVidonUtilsInterface
   RESOLVE_METHOD(Vidon_PushUploadFileParam)
   RESOLVE_METHOD(Vidon_ClearParams)
   RESOLVE_METHOD(Vidon_UploadReport)
+
+  RESOLVE_METHOD(GetVidonPlayerManagerInstance)
+
   END_METHOD_RESOLVE()
 
 //public:    

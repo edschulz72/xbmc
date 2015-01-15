@@ -51,28 +51,41 @@ void CGUIVideoControl::Process(unsigned int currentTime, CDirtyRegionList &dirty
 
 void CGUIVideoControl::Render()
 {
-#ifdef HAS_VIDEO_PLAYBACK
-  // don't render if we aren't playing video, or if the renderer isn't started
-  // (otherwise the lock we have from CApplication::Render() may clash with the startup
-  // locks in the RenderManager.)
-  if (g_application.m_pPlayer->IsPlayingVideo() && g_renderManager.IsStarted())
-  {
-#else
-  if (g_application.m_pPlayer->IsPlayingVideo())
-  {
-#endif
-    if (!g_application.m_pPlayer->IsPausedPlayback())
-      g_application.ResetScreenSaver();
 
-    g_graphicsContext.SetViewWindow(m_posX, m_posY, m_posX + m_width, m_posY + m_height);
+    if ( g_application.m_pPlayer->GetCurrentPlayer() == EPC_VDMPLAYER )
+    {
+        if (g_application.m_pPlayer && g_application.m_pPlayer->IsPlayingVideo () && g_application.m_pPlayer->IsSelfPresent ())
+        {
+            g_application.m_pPlayer->Present (); 
+        }
+    }
+    else
+    {
 
 #ifdef HAS_VIDEO_PLAYBACK
-    color_t alpha = g_graphicsContext.MergeAlpha(0xFF000000) >> 24;
-    g_renderManager.Render(false, 0, alpha);
+        // don't render if we aren't playing video, or if the renderer isn't started
+        // (otherwise the lock we have from CApplication::Render() may clash with the startup
+        // locks in the RenderManager.)
+        if (g_application.m_pPlayer->IsPlayingVideo() && g_renderManager.IsStarted())
+        {
 #else
-    ((CDummyVideoPlayer *)g_application.m_pPlayer->GetInternal())->Render();
+        if (g_application.m_pPlayer->IsPlayingVideo())
+        {
 #endif
-  }
+            if (!g_application.m_pPlayer->IsPausedPlayback())
+                g_application.ResetScreenSaver();
+
+            g_graphicsContext.SetViewWindow(m_posX, m_posY, m_posX + m_width, m_posY + m_height);
+
+#ifdef HAS_VIDEO_PLAYBACK
+            color_t alpha = g_graphicsContext.MergeAlpha(0xFF000000) >> 24;
+            g_renderManager.Render(false, 0, alpha);
+#else
+            ((CDummyVideoPlayer *)g_application.m_pPlayer->GetInternal())->Render();
+#endif
+        }
+    }
+
   CGUIControl::Render();
 }
 

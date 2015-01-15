@@ -554,6 +554,17 @@ bool CGUIWindowManager::Render()
 
   CDirtyRegionList dirtyRegions = m_tracker.GetDirtyRegions();
 
+#ifdef HAS_VIDONME
+  if(!g_graphicsContext.IsFullScreenVideo())
+  {
+    if (g_application.m_pPlayer && g_application.m_pPlayer->IsPlayingVideo () && g_application.m_pPlayer->IsSelfPresent ())
+    {
+      RenderPass();
+      return true;
+    }
+  }
+#endif 
+
   bool hasRendered = false;
   // If we visualize the regions we will always render the entire viewport
   if (g_advancedSettings.m_guiVisualizeDirtyRegions || g_advancedSettings.m_guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_FILL_VIEWPORT_ALWAYS)

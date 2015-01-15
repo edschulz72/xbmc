@@ -343,10 +343,6 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 
   m_mimetype = file.GetMimeType();
 
-  //translate properties to string
-
-  m_strProperties = file.GetPropertiesAsString();
-
   m_PlayerOptions = options;
 
 

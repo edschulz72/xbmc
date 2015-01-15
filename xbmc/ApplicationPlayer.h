@@ -151,6 +151,8 @@ public:
 
 #ifdef HAS_VIDONME
 
+  void Present();
+  bool IsSelfPresent();
 	void SetPlayMode(DIMENSIONMODE mode);
 
 #endif 

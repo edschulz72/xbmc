@@ -238,6 +238,36 @@ void CPlayerCoreFactory::GetPlayers( const CFileItem& item, VECPLAYERCORES &vecC
   /* make our list unique, preserving first added players */
   unique(vecCores);
 
+#if defined(HAS_VIDONME)
+
+  //at last for some special case
+  //we need force to using vdm player, need check it
+  if (vecCores.size() > 0 && EPC_DVDPLAYER == vecCores[0])
+  {
+    bool bUseXbmcPlayer = false; 
+
+#if defined(_DEBUG)
+    bUseXbmcPlayer = (CSettings::Get().GetInt("debugging.player") == 1);
+#endif 
+
+    if( bUseXbmcPlayer )
+    {
+      //do nothing, still using xbmc-dvdplayer
+    }
+    else
+    {
+      //check we need using vdm-player
+      if( CVDMPlayer::HandlesType(url.GetFileType()) )
+      {
+        CLog::Log(LOGINFO, "CPlayerCoreFactory::GetPlayers: force using VDMPlayer (%d)", EPC_VDMPLAYER);
+        vecCores.clear();
+        vecCores.push_back(EPC_VDMPLAYER);
+      }
+    }
+  }
+
+#endif
+
   CLog::Log(LOGDEBUG, "CPlayerCoreFactory::GetPlayers: added %"PRIuS" players", vecCores.size());
 }
 
@@ -341,6 +371,16 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
     omxplayer->m_bPlaysAudio = true;
     omxplayer->m_bPlaysVideo = true;
     m_vecCoreConfigs.push_back(omxplayer);
+#endif
+
+#if defined(HAS_VIDONME)
+    CPlayerCoreConfig* vdmplayer = new CPlayerCoreConfig("VDMPlayer", EPC_VDMPLAYER, NULL);
+#if defined(TARGET_WINDOWS) && defined(_DEBUG)
+    //only in windows,debug mode allow using vdmplayer
+    vdmplayer->m_bPlaysAudio = true;
+#endif 
+    vdmplayer->m_bPlaysVideo = true;
+    m_vecCoreConfigs.push_back(vdmplayer);
 #endif
 
     for(std::vector<CPlayerSelectionRule *>::iterator it = m_vecCoreSelectionRules.begin(); it != m_vecCoreSelectionRules.end(); ++it)

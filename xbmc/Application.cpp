@@ -2185,8 +2185,31 @@ bool CApplication::RenderNoPresent()
   // dont show GUI when playing full screen video
   if (g_graphicsContext.IsFullScreenVideo())
   {
+#ifdef HAS_VIDONME
+
+    //check player is present by itself or by xbmc
+
+    if( m_pPlayer && m_pPlayer->IsSelfPresent() )
+    {
+#if defined(TARGET_VIDONME_BOX)
+      //clear UI image retention.
+      g_graphicsContext.Clear();
+#endif
+      m_pPlayer->Present();
+
+    }
+    else
+    {
+      g_graphicsContext.SetRenderingResolution(g_graphicsContext.GetVideoResolution(), false);
+      g_renderManager.Render(true, 0, 255);
+    }
+
+#else
+
     g_graphicsContext.SetRenderingResolution(g_graphicsContext.GetVideoResolution(), false);
     g_renderManager.Render(true, 0, 255);
+
+#endif
 
     // close window overlays
     CGUIDialog *overlay = (CGUIDialog *)g_windowManager.GetWindow(WINDOW_DIALOG_VIDEO_OVERLAY);

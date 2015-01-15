@@ -316,6 +316,9 @@
     <Filter Include="vidonme">
       <UniqueIdentifier>{21c4b861-816c-4785-8d3b-d1432187b694}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cores\vdmplayer">
+      <UniqueIdentifier>{8ed6d12c-7a02-4511-989e-a4443438aa36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xbmc\win32\pch.cpp">
@@ -3133,6 +3136,9 @@
     </ClCompile>
     <ClCompile Include="..\..\xbmc\network\httprequesthandler\HTTPFileHandler.cpp">
       <Filter>network\httprequesthandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.cpp">
+      <Filter>cores\vdmplayer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -6159,6 +6165,12 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\network\httprequesthandler\HTTPFileHandler.h">
       <Filter>network\httprequesthandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\libplayercore_iplayer.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.h">
+      <Filter>cores\vdmplayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

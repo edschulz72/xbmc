@@ -47,8 +47,12 @@ enum EPLAYERCORES
 #if defined(HAS_OMXPLAYER)
   EPC_OMXPLAYER,
 #endif
+#if defined(HAS_VIDONME)
+   EPC_VDMPLAYER,
+#endif
   EPC_EXTPLAYER,
   EPC_UPNPPLAYER,
+
 };
 
 typedef unsigned int PLAYERCOREID;
@@ -59,6 +63,9 @@ const PLAYERCOREID PCID_MPLAYER = EPC_MPLAYER;
 const PLAYERCOREID PCID_PAPLAYER = EPC_PAPLAYER;
 #if defined(HAS_OMXPLAYER)
 const PLAYERCOREID PCID_OMXPLAYER = EPC_OMXPLAYER;
+#endif
+#if defined(HAS_VIDONME)
+const PLAYERCOREID PCID_VDMPLAYER = EPC_VDMPLAYER;
 #endif
 
 class CPlayerCoreFactory : public ISettingsHandler

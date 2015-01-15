@@ -31,6 +31,16 @@
 #ifdef HAS_UPNP
 #include "network/upnp/UPnPPlayer.h"
 #endif
+#if HAS_VIDONME
+#include "cores/vdmplayer/VDMPlayer.h"
+#include "settings/Settings.h"
+
+#if defined(TARGET_ANDROID) && defined(HAS_LIBAMCODEC)
+#include "utils/AMLUtils.h"
+#endif
+
+#endif 
+
 #include "utils/log.h"
 
 class CPlayerCoreConfig
@@ -83,27 +93,60 @@ public:
 
   IPlayer* CreatePlayer(IPlayerCallback& callback) const
   {
+#if defined(HAS_VIDONME)
+    bool bUseXbmcPlayer = false;
+#endif
     IPlayer* pPlayer;
     switch(m_eCore)
     {
-      case EPC_MPLAYER:
-      // TODO: this hack needs removal until we have a better player selection
-#if defined(HAS_OMXPLAYER)
-      case EPC_DVDPLAYER: 
-        pPlayer = new COMXPlayer(callback); 
-        CLog::Log(LOGINFO, "Created player %s for core %d / OMXPlayer forced as DVDPlayer", "OMXPlayer", m_eCore);
+#if defined (HAS_VIDONME)
+      case EPC_VDMPLAYER:
+        {
+          //for specify using vdmplayer, we not change it, current only in amlogic-version will enable it
+          pPlayer = new CVDMPlayer(callback, m_eCore);  
+          CLog::Log(LOGINFO, "%s, create vdmplayer to playing(value=%d)", __FUNCTION__, m_eCore);
+        }
+        break;
+      case EPC_DVDPLAYER:
+        {
+          pPlayer = new CDVDPlayer(callback);   
+
+          CLog::Log(LOGINFO, "%s, create dvdplayer to playing(value=%d)", __FUNCTION__, m_eCore);
+        }
+        break;
+      case EPC_PAPLAYER: 
+        {
+          pPlayer = new PAPlayer(callback);
+
+          CLog::Log(LOGINFO, "%s, create paplayer to playing(value=%d - specify=%d)", __FUNCTION__, m_eCore);
+        }
         break;
 #else
-      case EPC_DVDPLAYER: pPlayer = new CDVDPlayer(callback); break;
-#endif
-      case EPC_PAPLAYER: pPlayer = new PAPlayer(callback); break;
-      case EPC_EXTPLAYER: pPlayer = new CExternalPlayer(callback); break;
+      //original xbmc logic
+    case EPC_MPLAYER:
+      // TODO: this hack needs removal until we have a better player selection
+#if defined(HAS_OMXPLAYER)
+    case EPC_DVDPLAYER: 
+      CLog::Log(LOGINFO, "Created player %s for core %d / OMXPlayer forced as DVDPlayer", "OMXPlayer", m_eCore);
+      break;
+#else
+    case EPC_DVDPLAYER: 
+      pPlayer = new CDVDPlayer(callback); 
+      break;
+#endif //HAS_OMXPLAYER
+    case EPC_PAPLAYER: 
+      pPlayer = new PAPlayer(callback); 
+      break;
+#endif //HAS_VIDONME
+			case EPC_EXTPLAYER: 
+				pPlayer = new CExternalPlayer(callback); 
+				break;
 #if defined(HAS_OMXPLAYER)
       case EPC_OMXPLAYER: pPlayer = new COMXPlayer(callback); break;
-#endif
+#endif //HAS_OMXPLAYER
 #if defined(HAS_UPNP)
       case EPC_UPNPPLAYER: pPlayer = new UPNP::CUPnPPlayer(callback, m_id.c_str()); break;
-#endif
+#endif //HAS_OMXPLAYER
       default: return NULL;
     }
 

@@ -253,6 +253,8 @@ public:
 
 #ifdef HAS_VIDONME
 
+  virtual void Present(){};
+  virtual bool IsSelfPresent() { return false; }
 	virtual void SetPlayMode(DIMENSIONMODE mode) { return;}
 
 #endif 

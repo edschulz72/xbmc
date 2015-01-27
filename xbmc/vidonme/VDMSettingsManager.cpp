@@ -59,7 +59,7 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 	{
 		if (g_application.m_pPlayer)
 		{
-			g_application.m_pPlayer->SetPlayMode((DIMENSIONMODE)((CSettingInt*)setting)->GetValue());
+			//g_application.m_pPlayer->SetPlayMode((DIMENSIONMODE)((CSettingInt*)setting)->GetValue());
 		}
 	}
 

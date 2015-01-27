@@ -325,6 +325,9 @@
     <Filter Include="vidonme">
       <UniqueIdentifier>{4500f9e4-71cf-4f55-a9d3-7dc4296f480a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cores\vdmplayer">
+      <UniqueIdentifier>{e8d823a9-6634-4216-b808-57743b18ff03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xbmc\win32\pch.cpp">
@@ -3084,6 +3087,27 @@
       <Filter>cores</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\SynchroMethod.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogLogin.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMLogReportUpload.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMRegionFeature.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserInfo.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp">
       <Filter>vidonme</Filter>
     </ClCompile>
   </ItemGroup>
@@ -6036,6 +6060,42 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h">
       <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\CommonHeader.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\DLLVidonUtils.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\libVidonUtils.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\SynchroMethod.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogLogin.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMLogReportUpload.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMRegionFeature.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserInfo.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMVersionUpdate.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\libplayercore_iplayer.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VidonPlayerManager.h">
+      <Filter>cores\vdmplayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

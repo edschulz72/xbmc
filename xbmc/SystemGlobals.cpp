@@ -88,3 +88,6 @@
 
   CDataCacheCore g_dataCacheCore;
 
+  #include "vidonme/DLLVidonUtils.h"
+  DLLVidonUtils g_DllVidonUtils;
+

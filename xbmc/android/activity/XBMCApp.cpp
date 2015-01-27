@@ -74,9 +74,51 @@
 #include "android/jni/Build.h"
 #include "CompileInfo.h"
 
+#if defined(HAS_VIDONME)
+#include "utils/StringUtils.h"
+#include "client/linux/handler/exception_handler.h"
+#include "client/linux/handler/minidump_descriptor.h"
+#include "android/jni/Intent.h"
+#endif
+
 #define GIGABYTES       1073741824
 
 using namespace std;
+
+#if defined(HAS_VIDONME)
+
+static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
+	void* context,
+	bool succeeded)
+{
+	CXBMCApp::android_printf("Dump path: %s", descriptor.path());
+	MoveFile(descriptor.path(), StringUtils::Format("%s/xbmc.dmp", getenv("HOME")).c_str());
+
+	FILE* process = popen("logcat -d", "r");
+	FILE* file = fopen(StringUtils::Format("%s/xbmc.logcat", getenv("HOME")).c_str(), "w+");
+
+	char buf[1024];
+	int nRead = fread(buf, sizeof(char), sizeof(buf), process);
+	while (nRead > 0)
+	{
+		fwrite(buf, sizeof(char), nRead, file);
+		nRead = fread(buf, sizeof(char), sizeof(buf), process);
+	}
+
+	pclose(process);
+	fclose(file);
+
+	//return succeeded;
+	return false;
+}
+
+static void InitDump()
+{
+	static google_breakpad::MinidumpDescriptor descriptor(getenv("HOME"));
+	static google_breakpad::ExceptionHandler exceptionHandler(descriptor, NULL, DumpCallback, NULL, true, -1);
+}
+
+#endif
 
 template<class T, void(T::*fn)()>
 void* thread_run(void* obj)
@@ -96,6 +138,9 @@ std::vector<androidPackage> CXBMCApp::m_applications;
 bool CXBMCApp::m_InvokedByFileManager = NULL;
 #endif
 
+#if defined (HAS_VIDONME)
+bool CXBMCApp::m_InvokedByFileManager = NULL;
+#endif
 
 CXBMCApp::CXBMCApp(ANativeActivity* nativeActivity)
   : CJNIContext(nativeActivity)
@@ -283,7 +328,8 @@ void CXBMCApp::run()
   XBMC::Context context;
 
 #if defined(HAS_VIDONME)
-  m_InvokedByFileManager = false;
+	InitDump();
+	m_InvokedByFileManager = false;
 #endif
 
   m_initialVolume = GetSystemVolume();
@@ -341,7 +387,6 @@ void CXBMCApp::XBMC_Pause(bool pause)
 #else
 	  CApplicationMessenger::Get().SendAction(CAction(ACTION_PAUSE), WINDOW_INVALID, true);
 #endif
-    CApplicationMessenger::Get().SendAction(CAction(ACTION_PAUSE), WINDOW_INVALID, true);
 }
 
 void CXBMCApp::XBMC_Stop()
@@ -719,5 +764,10 @@ const ANativeWindow** CXBMCApp::GetNativeWindow(int timeout)
 bool CXBMCApp::InvokedByFileManager()
 {
 	return m_InvokedByFileManager;
+}
+
+CJNIPackageInfo CXBMCApp::GetPackageInfo(const std::string& packageName)
+{
+	return CJNIContext::GetPackageManager().getPackageInfo(packageName, 0);
 }
 #endif

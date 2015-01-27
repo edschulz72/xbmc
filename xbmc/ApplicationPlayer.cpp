@@ -675,3 +675,11 @@ int CApplicationPlayer::GetPlaySpeed() const
 {
   return m_iPlaySpeed;
 }
+
+#ifdef HAS_VIDONME
+void CApplicationPlayer::SetPlayMode(DIMENSIONMODE mode)
+{
+	if (m_pPlayer)
+		return m_pPlayer->SetPlayMode(mode);
+}
+#endif 

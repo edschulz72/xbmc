@@ -52,6 +52,10 @@
 #include "linux/RBP.h"
 #endif
 
+#if defined(HAS_VIDONME)
+#include "vidonme/DLLVidonUtils.h"
+#endif
+
   CXBMCRenderManager g_renderManager;
   CLangCodeExpander  g_LangCodeExpander;
   CLocalizeStrings   g_localizeStrings;
@@ -88,6 +92,6 @@
 
   CDataCacheCore g_dataCacheCore;
 
-  #include "vidonme/DLLVidonUtils.h"
-  DLLVidonUtils g_DllVidonUtils;
-
+#if defined(HAS_VIDONME)
+	DLLVidonUtils g_DllVidonUtils;
+#endif

@@ -3014,19 +3014,19 @@
             <options>
               <option label="70036">0</option>
               <!-- VS_2D_DISPLAY_THE_ORIGINAL -->
-              <!-- <option label="70037">1</option>  -->
+              <option label="70037">1</option>
               <!-- VS_2D_DISPLAY_THE_LEFT_HALF -->
-              <!-- <option label="70038">2</option>  -->
+              <option label="70038">2</option>
               <!-- VS_2D_DISPLAY_THE_UPPER_HALF -->
-              <!-- <option label="70039">3</option>  -->
+              <option label="70039">3</option>
               <!-- VS_3D_LEFT_RIGHT -->
-              <!-- <option label="70040">4</option>  -->
+              <option label="70040">4</option>
               <!-- VS_3D_TOM_BOTTOM -->
               <option label="70041">5</option>
               <!-- VS_3D_INTERLACING -->
-              <!-- <option label="70042">6</option>  -->
+              <option label="70042">6</option>
               <!-- VS_3D_LINE_INTERLACING -->
-              <!-- <option label="70043">7</option>  -->
+              <option label="70043">7</option>
               <!-- VS_3D_COLUMN_INTERLACING -->
             </options>
           </constraints>
@@ -3089,18 +3089,10 @@
           <level>1</level>
           <control type="button" format="action" />
         </setting>
-        <setting id="debugging.player" type="integer" label="70049" help="70050">
+        <setting id="using.vdmplayer" type="boolean" label="70098" help="70099">
           <level>3</level>
-          <default>0</default>
-          <constraints>
-            <options>
-              <option label="70051">0</option>
-              <!-- VDMPlayer -->
-              <option label="70052">1</option>
-              <!-- XBMCPlayer -->
-            </options>
-          </constraints>
-          <control type="list" format="string" />
+          <default>true</default>
+          <control type="toggle" />
         </setting>
       </group>
     </category>

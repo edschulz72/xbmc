@@ -16531,3 +16531,19 @@ msgstr "Congratulations! You've got the qualification to experience VidOn Member
 msgctxt "#70095"
 msgid "Play main title"
 msgstr "Play main title"
+
+msgctxt "#70096"
+msgid "Open folder"
+msgstr "Open folder"
+
+msgctxt "#70097"
+msgid "I am a user in Mainland China"
+msgstr "I am a user in Mainland China"
+
+msgctxt "#70098"
+msgid "Enable VidOn Player"
+msgstr "Enable VidOn Player"
+
+msgctxt "#70099"
+msgid "If VidOn Player is disabled, original XBMC player will be used."
+msgstr "If VidOn Player is disabled, original XBMC player will be used."

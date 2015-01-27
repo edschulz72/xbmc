@@ -351,6 +351,14 @@
 
 #include "cores/FFmpeg.h"
 
+#if defined (HAS_VIDONME)
+#include "vidonme/VDMSettingsManager.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/VDMUserInfo.h"
+#include "vidonme/DLLVidonUtils.h"
+#include "vidonme/VDMDialogVersionCheck.h"
+#endif
+
 using namespace std;
 using namespace ADDON;
 using namespace XFILE;
@@ -1325,6 +1333,20 @@ bool CApplication::Initialize()
   g_curlInterface.Load();
   g_curlInterface.Unload();
 
+#if defined(HAS_VIDONME)
+	g_DllVidonUtils.Load();
+	if (g_DllVidonUtils.IsLoaded())
+	{
+		libVidonUtils::LibVidonUtilsConfig config;
+		CStdString strUserData = CSpecialProtocol::TranslatePath(CProfilesManager::Get().GetUserDataFolder());
+		CStdString strBinPath = CSpecialProtocol::TranslatePath("special://xbmc/system/");
+
+		strncpy(config.bindatapath, strBinPath.c_str(), sizeof(config.bindatapath) / sizeof(config.bindatapath[0]));
+		strncpy(config.userdatapath, strUserData.c_str(), sizeof(config.userdatapath) / sizeof(config.userdatapath[0]));
+		g_DllVidonUtils.LibVidonUtilsInit(&config);
+	}
+#endif //#if defined(HAS_VIDONME)
+
   // initialize (and update as needed) our databases
   CDatabaseManager::Get().Initialize();
 
@@ -1458,6 +1480,11 @@ bool CApplication::Initialize()
     g_windowManager.Add(new CGUIWindowScreensaver);
     g_windowManager.Add(new CGUIWindowWeather);
     g_windowManager.Add(new CGUIWindowStartup);
+
+#if defined (HAS_VIDONME)
+		g_windowManager.Add(new CVDMDialogLogin);
+		g_windowManager.Add(new CVDMDialogVersionCheck);
+#endif
 
     /* window id's 3000 - 3100 are reserved for python */
 
@@ -3415,6 +3442,11 @@ bool CApplication::Cleanup()
     g_windowManager.Remove(WINDOW_DIALOG_SEEK_BAR);
     g_windowManager.Remove(WINDOW_DIALOG_VOLUME_BAR);
 
+#if defined (HAS_VIDONME)
+		g_windowManager.Remove(VDM_WINDOW_DIALOG_LOGIN);
+		g_windowManager.Remove(VDM_DIALOG_VERSIONCHECK);
+#endif
+
     CAddonMgr::Get().DeInit();
 
 #if defined(HAS_LIRC) || defined(HAS_IRSERVERSUITE)
@@ -3467,6 +3499,14 @@ bool CApplication::Cleanup()
 
     delete m_network;
     m_network = NULL;
+
+#if defined(HAS_VIDONME)
+		if (g_DllVidonUtils.IsLoaded())
+		{
+			g_DllVidonUtils.LibVidonUtilsDeInit();
+		}
+		g_DllVidonUtils.Unload();
+#endif //#if defined(HAS_VIDONME)
 
     return true;
   }
@@ -3689,8 +3729,7 @@ PlayBackRet CApplication::PlayStack(const CFileItem& item, bool bRestart)
   {
     CStackDirectory dir;
     CFileItemList movieList;
-    if (!dir.GetDirectory(item.GetURL(), movieList) || movieList.IsEmpty())
-      return PLAYBACK_FAIL;
+    dir.GetDirectory(item.GetURL(), movieList);
 
     // first assume values passed to the stack
     int selectedFile = item.m_lStartPartNumber;
@@ -3757,8 +3796,7 @@ PlayBackRet CApplication::PlayStack(const CFileItem& item, bool bRestart)
 
     // calculate the total time of the stack
     CStackDirectory dir;
-    if (!dir.GetDirectory(item.GetURL(), *m_currentStack) || m_currentStack->IsEmpty())
-      return PLAYBACK_FAIL;
+    dir.GetDirectory(item.GetURL(), *m_currentStack);
     long totalTime = 0;
     for (int i = 0; i < m_currentStack->Size(); i++)
     {
@@ -3784,17 +3822,17 @@ PlayBackRet CApplication::PlayStack(const CFileItem& item, bool bRestart)
     {  // have our times now, so update the dB
       if (dbs.Open())
       {
-        if (!haveTimes && !times.empty())
+        if( !haveTimes )
           dbs.SetStackTimes(item.GetPath(), times);
 
-        if (item.m_lStartOffset == STARTOFFSET_RESUME)
+        if( item.m_lStartOffset == STARTOFFSET_RESUME )
         {
           // can only resume seek here, not dvdstate
           CBookmark bookmark;
           CStdString path = item.GetPath();
           if (item.HasProperty("original_listitem_url") && URIUtils::IsPlugin(item.GetProperty("original_listitem_url").asString()))
             path = item.GetProperty("original_listitem_url").asString();
-          if (dbs.GetResumeBookMark(path, bookmark))
+          if( dbs.GetResumeBookMark(path, bookmark) )
             seconds = bookmark.timeInSeconds;
           else
             seconds = 0.0f;
@@ -4371,10 +4409,8 @@ void CApplication::UpdateFileState()
   if (m_progressTrackingItem->GetPath() != "" && m_progressTrackingItem->GetPath() != CurrentFile())
   {
     // Ignore for PVR channels, PerformChannelSwitch takes care of this.
-    // Also ignore video playlists containing multiple items: video settings have already been saved in PlayFile()
-    // and we'd overwrite them with settings for the *previous* item.
-    int playlist = g_playlistPlayer.GetCurrentPlaylist();
-    if (!m_progressTrackingItem->IsPVRChannel() && !(playlist == PLAYLIST_VIDEO && g_playlistPlayer.GetPlaylist(playlist).size() > 1))
+    // Also ignore playlists as correct video settings have already been saved in PlayFile() - we're causing off-by-1 errors here.
+    if (!m_progressTrackingItem->IsPVRChannel() && g_playlistPlayer.GetCurrentPlaylist() == PLAYLIST_NONE)
       SaveFileState();
 
     // Reset tracking item

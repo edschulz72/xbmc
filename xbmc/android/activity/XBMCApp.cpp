@@ -76,8 +76,8 @@
 
 #if defined(HAS_VIDONME)
 #include "utils/StringUtils.h"
-#include "client/linux/handler/exception_handler.h"
-#include "client/linux/handler/minidump_descriptor.h"
+//#include "client/linux/handler/exception_handler.h"
+//#include "client/linux/handler/minidump_descriptor.h"
 #include "android/jni/Intent.h"
 #endif
 
@@ -87,35 +87,35 @@ using namespace std;
 
 #if defined(HAS_VIDONME)
 
-static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
-	void* context,
-	bool succeeded)
-{
-	CXBMCApp::android_printf("Dump path: %s", descriptor.path());
-	MoveFile(descriptor.path(), StringUtils::Format("%s/xbmc.dmp", getenv("HOME")).c_str());
+//static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
+//	void* context,
+//	bool succeeded)
+//{
+//	CXBMCApp::android_printf("Dump path: %s", descriptor.path());
+//	MoveFile(descriptor.path(), StringUtils::Format("%s/xbmc.dmp", getenv("HOME")).c_str());
+//
+//	FILE* process = popen("logcat -d", "r");
+//	FILE* file = fopen(StringUtils::Format("%s/xbmc.logcat", getenv("HOME")).c_str(), "w+");
 
-	FILE* process = popen("logcat -d", "r");
-	FILE* file = fopen(StringUtils::Format("%s/xbmc.logcat", getenv("HOME")).c_str(), "w+");
+//	char buf[1024];
+//	int nRead = fread(buf, sizeof(char), sizeof(buf), process);
+//	while (nRead > 0)
+//	{
+//		fwrite(buf, sizeof(char), nRead, file);
+//		nRead = fread(buf, sizeof(char), sizeof(buf), process);
+//	}
 
-	char buf[1024];
-	int nRead = fread(buf, sizeof(char), sizeof(buf), process);
-	while (nRead > 0)
-	{
-		fwrite(buf, sizeof(char), nRead, file);
-		nRead = fread(buf, sizeof(char), sizeof(buf), process);
-	}
-
-	pclose(process);
-	fclose(file);
+//	pclose(process);
+//	fclose(file);
 
 	//return succeeded;
-	return false;
-}
+//	return false;
+//}
 
 static void InitDump()
 {
-	static google_breakpad::MinidumpDescriptor descriptor(getenv("HOME"));
-	static google_breakpad::ExceptionHandler exceptionHandler(descriptor, NULL, DumpCallback, NULL, true, -1);
+//	static google_breakpad::MinidumpDescriptor descriptor(getenv("HOME"));
+//	static google_breakpad::ExceptionHandler exceptionHandler(descriptor, NULL, DumpCallback, NULL, true, -1);
 }
 
 #endif
@@ -133,10 +133,6 @@ int CXBMCApp::m_batteryLevel = 0;
 int CXBMCApp::m_initialVolume = 0;
 CCriticalSection CXBMCApp::m_applicationsMutex;
 std::vector<androidPackage> CXBMCApp::m_applications;
-
-#if defined (HAS_VIDONME)
-bool CXBMCApp::m_InvokedByFileManager = NULL;
-#endif
 
 #if defined (HAS_VIDONME)
 bool CXBMCApp::m_InvokedByFileManager = NULL;

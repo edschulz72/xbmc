@@ -116,6 +116,9 @@ std::vector<std::string> jcast_helper<std::vector<std::string>, jobjectArray >::
       ret.push_back(newString);
       env->ReleaseStringUTFChars(element, newString);
     }
+#if defined(HAS_VIDONME)
+    env->DeleteLocalRef (element);
+#endif
   }
   return ret;
 }

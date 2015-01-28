@@ -22,6 +22,11 @@
 #include "JNIBase.h"
 #include "List.h"
 
+#if defined (HAS_VIDONME)
+#include "string.h"
+#include "PackageInfo.h"
+#endif
+
 class CJNIIntent;
 class CJNIDrawable;
 class CJNIApplicationInfo;
@@ -38,6 +43,10 @@ public:
   CJNIDrawable      getApplicationIcon(const std::string &package);
   CJNIList<CJNIApplicationInfo> getInstalledApplications(int flags);
   CJNICharSequence  getApplicationLabel(const CJNIApplicationInfo &info);
+  
+#if defined (HAS_VIDONME)
+	CJNIPackageInfo		getPackageInfo(std::string packageName, int flags);
+#endif
 
   static void       PopulateStaticFields();
   static int        GET_ACTIVITIES;

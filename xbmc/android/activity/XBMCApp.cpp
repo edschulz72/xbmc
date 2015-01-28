@@ -761,6 +761,11 @@ const ANativeWindow** CXBMCApp::GetNativeWindow(int timeout)
 }
 
 #if defined (HAS_VIDONME)
+ANativeActivity *CXBMCApp::GetCurrentActivity()
+{
+	return m_activity;
+}
+
 bool CXBMCApp::InvokedByFileManager()
 {
 	return m_InvokedByFileManager;

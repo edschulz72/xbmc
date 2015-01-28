@@ -91,6 +91,10 @@ void CAndroidStorageProvider::GetLocalDrives(VECSOURCES &localDrives)
     localDrives.push_back(share);
   }
 
+#if defined(HAS_VIDONME)
+	GetRemovableDrives(localDrives);
+#endif
+
   // root directory
   share.strPath = "/";
   share.strName = g_localizeStrings.Get(21453);

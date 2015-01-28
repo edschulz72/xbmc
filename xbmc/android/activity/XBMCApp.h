@@ -143,7 +143,7 @@ private:
 public:
 	static ANativeActivity *GetCurrentActivity();
 	static bool InvokedByFileManager();
-	static CJNIPackageInfo GetPackageInfo( const std::string& packageName = "org.vidonme.xbmc14" );
+	static CJNIPackageInfo GetPackageInfo( const std::string& packageName = "org.xbmc.kodi" );
 
 	static bool m_InvokedByFileManager;
 #endif

@@ -51,4 +51,11 @@ private:
   CStdString m_from; ///< source URL to copy from
   CStdString m_to;   ///< destination URL to copy to
   CEvent m_event;    ///< event to set to force an update
+
+#if defined(HAS_VIDONME)
+public:
+	bool m_bKeepCache;
+	bool succeeded() const { return m_succeeded; }
+	bool cancelled() const { return m_cancelled; }
+#endif
 };

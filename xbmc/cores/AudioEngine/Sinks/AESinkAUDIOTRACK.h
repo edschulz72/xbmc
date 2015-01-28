@@ -55,6 +55,12 @@ private:
   uint32_t              m_frames_written;
 
   static CAEDeviceInfo m_info;
+
+#if defined(HAS_VIDONME)
+	static CAEDeviceInfo m_info_hdmi;
+	static CAEDeviceInfo m_info_spdif;
+#endif
+
   AEAudioFormat      m_format;
   AEAudioFormat      m_lastFormat;
   double             m_volume;

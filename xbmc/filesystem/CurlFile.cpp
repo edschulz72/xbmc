@@ -234,7 +234,10 @@ CCurlFile::CReadState::CReadState()
   m_readBuffer = 0;
   m_isPaused = false;
   m_curlHeaderList = NULL;
-  m_curlAliasList = NULL;
+	m_curlAliasList = NULL;
+#if defined(HAS_VIDONME)
+	m_curlFormList = NULL;
+#endif
 }
 
 CCurlFile::CReadState::~CReadState()
@@ -358,6 +361,12 @@ void CCurlFile::CReadState::Disconnect()
   if( m_curlHeaderList )
     g_curlInterface.slist_free_all(m_curlHeaderList);
   m_curlHeaderList = NULL;
+
+#if defined(HAS_VIDONME)
+	if (m_curlFormList)
+		g_curlInterface.formfree(m_curlFormList);
+	m_curlFormList = NULL;
+#endif
 
   if( m_curlAliasList )
     g_curlInterface.slist_free_all(m_curlAliasList);
@@ -494,10 +503,12 @@ void CCurlFile::SetCommonOptions(CReadState* state)
     state->m_curlAliasList = g_curlInterface.slist_append(state->m_curlAliasList, "ICY 200 OK");
   g_curlInterface.easy_setopt(h, CURLOPT_HTTP200ALIASES, state->m_curlAliasList);
 
+#if !defined(HAS_VIDONME)
   // never verify peer, we don't have any certificates to do this
   g_curlInterface.easy_setopt(h, CURLOPT_SSL_VERIFYPEER, 0);
   g_curlInterface.easy_setopt(h, CURLOPT_SSL_VERIFYHOST, 0);
 
+#else
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_URL, m_url.c_str());
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_TRANSFERTEXT, FALSE);
 
@@ -517,6 +528,8 @@ void CCurlFile::SetCommonOptions(CReadState* state)
     g_curlInterface.easy_setopt(h, CURLOPT_REFERER, NULL);
     g_curlInterface.easy_setopt(h, CURLOPT_AUTOREFERER, TRUE);
   }
+
+#endif
 
   // setup any requested authentication
   if( !m_ftpauth.empty() )
@@ -630,6 +643,43 @@ void CCurlFile::SetRequestHeaders(CReadState* state)
   if (state->m_easyHandle)
     g_curlInterface.easy_setopt(state->m_easyHandle, CURLOPT_HTTPHEADER, state->m_curlHeaderList);
 }
+
+#if defined(HAS_VIDONME)
+
+void CCurlFile::SetRequestFormList(CReadState* state)
+{
+	if(state->m_curlFormList)
+	{
+		g_curlInterface.formfree(state->m_curlFormList);
+		state->m_curlFormList = NULL;
+	}
+
+	struct XCURL::curl_httppost* lastptr = NULL;
+	for(MAPHTTPHEADERS::iterator it = m_requestformdatalist.begin()
+		; it != m_requestformdatalist.end(); it++)
+	{
+		g_curlInterface.formadd(&state->m_curlFormList,
+			&lastptr,
+			CURLFORM_COPYNAME, it->first.c_str(),
+			CURLFORM_COPYCONTENTS, it->second.c_str(),
+			CURLFORM_END);
+	}
+	for(MAPHTTPHEADERS::iterator it = m_requestformfilelist.begin()
+		; it != m_requestformfilelist.end(); it++)
+	{
+		g_curlInterface.formadd(&state->m_curlFormList,
+			&lastptr,
+			CURLFORM_COPYNAME, it->first.c_str(),
+			CURLFORM_FILE, it->second.c_str(),
+			CURLFORM_END);
+	}
+
+	// add user defined headers
+	if (state->m_easyHandle && state->m_curlFormList)
+		g_curlInterface.easy_setopt(state->m_easyHandle, CURLOPT_HTTPPOST, state->m_curlFormList);
+}
+
+#endif
 
 void CCurlFile::SetCorrectHeaders(CReadState* state)
 {
@@ -916,6 +966,11 @@ bool CCurlFile::Open(const CURL& url)
   // setup common curl options
   SetCommonOptions(m_state);
   SetRequestHeaders(m_state);
+
+#if defined(HAS_VIDONME)
+	SetRequestFormList(m_state);
+#endif
+
   m_state->m_sendRange = m_seekable;
 
   m_httpresponse = m_state->Connect(m_bufferSize);
@@ -1003,6 +1058,10 @@ bool CCurlFile::OpenForWrite(const CURL& url, bool bOverWrite)
     // setup common curl options
   SetCommonOptions(m_state);
   SetRequestHeaders(m_state);
+
+#if defined(HAS_VIDONME)
+	SetRequestFormList(m_state);
+#endif
 
   char* efurl;
   if (CURLE_OK == g_curlInterface.easy_getinfo(m_state->m_easyHandle, CURLINFO_EFFECTIVE_URL,&efurl) && efurl)
@@ -1111,6 +1170,11 @@ bool CCurlFile::Exists(const CURL& url)
 
   SetCommonOptions(m_state);
   SetRequestHeaders(m_state);
+
+#if defined(HAS_VIDONME)
+	SetRequestFormList(m_state);
+#endif
+
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_TIMEOUT, 5);
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_NOBODY, 1);
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_WRITEDATA, NULL); /* will cause write failure*/
@@ -1212,6 +1276,10 @@ int64_t CCurlFile::Seek(int64_t iFilePosition, int iWhence)
   /* caller might have changed some headers (needed for daap)*/
   SetRequestHeaders(m_state);
 
+#if defined(HAS_VIDONME)
+	SetRequestFormList(m_state);
+#endif
+
   m_state->m_filePos = nextPos;
   m_state->m_sendRange = true;
 
@@ -1279,6 +1347,11 @@ int CCurlFile::Stat(const CURL& url, struct __stat64* buffer)
 
   SetCommonOptions(m_state);
   SetRequestHeaders(m_state);
+
+#if defined(HAS_VIDONME)
+	SetRequestFormList(m_state);
+#endif
+
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_TIMEOUT, g_advancedSettings.m_curlconnecttimeout);
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_NOBODY, 1);
   g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_WRITEDATA, NULL); /* will cause write failure*/
@@ -1311,6 +1384,11 @@ int CCurlFile::Stat(const CURL& url, struct __stat64* buffer)
     /* somehow curl doesn't reset CURLOPT_NOBODY properly so reset everything */
     SetCommonOptions(m_state);
     SetRequestHeaders(m_state);
+
+#if defined(HAS_VIDONME)
+		SetRequestFormList(m_state);
+#endif
+
     g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_TIMEOUT, g_advancedSettings.m_curlconnecttimeout);
     g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_RANGE, "0-0");
     g_curlInterface.easy_setopt(m_state->m_easyHandle, CURLOPT_WRITEDATA, NULL); /* will cause write failure*/
@@ -1623,6 +1701,26 @@ void CCurlFile::SetRequestHeader(const std::string& header, long value)
 {
   m_requestheaders[header] = StringUtils::Format("%ld", value);
 }
+
+#if defined(HAS_VIDONME)
+
+void CCurlFile::SetRequestFormData(const std::string& name, const std::string& data)
+{
+	m_requestformdatalist[name] = data;
+}
+
+void CCurlFile::SetRequestFormFile(const std::string& name, const std::string& file)
+{
+	m_requestformfilelist[name] = file;
+}
+
+void CCurlFile::ClearRequestFormList()
+{
+	m_requestformdatalist.clear();
+	m_requestformfilelist.clear();
+}
+
+#endif
 
 std::string CCurlFile::GetServerReportedCharset(void)
 {

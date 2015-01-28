@@ -59,6 +59,9 @@
 #ifdef HAS_WEB_SERVER
 #include "network/WebServer.h"
 #include "network/httprequesthandler/HTTPImageHandler.h"
+#if defined(HAS_VIDONME)
+#include "network/httprequesthandler/HTTPFileHandler.h"
+#endif
 #include "network/httprequesthandler/HTTPVfsHandler.h"
 #ifdef HAS_JSONRPC
 #include "network/httprequesthandler/HTTPJsonRpcHandler.h"
@@ -93,8 +96,11 @@ using namespace UPNP;
 CNetworkServices::CNetworkServices()
 #ifdef HAS_WEB_SERVER
   :
-  m_webserver(*new CWebServer),
-  m_httpImageHandler(*new CHTTPImageHandler),
+	m_webserver(*new CWebServer),
+	m_httpImageHandler(*new CHTTPImageHandler),
+#if defined(HAS_VIDONME)
+	m_httpFileHandler(*new CHTTPFileHandler),
+#endif
   m_httpVfsHandler(*new CHTTPVfsHandler)
 #ifdef HAS_JSONRPC
   , m_httpJsonRpcHandler(*new CHTTPJsonRpcHandler)
@@ -106,7 +112,10 @@ CNetworkServices::CNetworkServices()
 #endif // HAS_WEB_SERVER
 {
 #ifdef HAS_WEB_SERVER
-  CWebServer::RegisterRequestHandler(&m_httpImageHandler);
+	CWebServer::RegisterRequestHandler(&m_httpImageHandler);
+#if defined(HAS_VIDONME)
+	CWebServer::RegisterRequestHandler(&m_httpFileHandler);
+#endif
   CWebServer::RegisterRequestHandler(&m_httpVfsHandler);
 #ifdef HAS_JSONRPC
   CWebServer::RegisterRequestHandler(&m_httpJsonRpcHandler);
@@ -122,7 +131,11 @@ CNetworkServices::~CNetworkServices()
 {
 #ifdef HAS_WEB_SERVER
   CWebServer::UnregisterRequestHandler(&m_httpImageHandler);
-  delete &m_httpImageHandler;
+	delete &m_httpImageHandler;
+#if defined(HAS_VIDONME)
+	CWebServer::UnregisterRequestHandler(&m_httpFileHandler);
+	delete &m_httpFileHandler;
+#endif
   CWebServer::UnregisterRequestHandler(&m_httpVfsHandler);
   delete &m_httpVfsHandler;
 #ifdef HAS_JSONRPC

@@ -2650,7 +2650,7 @@ const char* CVDMPlayer::GetAppVersion()
 
 const char* CVDMPlayer::GetAppPackageName()
 {
-  static const char* APP_PACKAGE_NAME = "org.vidonme.xbmc13";
+  static const char* APP_PACKAGE_NAME = "org.xbmc.kodi";
   return APP_PACKAGE_NAME;
 }
 

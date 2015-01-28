@@ -3110,6 +3110,9 @@
     <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp">
       <Filter>vidonme</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\xbmc\network\httprequesthandler\HTTPFileHandler.cpp">
+      <Filter>network\httprequesthandler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\xbmc\win32\pch.h">
@@ -6096,6 +6099,9 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\cores\vdmplayer\VidonPlayerManager.h">
       <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\network\httprequesthandler\HTTPFileHandler.h">
+      <Filter>network\httprequesthandler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -184,6 +184,12 @@ public:
   static bool Copy(const std::string& strFileName, const std::string& strDest, XFILE::IFileCallback* pCallback = NULL, void* pContext = NULL);
   static bool SetHidden(const std::string& fileName, bool hidden);
 
+#if defined(HAS_VIDONME)
+	static bool Copy_Internal(const std::string& strFileName, const std::string& strDest, XFILE::IFileCallback* pCallback, void* pContext, bool bKeepCache);
+	static bool Copy_Internal(const CURL& url2, const CURL& dest, XFILE::IFileCallback* pCallback, void* pContext, bool bKeepCache);
+	static bool KeepCopy(const CURL& file, const CURL& dest, XFILE::IFileCallback* pCallback = NULL, void* pContext = NULL);
+#endif
+
 private:
   unsigned int m_flags;
   IFile* m_pFile;

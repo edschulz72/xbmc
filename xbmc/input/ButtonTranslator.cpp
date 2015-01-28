@@ -322,6 +322,11 @@ static const ActionMapping windows[] =
         {"appearancesettings"       , WINDOW_SETTINGS_APPEARANCE},
         {"pvrsettings"              , WINDOW_SETTINGS_MYPVR},
         {"tvsettings"               , WINDOW_SETTINGS_MYPVR},  // backward compat
+
+#if defined (HAS_VIDONME)
+				{ "vidonme"									, VDM_WINDOW_SETTINGS_VIDONME },
+#endif
+
         {"scripts"                  , WINDOW_PROGRAMS}, // backward compat
         {"videofiles"               , WINDOW_VIDEO_FILES},
         {"videolibrary"             , WINDOW_VIDEO_NAV},

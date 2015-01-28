@@ -30,6 +30,18 @@
 #include "guilib/GUIWindowManager.h"
 #include "Application.h"
 
+#if defined(HAS_VIDONME)
+#include "guilib/LocalizeStrings.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/DLLVidonUtils.h"
+#include "vidonme/VDMUserInfo.h"
+#include "guilib/GUIImage.h"
+#include "addons/Skin.h"
+#include "GUIUserMessages.h"
+#include "vidonme/VDMVersionUpdate.h"
+#include "vidonme/VDMDialogVersionCheck.h"
+#endif
+
 using namespace ANNOUNCEMENT;
 
 CGUIWindowHome::CGUIWindowHome(void) : CGUIWindow(WINDOW_HOME, "Home.xml"), 
@@ -38,7 +50,11 @@ CGUIWindowHome::CGUIWindowHome(void) : CGUIWindow(WINDOW_HOME, "Home.xml"),
 {
   m_updateRA = (Audio | Video | Totals);
   m_loadType = KEEP_IN_MEMORY;
-  
+
+#if defined(HAS_VIDONME)
+	m_bFirstRun = true;
+#endif
+
   CAnnouncementManager::Get().AddAnnouncer(this);
 }
 
@@ -70,6 +86,30 @@ void CGUIWindowHome::OnInitWindow()
   AddRecentlyAddedJobs( m_updateRA );
 
   CGUIWindow::OnInitWindow();
+
+#if defined(HAS_VIDONME)
+	if (m_bFirstRun)
+	{
+
+    CStdString strUserName;
+    CStdString strPassword;
+
+    if( CVDMUserInfo::Instance().GetUsernameAndPassword( strUserName, strPassword ) )
+    {
+      //CVDMUserInfo::Instance().DoLogin( strUserName, strPassword, false );
+      
+    }
+    else
+    {
+      //CGUIMessage showmsg(GUI_MSG_VISIBLE, GetID(), VDM_WINDOW_DIALOG_LOGIN);
+      //g_windowManager.SendThreadMessage(showmsg, VDM_WINDOW_DIALOG_LOGIN);
+    }
+    g_vdmVersionUpdate.CheckVersionInBackground();
+
+		m_bFirstRun = false;
+	}
+#endif
+
 }
 
 void CGUIWindowHome::Announce(AnnouncementFlag flag, const char *sender, const char *message, const CVariant &data)
@@ -172,6 +212,24 @@ bool CGUIWindowHome::OnMessage(CGUIMessage& message)
         m_updateRA |= updateRA;
     }
     break;
+
+#if defined(HAS_VIDONME)
+//  case GUI_MSG_UPDATE_VIDON_LOGO:
+//   UpdateVidonLogo();
+//    break;
+
+  case GUI_MSG_UPDATE_HASNEWVERSION:
+    {
+      CVDMVersionInfo* pInfo = (CVDMVersionInfo*)message.GetPointer();
+      if( NULL != pInfo )
+      {
+        CVDMDialogVersionCheck::ShowNewVersionDialog( *pInfo );
+        delete pInfo;
+        pInfo = NULL;
+      }
+    }
+    break;
+#endif //#if defined(HAS_VIDONME)
 
   default:
     break;

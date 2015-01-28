@@ -45,4 +45,8 @@ private:
 
   bool m_recentlyAddedRunning;
   int m_cumulativeUpdateFlag;
+
+#if defined(HAS_VIDONME)
+	bool m_bFirstRun;
+#endif
 };

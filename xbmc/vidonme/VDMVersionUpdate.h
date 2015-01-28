@@ -62,9 +62,15 @@ public:
     unsigned int m_nJobID;
     unsigned int m_nProgress;
 
+    unsigned int m_nJobIDCheckVersionInBackground;
+
     void OnJobComplete(unsigned int jobID, bool success, CJob* job);
     void OnJobProgress(unsigned int jobID, unsigned int progress, unsigned int total, const CJob *job);
 public:
+    bool IsCheckInBackground();
+    bool CheckVersionInBackground();
+    void CancekCheckVersionInBackground();
+
     void Start(const CVDMVersionInfo& info);
     bool Stop();
 public:

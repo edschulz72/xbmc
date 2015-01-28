@@ -89,13 +89,25 @@ bool CVDMVersionCheck::VersionCheck(OUT CVDMVersionInfo& info)
   return bRet;
 }
 
+class CVDMVersionCheckInBackgroundJob : public CJob
+{
+public:
+  virtual bool DoWork()
+  {
+    return CVDMVersionCheck::VersionCheck( m_info );
+  }
+  const CVDMVersionInfo& GetResult(){ return m_info; };
+private:
+  CVDMVersionInfo m_info;
+};
+
 bool CVDMVersionUpdateJob::DownloadPackage(const CStdString& path, const CStdString& dest)
 {
   CFileItemList list;
   list.Add(CFileItemPtr(new CFileItem(path,false)));
   list[0]->Select(true);
   SetFileOperation(CFileOperationJob::ActionReplace, list, dest);
-  //m_bKeepCache = true;
+  m_bKeepCache = true;
   return CFileOperationJob::DoWork();
 }
 
@@ -162,6 +174,7 @@ void CVDMVersionUpdateJob::ReportValidateError(const CStdString& fileName)
 CVDMVersionUpdate::CVDMVersionUpdate()
   : m_nJobID(0)
   , m_nProgress(0)
+  , m_nJobIDCheckVersionInBackground(0)
 {
 
 };
@@ -185,6 +198,27 @@ void CVDMVersionUpdate::OnJobComplete(unsigned int jobID, bool success, CJob* jo
     lock.Leave();
     g_windowManager.SendThreadMessage(msg);
   }
+  else if( m_nJobIDCheckVersionInBackground == jobID )
+  {
+    m_nJobIDCheckVersionInBackground = 0;
+    if( success )
+    {
+      CVDMVersionCheckInBackgroundJob* pCheckVersionJob = (CVDMVersionCheckInBackgroundJob*) job;
+
+      if( NULL != pCheckVersionJob )
+      {
+        if( pCheckVersionJob->GetResult().state == CVDMVersionInfo::sUpdateAvail )
+        {
+          CGUIMessage msgVersionInfo(GUI_MSG_UPDATE_HASNEWVERSION, 0, WINDOW_HOME);
+          CVDMVersionInfo* pInfo = new CVDMVersionInfo();
+          *pInfo = pCheckVersionJob->GetResult();
+          msgVersionInfo.SetPointer( pInfo );
+          lock.Leave();
+          g_windowManager.SendThreadMessage( msgVersionInfo, WINDOW_HOME );
+        }
+      }
+    }
+  }
 }
 
 void CVDMVersionUpdate::OnJobProgress(unsigned int jobID, unsigned int progress, unsigned int total, const CJob *job)
@@ -199,6 +233,35 @@ void CVDMVersionUpdate::OnJobProgress(unsigned int jobID, unsigned int progress,
     lock.Leave();
     g_windowManager.SendThreadMessage(msg);
   }
+}
+
+bool CVDMVersionUpdate::IsCheckInBackground()
+{
+  CSingleLock lock(m_mutex);
+  return m_nJobIDCheckVersionInBackground != 0;
+}
+
+bool CVDMVersionUpdate::CheckVersionInBackground()
+{
+  CSingleLock lock(m_mutex);
+
+  if( m_nJobIDCheckVersionInBackground != 0 ) return false;
+
+  m_nJobIDCheckVersionInBackground = CJobManager::GetInstance().AddJob( new CVDMVersionCheckInBackgroundJob(), this );
+
+  return true;
+}
+
+void CVDMVersionUpdate::CancekCheckVersionInBackground()
+{
+  CSingleLock lock(m_mutex);
+
+  if( m_nJobIDCheckVersionInBackground != 0 )
+  {
+    CJobManager::GetInstance().CancelJob( m_nJobIDCheckVersionInBackground );
+    m_nJobIDCheckVersionInBackground = 0;
+  }
+
 }
 
 void CVDMVersionUpdate::Start(const CVDMVersionInfo& info)
@@ -224,6 +287,7 @@ bool CVDMVersionUpdate::Stop( void )
     m_nProgress = 0;
     return true;
   }
+  CancekCheckVersionInBackground();
   return false;
 }
 

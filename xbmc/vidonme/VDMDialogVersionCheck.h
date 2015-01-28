@@ -11,6 +11,9 @@ public:
     virtual bool OnBack(int actionID);
     static bool ShowAndGetInput(OUT CVDMVersionInfo& info);
 
+    static bool ShowNewVersionDialog( const CVDMVersionInfo& info );
+    void SetVersionInfo( const CVDMVersionInfo& info );
+
     virtual void OnInitWindow();
 protected:
     bool m_bConfirmed;
@@ -21,6 +24,7 @@ private:
     
     enum State
     {
+        sUnknown = -1,
         sChecking,
         sError,
         sUpdateNone,

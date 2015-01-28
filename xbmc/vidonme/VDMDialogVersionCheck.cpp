@@ -58,6 +58,7 @@ private:
 
 CVDMDialogVersionCheck::CVDMDialogVersionCheck(void)
     : CGUIDialog(VDM_DIALOG_VERSIONCHECK, "special://xbmc/media/VDMResource/VDMDialogVersionCheck.xml")
+    , m_state(sUnknown)
 {
 }
 
@@ -132,7 +133,14 @@ void CVDMDialogVersionCheck::OnInitWindow()
     m_bConfirmed = false;
     CGUIDialog::OnInitWindow();
 
-    DoVersionCheck();
+    if( m_state == sUnknown )
+    {
+      DoVersionCheck();
+    }
+    else
+    {
+      SetUpdateState( m_state );
+    }
 }
 
 bool CVDMDialogVersionCheck::OnMessage(CGUIMessage& message)
@@ -199,5 +207,38 @@ bool CVDMDialogVersionCheck::ShowAndGetInput(CVDMVersionInfo& info)
 
     info = dialog->m_info;
     return true;
+}
+
+bool CVDMDialogVersionCheck::ShowNewVersionDialog( const CVDMVersionInfo& info )
+{
+  if( info.state != CVDMVersionInfo::sUpdateAvail )
+  {
+    return false;
+  }
+
+  CVDMDialogVersionCheck *dialog = (CVDMDialogVersionCheck *)g_windowManager.GetWindow(VDM_DIALOG_VERSIONCHECK);
+  if (!dialog) return false;
+
+  dialog->SetVersionInfo( info );
+  dialog->DoModal();
+
+  if (!dialog->m_bConfirmed) return false;
+
+  g_vdmVersionUpdate.Start(info);
+  return true;
+}
+
+void CVDMDialogVersionCheck::SetVersionInfo( const CVDMVersionInfo& info )
+{
+  m_info = info;
+
+  if( info.state == CVDMVersionInfo::sUpdateAvail )
+  {
+    m_state = sUpdateAvail;
+  }
+  else
+  {
+    m_state = sUpdateNone;
+  }
 }
 

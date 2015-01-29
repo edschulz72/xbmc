@@ -836,7 +836,8 @@ void CSettings::InitializeISettingCallbacks()
 
 #if defined (HAS_VIDONME)
   settingSet.clear();
-  settingSet.insert("d3.mode");
+	settingSet.insert("d3.mode");
+	settingSet.insert("audiooutput.passthrough");
   settingSet.insert("debugging.upload");
   settingSet.insert("debugging.viewlog");
   settingSet.insert("upgrade.website");

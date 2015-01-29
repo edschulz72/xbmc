@@ -3034,6 +3034,7 @@
         </setting>
       </group>
     </category>
+	<!--
     <category id="usercenter" label="70055" help="70056">
       <group id="1">
         <setting id="usercenter.name" type="string" label="70057" help="0">
@@ -3074,6 +3075,7 @@
         </setting>
       </group>
     </category>
+	-->
     <category id="debugging" label="70026" help="70027">
       <group id="1">
         <setting id="debugging.upload" type="action" label="70028" help="70029">
@@ -3100,23 +3102,23 @@
       <group id="1">
         <setting id="upgrade.currVerName" type="action" label="70065" help="0">
           <level>0</level>
-          <control type="edit" format="readonly"/>
+          <control type="button" format="action"/>
         </setting>
         <setting id="upgrade.currVerTime" type="action" label="70091" help="0">
           <level>0</level>
-          <control type="edit" format="readonly"/>
+          <control type="button" format="action"/>
         </setting>
         <setting id="upgrade.website" type="action" label="70066" help="70067">
           <level>0</level>
-          <control type="edit" format="readonly"/>
+          <control type="button" format="action"/>
         </setting>
         <setting id="upgrade.forum" type="action" label="70068" help="70069">
           <level>0</level>
-          <control type="edit" format="readonly"/>
+          <control type="button" format="action"/>
         </setting>
         <setting id="upgrade.versioncheck" type="action" label="70070" help="70071">
           <level>0</level>
-          <control type="edit" format="readonly" />
+          <control type="button" format="action" />
         </setting>
       </group>
     </category>

@@ -659,6 +659,10 @@ void CSettings::InitializeISubSettings()
   m_settingsManager->RegisterSubSettings(&CSkinSettings::Get());
   m_settingsManager->RegisterSubSettings(&g_sysinfo);
   m_settingsManager->RegisterSubSettings(&CViewStateSettings::Get());
+
+#if defined (HAS_VIDONME)
+	m_settingsManager->RegisterSubSettings(&CVDMSettingsManager::Get());
+#endif
 }
 
 void CSettings::InitializeISettingCallbacks()
@@ -840,7 +844,9 @@ void CSettings::InitializeISettingCallbacks()
 	settingSet.insert("audiooutput.passthrough");
   settingSet.insert("debugging.upload");
   settingSet.insert("debugging.viewlog");
-  settingSet.insert("upgrade.website");
+	settingSet.insert("upgrade.website");
+	settingSet.insert("upgrade.forum");
+	settingSet.insert("upgrade.versioncheck");
   m_settingsManager->RegisterCallback(&CVDMSettingsManager::Get(), settingSet);
 #endif
 }

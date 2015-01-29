@@ -1029,6 +1029,31 @@ bool CGUIMediaWindow::OnClick(int iItem)
     if (!Update(directory.GetPath()))
       ShowShareErrorMessage(&directory);
 
+#if defined(HAS_VIDONME)
+		if (m_itemType == "DVDFolder" || m_itemType == "BDFolder")
+		{
+			CStdString strPath = pItem->GetPath();
+
+			pItem->SetProperty("original_listitem_url", strPath);
+
+			if (m_itemType == "DVDFolder")
+			{
+				strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS");
+				strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS.IFO");
+			}
+			else if (m_itemType == "BDFolder")
+			{
+				strPath = URIUtils::AddFileToFolder(strPath, "BDMV");
+				strPath = URIUtils::AddFileToFolder(strPath, "index.bdmv");
+			}
+
+			pItem->SetPath(strPath);
+
+			pItem->SetProperty("type", m_itemType);
+			return OnPlayMedia(iItem);
+		}
+#endif
+
     return true;
   }
   else if (pItem->IsPlugin() && !pItem->GetProperty("isplayable").asBoolean())

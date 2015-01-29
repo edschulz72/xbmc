@@ -14,6 +14,8 @@
 #include "vidonme/VDMUserInfo.h"
 #include "vidonme/VDMDialogLogin.h"
 #include "vidonme/VDMRegionFeature.h"
+#include "vidonme/VDMVersionUpdate.h"
+#include "vidonme/VDMDialogVersionCheck.h"
 
 CVDMSettingsManager::CVDMSettingsManager()
 {
@@ -53,6 +55,31 @@ void CVDMSettingsManager::OnSettingAction(const CSetting *setting)
 	if (settingId == "upgrade.website")
 	{
 		CBuiltins::Execute(StringUtils::Format("VDMOpenURL(%s)", CVDMRegionFeature::Get().GetWebSite().c_str()));
+	}
+
+	if (settingId == "upgrade.forum")
+	{
+		CBuiltins::Execute(StringUtils::Format("VDMOpenURL(%s)", CVDMRegionFeature::Get().GetForum().c_str()));
+	}
+
+	if (settingId == "upgrade.versioncheck")
+	{
+		if (g_vdmVersionUpdate.running())
+		{
+			return;
+		}
+
+		if (g_vdmVersionUpdate.IsCheckInBackground())
+		{
+			g_vdmVersionUpdate.CancelCheckVersionInBackground();
+		}
+
+		CVDMVersionInfo info;
+		if (!CVDMDialogVersionCheck::ShowAndGetInput(info)) 
+			return;
+
+		g_vdmVersionUpdate.Start(info);
+		return;
 	}
 }
 

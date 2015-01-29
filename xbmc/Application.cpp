@@ -357,6 +357,7 @@
 #include "vidonme/VDMUserInfo.h"
 #include "vidonme/DLLVidonUtils.h"
 #include "vidonme/VDMDialogVersionCheck.h"
+#include "vidonme/VDMRegionFeature.h"
 #endif
 
 using namespace std;

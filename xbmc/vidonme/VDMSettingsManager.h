@@ -5,9 +5,10 @@
 
 #include "settings/lib/ISettingCallback.h"
 #include "settings/lib/ISettingsHandler.h"
+#include "settings/lib/ISubSettings.h"
 
 
-class CVDMSettingsManager : public ISettingCallback, public ISettingsHandler
+class CVDMSettingsManager : public ISettingCallback, public ISettingsHandler, public ISubSettings
 {
 public:
 	static CVDMSettingsManager& Get();

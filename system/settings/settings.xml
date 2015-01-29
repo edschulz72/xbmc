@@ -3100,21 +3100,41 @@
     </category>
     <category id="upgrade" label="70063" help="70064">
       <group id="1">
-        <setting id="upgrade.currVerName" type="action" label="70065" help="0">
+        <setting id="upgrade.currVerName" type="string" label="70065" help="0">
           <level>0</level>
-          <control type="button" format="action"/>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="edit" format="string" />
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
         </setting>
-        <setting id="upgrade.currVerTime" type="action" label="70091" help="0">
+        <setting id="upgrade.currVerTime" type="string" label="70091" help="0">
           <level>0</level>
-          <control type="button" format="action"/>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="edit" format="string" />
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
         </setting>
         <setting id="upgrade.website" type="action" label="70066" help="70067">
           <level>0</level>
-          <control type="button" format="action"/>
+          <control type="button" format="action" />
         </setting>
         <setting id="upgrade.forum" type="action" label="70068" help="70069">
           <level>0</level>
-          <control type="button" format="action"/>
+          <control type="button" format="action" />
         </setting>
         <setting id="upgrade.versioncheck" type="action" label="70070" help="70071">
           <level>0</level>

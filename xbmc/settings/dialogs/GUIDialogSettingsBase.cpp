@@ -39,6 +39,11 @@
 #include "settings/windows/GUIControlSettings.h"
 #include "utils/StringUtils.h"
 
+#if defined (HAS_VIDONME)
+#include "vidonme/VDMVersionUpdate.h"
+#include "vidonme/VDMRegionFeature.h"
+#endif
+
 using namespace std;
 
 #if defined(TARGET_WINDOWS) // disable 4355: 'this' used in base member initializer list
@@ -548,6 +553,38 @@ void CGUIDialogSettingsBase::UpdateSettings()
     CGUIControl *pControl = pSettingControl->GetControl();
     if (pSetting == NULL || pControl == NULL)
       continue;
+
+#if defined (HAS_VIDONME)
+		if (pSetting->GetId() == "upgrade.currVerName")
+		{
+			((CSettingString*)pSetting)->SetValue(CVDMVersionCheck::GetCurrVersionName());
+		}
+		if (pSetting->GetId() == "upgrade.currVerTime")
+		{
+			((CSettingString*)pSetting)->SetValue(CVDMVersionCheck::GetCurrVersionTime());
+		}
+#if 0
+		else if (pSetting->GetId() == "upgrade.website")
+		{
+			((CSettingString*)pSetting)->SetValue(CVDMRegionFeature::Get().GetWebSite());
+		}
+		else if (pSetting->GetId() == "upgrade.forum")
+		{
+			((CSettingString*)pSetting)->SetValue(CVDMRegionFeature::Get().GetForum());
+		}
+		else if (pSetting->GetId() == "upgrade.versioncheck")
+		{
+			std::string strShowing;
+
+			if (g_vdmVersionUpdate.running())
+			{
+				strShowing = StringUtils::Format("%s: %d%%", g_localizeStrings.Get(70076).c_str(), g_vdmVersionUpdate.progress());
+			}
+
+			((CSettingString*)pSetting)->SetValue(strShowing);
+		}
+#endif
+#endif
 
     pSettingControl->Update();
   }

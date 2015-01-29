@@ -71,23 +71,23 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 		}
 	}
 
-#if !defined(AML_DEMO)
-	if (settingId == "audiooutput.passthrough")
-	{
-		CSettingBool* pSettingsTmp = (CSettingBool*)setting;
-		if (pSettingsTmp->GetValue())
-		{
-			if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
-			{
-				CVDMDialogLogin::ShowLoginTip();
-				if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
-				{
-					pSettingsTmp->SetValue(false);
-				}
-			}
-		}
-	}
-#endif
+//#if !defined(AML_DEMO)
+//	if (settingId == "audiooutput.passthrough")
+//	{
+//		CSettingBool* pSettingsTmp = (CSettingBool*)setting;
+//		if (pSettingsTmp->GetValue())
+//		{
+//			if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+//			{
+//				CVDMDialogLogin::ShowLoginTip();
+//				if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+//				{
+//					pSettingsTmp->SetValue(false);
+//				}
+//			}
+//		}
+//	}
+//#endif
 
 	return true;
 }

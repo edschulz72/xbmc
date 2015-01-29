@@ -94,5 +94,6 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 
 bool CVDMSettingsManager::OnSettingUpdate(CSetting* &setting, const char *oldSettingId, const TiXmlNode *oldSettingNode)
 {
+	return true;
 }
 #endif

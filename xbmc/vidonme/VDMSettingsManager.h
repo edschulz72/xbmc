@@ -14,7 +14,7 @@ public:
 
 	virtual void OnSettingAction(const CSetting *setting);
 	virtual bool OnSettingChanging(const CSetting *setting);
-	virtual bool OnSettingUpdate(CSetting* &setting, const char *oldSettingId, const TiXmlNode *oldSettingNode) { return false; }
+	virtual bool OnSettingUpdate(CSetting* &setting, const char *oldSettingId, const TiXmlNode *oldSettingNode);
 
 protected:
 	CVDMSettingsManager();

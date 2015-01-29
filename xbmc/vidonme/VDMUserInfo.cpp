@@ -133,7 +133,7 @@ bool CVDMUserInfo::GetUsernameAndPassword( CStdString& strUserName, CStdString& 
 
     if( !LoadUserInfoFromFile( strUserDataFile ) )
     {
-#if defined(TARGET_ANDROID)
+#if 0 /*defined(TARGET_ANDROID)*/
       strUserDataFile = "/sdcard/Android/data/org.vidonme.mediacenter/files/.vmc/userdata/userdata.xml";
       if( !LoadUserInfoFromFile( strUserDataFile ) )
       {

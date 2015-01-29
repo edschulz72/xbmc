@@ -27,7 +27,7 @@ using namespace XFILE;
 #include "android/jni/PackageInfo.h"
 #endif
 
-#define VERSIONCHECK_CLIENTTYPE    "XBMC13"
+#define VERSIONCHECK_CLIENTTYPE    "XBMC14"
 
 enum VERSION_STATUS
 {

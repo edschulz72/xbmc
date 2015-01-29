@@ -69,7 +69,7 @@ public:
 public:
     bool IsCheckInBackground();
     bool CheckVersionInBackground();
-    void CancekCheckVersionInBackground();
+    void CancelCheckVersionInBackground();
 
     void Start(const CVDMVersionInfo& info);
     bool Stop();

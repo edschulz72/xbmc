@@ -252,7 +252,7 @@ bool CVDMVersionUpdate::CheckVersionInBackground()
   return true;
 }
 
-void CVDMVersionUpdate::CancekCheckVersionInBackground()
+void CVDMVersionUpdate::CancelCheckVersionInBackground()
 {
   CSingleLock lock(m_mutex);
 
@@ -287,7 +287,7 @@ bool CVDMVersionUpdate::Stop( void )
     m_nProgress = 0;
     return true;
   }
-  CancekCheckVersionInBackground();
+  CancelCheckVersionInBackground();
   return false;
 }
 

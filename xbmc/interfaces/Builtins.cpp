@@ -97,6 +97,10 @@
 #include "settings/AdvancedSettings.h"
 #include "settings/DisplaySettings.h"
 
+#if defined(TARGET_ANDROID)
+#include "android/activity/XBMCApp.h"
+#endif
+
 using namespace std;
 using namespace XFILE;
 using namespace ADDON;

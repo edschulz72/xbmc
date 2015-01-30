@@ -26,6 +26,7 @@
 #include "settings/Settings.h"
 #include "settings/lib/SettingSection.h"
 #include "view/ViewStateSettings.h"
+#include "utils/StringUtils.h"
 
 #if defined (HAS_VIDONME)
 #include "guilib/GUIButtonControl.h"

@@ -27,6 +27,13 @@
 #include "settings/lib/SettingSection.h"
 #include "view/ViewStateSettings.h"
 
+#if defined (HAS_VIDONME)
+#include "guilib/GUIButtonControl.h"
+#include "settings/windows/GUIControlSettings.h"
+#include "vidonme/VDMVersionUpdate.h"
+#include "vidonme/VDMRegionFeature.h"
+#endif
+
 using namespace std;
 
 #define SETTINGS_PICTURES               WINDOW_SETTINGS_MYPICTURES - WINDOW_SETTINGS_START
@@ -215,3 +222,31 @@ void CGUIWindowSettingsCategory::Save()
 {
   m_settings.Save();
 }
+
+#if defined (HAS_VIDONME)
+void CGUIWindowSettingsCategory::FrameMove()
+{
+	CGUIDialogSettingsManagerBase::FrameMove();
+
+	for (vector<BaseSettingControlPtr>::iterator it = m_settingControls.begin(); it != m_settingControls.end(); it++)
+	{
+		BaseSettingControlPtr pSettingControl = *it;
+		CSetting *pSetting = pSettingControl->GetSetting();
+		CGUIControl *pControl = pSettingControl->GetControl();
+		if (pSetting == NULL || pControl == NULL)
+			continue;
+
+		if (pSetting->GetId() == "upgrade.versioncheck")
+		{
+			std::string strShowing;
+
+			if (g_vdmVersionUpdate.running())
+			{
+				strShowing = StringUtils::Format("%s: %d%%", g_localizeStrings.Get(70076).c_str(), g_vdmVersionUpdate.progress());
+			}
+
+			((CGUIButtonControl*)pControl)->SetLabel2(strShowing);
+		}
+	}
+}
+#endif

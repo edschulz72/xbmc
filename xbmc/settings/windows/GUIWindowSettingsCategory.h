@@ -38,6 +38,10 @@ public:
   // specialization of CGUIWindow
   virtual bool IsDialog() const { return false; }
 
+#if defined (HAS_VIDONME)
+	virtual void FrameMove();
+#endif
+
 protected:
   // specialization of CGUIWindow
   virtual void OnWindowLoaded();

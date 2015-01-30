@@ -563,30 +563,20 @@ void CGUIDialogSettingsBase::UpdateSettings()
 		{
 			((CSettingString*)pSetting)->SetValue(CVDMVersionCheck::GetCurrVersionTime());
 		}
-#if 0
-		else if (pSetting->GetId() == "upgrade.website")
-		{
-			((CSettingString*)pSetting)->SetValue(CVDMRegionFeature::Get().GetWebSite());
-		}
-		else if (pSetting->GetId() == "upgrade.forum")
-		{
-			((CSettingString*)pSetting)->SetValue(CVDMRegionFeature::Get().GetForum());
-		}
-		else if (pSetting->GetId() == "upgrade.versioncheck")
-		{
-			std::string strShowing;
-
-			if (g_vdmVersionUpdate.running())
-			{
-				strShowing = StringUtils::Format("%s: %d%%", g_localizeStrings.Get(70076).c_str(), g_vdmVersionUpdate.progress());
-			}
-
-			((CSettingString*)pSetting)->SetValue(strShowing);
-		}
-#endif
 #endif
 
     pSettingControl->Update();
+
+#if defined (HAS_VIDONME)
+		if (pSetting->GetId() == "upgrade.website")
+		{
+			((CGUIButtonControl*)pControl)->SetLabel2(CVDMRegionFeature::Get().GetWebSite());
+		}
+		else if (pSetting->GetId() == "upgrade.forum")
+		{
+			((CGUIButtonControl*)pControl)->SetLabel2(CVDMRegionFeature::Get().GetForum());
+		}
+#endif
   }
 }
 

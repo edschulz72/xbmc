@@ -276,7 +276,10 @@ bool CAddonMgr::Init()
   assert(m_cp_context);
   status = m_cpluff->register_pcollection(m_cp_context, CSpecialProtocol::TranslatePath("special://home/addons").c_str());
   status = m_cpluff->register_pcollection(m_cp_context, CSpecialProtocol::TranslatePath("special://xbmc/addons").c_str());
-  status = m_cpluff->register_pcollection(m_cp_context, CSpecialProtocol::TranslatePath("special://xbmcbin/addons").c_str());
+	status = m_cpluff->register_pcollection(m_cp_context, CSpecialProtocol::TranslatePath("special://xbmcbin/addons").c_str());
+#if defined(TARGET_ANDROID) && defined(HAS_VIDONME)
+	status = m_cpluff->register_pcollection(m_cp_context, getenv("XBMC_MORE_ADDONS"));
+#endif
   if (status != CP_OK)
   {
     CLog::Log(LOGERROR, "ADDONS: Fatal Error, cp_register_pcollection() returned status: %i", status);

@@ -3034,7 +3034,6 @@
         </setting>
       </group>
     </category>
-	<!--
     <category id="usercenter" label="70055" help="70056">
       <group id="1">
         <setting id="usercenter.name" type="string" label="70057" help="0">
@@ -3043,7 +3042,7 @@
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
           </dependencies>
-          <control type="button" format="string" />
+          <control type="edit" format="string" />
         </setting>
         <setting id="usercenter.email" type="string" label="70058" help="0">
           <level>0</level>
@@ -3051,7 +3050,7 @@
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
           </dependencies>
-          <control type="button" format="string" />
+          <control type="edit" format="string" />
         </setting>
         <setting id="usercenter.licensetime" type="string" label="70059" help="0">
           <level>0</level>
@@ -3059,7 +3058,7 @@
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
           </dependencies>
-          <control type="button" format="string" />
+          <control type="edit" format="string" />
         </setting>
         <setting id="usercenter.licenseid" type="string" label="70060" help="0">
           <level>0</level>
@@ -3067,7 +3066,7 @@
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
           </dependencies>
-          <control type="button" format="string" />
+          <control type="edit" format="string" />
         </setting>
         <setting id="usercenter.switchuser" type="action" label="70061" help="70062">
           <level>0</level>
@@ -3075,7 +3074,6 @@
         </setting>
       </group>
     </category>
-	-->
     <category id="debugging" label="70026" help="70027">
       <group id="1">
         <setting id="debugging.upload" type="action" label="70028" help="70029">

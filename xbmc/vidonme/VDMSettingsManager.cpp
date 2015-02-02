@@ -52,6 +52,13 @@ void CVDMSettingsManager::OnSettingAction(const CSetting *setting)
 		CBuiltins::Execute(strExecute);
 	}
 
+	if (settingId == "usercenter.switchuser")
+	{
+#if !defined(AML_DEMO)
+		CVDMDialogLogin::ShowSwitchUser();
+#endif
+	}
+
 	if (settingId == "upgrade.website")
 	{
 		CBuiltins::Execute(StringUtils::Format("VDMOpenURL(%s)", CVDMRegionFeature::Get().GetWebSite().c_str()));

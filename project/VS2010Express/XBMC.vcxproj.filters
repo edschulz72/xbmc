@@ -3113,6 +3113,9 @@
     <ClCompile Include="..\..\xbmc\network\httprequesthandler\HTTPFileHandler.cpp">
       <Filter>network\httprequesthandler</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.cpp">
+      <Filter>cores\vdmplayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\xbmc\win32\pch.h">
@@ -6102,6 +6105,9 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\network\httprequesthandler\HTTPFileHandler.h">
       <Filter>network\httprequesthandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.h">
+      <Filter>cores\vdmplayer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

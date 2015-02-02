@@ -170,6 +170,10 @@ public:
 
   CVariant   GetProperty(const std::string &strKey) const;
 
+#if defined (HAS_VIDONME)
+	std::string GetPropertiesAsString() const;
+#endif
+
 protected:
   std::string m_strLabel2;     // text of column2
   std::string m_strIcon;      // filename of icon

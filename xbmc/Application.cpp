@@ -358,6 +358,7 @@
 #include "vidonme/DLLVidonUtils.h"
 #include "vidonme/VDMDialogVersionCheck.h"
 #include "vidonme/VDMRegionFeature.h"
+#include "cores/vdmplayer/VDMPlayer.h"
 #endif
 
 using namespace std;
@@ -477,8 +478,17 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
   switch(newEvent.type)
   {
     case XBMC_QUIT:
-      if (!g_application.m_bStop)
-        CApplicationMessenger::Get().Quit();
+			if (!g_application.m_bStop)
+#if defined (HAS_VIDONME)
+			{
+				g_application.StopPlaying();
+				CVDMPlayer::UninitializePlayerCore();
+				CApplicationMessenger::Get().Quit();
+			}
+#else
+				CApplicationMessenger::Get().Quit();
+#endif
+
       break;
     case XBMC_KEYDOWN:
       g_application.OnKey(g_Keyboard.ProcessKeyDown(newEvent.key.keysym));
@@ -500,7 +510,14 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
         g_graphicsContext.SetVideoResolution(RES_WINDOW, true);
         CSettings::Get().SetInt("window.width", newEvent.resize.w);
         CSettings::Get().SetInt("window.height", newEvent.resize.h);
-        CSettings::Get().Save();
+				CSettings::Get().Save();
+
+#if defined (HAS_VIDONME)
+				if (g_application.m_pPlayer)
+				{
+					g_application.m_pPlayer->UpdateWindowSize();
+				}
+#endif
       }
       break;
     case XBMC_VIDEOMOVE:
@@ -2197,9 +2214,26 @@ bool CApplication::RenderNoPresent()
 
   // dont show GUI when playing full screen video
   if (g_graphicsContext.IsFullScreenVideo())
-  {
-    g_graphicsContext.SetRenderingResolution(g_graphicsContext.GetVideoResolution(), false);
-    g_renderManager.Render(true, 0, 255);
+	{
+#ifdef HAS_VIDONME
+		if (m_pPlayer && m_pPlayer->IsSelfPresent())
+		{
+#if defined(TARGET_VIDONME_BOX)
+			g_graphicsContext.Clear();
+#endif
+			m_pPlayer->Present();
+
+		}
+		else
+		{
+			g_graphicsContext.SetRenderingResolution(g_graphicsContext.GetVideoResolution(), false);
+			g_renderManager.Render(true, 0, 255);
+		}
+#else
+		g_graphicsContext.SetRenderingResolution(g_graphicsContext.GetVideoResolution(), false);
+		g_renderManager.Render(true, 0, 255);
+#endif
+
 
     // close window overlays
     CGUIDialog *overlay = (CGUIDialog *)g_windowManager.GetWindow(WINDOW_DIALOG_VIDEO_OVERLAY);
@@ -2568,6 +2602,14 @@ bool CApplication::OnAction(const CAction &action)
   if (action.GetID() == ACTION_TOGGLE_FULLSCREEN)
   {
     g_graphicsContext.ToggleFullScreenRoot();
+
+#if defined (HAS_VIDONME)
+		if (m_pPlayer)
+		{
+			m_pPlayer->UpdateWindowSize();
+		}
+#endif
+
     return true;
   }
 
@@ -3867,8 +3909,50 @@ PlayBackRet CApplication::PlayStack(const CFileItem& item, bool bRestart)
   return PLAYBACK_FAIL;
 }
 
+#if defined(HAS_VIDONME)
+static bool IsPlayBDMenu(const CFileItem& item)
+{
+	CStdString strFilepath = item.GetPath();
+	if (StringUtils::EndsWith(strFilepath, "BDMV/MovieObject.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV/index.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV\\MovieObject.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV\\index.bdmv"))
+	{
+		return true;
+	}
+	//refer to bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item)
+	if (URIUtils::HasExtension(item.GetPath(), ".iso|.img"))
+	{
+		CURL url2("udf://");
+		url2.SetHostName(item.GetPath());
+		url2.SetFileName("BDMV/index.bdmv");
+		if (CFile::Exists(url2.Get()))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+#endif
+
 PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
 {
+#if defined(HAS_VIDONME) && !defined(AML_DEMO)
+	if (IsPlayBDMenu(item))
+	{
+		CVDMUserInfo::Instance().WaitLoginInBackground();
+		if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+		{
+			CVDMDialogLogin::ShowLoginTip();
+			if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+			{
+				return PLAYBACK_CANCELED;
+			}
+		}
+	}
+#endif //if defined(HAS_VIDONME)
+
   // Ensure the MIME type has been retrieved for http:// and shout:// streams
   if (item.GetMimeType().empty())
     const_cast<CFileItem&>(item).FillInMimeType();
@@ -4114,6 +4198,10 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
 
   m_pPlayer->CreatePlayer(eNewCore, *this);
 
+#if defined (HAS_VIDONME)
+	bool		bSubtitleVisible = CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn;
+#endif
+
   PlayBackRet iResult;
   if (m_pPlayer->HasPlayer())
   {
@@ -4139,7 +4227,14 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
   }
 
   if(iResult == PLAYBACK_OK)
-  {
+	{
+#if defined (HAS_VIDONME)
+		if (m_pPlayer)
+		{
+			m_pPlayer->SetSubtitleVisible(bSubtitleVisible);
+		}
+#endif
+
     if (m_pPlayer->GetPlaySpeed() != 1)
     {
       int iSpeed = m_pPlayer->GetPlaySpeed();

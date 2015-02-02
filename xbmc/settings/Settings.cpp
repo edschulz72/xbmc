@@ -843,7 +843,8 @@ void CSettings::InitializeISettingCallbacks()
 	settingSet.insert("d3.mode");
 	settingSet.insert("audiooutput.passthrough");
   settingSet.insert("debugging.upload");
-  settingSet.insert("debugging.viewlog");
+	settingSet.insert("debugging.viewlog");
+	settingSet.insert("usercenter.switchuser");
 	settingSet.insert("upgrade.website");
 	settingSet.insert("upgrade.forum");
 	settingSet.insert("upgrade.versioncheck");

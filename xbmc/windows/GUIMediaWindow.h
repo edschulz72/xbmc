@@ -53,6 +53,10 @@ public:
   virtual bool IsFiltered();
   virtual bool IsSameStartFolder(const std::string &dir);
 
+#if defined(HAS_VIDONME)
+	void SetUpdate(bool bUpdate);
+#endif
+
 protected:
   virtual void LoadAdditionalTags(TiXmlElement *root);
   CGUIControl *GetFirstFocusableControl(int id);
@@ -189,5 +193,6 @@ protected:
 
 #if defined(HAS_VIDONME)
 	CStdString	m_itemType;
+	bool				m_bUpdate;
 #endif
 };

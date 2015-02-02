@@ -1153,6 +1153,28 @@ bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item, const CStdString
     return true;
   }
 
+#if defined (HAS_VIDONME)
+
+	CFileItemPtr pItem;
+	CStdString originPath = item->GetPath();
+	CStdString strFolerType = item->GetProperty("type").asString();
+
+	pItem.reset(new CFileItem());
+
+	if (strFolerType == "BDFolder" || strFolerType == "DVDFolder")
+	{
+		pItem.reset(new CFileItem());
+		CStdString strFolderPath = StringUtils::Left(originPath, originPath.size() - 15);
+		pItem->SetPath(strFolderPath);
+		pItem->m_bIsFolder = true;
+		pItem->SetLabel(g_localizeStrings.Get(70096) /* Open Folder */);
+		pItem->SetIconImage("DefaultFolder.png");
+		pItem->SetProperty("chooseitem", "update");
+		items.Add(pItem);
+	}
+
+#endif
+
   if (items.Size() == 0)
   {
     CLog::Log(LOGERROR, "CGUIWindowVideoBase::ShowPlaySelection - Failed to get any items %s", directory.c_str());
@@ -1174,6 +1196,16 @@ bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item, const CStdString
       CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
       break;
     }
+
+#if defined (HAS_VIDONME)
+		if (item_new->GetProperty("chooseitem").asString() == "update")
+		{
+			item.reset(new CFileItem(*item));
+			item->SetProperty("chooseitem", item_new->GetProperty("chooseitem").asString());
+			item->SetPath(item_new->GetPath());
+			return true;
+		}
+#endif
 
     if(item_new->m_bIsFolder == false)
     {
@@ -1615,6 +1647,15 @@ void CGUIWindowVideoBase::PlayMovie(const CFileItem *item)
 
   if(!ShowPlaySelection(movieItem))
     return;
+
+#if defined(HAS_VIDONME)
+	if (movieItem->GetProperty("chooseitem").asString() == "update")
+	{
+		CGUIMediaWindow::SetUpdate(true);
+		Update(movieItem->GetPath());
+		return;
+	}
+#endif
 
   g_playlistPlayer.Reset();
   g_playlistPlayer.SetCurrentPlaylist(PLAYLIST_VIDEO);

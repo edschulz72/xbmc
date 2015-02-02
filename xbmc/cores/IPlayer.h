@@ -252,7 +252,10 @@ public:
   virtual void GetSubtitleCapabilities(std::vector<int> &subCaps) { subCaps.assign(1,IPC_SUBS_ALL); };
 
 #ifdef HAS_VIDONME
+	virtual void Present(){};
+	virtual bool IsSelfPresent() { return false; }
 	virtual void SetPlayMode(DIMENSIONMODE mode) { return; }
+	virtual void UpdateWindowSize(void) { return; }
 #endif 
 
 protected:

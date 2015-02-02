@@ -110,6 +110,10 @@ public:
 
   static std::string GetErrorDescription(HRESULT hr);
 
+#if defined (HAS_VIDONME)
+	LPDIRECT3D9 GetD3D() { return m_pD3D; }
+#endif
+
 protected:
   bool CreateDevice();
   void DeleteDevice();

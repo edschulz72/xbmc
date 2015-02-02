@@ -97,6 +97,10 @@ CGUIMediaWindow::CGUIMediaWindow(int id, const char *xmlFile)
   m_iSelectedItem = -1;
   m_canFilterAdvanced = false;
 
+#if defined(HAS_VIDONME)
+	m_bUpdate = false;
+#endif
+
   m_guiState.reset(CGUIViewState::GetViewState(GetID(), *m_vecItems));
 }
 
@@ -730,27 +734,33 @@ bool CGUIMediaWindow::Update(const std::string &strDirectory, bool updateFilterP
     return false;
 
 #if defined(HAS_VIDONME)
-	CStdString strDVDFolderPath, strBDFolderPath;
+	if (!m_bUpdate)
+	{
+		CStdString strDVDFolderPath, strBDFolderPath;
 
-	strDVDFolderPath	= URIUtils::AddFileToFolder(strDirectory, "VIDEO_TS");
-	strDVDFolderPath	= URIUtils::AddFileToFolder(strDVDFolderPath, "VIDEO_TS.IFO");
-	strBDFolderPath		= URIUtils::AddFileToFolder(strDirectory, "BDMV");
-	strBDFolderPath		= URIUtils::AddFileToFolder(strBDFolderPath, "index.bdmv");
+		strDVDFolderPath = URIUtils::AddFileToFolder(strDirectory, "VIDEO_TS");
+		strDVDFolderPath = URIUtils::AddFileToFolder(strDVDFolderPath, "VIDEO_TS.IFO");
+		strBDFolderPath = URIUtils::AddFileToFolder(strDirectory, "BDMV");
+		strBDFolderPath = URIUtils::AddFileToFolder(strBDFolderPath, "index.bdmv");
 
-	if (XFILE::CFile::Exists(strDVDFolderPath))
-	{
-		m_itemType = "DVDFolder";
-		return true;
+		if (XFILE::CFile::Exists(strDVDFolderPath))
+		{
+			m_itemType = "DVDFolder";
+			return true;
+		}
+		else if (XFILE::CFile::Exists(strBDFolderPath))
+		{
+			m_itemType = "BDFolder";
+			return true;
+		}
+		else
+		{
+			m_itemType = "NONE";
+		}
 	}
-	else if (XFILE::CFile::Exists(strBDFolderPath))
-	{
-		m_itemType = "BDFolder";
-		return true;
-	}
-	else
-	{
-		m_itemType = "NONE";
-	}
+
+	m_bUpdate = false;
+
 #endif
 
   // get selected item
@@ -947,6 +957,13 @@ bool CGUIMediaWindow::OnClick(int iItem)
 {
   if ( iItem < 0 || iItem >= (int)m_vecItems->Size() ) return true;
   CFileItemPtr pItem = m_vecItems->Get(iItem);
+
+#if defined(HAS_VIDONME)
+	if (pItem->GetLabel() == "..")
+	{
+		m_bUpdate = true;
+	}
+#endif
 
   if (pItem->IsParentFolder())
   {
@@ -1773,6 +1790,13 @@ void CGUIMediaWindow::UpdateFilterPath(const std::string &strDirectory, const CF
     }
   }
 }
+
+#if defined(HAS_VIDONME)
+void CGUIMediaWindow::SetUpdate(bool bUpdate)
+{
+	m_bUpdate = bUpdate;
+}
+#endif
 
 void CGUIMediaWindow::OnFilterItems(const std::string &filter)
 {

@@ -154,6 +154,9 @@ public:
   void  ToFFRW(int iSpeed = 0);
 
 #ifdef HAS_VIDONME
+	void Present();
+	bool IsSelfPresent();
 	void SetPlayMode(DIMENSIONMODE mode);
+	void UpdateWindowSize(void);
 #endif 
 };

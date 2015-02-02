@@ -699,7 +699,12 @@ void CXBMCApp::SetupEnv()
   {
     setenv("KODI_BIN_HOME", (xbmcHome + "/assets").c_str(), 0);
     setenv("KODI_HOME", (xbmcHome + "/assets").c_str(), 0);
-  }
+	}
+
+#if defined(HAS_VIDONME)
+	setenv("XBMC_MORE_ADDONS", (cacheDir + "/more-addons/addons").c_str(), 0);
+#endif
+
 
   std::string externalDir = CJNISystem::getProperty("xbmc.data", "");
   if (externalDir.empty())

@@ -677,9 +677,29 @@ int CApplicationPlayer::GetPlaySpeed() const
 }
 
 #ifdef HAS_VIDONME
+void CApplicationPlayer::Present()
+{
+	if (m_pPlayer)
+		m_pPlayer->Present();
+}
+
+bool CApplicationPlayer::IsSelfPresent()
+{
+	if (m_pPlayer)
+		return m_pPlayer->IsSelfPresent();
+
+	return false;
+}
+
 void CApplicationPlayer::SetPlayMode(DIMENSIONMODE mode)
 {
 	if (m_pPlayer)
 		return m_pPlayer->SetPlayMode(mode);
+}
+
+void CApplicationPlayer::UpdateWindowSize()
+{
+	if (m_pPlayer)
+		return m_pPlayer->UpdateWindowSize();
 }
 #endif 

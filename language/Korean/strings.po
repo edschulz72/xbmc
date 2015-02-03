@@ -13085,16 +13085,16 @@ msgstr "GPU 가속"
 
 
 msgctxt "#70000"
-msgid "Welcome to VidOn XBMC Demo"
-msgstr " VidOn XBMC Demo에 오신 것을 환영합니다"
+msgid "Welcome to VidOn Kodi Demo"
+msgstr " VidOn Kodi Demo에 오신 것을 환영합니다"
 
 msgctxt "#70001"
-msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
-msgstr "VidOn.me는 안드로이드 플렛폼에 가장 호환되고 신뢰할 수 있는 최적화된 XBMC를 제공합니다. 전통적인 미디어 관리 기능의 기초상에 블루레이 메뉴 네비게이션, HD 오디오 출력 등 고유의 기능들을 제공해 드립니다."
+msgid "VidOn.me offers for Android the most complete and reliable Kodi, with greatly optimized functions and features. On top of the traditional media management function, our Kodi has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr "VidOn.me는 안드로이드 플렛폼에 가장 호환되고 신뢰할 수 있는 최적화된 Kodi를 제공합니다. 전통적인 미디어 관리 기능의 기초상에 블루레이 메뉴 네비게이션, HD 오디오 출력 등 고유의 기능들을 제공해 드립니다."
 
 msgctxt "#70002"
-msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
-msgstr "\n\nTo VidOn XBMC Pro로 업그레이드하는데는 [COLOR=blue]http://ko/VidOn.me/ [/COLOR]를 방문하십시오. "
+msgid "\n\nTo upgrade to VidOn Kodi Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\nTo VidOn Kodi Pro로 업그레이드하는데는 [COLOR=blue]http://ko/VidOn.me/ [/COLOR]를 방문하십시오. "
 
 msgctxt "#70003"
 msgid "OK"
@@ -13113,12 +13113,12 @@ msgid "Account/password verification failed. Please re-enter."
 msgstr "아이디/비밀 번호를 확인하는데 실패했습니다. 다시 입력해 주십시오."
 
 msgctxt "#70007"
-msgid "Welcome to VidOn XBMC"
-msgstr " VidOn XBMC에 오신것을 환영합니다"
+msgid "Welcome to VidOn Kodi"
+msgstr " VidOn Kodi에 오신것을 환영합니다"
 
 msgctxt "#70008"
-msgid "You are using the free version of VidOn XBMC."
-msgstr " VidOn XBMC의 무료 버전을 사용하고 있습니다."
+msgid "You are using the free version of VidOn Kodi."
+msgstr " VidOn Kodi의 무료 버전을 사용하고 있습니다."
 
 msgctxt "#70009"
 msgid "You already have a top-up card. Complete the binding to upgrade immediately to the Pro version!"

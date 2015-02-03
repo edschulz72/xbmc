@@ -13085,16 +13085,16 @@ msgstr "GPU-beschleunigt"
 
 
 msgctxt "#70000"
-msgid "Welcome to VidOn XBMC Demo"
-msgstr "Willkommen bei VidOn XBMC Demo"
+msgid "Welcome to VidOn Kodi Demo"
+msgstr "Willkommen bei VidOn Kodi Demo"
 
 msgctxt "#70001"
-msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
-msgstr "VidOn.me bietet fürAndroiddas vollständige und zuverlässige XBMC mit den optimierten Funktionen und Features. Neben der leistungsstarken Medien-Management-Funktion, hat das VidOn XBMC auch viele einzigartige Features inkl. Blu-ray-Menünavigation, HD-Audio-Ausgang und vieles mehr."
+msgid "VidOn.me offers for Android the most complete and reliable Kodi, with greatly optimized functions and features. On top of the traditional media management function, our Kodi has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr "VidOn.me bietet fürAndroiddas vollständige und zuverlässige Kodi mit den optimierten Funktionen und Features. Neben der leistungsstarken Medien-Management-Funktion, hat das VidOn Kodi auch viele einzigartige Features inkl. Blu-ray-Menünavigation, HD-Audio-Ausgang und vieles mehr."
 
 msgctxt "#70002"
-msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
-msgstr "\n\nUm auf das VidOn XBMC Pro zu aktualisieren, besuchen Sie bitte: [COLOR=blue]http://VidOn.me/ [/COLOR] "
+msgid "\n\nTo upgrade to VidOn Kodi Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\nUm auf das VidOn Kodi Pro zu aktualisieren, besuchen Sie bitte: [COLOR=blue]http://VidOn.me/ [/COLOR] "
 
 msgctxt "#70003"
 msgid "OK"
@@ -13113,16 +13113,16 @@ msgid "Account/password verification failed. Please re-enter."
 msgstr "Benutzername/Passwortfalsch. Bitte geben Sie erneut ein."
 
 msgctxt "#70007"
-msgid "Welcome to VidOn XBMC"
-msgstr "Willkommen bei VidOn XBMC"
+msgid "Welcome to VidOn Kodi"
+msgstr "Willkommen bei VidOn Kodi"
 
 msgctxt "#70008"
-msgid "You are using the free version of VidOn XBMC."
-msgstr "Jetzt nutzen Sie eine kostenlose Version des VidOn XBMC."
+msgid "You are using the free version of VidOn Kodi."
+msgstr "Jetzt nutzen Sie eine kostenlose Version des VidOn Kodi."
 
 msgctxt "#70009"
 msgid "You already have a top-up card. Complete the binding to upgrade immediately to the Pro version!"
-msgstr "Sie haben bereits einePrepaid-Karte. Schließen Sie die Bindung ab um VidOn XBMC sofort auf die Pro-Version zu upgraden!"
+msgstr "Sie haben bereits einePrepaid-Karte. Schließen Sie die Bindung ab um VidOn Kodi sofort auf die Pro-Version zu upgraden!"
 
 msgctxt "#70010"
 msgid "You already have a top-up card. You can use advanced features after the binding!"
@@ -13130,7 +13130,7 @@ msgstr "Sie haben bereits eine Prepaid-Karte. Sie könnenerweiterte Funktionen n
 
 msgctxt "#70011"
 msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding to upgrade to the Pro version!"
-msgstr "Keine verfügbare Prepaid-Karte unter Ihrem Konto. Sie könnenden digitalen Codeder Kartemanuell eingeben, um die Bindung abzuschließen und Ihr VidOn XBMC auf die Pro-Version zu upgraden!"
+msgstr "Keine verfügbare Prepaid-Karte unter Ihrem Konto. Sie könnenden digitalen Codeder Kartemanuell eingeben, um die Bindung abzuschließen und Ihr VidOn Kodi auf die Pro-Version zu upgraden!"
 
 msgctxt "#70012"
 msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding."

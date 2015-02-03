@@ -13084,16 +13084,16 @@ msgstr "GPU 加速"
 
 
 msgctxt "#70000"
-msgid "Welcome to VidOn XBMC Demo"
-msgstr "欢迎使用VidOn XBMC Demo版"
+msgid "Welcome to VidOn Kodi Demo"
+msgstr "欢迎使用VidOn Kodi Demo版"
 
 msgctxt "#70001"
-msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
-msgstr "VidOn.me致力于为用户提供最完整、最可靠的Android XBMC。我们的XBMC经过极度优化，在传统的媒体管理功能基础上还具备了蓝光菜单导航和HD音频输出等独家功能。 "
+msgid "VidOn.me offers for Android the most complete and reliable Kodi, with greatly optimized functions and features. On top of the traditional media management function, our Kodi has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr "VidOn.me致力于为用户提供最完整、最可靠的Android Kodi。我们的Kodi经过极度优化，在传统的媒体管理功能基础上还具备了蓝光菜单导航和HD音频输出等独家功能。 "
 
 msgctxt "#70002"
-msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
-msgstr "\n\n想要升级成VidOn XBMC Pro版，请访问：[COLOR=blue]http://cn.vidon.me/ [/COLOR] "
+msgid "\n\nTo upgrade to VidOn Kodi Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\n想要升级成VidOn Kodi Pro版，请访问：[COLOR=blue]http://cn.vidon.me/ [/COLOR] "
 
 msgctxt "#70003"
 msgid "OK"
@@ -13112,12 +13112,12 @@ msgid "Account/password verification failed. Please re-enter."
 msgstr "账户/密码验证失败。请重新输入。"
 
 msgctxt "#70007"
-msgid "Welcome to VidOn XBMC"
-msgstr "欢迎使用VidOn XBMC"
+msgid "Welcome to VidOn Kodi"
+msgstr "欢迎使用VidOn Kodi"
 
 msgctxt "#70008"
-msgid "You are using the free version of VidOn XBMC."
-msgstr "您正在使用免费版VidOn XBMC."
+msgid "You are using the free version of VidOn Kodi."
+msgstr "您正在使用免费版VidOn Kodi."
 
 msgctxt "#70009"
 msgid "You already have a top-up card. Complete the binding to upgrade immediately to the Pro version!"

@@ -1677,7 +1677,7 @@ void CVDMPlayer::InitializePlayerCore()
 	config.pfn_guishader_callback = on_guishader_callback;
 	//CXBMCApp::GetScreenDimension (config.width, config.height);
 	//CJG, 20141020,need to fix this
-	if(g_Windowing.GetEglHandle())
+	/*if(g_Windowing.GetEglHandle())
 	{
 		RESOLUTION_INFO res;
 		g_Windowing.GetEglHandle()->GetNativeResolution(&res);
@@ -1689,7 +1689,7 @@ void CVDMPlayer::InitializePlayerCore()
 		config.width = res.iScreenWidth;
 		config.height = res.iScreenHeight;
 	}
-	else
+	else*/
 	{ 
 		config.width = 1280;//1280;//1920;
 		config.height = 720;

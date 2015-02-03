@@ -48,6 +48,16 @@ class CTemperature;
 #define CPU_FEATURE_ALTIVEC  1 << 10
 #define CPU_FEATURE_NEON     1 << 11
 
+#if defined(TARGET_VIDONME_BOX)
+enum CPU_TYPE
+{
+  CT_UNKNOWN,
+  CT_ALLWINNER_A20,
+  CT_ALLWINNER_A31,
+  CT_AMLOGIC_M8,
+};
+#endif
+
 struct CoreInfo
 {
   int    m_id;
@@ -99,6 +109,10 @@ public:
   std::string GetCoresUsageString() const;
 
   unsigned int GetCPUFeatures() const { return m_cpuFeatures; }
+
+#if defined(TARGET_VIDONME_BOX)
+  static CPU_TYPE GetCPUType();
+#endif
 
 private:
   bool readProcStat(unsigned long long& user, unsigned long long& nice, unsigned long long& system,

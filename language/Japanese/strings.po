@@ -12608,6 +12608,22 @@ msgctxt "#70092"
 msgid "Unlicensed"
 msgstr "未認可"
 
-msgctxt "#70095" 
-msgid "Play main title" 
-msgstr "メインタイトルを再生" 
+msgctxt "#70093"
+msgid "You've got VidOn Membership Experience Qualification"
+msgstr " VidOn 会員体験資格を取得しました"
+
+msgctxt "#70094"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgstr "おめでとうございます！VidOn 会員体験資格を取得しました。この体験資格の有効期限は %s まで、期限内に無料でBlu-rayメニューナビゲーション及び他の高度機能を使用できます。今すぐ試しに行こう！"
+
+msgctxt "#70095"
+msgid "Play main title"
+msgstr "メインタイトルを再生"
+
+msgctxt "#70096"
+msgid "Open folder"
+msgstr "フォルダを開く"
+
+msgctxt "#70097"
+msgid "I am a user in Mainland China"
+msgstr "中国本土で使用します"

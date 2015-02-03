@@ -13186,7 +13186,7 @@ msgid "VidOn"
 msgstr "VidOn"
 
 msgctxt "#70025"
-msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file 路 Send dump file 路 Default settings for 3D playback"
+msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file · Send dump file · Default settings for 3D playback"
 msgstr "[B]CONFIGURAR LOS AJUSTES DE VIDON [/B][CR][CR]Enviar archivo log ·Enviar archivo dump · Ajustes para reproducción de 3D por defecto"
 
 msgctxt "#70026"
@@ -13394,7 +13394,7 @@ msgstr "Fallo en verificar el archivo"
 #: xbmc/vidonme/VDMDialogVersionCheck.cpp
 msgctxt "#70075"
 msgid "New Version"
-msgstr "Nueva versi贸n"
+msgstr "Nueva versión"
 
 
 #: xbmc/settings/windows/GUIWindowSettingsCategory.cpp
@@ -13429,17 +13429,17 @@ msgstr "Fallo en recoger el archivo log"
 #: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
 msgctxt "#70081"
 msgid "Current Version"
-msgstr "Versi贸n Actual"
+msgstr "Versión Actual"
 
 #: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
 msgctxt "#70082"
 msgid "Checking for the latest version..."
-msgstr "Verificando la versi贸n m谩s reciente ..."
+msgstr "Verificando la versión más reciente ..."
 
 #: xbmc/vidonme/VDMLogReportUpload.cpp
 msgctxt "#70083"
 msgid "Network connection error"
-msgstr "Error en conexi贸n al red"
+msgstr "Error en conexión al red"
 
 #: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
 msgctxt "#70084"
@@ -13454,7 +13454,7 @@ msgstr "Reintentar"
 #: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
 msgctxt "#70086"
 msgid "Already the latest version"
-msgstr "Ya es la versi贸n m谩s reciente"
+msgstr "Ya es la versión más reciente"
 
 
 #: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
@@ -13469,7 +13469,7 @@ msgstr "Actualizar"
 
 msgctxt "#70089"
 msgid "Without account?"
-msgstr "驴No tiene cuenta?"
+msgstr "¿No tiene cuenta?"
 
 msgctxt "#70090"
 msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/ [COLOR=white]to finish registration.[/COLOR] "
@@ -13484,7 +13484,22 @@ msgctxt "#70092"
 msgid "Unlicensed"
 msgstr "No licenciado"
 
+msgctxt "#70093"
+msgid "You've got VidOn Membership Experience Qualification"
+msgstr "Ha conseguido la Calificación de Prueba de VidOn Membresía"
 
-msgctxt "#70095" 
-msgid "Play main title" 
-msgstr "Reproduce título principal" 
+msgctxt "#70094"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgstr "¡Enhorabuena! Ha conseguido la Calificación de Prueba de VidOn Membresía. Esta calificación, hasta %s, te permite accede la function de navegación por menú de Blu-ray y otras características advanzadas gratis. ¡Pruebela!"
+
+msgctxt "#70095"
+msgid "Play main title"
+msgstr "Reproduce título principal"
+
+msgctxt "#70096"
+msgid "Open folder"
+msgstr "Abrir carpeta"
+
+msgctxt "#70097"
+msgid "I am a user in Mainland China"
+msgstr "Estoy en parte continental de China"

@@ -13185,7 +13185,7 @@ msgid "VidOn"
 msgstr "VidOn"
 
 msgctxt "#70025"
-msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file 路 Send dump file 路 Default settings for 3D playback"
+msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file · Send dump file · Default settings for 3D playback"
 msgstr "[B]CONFIGURER LES REGLAGES VIDON[/B][CR][CR]Envoyer le fichier log · Envoyer le fichier dump · Réglages de lecture 3D par défaut"
 
 msgctxt "#70026"
@@ -13483,6 +13483,22 @@ msgctxt "#70092"
 msgid "Unlicensed"
 msgstr "Non autorisé"
 
-msgctxt "#70095" 
-msgid "Play main title" 
-msgstr "Lire le titre principal" 
+msgctxt "#70093"
+msgid "You've got VidOn Membership Experience Qualification"
+msgstr "Vous avez obtenu la qualification d’expérience de l’adhésion VidOn."
+
+msgctxt "#70094"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership.The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgstr "Félicitations! Vous avez obtenu la qualification d’expérience de l’adhésion VidOn, qui sera expirée %s. Vous pouvez utiliser la fonctionnalité de navigation de menu Blu-ray et les autres fonctionnalités avancées. Allez, essayez-le ! "
+
+msgctxt "#70095"
+msgid "Play main title"
+msgstr "Lire le titre principal"
+
+msgctxt "#70096"
+msgid "Open folder"
+msgstr "Ouvrir un dossier"
+
+msgctxt "#70097"
+msgid "I am a user in Mainland China"
+msgstr "Je suis un utilisateur en Chine continentale"

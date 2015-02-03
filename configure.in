@@ -2538,6 +2538,10 @@ if test "$use_sse4" = "yes"; then
 OUTPUT_FILES="$OUTPUT_FILES xbmc/linux/sse4/Makefile"
 fi
 
+if test "$THIRD_PARTY" = ""; then
+  THIRD_PARTY=/opt/third_party
+fi
+
 LIBS="$LIBS -L$THIRD_PARTY/lib -lbreakpad_client -llog"
 
 OUTPUT_FILES="$OUTPUT_FILES \
@@ -2618,6 +2622,9 @@ AC_SUBST(UPNP_DEFINES)
 AC_SUBST(USE_SSE4)
 AC_SUBST(USE_MMAL)
 AC_SUBST(USE_X11)
+AC_SUBST(THIRD_PARTY)
+AC_SUBST(FEATURE_SUPPORT)
+AC_SUBST(NDK_R9_PLUS)
 
 # pushd and popd are not available in other shells besides bash, so implement
 # our own pushd/popd functions

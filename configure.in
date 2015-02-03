@@ -2538,6 +2538,8 @@ if test "$use_sse4" = "yes"; then
 OUTPUT_FILES="$OUTPUT_FILES xbmc/linux/sse4/Makefile"
 fi
 
+LIBS="$LIBS -L$THIRD_PARTY/lib -lbreakpad_client -llog"
+
 OUTPUT_FILES="$OUTPUT_FILES \
   xbmc/interfaces/python/Makefile \
   xbmc/interfaces/python/test/Makefile"

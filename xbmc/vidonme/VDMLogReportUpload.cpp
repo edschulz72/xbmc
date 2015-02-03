@@ -32,14 +32,14 @@ bool Method_LogReportUpload::Upload(const CStdString& strUserID, const CStdStrin
     {
       VidonUploadReportHandle hHandle = g_DllVidonUtils.Vidon_CreateUploadReportHandle();
       g_DllVidonUtils.Vidon_SetUploadStringParam( hHandle, libVidonUtils::VdionUpload_TempDir, CSpecialProtocol::TranslatePath("special://temp/").c_str() );
-      g_DllVidonUtils.Vidon_SetUploadStringParam( hHandle, libVidonUtils::VidonUploadParams_Title, "XBMC13" );
+      g_DllVidonUtils.Vidon_SetUploadStringParam( hHandle, libVidonUtils::VidonUploadParams_Title, "XBMC14" );
       g_DllVidonUtils.Vidon_SetUploadStringParam( hHandle, libVidonUtils::VidonUploadParams_Username, strUserID.c_str() );
       g_DllVidonUtils.Vidon_SetUploadStringParam( hHandle, libVidonUtils::VidonUploadParams_Email, strUserEmail.c_str() );
       g_DllVidonUtils.Vidon_SetUploadStringParam( hHandle, libVidonUtils::VidonUploadParams_Version, CVDMVersionCheck::GetCurrVersionCode().c_str() );
       g_DllVidonUtils.Vidon_SetUploadStringParam( hHandle, libVidonUtils::VdionUploadParams_RecordType,"log" );
-      g_DllVidonUtils.Vidon_PushUploadFileParam( hHandle, URIUtils::AddFileToFolder(getenv("HOME"), "xbmc.logcat").c_str() );
-      g_DllVidonUtils.Vidon_PushUploadFileParam( hHandle, URIUtils::AddFileToFolder(getenv("HOME"), "xbmc.dmp").c_str() );
-      g_DllVidonUtils.Vidon_PushUploadFileParam( hHandle, URIUtils::AddFileToFolder(CSpecialProtocol::TranslatePath(g_advancedSettings.m_logFolder), "xbmc.log").c_str() );
+      g_DllVidonUtils.Vidon_PushUploadFileParam( hHandle, URIUtils::AddFileToFolder(getenv("HOME"), "kodi.logcat").c_str() );
+      g_DllVidonUtils.Vidon_PushUploadFileParam( hHandle, URIUtils::AddFileToFolder(getenv("HOME"), "kodi.dmp").c_str() );
+      g_DllVidonUtils.Vidon_PushUploadFileParam( hHandle, URIUtils::AddFileToFolder(CSpecialProtocol::TranslatePath(g_advancedSettings.m_logFolder), "kodi.log").c_str() );
       g_DllVidonUtils.Vidon_PushUploadFileParam( hHandle, URIUtils::AddFileToFolder(CSpecialProtocol::TranslatePath(g_advancedSettings.m_logFolder), "vdmplayer.log").c_str() );
       bRet = g_DllVidonUtils.Vidon_UploadReport( hHandle );
       g_DllVidonUtils.Vidon_DestroyUploadReportHandle( hHandle );

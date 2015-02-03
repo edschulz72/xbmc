@@ -69,6 +69,9 @@ ifeq ($(ARCH), powerpc-osx)
 	BUNDLE1_O=-lbundle1.o
 endif
 
+INCLUDES+=-I@THIRD_PARTY@/include/breakpad
+INCLUDES+=-I@THIRD_PARTY@/include/breakpad/common/android/include
+
 ifneq ($(V), 1)
 	SILENT_CPP=@echo "CPP     $(rel_top_srcdir)$@";
 	SILENT_CC =@echo "CC      $(rel_top_srcdir)$@";

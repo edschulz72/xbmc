@@ -16,6 +16,7 @@
 #include "vidonme/VDMRegionFeature.h"
 #include "vidonme/VDMVersionUpdate.h"
 #include "vidonme/VDMDialogVersionCheck.h"
+#include "vidonme/VDMLogReportUpload.h"
 
 CVDMSettingsManager::CVDMSettingsManager()
 {
@@ -40,13 +41,22 @@ void CVDMSettingsManager::OnSettingAction(const CSetting *setting)
 
 	if (settingId == "debugging.upload")
 	{
-      CStdString strUserName;
-      CStdString strEmail = CSettings::Get().GetString( "usercenter.email");
+    CStdString strUserName;
+    CStdString strPassword;
+    if (!CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword))
+    {
+      strUserName = "unknown username";
+    }
+
+    CStdString strEmail = CSettings::Get().GetString("usercenter.email");
+
+    Method_LogReportUpload* LogUpload = new Method_LogReportUpload(strUserName, strEmail);
+    SynchroMethodCall(boost::shared_ptr<MethodPtr>(new MethodPtr(LogUpload)));
 	}
 	
 	if (settingId == "debugging.viewlog")
 	{
-		CStdString strExecute = "file://" +g_advancedSettings.m_logFolder + "xbmc.log";
+		CStdString strExecute = "file://" +g_advancedSettings.m_logFolder + "kodi.log";
 		
 		strExecute	= StringUtils::Format("VDMOpenURL(%s)", strExecute.c_str());
 		CBuiltins::Execute(strExecute);
@@ -101,27 +111,27 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 	{
 		if (g_application.m_pPlayer)
 		{
-			//g_application.m_pPlayer->SetPlayMode((DIMENSIONMODE)((CSettingInt*)setting)->GetValue());
+			g_application.m_pPlayer->SetPlayMode((DIMENSIONMODE)((CSettingInt*)setting)->GetValue());
 		}
 	}
 
-//#if !defined(AML_DEMO)
-//	if (settingId == "audiooutput.passthrough")
-//	{
-//		CSettingBool* pSettingsTmp = (CSettingBool*)setting;
-//		if (pSettingsTmp->GetValue())
-//		{
-//			if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
-//			{
-//				CVDMDialogLogin::ShowLoginTip();
-//				if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
-//				{
-//					pSettingsTmp->SetValue(false);
-//				}
-//			}
-//		}
-//	}
-//#endif
+#if !defined(AML_DEMO)
+	if (settingId == "audiooutput.passthrough")
+	{
+		CSettingBool* pSettingsTmp = (CSettingBool*)setting;
+		if (pSettingsTmp->GetValue())
+		{
+			if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+			{
+				CVDMDialogLogin::ShowLoginTip();
+				if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+				{
+					pSettingsTmp->SetValue(false);
+				}
+			}
+		}
+	}
+#endif
 
 	return true;
 }

@@ -87,6 +87,10 @@ void CGUIWindowHome::OnInitWindow()
     m_updateRA = (Audio | Video | Totals);
   AddRecentlyAddedJobs( m_updateRA );
 
+#if defined(HAS_VIDONME)
+  UpdateVidonLogo();
+#endif
+
   CGUIWindow::OnInitWindow();
 
 #if defined(HAS_VIDONME)
@@ -98,13 +102,14 @@ void CGUIWindowHome::OnInitWindow()
     if( CVDMUserInfo::Instance().GetUsernameAndPassword( strUserName, strPassword ) )
     {
       CVDMUserInfo::Instance().DoLogin( strUserName, strPassword, false );
+      g_vdmVersionUpdate.CheckVersionInBackground();
+      
     }
     else
     {
       CGUIMessage showmsg(GUI_MSG_VISIBLE, GetID(), VDM_WINDOW_DIALOG_LOGIN);
       g_windowManager.SendThreadMessage(showmsg, VDM_WINDOW_DIALOG_LOGIN);
     }
-    g_vdmVersionUpdate.CheckVersionInBackground();
 
 		m_bFirstRun = false;
 	}
@@ -196,6 +201,26 @@ void CGUIWindowHome::OnJobComplete(unsigned int jobID, bool success, CJob *job)
     AddRecentlyAddedJobs(0 /* the flag will be set inside AddRecentlyAddedJobs via m_cumulativeUpdateFlag */ );
 }
 
+void CGUIWindowHome::UpdateVidonLogo()
+{
+#if defined(HAS_VIDONME)
+  if (g_SkinInfo->ID() == "skin.confluence" && g_SkinInfo->IsInUse())
+  {
+    CGUIImage* pLogoImage = (CGUIImage*)GetControl(CONTROL_IMAGE_LOGO);
+    if (pLogoImage != NULL)
+    {
+      if (CVDMUserInfo::Instance().MaybeProVersion())
+      {
+        pLogoImage->SetFileName("special://xbmc/media/VDMResource/vidonxbmc_logo_pro.png");
+      }
+      else
+      {
+        pLogoImage->SetFileName("kodi-logo.png");
+      }
+    }
+  }
+#endif //#if defined(HAS_VIDONME)
+}
 
 bool CGUIWindowHome::OnMessage(CGUIMessage& message)
 {
@@ -238,24 +263,3 @@ bool CGUIWindowHome::OnMessage(CGUIMessage& message)
 
   return CGUIWindow::OnMessage(message);
 }
-
-#if defined(HAS_VIDONME)
-void CGUIWindowHome::UpdateVidonLogo()
-{
-	if (g_SkinInfo->ID() == "skin.confluence" && g_SkinInfo->IsInUse())
-	{
-		CGUIImage* pLogoImage = (CGUIImage*)GetControl(CONTROL_IMAGE_LOGO);
-		if (pLogoImage != NULL)
-		{
-			if (CVDMUserInfo::Instance().MaybeProVersion())
-			{
-				pLogoImage->SetFileName("special://xbmc/media/VDMResource/vidonxbmc_logo_pro.png");
-			}
-			else
-			{
-				pLogoImage->SetFileName("xbmc-logo.png");
-			}
-		}
-	}
-}
-#endif

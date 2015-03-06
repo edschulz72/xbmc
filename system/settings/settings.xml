@@ -3063,6 +3063,7 @@
         <setting id="usercenter.licenseid" type="string" label="70060" help="0">
           <level>0</level>
           <default>$LOCALIZE[70092]</default>
+		  <visible>false</visible>
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
           </dependencies>

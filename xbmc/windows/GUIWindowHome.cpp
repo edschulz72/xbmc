@@ -105,11 +105,6 @@ void CGUIWindowHome::OnInitWindow()
       g_vdmVersionUpdate.CheckVersionInBackground();
       
     }
-    else
-    {
-      CGUIMessage showmsg(GUI_MSG_VISIBLE, GetID(), VDM_WINDOW_DIALOG_LOGIN);
-      g_windowManager.SendThreadMessage(showmsg, VDM_WINDOW_DIALOG_LOGIN);
-    }
 
 		m_bFirstRun = false;
 	}

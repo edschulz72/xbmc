@@ -16546,3 +16546,19 @@ msgstr "Enable VidOn Player"
 msgctxt "#70099"
 msgid "If VidOn Player is disabled, original XBMC player will be used."
 msgstr "If VidOn Player is disabled, original XBMC player will be used."
+
+msgctxt "#70100"
+msgid "Please login with your VidOn.me account to access this subscription feature."
+msgstr "Please login with your VidOn.me account to access this subscription feature."
+
+msgctxt "#70101"
+msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+msgstr "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+
+msgctxt "#70102"
+msgid ""
+msgstr ""
+
+msgctxt "#70103"
+msgid ""
+msgstr ""

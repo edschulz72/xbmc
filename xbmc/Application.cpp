@@ -3942,13 +3942,9 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
 	if (IsPlayBDMenu(item))
 	{
 		CVDMUserInfo::Instance().WaitLoginInBackground();
-		if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+		if (!CVDMDialogLogin::ShowLoginTip())
 		{
-			CVDMDialogLogin::ShowLoginTip();
-			if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
-			{
-				return PLAYBACK_CANCELED;
-			}
+			return PLAYBACK_CANCELED;
 		}
 	}
 #endif //if defined(HAS_VIDONME)

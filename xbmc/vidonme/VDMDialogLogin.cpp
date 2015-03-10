@@ -304,7 +304,11 @@ void CVDMDialogLogin::UpdateControls()
 			else
 			{
 				Close();
-				CGUIDialogOK::ShowAndGetInput(70007, 70100, 70101, "");
+				
+				if (!m_item->HasProperty("SwitchUser"))
+				{
+					CGUIDialogOK::ShowAndGetInput(70007, 70100, 70101, "");
+				}
 			}
 			UpdateButtons();
 		}

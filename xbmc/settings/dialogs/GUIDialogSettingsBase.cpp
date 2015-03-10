@@ -42,6 +42,8 @@
 #if defined (HAS_VIDONME)
 #include "vidonme/VDMVersionUpdate.h"
 #include "vidonme/VDMRegionFeature.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "settings/Settings.h"
 #endif
 
 using namespace std;
@@ -783,6 +785,18 @@ void CGUIDialogSettingsBase::OnClick(BaseSettingControlPtr pSettingControl)
 
     return;
   }
+
+#if defined(HAS_VIDONME)
+	if (pSettingControl->GetSetting()->GetId() == "audio.digitalanalog" && !CSettings::Get().GetBool("audiooutput.passthrough"))
+	{
+		if (!CVDMDialogLogin::ShowLoginTip())
+		{
+			static_cast<CSettingBool*>(pSettingControl->GetSetting())->SetValue(false);
+			pSettingControl->Update();
+			return;
+		}
+	}
+#endif
 
   // if changing the setting fails
   // we need to restore the proper state

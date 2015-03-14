@@ -64,6 +64,13 @@ using namespace std;
 #define CONTROL_DEFAULT_EDIT            12
 #define CONTROL_DEFAULT_SLIDER          13
 
+#if defined (HAS_VIDONME)
+#define USERCENTER_CATEGORY_ID          "usercenter"
+#define UPGRADE_CATEGORY_ID             "upgrade"
+#endif
+
+
+
 CGUIDialogSettingsBase::CGUIDialogSettingsBase(int windowId, const std::string &xmlFile)
     : CGUIDialog(windowId, xmlFile),
       m_iSetting(0), m_iCategory(0),
@@ -535,9 +542,18 @@ std::set<std::string> CGUIDialogSettingsBase::CreateSettings()
 
   if (AllowResettingSettings() && !settingMap.empty())
   {
-    // add "Reset" control
-    AddSeparator(group->GetWidth(), iControlID);
-    AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+    // add "Reset" 
+#if defined(HAS_VIDONME)
+		if (0 != strcmp(category->GetId().c_str(), USERCENTER_CATEGORY_ID) && 
+			0 != strcmp(category->GetId().c_str(), UPGRADE_CATEGORY_ID))
+		{
+			AddSeparator(group->GetWidth(), iControlID);
+			AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+		}
+#else
+		AddSeparator(group->GetWidth(), iControlID);
+		AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+#endif
   }
   
   // update our settings (turns controls on/off as appropriate)

@@ -13503,3 +13503,20 @@ msgstr "Abrir carpeta"
 msgctxt "#70097"
 msgid "I am a user in Mainland China"
 msgstr "Estoy en parte continental de China"
+
+msgctxt "#70098"
+msgid "Left right to 3D"
+msgstr " Izquierda derecha de 3D "
+
+msgctxt "#70099"
+msgid "Top bottom to 3D"
+msgstr "Superior inferior de 3D"
+
+msgctxt "#70100"
+msgid "Please login with your VidOn.me account to access this subscription feature."
+msgstr "Por favor inicie session con su cuenta de VinOn.me para acceder a esta característica de suscripción ."
+
+msgctxt "#70101"
+msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+msgstr "Si no tiene una cuenta, por favor visite nuestro sitio web official: http://vidon.me/ para conocer más."
+

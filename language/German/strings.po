@@ -13503,3 +13503,19 @@ msgstr "Ordner öffnen"
 msgctxt "#70097"
 msgid "I am a user in Mainland China"
 msgstr "Ich bin ein Benutzer in Festlandchina"
+
+msgctxt "#70098"
+msgid "Left right to 3D"
+msgstr "Links Rechts 3D"
+
+msgctxt "#70099"
+msgid "Top bottom to 3D"
+msgstr "Oben Unten 3D"
+
+msgctxt "#70100"
+msgid "Please login with your VidOn.me account to access this subscription feature."
+msgstr "Bitte loggen Sie sich mit Ihrem VidOn.me Account ein, um dieses Abonnement Feature aufzurufen."
+
+msgctxt "#70101"
+msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+msgstr "Wenn Sie keinen Account haben, gehen Sie bitte auf unsere offizielle Website: http://de.vidon.me/ um mehr zu erfahren."

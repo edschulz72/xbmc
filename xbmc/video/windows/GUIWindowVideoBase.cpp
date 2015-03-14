@@ -1100,9 +1100,11 @@ bool CGUIWindowVideoBase::ShowResumeMenu(CFileItem &item)
 
 bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item)
 {
+#if !defined (HAS_VIDONME)
   /* if asked to resume somewhere, we should not show anything */
   if (item->m_lStartOffset)
-    return true;
+		return true;
+#endif
 
   if (CSettings::Get().GetInt("disc.playback") != BD_PLAYBACK_SIMPLE_MENU)
     return true;
@@ -1188,14 +1190,35 @@ bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item, const CStdString
     dialog->SetHeading(25006 /* Select playback item */);
     dialog->SetItems(&items);
     dialog->SetUseDetails(true);
-    dialog->DoModal();
+		
+#if defined (HAS_VIDONME)
+		CFileItemPtr item_new;
 
+		if (item->m_lStartOffset)
+		{
+			item_new = items.Get(0);
+		}
+		else
+		{
+			dialog->DoModal();
+			item_new = dialog->GetSelectedItem();
+
+			if (!item_new || dialog->GetSelectedLabel() < 0)
+			{
+				CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
+				break;
+			}
+		}
+#else
+    dialog->DoModal();
     CFileItemPtr item_new = dialog->GetSelectedItem();
-    if(!item_new || dialog->GetSelectedLabel() < 0)
-    {
-      CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
-      break;
-    }
+
+		if (!item_new || dialog->GetSelectedLabel() < 0)
+		{
+			CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
+			break;
+		}
+#endif
 
 #if defined (HAS_VIDONME)
 		if (item_new->GetProperty("chooseitem").asString() == "update")

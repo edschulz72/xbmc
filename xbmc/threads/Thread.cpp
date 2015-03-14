@@ -137,7 +137,9 @@ THREADFUNC CThread::staticThread(void* data)
   pThread->m_TermEvent.Set();
   pThread->TermHandler();
 
+#if !defined (HAS_VIDONME)
   lock.Leave();
+#endif
 
   if (autodelete)
   {
@@ -147,6 +149,10 @@ THREADFUNC CThread::staticThread(void* data)
   }
   else
     LOG(LOGDEBUG,"Thread %s %" PRIu64" terminating", name.c_str(), (uint64_t)id);
+
+#if defined (HAS_VIDONME)
+	lock.Leave();
+#endif
 
   return 0;
 }

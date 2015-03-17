@@ -16556,9 +16556,77 @@ msgid "If you do not have an account, please go to our official website: http://
 msgstr "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
 
 msgctxt "#70102"
-msgid ""
-msgstr ""
+msgid "Playing buffer"
+msgstr "Playing buffer"
 
 msgctxt "#70103"
-msgid ""
-msgstr ""
+msgid "This will config your network sources playing buffer settings."
+msgstr "This will config your network sources playing buffer settings."
+
+msgctxt "#70104"
+msgid "Playing buffer mode"
+msgstr "Playing buffer mode"
+
+msgctxt "#70105"
+msgid "Chose your network sources playing buffer mode"
+msgstr "Chose your network sources playing buffer mode"
+
+msgctxt "#70106"
+msgid "Buffer internet files"
+msgstr "Buffer internet files"
+
+msgctxt "#70107"
+msgid "Buffer all internet and LAN files"
+msgstr "Buffer all internet and LAN files"
+
+msgctxt "#70108"
+msgid "Buffer internet stream"
+msgstr "Buffer internet stream"
+
+msgctxt "#70109"
+msgid "No buffer"
+msgstr "No buffer"
+
+msgctxt "#70110"
+msgid "Buffer size"
+msgstr "Buffer size"
+
+msgctxt "#70111"
+msgid "Set the cache buffer size"
+msgstr "Set the cache buffer size"
+
+msgctxt "#70112"
+msgid "Buffer speed"
+msgstr "Buffer speed"
+
+msgctxt "#70113"
+msgid "Set the cache buffer speed"
+msgstr "Set the cache buffer speed"
+
+msgctxt "#70114"
+msgid "0MB"
+msgstr "0MB"
+
+msgctxt "#70115"
+msgid "20MB"
+msgstr "20MB"
+
+msgctxt "#70116"
+msgid "50MB"
+msgstr "50MB"
+
+msgctxt "#70117"
+msgid "100MB"
+msgstr "100MB"
+
+msgctxt "#70118"
+msgid "150MB"
+msgstr "150MB"
+
+msgctxt "#70119"
+msgid "10"
+msgstr "10"
+
+msgctxt "#70120"
+msgid "20"
+msgstr "20"

@@ -2988,6 +2988,50 @@
   </section>
   <!--HAS_VIDONME-->
   <section id ="vidonme" label="70024" help="70025">
+    <category id="buffer" label="70102" help="70103">
+      <group id="1">
+        <setting id="buffer.mode" type="integer" label="70104" help="70105">
+          <level>0</level>
+          <default>1</default>
+          <constraints>
+            <options>
+              <option label="70106">1</option>
+              <option label="70107">2</option>
+              <option label="70108">3</option>
+              <option label="70109">4</option>
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+        <setting id="buffer.size" type="integer" label="70110" help="70111">
+          <level>0</level>
+          <default>20</default>
+          <constraints>
+            <options>
+              <option label="70114">0</option>
+              <option label="70115">20</option>
+              <option label="70116">50</option>
+              <option label="70117">100</option>
+              <option label="70118">150</option>
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+        <setting id="buffer.speed" type="integer" label="70112" help="70113">
+          <level>0</level>
+          <default>1</default>
+          <constraints>
+            <options>
+              <option label="12311">1</option>
+              <option label="12315">5</option>
+              <option label="70119">10</option>
+              <option label="70120">20</option>
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+	  </group>
+	</category>
     <category id="bd" label="70053" help="70054">
       <group id="1">
         <setting id="bd.regincode" type="integer" label="70044" help="70048">
@@ -3054,7 +3098,7 @@
         </setting>
         <setting id="usercenter.licensetime" type="string" label="70059" help="0">
           <level>0</level>
-          <default>$LOCALIZE[70092]</default>
+          <default>Unlicensed</default>
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
           </dependencies>
@@ -3062,7 +3106,7 @@
         </setting>
         <setting id="usercenter.licenseid" type="string" label="70060" help="0">
           <level>0</level>
-          <default>$LOCALIZE[70092]</default>
+          <default>Unlicensed</default>
 		  <visible>false</visible>
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />

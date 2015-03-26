@@ -1149,17 +1149,78 @@ bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item, const CStdString
 
   CFileItemList items;
 
+#if defined (HAS_VIDONME)
+
+	CFileItemPtr pItem;
+	CStdString originPath = item->GetPath();
+	CStdString strFolerType = item->GetProperty("type").asString();
+
+	pItem.reset(new CFileItem());
+
+	if (CSettings::Get().GetBool("using.vdmplayer"))
+	{
+		if (URIUtils::GetFileName(originPath) == "index.bdmv")
+		{
+			CStdString strParentPath = URIUtils::GetParentPath(originPath);
+			URIUtils::RemoveSlashAtEnd(strParentPath);
+
+			if (URIUtils::GetFileName(strParentPath) == "BDMV")
+			{
+				CStdString strTmpPath = URIUtils::AddFileToFolder(strParentPath, "PLAYLIST");
+				strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "1048575.mpls");
+				pItem->SetPath(strTmpPath);
+			}
+		}
+		else if (URIUtils::GetExtension(originPath) == ".iso")
+		{
+			CStdString strTmpPath = URIUtils::AddFileToFolder(originPath, "BDMV");
+			strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "PLAYLIST");
+			strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "1048575.mpls");
+			pItem->SetPath(strTmpPath);
+		}
+
+		pItem->m_bIsFolder = false;
+		pItem->SetLabel(g_localizeStrings.Get(70095) /* MainTitle */);
+		pItem->SetIconImage("DefaultVideo.png");
+		pItem->SetProperty("chooseitem", "maintitle");
+		items.Add(pItem);
+
+		pItem.reset(new CFileItem());
+		pItem->SetPath(directory + "titles");
+		pItem->m_bIsFolder = true;
+		pItem->SetLabel(g_localizeStrings.Get(25002) /* All titles */);
+		pItem->SetIconImage("DefaultVideoPlaylists.png");
+		pItem->SetProperty("chooseitem", "alltitle");
+		items.Add(pItem);
+
+		pItem.reset(new CFileItem());
+		pItem->SetPath(originPath);
+		pItem->m_bIsFolder = false;
+		pItem->SetLabel(g_localizeStrings.Get(25003) /* BDMenus */);
+		pItem->SetProperty("chooseitem", "menu");
+		pItem->SetIconImage("DefaultProgram.png");
+		items.Add(pItem);
+	}
+	else
+	{
+		if (!XFILE::CDirectory::GetDirectory(directory, items, XFILE::CDirectory::CHints(), true))
+		{
+			CLog::Log(LOGERROR, "CGUIWindowVideoBase::ShowPlaySelection - Failed to get play directory for %s", directory.c_str());
+			return true;
+		}
+	}
+
+#else
+
   if (!XFILE::CDirectory::GetDirectory(directory, items, XFILE::CDirectory::CHints(), true))
   {
     CLog::Log(LOGERROR, "CGUIWindowVideoBase::ShowPlaySelection - Failed to get play directory for %s", directory.c_str());
     return true;
   }
 
-#if defined (HAS_VIDONME)
+#endif
 
-	CFileItemPtr pItem;
-	CStdString originPath = item->GetPath();
-	CStdString strFolerType = item->GetProperty("type").asString();
+#if defined (HAS_VIDONME)
 
 	pItem.reset(new CFileItem());
 

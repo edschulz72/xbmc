@@ -17,6 +17,7 @@
 #include "SynchroMethod.h"
 #include "dialogs/GUIDialogYesNo.h"
 #include "dialogs/GUIDialogOK.h"
+#include "settings/Settings.h"
 
 #define CONTROL_GROUP_LOGIN   1
 #define CONTROL_EDIT_USERNAME 400
@@ -154,6 +155,17 @@ void CVDMDialogLogin::OnDeinitWindow(int nextWindowID)
 bool CVDMDialogLogin::ShowLoginTip()
 {
 	CFileItemPtr item = CFileItemPtr(new CFileItem);
+
+	CStdString strUserName, strPassword;
+	CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword);
+
+	if (!CVDMUserInfo::Instance().IsLogin() && 
+		CSettings::Get().GetString("usercenter.licenseid") != "Unlicensed" && 
+		CSettings::Get().GetString("usercenter.licenseid") != g_localizeStrings.Get(70092) &&
+		!strUserName.empty() && !strPassword.empty())
+	{
+		CVDMUserInfo::Instance().DoLogin(strUserName, strPassword);
+	}
 
 	if (!CVDMUserInfo::Instance().IsLogin())
 	{

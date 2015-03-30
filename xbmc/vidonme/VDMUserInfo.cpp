@@ -614,6 +614,7 @@ void CVDMUserInfo::SaveSettingsUserInfo()
       CSettings::Get().SetString( "usercenter.licensetime", g_localizeStrings.Get(70092) );
     }
     CVDMUserInfo::Instance().SaveUsernameAndPassword( m_strUserName, m_strPassword );
+		CSettings::Get().Save();
   }
 }
 

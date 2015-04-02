@@ -1704,7 +1704,19 @@ bool CGUIWindowVideoBase::OnPlayMedia(int iItem)
     }
   }
 
-  PlayMovie(&item);
+#if defined(HAS_VIDONME)
+	bool bPlaySuccess = PlayMovie(&item);
+	if (!bPlaySuccess && (item.GetProperty("type").asString() == "BDFolder" || item.GetProperty("type").asString() == "DVDFolder"))
+	{
+		CStdString strOriginalPath = pItem->GetPath();
+		strOriginalPath = URIUtils::GetParentPath(strOriginalPath);
+		strOriginalPath = URIUtils::GetParentPath(strOriginalPath);
+
+		pItem->SetPath(strOriginalPath);
+	}
+#else
+	PlayMovie(&item);
+#endif
 
   return true;
 }
@@ -1725,19 +1737,27 @@ bool CGUIWindowVideoBase::OnPlayAndQueueMedia(const CFileItemPtr &item)
   return CGUIMediaWindow::OnPlayAndQueueMedia(movieItem);
 }
 
+#if defined(HAS_VIDONME)
+bool CGUIWindowVideoBase::PlayMovie(const CFileItem *item)
+#else
 void CGUIWindowVideoBase::PlayMovie(const CFileItem *item)
+#endif
 {
   CFileItemPtr movieItem(new CFileItem(*item));
 
-  if(!ShowPlaySelection(movieItem))
-    return;
+	if (!ShowPlaySelection(movieItem))
+#if defined(HAS_VIDONME)
+		return false;
+#else
+		return;
+#endif
 
 #if defined(HAS_VIDONME)
 	if (movieItem->GetProperty("chooseitem").asString() == "update")
 	{
 		CGUIMediaWindow::SetUpdate(true);
 		Update(movieItem->GetPath());
-		return;
+		return false;
 	}
 #endif
 
@@ -1755,6 +1775,10 @@ void CGUIWindowVideoBase::PlayMovie(const CFileItem *item)
 
   if(!g_application.m_pPlayer->IsPlayingVideo())
     m_thumbLoader.Load(*m_vecItems);
+
+#if defined(HAS_VIDONME)
+	return true;
+#endif
 }
 
 void CGUIWindowVideoBase::OnDeleteItem(int iItem)

@@ -247,9 +247,7 @@ void CPlayerCoreFactory::GetPlayers( const CFileItem& item, VECPLAYERCORES &vecC
 #if defined(HAS_VIDONME)
 	if (vecCores.size() > 0 && EPC_DVDPLAYER == vecCores[0])
 	{
-#if defined(_DEBUG)
 		bool bUseVDMPlayer = CSettings::Get().GetBool("using.vdmplayer");
-#endif 
 
 		if (bUseVDMPlayer)
 		{

@@ -226,7 +226,7 @@ set WORKSPACE=%CD%\..\..
   IF %errorlevel%==1 (
     set DIETEXT="failed to build addons"
     cd %build_path%
-    goto DIE
+    rem goto DIE
   )
 
   cd %build_path%

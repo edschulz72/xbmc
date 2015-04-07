@@ -1100,9 +1100,11 @@ bool CGUIWindowVideoBase::ShowResumeMenu(CFileItem &item)
 
 bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item)
 {
+#if !defined (HAS_VIDONME)
   /* if asked to resume somewhere, we should not show anything */
   if (item->m_lStartOffset)
-    return true;
+		return true;
+#endif
 
   if (CSettings::Get().GetInt("disc.playback") != BD_PLAYBACK_SIMPLE_MENU)
     return true;
@@ -1147,17 +1149,78 @@ bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item, const CStdString
 
   CFileItemList items;
 
+#if defined (HAS_VIDONME)
+
+	CFileItemPtr pItem;
+	CStdString originPath = item->GetPath();
+	CStdString strFolerType = item->GetProperty("type").asString();
+
+	pItem.reset(new CFileItem());
+
+	if (CSettings::Get().GetBool("using.vdmplayer"))
+	{
+		if (URIUtils::GetFileName(originPath) == "index.bdmv")
+		{
+			CStdString strParentPath = URIUtils::GetParentPath(originPath);
+			URIUtils::RemoveSlashAtEnd(strParentPath);
+
+			if (URIUtils::GetFileName(strParentPath) == "BDMV")
+			{
+				CStdString strTmpPath = URIUtils::AddFileToFolder(strParentPath, "PLAYLIST");
+				strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "1048575.mpls");
+				pItem->SetPath(strTmpPath);
+			}
+		}
+		else if (URIUtils::GetExtension(originPath) == ".iso")
+		{
+			CStdString strTmpPath = URIUtils::AddFileToFolder(originPath, "BDMV");
+			strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "PLAYLIST");
+			strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "1048575.mpls");
+			pItem->SetPath(strTmpPath);
+		}
+
+		pItem->m_bIsFolder = false;
+		pItem->SetLabel(g_localizeStrings.Get(70095) /* MainTitle */);
+		pItem->SetIconImage("DefaultVideo.png");
+		pItem->SetProperty("chooseitem", "maintitle");
+		items.Add(pItem);
+
+		pItem.reset(new CFileItem());
+		pItem->SetPath(directory + "titles");
+		pItem->m_bIsFolder = true;
+		pItem->SetLabel(g_localizeStrings.Get(25002) /* All titles */);
+		pItem->SetIconImage("DefaultVideoPlaylists.png");
+		pItem->SetProperty("chooseitem", "alltitle");
+		items.Add(pItem);
+
+		pItem.reset(new CFileItem());
+		pItem->SetPath(originPath);
+		pItem->m_bIsFolder = false;
+		pItem->SetLabel(g_localizeStrings.Get(25003) /* BDMenus */);
+		pItem->SetProperty("chooseitem", "menu");
+		pItem->SetIconImage("DefaultProgram.png");
+		items.Add(pItem);
+	}
+	else
+	{
+		if (!XFILE::CDirectory::GetDirectory(directory, items, XFILE::CDirectory::CHints(), true))
+		{
+			CLog::Log(LOGERROR, "CGUIWindowVideoBase::ShowPlaySelection - Failed to get play directory for %s", directory.c_str());
+			return true;
+		}
+	}
+
+#else
+
   if (!XFILE::CDirectory::GetDirectory(directory, items, XFILE::CDirectory::CHints(), true))
   {
     CLog::Log(LOGERROR, "CGUIWindowVideoBase::ShowPlaySelection - Failed to get play directory for %s", directory.c_str());
     return true;
   }
 
-#if defined (HAS_VIDONME)
+#endif
 
-	CFileItemPtr pItem;
-	CStdString originPath = item->GetPath();
-	CStdString strFolerType = item->GetProperty("type").asString();
+#if defined (HAS_VIDONME)
 
 	pItem.reset(new CFileItem());
 
@@ -1188,14 +1251,35 @@ bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item, const CStdString
     dialog->SetHeading(25006 /* Select playback item */);
     dialog->SetItems(&items);
     dialog->SetUseDetails(true);
-    dialog->DoModal();
+		
+#if defined (HAS_VIDONME)
+		CFileItemPtr item_new;
 
+		if (item->m_lStartOffset)
+		{
+			item_new = items.Get(0);
+		}
+		else
+		{
+			dialog->DoModal();
+			item_new = dialog->GetSelectedItem();
+
+			if (!item_new || dialog->GetSelectedLabel() < 0)
+			{
+				CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
+				break;
+			}
+		}
+#else
+    dialog->DoModal();
     CFileItemPtr item_new = dialog->GetSelectedItem();
-    if(!item_new || dialog->GetSelectedLabel() < 0)
-    {
-      CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
-      break;
-    }
+
+		if (!item_new || dialog->GetSelectedLabel() < 0)
+		{
+			CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
+			break;
+		}
+#endif
 
 #if defined (HAS_VIDONME)
 		if (item_new->GetProperty("chooseitem").asString() == "update")
@@ -1620,7 +1704,19 @@ bool CGUIWindowVideoBase::OnPlayMedia(int iItem)
     }
   }
 
-  PlayMovie(&item);
+#if defined(HAS_VIDONME)
+	bool bPlaySuccess = PlayMovie(&item);
+	if (!bPlaySuccess && (item.GetProperty("type").asString() == "BDFolder" || item.GetProperty("type").asString() == "DVDFolder"))
+	{
+		CStdString strOriginalPath = pItem->GetPath();
+		strOriginalPath = URIUtils::GetParentPath(strOriginalPath);
+		strOriginalPath = URIUtils::GetParentPath(strOriginalPath);
+
+		pItem->SetPath(strOriginalPath);
+	}
+#else
+	PlayMovie(&item);
+#endif
 
   return true;
 }
@@ -1641,19 +1737,27 @@ bool CGUIWindowVideoBase::OnPlayAndQueueMedia(const CFileItemPtr &item)
   return CGUIMediaWindow::OnPlayAndQueueMedia(movieItem);
 }
 
+#if defined(HAS_VIDONME)
+bool CGUIWindowVideoBase::PlayMovie(const CFileItem *item)
+#else
 void CGUIWindowVideoBase::PlayMovie(const CFileItem *item)
+#endif
 {
   CFileItemPtr movieItem(new CFileItem(*item));
 
-  if(!ShowPlaySelection(movieItem))
-    return;
+	if (!ShowPlaySelection(movieItem))
+#if defined(HAS_VIDONME)
+		return false;
+#else
+		return;
+#endif
 
 #if defined(HAS_VIDONME)
 	if (movieItem->GetProperty("chooseitem").asString() == "update")
 	{
 		CGUIMediaWindow::SetUpdate(true);
 		Update(movieItem->GetPath());
-		return;
+		return false;
 	}
 #endif
 
@@ -1671,6 +1775,10 @@ void CGUIWindowVideoBase::PlayMovie(const CFileItem *item)
 
   if(!g_application.m_pPlayer->IsPlayingVideo())
     m_thumbLoader.Load(*m_vecItems);
+
+#if defined(HAS_VIDONME)
+	return true;
+#endif
 }
 
 void CGUIWindowVideoBase::OnDeleteItem(int iItem)

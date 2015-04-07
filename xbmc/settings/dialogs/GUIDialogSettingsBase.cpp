@@ -42,6 +42,8 @@
 #if defined (HAS_VIDONME)
 #include "vidonme/VDMVersionUpdate.h"
 #include "vidonme/VDMRegionFeature.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "settings/Settings.h"
 #endif
 
 using namespace std;
@@ -61,6 +63,13 @@ using namespace std;
 #define CONTROL_DEFAULT_SEPARATOR       11
 #define CONTROL_DEFAULT_EDIT            12
 #define CONTROL_DEFAULT_SLIDER          13
+
+#if defined (HAS_VIDONME)
+#define USERCENTER_CATEGORY_ID          "usercenter"
+#define UPGRADE_CATEGORY_ID             "upgrade"
+#endif
+
+
 
 CGUIDialogSettingsBase::CGUIDialogSettingsBase(int windowId, const std::string &xmlFile)
     : CGUIDialog(windowId, xmlFile),
@@ -533,9 +542,18 @@ std::set<std::string> CGUIDialogSettingsBase::CreateSettings()
 
   if (AllowResettingSettings() && !settingMap.empty())
   {
-    // add "Reset" control
-    AddSeparator(group->GetWidth(), iControlID);
-    AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+    // add "Reset" 
+#if defined(HAS_VIDONME)
+		if (0 != strcmp(category->GetId().c_str(), USERCENTER_CATEGORY_ID) && 
+			0 != strcmp(category->GetId().c_str(), UPGRADE_CATEGORY_ID))
+		{
+			AddSeparator(group->GetWidth(), iControlID);
+			AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+		}
+#else
+		AddSeparator(group->GetWidth(), iControlID);
+		AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+#endif
   }
   
   // update our settings (turns controls on/off as appropriate)
@@ -783,6 +801,18 @@ void CGUIDialogSettingsBase::OnClick(BaseSettingControlPtr pSettingControl)
 
     return;
   }
+
+#if defined(HAS_VIDONME)
+	if (pSettingControl->GetSetting()->GetId() == "audio.digitalanalog" && !CSettings::Get().GetBool("audiooutput.passthrough"))
+	{
+		if (!CVDMDialogLogin::ShowLoginTip())
+		{
+			static_cast<CSettingBool*>(pSettingControl->GetSetting())->SetValue(false);
+			pSettingControl->Update();
+			return;
+		}
+	}
+#endif
 
   // if changing the setting fails
   // we need to restore the proper state

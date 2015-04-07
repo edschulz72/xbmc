@@ -44,7 +44,12 @@ public:
   virtual bool OnMessage(CGUIMessage& message);
   virtual bool OnAction(const CAction &action);
 
-  void PlayMovie(const CFileItem *item);
+#if defined(HAS_VIDONME)
+	bool PlayMovie(const CFileItem *item);
+#else
+	void PlayMovie(const CFileItem *item);
+#endif
+
   static void GetResumeItemOffset(const CFileItem *item, int& startoffset, int& partNumber);
   static bool HasResumeItemOffset(const CFileItem *item);
 

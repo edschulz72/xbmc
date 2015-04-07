@@ -13150,3 +13150,19 @@ msgstr "打開資料夾"
 msgctxt "#70097"
 msgid "I am a user in Mainland China"
 msgstr "我在中國大陸使用"
+
+msgctxt "#70098"
+msgid "Left right to 3D"
+msgstr "左右3D"
+
+msgctxt "#70099"
+msgid "Top bottom to 3D"
+msgstr "上下3D"
+
+msgctxt "#70100"
+msgid "Please login with your VidOn.me account to access this subscription feature."
+msgstr "請使用VidOn.me帳號登入，使用訂製功能。"
+
+msgctxt "#70101"
+msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+msgstr "如果您沒有帳號，請到我們的官方網站http://zh.vidon.me獲取更多資訊。"

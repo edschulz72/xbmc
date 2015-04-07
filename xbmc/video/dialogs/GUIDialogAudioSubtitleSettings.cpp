@@ -131,7 +131,8 @@ void CGUIDialogAudioSubtitleSettings::OnSettingChanged(const CSetting *setting)
   {
 		videoSettings.m_VolumeAmplification = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
 #if defined(HAS_VIDONME)
-		g_application.m_pPlayer->SetDynamicRangeCompression((long)(videoSettings.m_VolumeAmplification));
+		//playercore do not *100, *100 in here for now.
+		g_application.m_pPlayer->SetDynamicRangeCompression((long)(videoSettings.m_VolumeAmplification * 100));
 #else
     g_application.m_pPlayer->SetDynamicRangeCompression((long)(videoSettings.m_VolumeAmplification * 100));
 #endif

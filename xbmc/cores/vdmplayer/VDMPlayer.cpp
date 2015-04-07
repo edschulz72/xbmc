@@ -351,7 +351,7 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 
 
 #if defined(HAS_VIDEO_PLAYBACK)
-	//g_renderManager.PreInit();
+	g_renderManager.PreInit();
 #endif
 
 	bool bOpen = false;

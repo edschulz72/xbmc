@@ -12627,3 +12627,19 @@ msgstr "フォルダを開く"
 msgctxt "#70097"
 msgid "I am a user in Mainland China"
 msgstr "中国本土で使用します"
+
+msgctxt "#70098"
+msgid "Left right to 3D"
+msgstr "サイドバイサイド3D"
+
+msgctxt "#70099"
+msgid "Top bottom to 3D"
+msgstr "トップ/ボトム3D"
+
+msgctxt "#70100"
+msgid "Please login with your VidOn.me account to access this subscription feature."
+msgstr "会員機能にアクセスするには、VidOn.me アカウントでログインしてください。"
+
+msgctxt "#70101"
+msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+msgstr "アカウントを持っていない場合、当社の公式サイトまでご覧ください: http://ja.vidon.me/ 。"

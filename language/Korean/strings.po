@@ -13503,3 +13503,19 @@ msgstr "폴더 열기"
 msgctxt "#70097"
 msgid "I am a user in Mainland China"
 msgstr "중국 사용자 입니다"
+
+msgctxt "#70098"
+msgid "Left right to 3D"
+msgstr "좌 우 3D"
+
+msgctxt "#70099"
+msgid "Top bottom to 3D"
+msgstr "상 하 3D"
+
+msgctxt "#70100"
+msgid "Please login with your VidOn.me account to access this subscription feature."
+msgstr "VidOn.me 계정으로 로그인하고 이 회원 기능을 사용해 보십시오."
+
+msgctxt "#70101"
+msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+msgstr "계정을 갖고 있지 않다면 공식 웹사이트 http://ko.vidon.me에서 상세 정보를 요해해 보십시오."

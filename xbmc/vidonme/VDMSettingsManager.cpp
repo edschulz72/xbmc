@@ -74,8 +74,6 @@ void CVDMSettingsManager::OnSettingAction(const CSetting *setting)
 			{
 				CGUIMessage msg(GUI_MSG_UPDATE, VDM_WINDOW_SETTINGS_VIDONME, 0, 0);
 				g_windowManager.SendThreadMessage(msg, VDM_WINDOW_SETTINGS_VIDONME);
-				//CSetting* tmpSetting = setting->Clone(settingId);
-				//tmpSetting->SetLabel(70061);
 			}
 		}
 #endif

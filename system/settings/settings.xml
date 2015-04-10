@@ -2494,7 +2494,7 @@
         </setting>
         <setting id="audiooutput.passthroughdevice" type="string" label="546" help="36372">
           <level>2</level>
-          <default>Default</default> <!-- will be properly set on startup -->
+          <default>VIDONME:HDMI-PCM</default> <!-- will be properly set on startup -->
           <dependencies>
             <dependency type="visible">
               <and>
@@ -2502,7 +2502,8 @@
                 <condition on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</condition>
               </and>
             </dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <constraints>
             <options>audiodevicespassthrough</options>
@@ -2514,7 +2515,8 @@
           <default>true</default>
           <dependencies>
             <dependency type="visible" on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <control type="toggle" />
         </setting>
@@ -2524,7 +2526,8 @@
           <dependencies>
             <dependency type="enable">
               <and>
-                <condition setting="audiooutput.passthrough" operator="is">true</condition>
+				<!--Default not limited-->
+                <!--<condition setting="audiooutput.passthrough" operator="is">true</condition>-->
                 <condition setting="audiooutput.ac3passthrough" operator="is">true</condition>
               </and>
             </dependency>
@@ -2547,7 +2550,8 @@
                 <condition on="property" name="aesettingvisible" setting="audiooutput.passthroughdevice">audiooutput.eac3passthrough</condition>
               </and>
             </dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <control type="toggle" />
         </setting>
@@ -2556,7 +2560,8 @@
           <default>false</default>
           <dependencies>
             <dependency type="visible" on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <control type="toggle" />
         </setting>

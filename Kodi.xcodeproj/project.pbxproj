@@ -1089,6 +1089,30 @@
 		7CF80DC919710DC2003B2B34 /* KeyboardLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */; };
 		7CF80DCA19710DC2003B2B34 /* KeyboardLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */; };
 		7CF80DCB19710DC2003B2B34 /* KeyboardLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */; };
+		7D041A101AD7E5A5004C7BF9 /* SynchroMethod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F01AD7E5A5004C7BF9 /* SynchroMethod.cpp */; };
+		7D041A111AD7E5A5004C7BF9 /* SynchroMethod.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D0419F21AD7E5A5004C7BF9 /* SynchroMethod.o */; };
+		7D041A121AD7E5A5004C7BF9 /* SynchroMethod.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F31AD7E5A5004C7BF9 /* SynchroMethod.P */; };
+		7D041A131AD7E5A5004C7BF9 /* VDMDialogLogin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F41AD7E5A5004C7BF9 /* VDMDialogLogin.cpp */; };
+		7D041A141AD7E5A5004C7BF9 /* VDMDialogLogin.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D0419F61AD7E5A5004C7BF9 /* VDMDialogLogin.o */; };
+		7D041A151AD7E5A5004C7BF9 /* VDMDialogLogin.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F71AD7E5A5004C7BF9 /* VDMDialogLogin.P */; };
+		7D041A161AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F81AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp */; };
+		7D041A171AD7E5A5004C7BF9 /* VDMDialogVersionCheck.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D0419FA1AD7E5A5004C7BF9 /* VDMDialogVersionCheck.o */; };
+		7D041A181AD7E5A5004C7BF9 /* VDMDialogVersionCheck.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419FB1AD7E5A5004C7BF9 /* VDMDialogVersionCheck.P */; };
+		7D041A191AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419FC1AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp */; };
+		7D041A1A1AD7E5A5004C7BF9 /* VDMLogReportUpload.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D0419FE1AD7E5A5004C7BF9 /* VDMLogReportUpload.o */; };
+		7D041A1B1AD7E5A5004C7BF9 /* VDMLogReportUpload.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419FF1AD7E5A5004C7BF9 /* VDMLogReportUpload.P */; };
+		7D041A1C1AD7E5A5004C7BF9 /* VDMRegionFeature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A001AD7E5A5004C7BF9 /* VDMRegionFeature.cpp */; };
+		7D041A1D1AD7E5A5004C7BF9 /* VDMRegionFeature.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D041A021AD7E5A5004C7BF9 /* VDMRegionFeature.o */; };
+		7D041A1E1AD7E5A5004C7BF9 /* VDMRegionFeature.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A031AD7E5A5004C7BF9 /* VDMRegionFeature.P */; };
+		7D041A1F1AD7E5A5004C7BF9 /* VDMSettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A041AD7E5A5004C7BF9 /* VDMSettingsManager.cpp */; };
+		7D041A201AD7E5A5004C7BF9 /* VDMSettingsManager.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D041A061AD7E5A5004C7BF9 /* VDMSettingsManager.o */; };
+		7D041A211AD7E5A5004C7BF9 /* VDMSettingsManager.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A071AD7E5A5004C7BF9 /* VDMSettingsManager.P */; };
+		7D041A221AD7E5A5004C7BF9 /* VDMUserInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A081AD7E5A5004C7BF9 /* VDMUserInfo.cpp */; };
+		7D041A231AD7E5A5004C7BF9 /* VDMUserInfo.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D041A0A1AD7E5A5004C7BF9 /* VDMUserInfo.o */; };
+		7D041A241AD7E5A5004C7BF9 /* VDMUserInfo.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A0B1AD7E5A5004C7BF9 /* VDMUserInfo.P */; };
+		7D041A251AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */; };
+		7D041A261AD7E5A5004C7BF9 /* VDMVersionUpdate.o in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D041A0E1AD7E5A5004C7BF9 /* VDMVersionUpdate.o */; };
+		7D041A271AD7E5A5004C7BF9 /* VDMVersionUpdate.P in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A0F1AD7E5A5004C7BF9 /* VDMVersionUpdate.P */; };
 		810C9FA90D67D1FB0095F5DD /* MythDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */; };
 		810C9FAA0D67D1FB0095F5DD /* MythFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA70D67D1FB0095F5DD /* MythFile.cpp */; };
 		815EE6350E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 815EE6330E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp */; };
@@ -4606,6 +4630,41 @@
 		7CF34D9E1930264A00D543C5 /* AudioEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEncoder.h; sourceTree = "<group>"; };
 		7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardLayout.cpp; sourceTree = "<group>"; };
 		7CF80DC819710DC2003B2B34 /* KeyboardLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayout.h; sourceTree = "<group>"; };
+		7D0419ED1AD7E5A5004C7BF9 /* CommonHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonHeader.h; sourceTree = "<group>"; };
+		7D0419EE1AD7E5A5004C7BF9 /* DLLVidonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLVidonUtils.h; sourceTree = "<group>"; };
+		7D0419EF1AD7E5A5004C7BF9 /* libVidonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libVidonUtils.h; sourceTree = "<group>"; };
+		7D0419F01AD7E5A5004C7BF9 /* SynchroMethod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SynchroMethod.cpp; sourceTree = "<group>"; };
+		7D0419F11AD7E5A5004C7BF9 /* SynchroMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynchroMethod.h; sourceTree = "<group>"; };
+		7D0419F21AD7E5A5004C7BF9 /* SynchroMethod.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = SynchroMethod.o; sourceTree = "<group>"; };
+		7D0419F31AD7E5A5004C7BF9 /* SynchroMethod.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = SynchroMethod.P; sourceTree = "<group>"; };
+		7D0419F41AD7E5A5004C7BF9 /* VDMDialogLogin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMDialogLogin.cpp; sourceTree = "<group>"; };
+		7D0419F51AD7E5A5004C7BF9 /* VDMDialogLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMDialogLogin.h; sourceTree = "<group>"; };
+		7D0419F61AD7E5A5004C7BF9 /* VDMDialogLogin.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = VDMDialogLogin.o; sourceTree = "<group>"; };
+		7D0419F71AD7E5A5004C7BF9 /* VDMDialogLogin.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = VDMDialogLogin.P; sourceTree = "<group>"; };
+		7D0419F81AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMDialogVersionCheck.cpp; sourceTree = "<group>"; };
+		7D0419F91AD7E5A5004C7BF9 /* VDMDialogVersionCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMDialogVersionCheck.h; sourceTree = "<group>"; };
+		7D0419FA1AD7E5A5004C7BF9 /* VDMDialogVersionCheck.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = VDMDialogVersionCheck.o; sourceTree = "<group>"; };
+		7D0419FB1AD7E5A5004C7BF9 /* VDMDialogVersionCheck.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = VDMDialogVersionCheck.P; sourceTree = "<group>"; };
+		7D0419FC1AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMLogReportUpload.cpp; sourceTree = "<group>"; };
+		7D0419FD1AD7E5A5004C7BF9 /* VDMLogReportUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMLogReportUpload.h; sourceTree = "<group>"; };
+		7D0419FE1AD7E5A5004C7BF9 /* VDMLogReportUpload.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = VDMLogReportUpload.o; sourceTree = "<group>"; };
+		7D0419FF1AD7E5A5004C7BF9 /* VDMLogReportUpload.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = VDMLogReportUpload.P; sourceTree = "<group>"; };
+		7D041A001AD7E5A5004C7BF9 /* VDMRegionFeature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMRegionFeature.cpp; sourceTree = "<group>"; };
+		7D041A011AD7E5A5004C7BF9 /* VDMRegionFeature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMRegionFeature.h; sourceTree = "<group>"; };
+		7D041A021AD7E5A5004C7BF9 /* VDMRegionFeature.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = VDMRegionFeature.o; sourceTree = "<group>"; };
+		7D041A031AD7E5A5004C7BF9 /* VDMRegionFeature.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = VDMRegionFeature.P; sourceTree = "<group>"; };
+		7D041A041AD7E5A5004C7BF9 /* VDMSettingsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMSettingsManager.cpp; sourceTree = "<group>"; };
+		7D041A051AD7E5A5004C7BF9 /* VDMSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMSettingsManager.h; sourceTree = "<group>"; };
+		7D041A061AD7E5A5004C7BF9 /* VDMSettingsManager.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = VDMSettingsManager.o; sourceTree = "<group>"; };
+		7D041A071AD7E5A5004C7BF9 /* VDMSettingsManager.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = VDMSettingsManager.P; sourceTree = "<group>"; };
+		7D041A081AD7E5A5004C7BF9 /* VDMUserInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMUserInfo.cpp; sourceTree = "<group>"; };
+		7D041A091AD7E5A5004C7BF9 /* VDMUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMUserInfo.h; sourceTree = "<group>"; };
+		7D041A0A1AD7E5A5004C7BF9 /* VDMUserInfo.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = VDMUserInfo.o; sourceTree = "<group>"; };
+		7D041A0B1AD7E5A5004C7BF9 /* VDMUserInfo.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = VDMUserInfo.P; sourceTree = "<group>"; };
+		7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMVersionUpdate.cpp; sourceTree = "<group>"; };
+		7D041A0D1AD7E5A5004C7BF9 /* VDMVersionUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMVersionUpdate.h; sourceTree = "<group>"; };
+		7D041A0E1AD7E5A5004C7BF9 /* VDMVersionUpdate.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = VDMVersionUpdate.o; sourceTree = "<group>"; };
+		7D041A0F1AD7E5A5004C7BF9 /* VDMVersionUpdate.P */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = VDMVersionUpdate.P; sourceTree = "<group>"; };
 		810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythDirectory.cpp; sourceTree = "<group>"; };
 		810C9FA60D67D1FB0095F5DD /* MythDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MythDirectory.h; sourceTree = "<group>"; };
 		810C9FA70D67D1FB0095F5DD /* MythFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythFile.cpp; sourceTree = "<group>"; };
@@ -6322,6 +6381,14 @@
 				F52A733D1560BC34005B1A0B /* CoreFoundation.framework in Frameworks */,
 				DFBE805115F7D75700D7D102 /* SystemConfiguration.framework in Frameworks */,
 				F5071906175A26AD004C87D1 /* VideoDecodeAcceleration.framework in Frameworks */,
+				7D041A111AD7E5A5004C7BF9 /* SynchroMethod.o in Frameworks */,
+				7D041A141AD7E5A5004C7BF9 /* VDMDialogLogin.o in Frameworks */,
+				7D041A171AD7E5A5004C7BF9 /* VDMDialogVersionCheck.o in Frameworks */,
+				7D041A1A1AD7E5A5004C7BF9 /* VDMLogReportUpload.o in Frameworks */,
+				7D041A1D1AD7E5A5004C7BF9 /* VDMRegionFeature.o in Frameworks */,
+				7D041A201AD7E5A5004C7BF9 /* VDMSettingsManager.o in Frameworks */,
+				7D041A231AD7E5A5004C7BF9 /* VDMUserInfo.o in Frameworks */,
+				7D041A261AD7E5A5004C7BF9 /* VDMVersionUpdate.o in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7955,6 +8022,48 @@
 			path = media;
 			sourceTree = "<group>";
 		};
+		7D0419EC1AD7E5A5004C7BF9 /* vidonme */ = {
+			isa = PBXGroup;
+			children = (
+				7D0419ED1AD7E5A5004C7BF9 /* CommonHeader.h */,
+				7D0419EE1AD7E5A5004C7BF9 /* DLLVidonUtils.h */,
+				7D0419EF1AD7E5A5004C7BF9 /* libVidonUtils.h */,
+				7D0419F01AD7E5A5004C7BF9 /* SynchroMethod.cpp */,
+				7D0419F11AD7E5A5004C7BF9 /* SynchroMethod.h */,
+				7D0419F21AD7E5A5004C7BF9 /* SynchroMethod.o */,
+				7D0419F31AD7E5A5004C7BF9 /* SynchroMethod.P */,
+				7D0419F41AD7E5A5004C7BF9 /* VDMDialogLogin.cpp */,
+				7D0419F51AD7E5A5004C7BF9 /* VDMDialogLogin.h */,
+				7D0419F61AD7E5A5004C7BF9 /* VDMDialogLogin.o */,
+				7D0419F71AD7E5A5004C7BF9 /* VDMDialogLogin.P */,
+				7D0419F81AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp */,
+				7D0419F91AD7E5A5004C7BF9 /* VDMDialogVersionCheck.h */,
+				7D0419FA1AD7E5A5004C7BF9 /* VDMDialogVersionCheck.o */,
+				7D0419FB1AD7E5A5004C7BF9 /* VDMDialogVersionCheck.P */,
+				7D0419FC1AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp */,
+				7D0419FD1AD7E5A5004C7BF9 /* VDMLogReportUpload.h */,
+				7D0419FE1AD7E5A5004C7BF9 /* VDMLogReportUpload.o */,
+				7D0419FF1AD7E5A5004C7BF9 /* VDMLogReportUpload.P */,
+				7D041A001AD7E5A5004C7BF9 /* VDMRegionFeature.cpp */,
+				7D041A011AD7E5A5004C7BF9 /* VDMRegionFeature.h */,
+				7D041A021AD7E5A5004C7BF9 /* VDMRegionFeature.o */,
+				7D041A031AD7E5A5004C7BF9 /* VDMRegionFeature.P */,
+				7D041A041AD7E5A5004C7BF9 /* VDMSettingsManager.cpp */,
+				7D041A051AD7E5A5004C7BF9 /* VDMSettingsManager.h */,
+				7D041A061AD7E5A5004C7BF9 /* VDMSettingsManager.o */,
+				7D041A071AD7E5A5004C7BF9 /* VDMSettingsManager.P */,
+				7D041A081AD7E5A5004C7BF9 /* VDMUserInfo.cpp */,
+				7D041A091AD7E5A5004C7BF9 /* VDMUserInfo.h */,
+				7D041A0A1AD7E5A5004C7BF9 /* VDMUserInfo.o */,
+				7D041A0B1AD7E5A5004C7BF9 /* VDMUserInfo.P */,
+				7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */,
+				7D041A0D1AD7E5A5004C7BF9 /* VDMVersionUpdate.h */,
+				7D041A0E1AD7E5A5004C7BF9 /* VDMVersionUpdate.o */,
+				7D041A0F1AD7E5A5004C7BF9 /* VDMVersionUpdate.P */,
+			);
+			path = vidonme;
+			sourceTree = "<group>";
+		};
 		B5426323197D2AB300726998 /* posix */ = {
 			isa = PBXGroup;
 			children = (
@@ -8578,6 +8687,7 @@
 		E38E14610D25F9F900618676 /* xbmc */ = {
 			isa = PBXGroup;
 			children = (
+				7D0419EC1AD7E5A5004C7BF9 /* vidonme */,
 				18B49FF01152BEEB001AF8A6 /* addons */,
 				E38E147F0D25F9F900618676 /* cdrip */,
 				EC720A91155091CA00FFD782 /* commons */,
@@ -11868,6 +11978,22 @@
 				7C908894196358A8003D0619 /* auto_buffer.cpp in Sources */,
 				7CF34D9F1930264A00D543C5 /* AudioEncoder.cpp in Sources */,
 				7CF80DC919710DC2003B2B34 /* KeyboardLayout.cpp in Sources */,
+				7D041A101AD7E5A5004C7BF9 /* SynchroMethod.cpp in Sources */,
+				7D041A121AD7E5A5004C7BF9 /* SynchroMethod.P in Sources */,
+				7D041A131AD7E5A5004C7BF9 /* VDMDialogLogin.cpp in Sources */,
+				7D041A151AD7E5A5004C7BF9 /* VDMDialogLogin.P in Sources */,
+				7D041A161AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp in Sources */,
+				7D041A181AD7E5A5004C7BF9 /* VDMDialogVersionCheck.P in Sources */,
+				7D041A191AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp in Sources */,
+				7D041A1B1AD7E5A5004C7BF9 /* VDMLogReportUpload.P in Sources */,
+				7D041A1C1AD7E5A5004C7BF9 /* VDMRegionFeature.cpp in Sources */,
+				7D041A1E1AD7E5A5004C7BF9 /* VDMRegionFeature.P in Sources */,
+				7D041A1F1AD7E5A5004C7BF9 /* VDMSettingsManager.cpp in Sources */,
+				7D041A211AD7E5A5004C7BF9 /* VDMSettingsManager.P in Sources */,
+				7D041A221AD7E5A5004C7BF9 /* VDMUserInfo.cpp in Sources */,
+				7D041A241AD7E5A5004C7BF9 /* VDMUserInfo.P in Sources */,
+				7D041A251AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp in Sources */,
+				7D041A271AD7E5A5004C7BF9 /* VDMVersionUpdate.P in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14428,6 +14554,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				XBMC_GCC_PREPROCESSOR_DEFINITIONS_COMMON = "TARGET_POSIX TARGET_DARWIN _LINUX _REENTRANT _FILE_DEFINED _FILE_OFFSET_BITS=64 _LARGEFILE64_SOURCE __STDC_CONSTANT_MACROS HAVE_CONFIG_H HAS_SPC_CODEC NPT_CONFIG_ENABLE_LOGGING PLT_HTTP_DEFAULT_USER_AGENT=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" PLT_HTTP_DEFAULT_SERVER=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" HAS_VIDONME";
 			};
 			name = Debug;
 		};
@@ -14438,6 +14565,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				XBMC_GCC_PREPROCESSOR_DEFINITIONS_COMMON = "TARGET_POSIX TARGET_DARWIN _LINUX _REENTRANT _FILE_DEFINED _FILE_OFFSET_BITS=64 _LARGEFILE64_SOURCE __STDC_CONSTANT_MACROS HAVE_CONFIG_H HAS_SPC_CODEC NPT_CONFIG_ENABLE_LOGGING PLT_HTTP_DEFAULT_USER_AGENT=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" PLT_HTTP_DEFAULT_SERVER=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" HAS_VIDONME";
 			};
 			name = Release;
 		};

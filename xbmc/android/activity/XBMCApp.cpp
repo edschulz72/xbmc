@@ -493,6 +493,7 @@ bool CXBMCApp::HasLaunchIntent(const string &package)
 // Note intent, dataType, dataURI all default to ""
 bool CXBMCApp::StartActivity(const string &package, const string &intent, const string &dataType, const string &dataURI)
 {
+#if defined(HAS_VIDONME)
 	if (package == "com.android.browser")
 	{
 		CJNIIntent newIntent = GetPackageManager().getLaunchIntentForPackage(package);
@@ -513,6 +514,7 @@ bool CXBMCApp::StartActivity(const string &package, const string &intent, const 
 		}
 	}
 	else
+#else
 	{
 		CJNIIntent newIntent = intent.empty() ?
 			GetPackageManager().getLaunchIntentForPackage(package) :
@@ -535,7 +537,7 @@ bool CXBMCApp::StartActivity(const string &package, const string &intent, const 
 
 		newIntent.setPackage(package);
 		startActivity(newIntent);
-	}  
+	}
   
   if (xbmc_jnienv()->ExceptionOccurred())
   {

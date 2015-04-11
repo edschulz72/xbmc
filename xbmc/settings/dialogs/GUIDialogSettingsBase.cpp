@@ -537,6 +537,7 @@ std::set<std::string> CGUIDialogSettingsBase::CreateSettings()
     {
       CSetting *pSetting = *settingIt;
       settingMap.insert(pSetting->GetId());
+#if defined(HAS_VIDONME)
 			if (pSetting->GetId() == "usercenter.email")
 			{
 				if (!pSetting->IsDefault())
@@ -555,6 +556,7 @@ std::set<std::string> CGUIDialogSettingsBase::CreateSettings()
 					pSetting->SetLabel(70061);
 				}
 			}
+#endif
       AddSetting(pSetting, group->GetWidth(), iControlID);
     }
   }

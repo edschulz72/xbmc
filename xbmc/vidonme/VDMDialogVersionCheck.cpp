@@ -71,7 +71,9 @@ bool CVDMDialogVersionCheck::VersionCheck()
     Method_VersionCheck *methodBase = new Method_VersionCheck;
     boost::shared_ptr<MethodPtr> method(new MethodPtr(methodBase));
     if ( !SynchroMethodCall(method) ) return false;
-    m_info = methodBase->info();
+		m_info = methodBase->info();
+		int nIndex = m_info.strVersionName.find_first_of('.');
+		m_info.strVersionName = StringUtils::Left(m_info.strVersionName, nIndex) + StringUtils::Mid(m_info.strVersionName, nIndex + 1);
     return true;
 }
 
@@ -231,6 +233,9 @@ bool CVDMDialogVersionCheck::ShowNewVersionDialog( const CVDMVersionInfo& info )
 void CVDMDialogVersionCheck::SetVersionInfo( const CVDMVersionInfo& info )
 {
   m_info = info;
+
+	int nIndex = m_info.strVersionName.find_first_of('.');
+	m_info.strVersionName = StringUtils::Left(m_info.strVersionName, nIndex) + StringUtils::Mid(m_info.strVersionName, nIndex + 1);
 
   if( info.state == CVDMVersionInfo::sUpdateAvail )
   {

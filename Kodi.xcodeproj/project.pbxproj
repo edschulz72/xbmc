@@ -1089,6 +1089,18 @@
 		7CF80DC919710DC2003B2B34 /* KeyboardLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */; };
 		7CF80DCA19710DC2003B2B34 /* KeyboardLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */; };
 		7CF80DCB19710DC2003B2B34 /* KeyboardLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */; };
+		7D041A101AD7E5A5004C7BF9 /* SynchroMethod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F01AD7E5A5004C7BF9 /* SynchroMethod.cpp */; };
+		7D041A131AD7E5A5004C7BF9 /* VDMDialogLogin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F41AD7E5A5004C7BF9 /* VDMDialogLogin.cpp */; };
+		7D041A161AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419F81AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp */; };
+		7D041A191AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0419FC1AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp */; };
+		7D041A1C1AD7E5A5004C7BF9 /* VDMRegionFeature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A001AD7E5A5004C7BF9 /* VDMRegionFeature.cpp */; };
+		7D041A1F1AD7E5A5004C7BF9 /* VDMSettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A041AD7E5A5004C7BF9 /* VDMSettingsManager.cpp */; };
+		7D041A221AD7E5A5004C7BF9 /* VDMUserInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A081AD7E5A5004C7BF9 /* VDMUserInfo.cpp */; };
+		7D041A251AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */; };
+		7DAB69651AD8B06700EC4961 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 7DAB69601AD8B06700EC4961 /* Makefile */; };
+		7DAB69661AD8B06700EC4961 /* VDMPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DAB69621AD8B06700EC4961 /* VDMPlayer.cpp */; };
+		7DDAA7321AD8B4AE0022D375 /* HTTPFileHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DDAA7311AD8B4AE0022D375 /* HTTPFileHandler.cpp */; };
+		7DDAA93D1AD8C0430022D375 /* SlingboxLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DDAA9371AD8C0430022D375 /* SlingboxLib.cpp */; };
 		810C9FA90D67D1FB0095F5DD /* MythDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */; };
 		810C9FAA0D67D1FB0095F5DD /* MythFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA70D67D1FB0095F5DD /* MythFile.cpp */; };
 		815EE6350E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 815EE6330E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp */; };
@@ -4606,6 +4618,35 @@
 		7CF34D9E1930264A00D543C5 /* AudioEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEncoder.h; sourceTree = "<group>"; };
 		7CF80DC719710DC2003B2B34 /* KeyboardLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KeyboardLayout.cpp; sourceTree = "<group>"; };
 		7CF80DC819710DC2003B2B34 /* KeyboardLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardLayout.h; sourceTree = "<group>"; };
+		7D0419ED1AD7E5A5004C7BF9 /* CommonHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonHeader.h; sourceTree = "<group>"; };
+		7D0419EE1AD7E5A5004C7BF9 /* DLLVidonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLLVidonUtils.h; sourceTree = "<group>"; };
+		7D0419EF1AD7E5A5004C7BF9 /* libVidonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libVidonUtils.h; sourceTree = "<group>"; };
+		7D0419F01AD7E5A5004C7BF9 /* SynchroMethod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SynchroMethod.cpp; sourceTree = "<group>"; };
+		7D0419F11AD7E5A5004C7BF9 /* SynchroMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynchroMethod.h; sourceTree = "<group>"; };
+		7D0419F41AD7E5A5004C7BF9 /* VDMDialogLogin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMDialogLogin.cpp; sourceTree = "<group>"; };
+		7D0419F51AD7E5A5004C7BF9 /* VDMDialogLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMDialogLogin.h; sourceTree = "<group>"; };
+		7D0419F81AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMDialogVersionCheck.cpp; sourceTree = "<group>"; };
+		7D0419F91AD7E5A5004C7BF9 /* VDMDialogVersionCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMDialogVersionCheck.h; sourceTree = "<group>"; };
+		7D0419FC1AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMLogReportUpload.cpp; sourceTree = "<group>"; };
+		7D0419FD1AD7E5A5004C7BF9 /* VDMLogReportUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMLogReportUpload.h; sourceTree = "<group>"; };
+		7D041A001AD7E5A5004C7BF9 /* VDMRegionFeature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMRegionFeature.cpp; sourceTree = "<group>"; };
+		7D041A011AD7E5A5004C7BF9 /* VDMRegionFeature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMRegionFeature.h; sourceTree = "<group>"; };
+		7D041A041AD7E5A5004C7BF9 /* VDMSettingsManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMSettingsManager.cpp; sourceTree = "<group>"; };
+		7D041A051AD7E5A5004C7BF9 /* VDMSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMSettingsManager.h; sourceTree = "<group>"; };
+		7D041A081AD7E5A5004C7BF9 /* VDMUserInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMUserInfo.cpp; sourceTree = "<group>"; };
+		7D041A091AD7E5A5004C7BF9 /* VDMUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMUserInfo.h; sourceTree = "<group>"; };
+		7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMVersionUpdate.cpp; sourceTree = "<group>"; };
+		7D041A0D1AD7E5A5004C7BF9 /* VDMVersionUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMVersionUpdate.h; sourceTree = "<group>"; };
+		7DAB695F1AD8B06700EC4961 /* libplayercore_iplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libplayercore_iplayer.h; sourceTree = "<group>"; };
+		7DAB69601AD8B06700EC4961 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		7DAB69611AD8B06700EC4961 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		7DAB69621AD8B06700EC4961 /* VDMPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMPlayer.cpp; sourceTree = "<group>"; };
+		7DAB69631AD8B06700EC4961 /* VDMPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMPlayer.h; sourceTree = "<group>"; };
+		7DAB69641AD8B06700EC4961 /* VidonPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidonPlayerManager.h; sourceTree = "<group>"; };
+		7DDAA7311AD8B4AE0022D375 /* HTTPFileHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTTPFileHandler.cpp; sourceTree = "<group>"; };
+		7DDAA7341AD8B4B70022D375 /* HTTPFileHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPFileHandler.h; sourceTree = "<group>"; };
+		7DDAA9371AD8C0430022D375 /* SlingboxLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlingboxLib.cpp; sourceTree = "<group>"; };
+		7DDAA9381AD8C0430022D375 /* SlingboxLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlingboxLib.h; sourceTree = "<group>"; };
 		810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythDirectory.cpp; sourceTree = "<group>"; };
 		810C9FA60D67D1FB0095F5DD /* MythDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MythDirectory.h; sourceTree = "<group>"; };
 		810C9FA70D67D1FB0095F5DD /* MythFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythFile.cpp; sourceTree = "<group>"; };
@@ -7955,6 +7996,55 @@
 			path = media;
 			sourceTree = "<group>";
 		};
+		7D0419EC1AD7E5A5004C7BF9 /* vidonme */ = {
+			isa = PBXGroup;
+			children = (
+				7D0419ED1AD7E5A5004C7BF9 /* CommonHeader.h */,
+				7D0419EE1AD7E5A5004C7BF9 /* DLLVidonUtils.h */,
+				7D0419EF1AD7E5A5004C7BF9 /* libVidonUtils.h */,
+				7D0419F01AD7E5A5004C7BF9 /* SynchroMethod.cpp */,
+				7D0419F11AD7E5A5004C7BF9 /* SynchroMethod.h */,
+				7D0419F41AD7E5A5004C7BF9 /* VDMDialogLogin.cpp */,
+				7D0419F51AD7E5A5004C7BF9 /* VDMDialogLogin.h */,
+				7D0419F81AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp */,
+				7D0419F91AD7E5A5004C7BF9 /* VDMDialogVersionCheck.h */,
+				7D0419FC1AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp */,
+				7D0419FD1AD7E5A5004C7BF9 /* VDMLogReportUpload.h */,
+				7D041A001AD7E5A5004C7BF9 /* VDMRegionFeature.cpp */,
+				7D041A011AD7E5A5004C7BF9 /* VDMRegionFeature.h */,
+				7D041A041AD7E5A5004C7BF9 /* VDMSettingsManager.cpp */,
+				7D041A051AD7E5A5004C7BF9 /* VDMSettingsManager.h */,
+				7D041A081AD7E5A5004C7BF9 /* VDMUserInfo.cpp */,
+				7D041A091AD7E5A5004C7BF9 /* VDMUserInfo.h */,
+				7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */,
+				7D041A0D1AD7E5A5004C7BF9 /* VDMVersionUpdate.h */,
+			);
+			path = vidonme;
+			sourceTree = "<group>";
+		};
+		7DAB695E1AD8B06700EC4961 /* vdmplayer */ = {
+			isa = PBXGroup;
+			children = (
+				7DAB695F1AD8B06700EC4961 /* libplayercore_iplayer.h */,
+				7DAB69601AD8B06700EC4961 /* Makefile */,
+				7DAB69611AD8B06700EC4961 /* Makefile.in */,
+				7DAB69621AD8B06700EC4961 /* VDMPlayer.cpp */,
+				7DAB69631AD8B06700EC4961 /* VDMPlayer.h */,
+				7DAB69641AD8B06700EC4961 /* VidonPlayerManager.h */,
+			);
+			path = vdmplayer;
+			sourceTree = "<group>";
+		};
+		7DDAA9321AD8C0430022D375 /* SlingboxLib */ = {
+			isa = PBXGroup;
+			children = (
+				7DDAA9371AD8C0430022D375 /* SlingboxLib.cpp */,
+				7DDAA9381AD8C0430022D375 /* SlingboxLib.h */,
+			);
+			name = SlingboxLib;
+			path = lib/SlingboxLib;
+			sourceTree = SOURCE_ROOT;
+		};
 		B5426323197D2AB300726998 /* posix */ = {
 			isa = PBXGroup;
 			children = (
@@ -8405,6 +8495,8 @@
 		DFCA6AB8152245CD000BFAAE /* httprequesthandler */ = {
 			isa = PBXGroup;
 			children = (
+				7DDAA7341AD8B4B70022D375 /* HTTPFileHandler.h */,
+				7DDAA7311AD8B4AE0022D375 /* HTTPFileHandler.cpp */,
 				7C6EB6F8155F32C30080368A /* HTTPImageHandler.cpp */,
 				7C6EB6F9155F32C30080368A /* HTTPImageHandler.h */,
 				DFCA6ABB152245CD000BFAAE /* HTTPJsonRpcHandler.cpp */,
@@ -8578,6 +8670,8 @@
 		E38E14610D25F9F900618676 /* xbmc */ = {
 			isa = PBXGroup;
 			children = (
+				7DDAA9321AD8C0430022D375 /* SlingboxLib */,
+				7D0419EC1AD7E5A5004C7BF9 /* vidonme */,
 				18B49FF01152BEEB001AF8A6 /* addons */,
 				E38E147F0D25F9F900618676 /* cdrip */,
 				EC720A91155091CA00FFD782 /* commons */,
@@ -8712,6 +8806,7 @@
 		E38E149A0D25F9F900618676 /* cores */ = {
 			isa = PBXGroup;
 			children = (
+				7DAB695E1AD8B06700EC4961 /* vdmplayer */,
 				DFB65F6315373AE7006B8FF1 /* AudioEngine */,
 				E38E149D0D25F9F900618676 /* DllLoader */,
 				E38E14F80D25F9F900618676 /* dvdplayer */,
@@ -11868,6 +11963,18 @@
 				7C908894196358A8003D0619 /* auto_buffer.cpp in Sources */,
 				7CF34D9F1930264A00D543C5 /* AudioEncoder.cpp in Sources */,
 				7CF80DC919710DC2003B2B34 /* KeyboardLayout.cpp in Sources */,
+				7D041A101AD7E5A5004C7BF9 /* SynchroMethod.cpp in Sources */,
+				7D041A131AD7E5A5004C7BF9 /* VDMDialogLogin.cpp in Sources */,
+				7D041A161AD7E5A5004C7BF9 /* VDMDialogVersionCheck.cpp in Sources */,
+				7D041A191AD7E5A5004C7BF9 /* VDMLogReportUpload.cpp in Sources */,
+				7D041A1C1AD7E5A5004C7BF9 /* VDMRegionFeature.cpp in Sources */,
+				7D041A1F1AD7E5A5004C7BF9 /* VDMSettingsManager.cpp in Sources */,
+				7D041A221AD7E5A5004C7BF9 /* VDMUserInfo.cpp in Sources */,
+				7D041A251AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp in Sources */,
+				7DAB69651AD8B06700EC4961 /* Makefile in Sources */,
+				7DAB69661AD8B06700EC4961 /* VDMPlayer.cpp in Sources */,
+				7DDAA7321AD8B4AE0022D375 /* HTTPFileHandler.cpp in Sources */,
+				7DDAA93D1AD8C0430022D375 /* SlingboxLib.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14428,6 +14535,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				XBMC_GCC_PREPROCESSOR_DEFINITIONS_COMMON = "TARGET_POSIX TARGET_DARWIN _LINUX _REENTRANT _FILE_DEFINED _FILE_OFFSET_BITS=64 _LARGEFILE64_SOURCE __STDC_CONSTANT_MACROS HAVE_CONFIG_H HAS_SPC_CODEC NPT_CONFIG_ENABLE_LOGGING PLT_HTTP_DEFAULT_USER_AGENT=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" PLT_HTTP_DEFAULT_SERVER=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" HAS_VIDONME";
 			};
 			name = Debug;
 		};
@@ -14438,6 +14546,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				XBMC_GCC_PREPROCESSOR_DEFINITIONS_COMMON = "TARGET_POSIX TARGET_DARWIN _LINUX _REENTRANT _FILE_DEFINED _FILE_OFFSET_BITS=64 _LARGEFILE64_SOURCE __STDC_CONSTANT_MACROS HAVE_CONFIG_H HAS_SPC_CODEC NPT_CONFIG_ENABLE_LOGGING PLT_HTTP_DEFAULT_USER_AGENT=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" PLT_HTTP_DEFAULT_SERVER=\"\\\"UPnP/1.0 DLNADOC/1.50 Kodi\\\"\" HAS_VIDONME";
 			};
 			name = Release;
 		};

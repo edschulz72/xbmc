@@ -1097,6 +1097,8 @@
 		7D041A1F1AD7E5A5004C7BF9 /* VDMSettingsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A041AD7E5A5004C7BF9 /* VDMSettingsManager.cpp */; };
 		7D041A221AD7E5A5004C7BF9 /* VDMUserInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A081AD7E5A5004C7BF9 /* VDMUserInfo.cpp */; };
 		7D041A251AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */; };
+		7DAB69651AD8B06700EC4961 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 7DAB69601AD8B06700EC4961 /* Makefile */; };
+		7DAB69661AD8B06700EC4961 /* VDMPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DAB69621AD8B06700EC4961 /* VDMPlayer.cpp */; };
 		810C9FA90D67D1FB0095F5DD /* MythDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */; };
 		810C9FAA0D67D1FB0095F5DD /* MythFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA70D67D1FB0095F5DD /* MythFile.cpp */; };
 		815EE6350E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 815EE6330E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp */; };
@@ -4633,6 +4635,12 @@
 		7D041A091AD7E5A5004C7BF9 /* VDMUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMUserInfo.h; sourceTree = "<group>"; };
 		7D041A0C1AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMVersionUpdate.cpp; sourceTree = "<group>"; };
 		7D041A0D1AD7E5A5004C7BF9 /* VDMVersionUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMVersionUpdate.h; sourceTree = "<group>"; };
+		7DAB695F1AD8B06700EC4961 /* libplayercore_iplayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libplayercore_iplayer.h; sourceTree = "<group>"; };
+		7DAB69601AD8B06700EC4961 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		7DAB69611AD8B06700EC4961 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		7DAB69621AD8B06700EC4961 /* VDMPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VDMPlayer.cpp; sourceTree = "<group>"; };
+		7DAB69631AD8B06700EC4961 /* VDMPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDMPlayer.h; sourceTree = "<group>"; };
+		7DAB69641AD8B06700EC4961 /* VidonPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidonPlayerManager.h; sourceTree = "<group>"; };
 		810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythDirectory.cpp; sourceTree = "<group>"; };
 		810C9FA60D67D1FB0095F5DD /* MythDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MythDirectory.h; sourceTree = "<group>"; };
 		810C9FA70D67D1FB0095F5DD /* MythFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythFile.cpp; sourceTree = "<group>"; };
@@ -8008,6 +8016,19 @@
 			path = vidonme;
 			sourceTree = "<group>";
 		};
+		7DAB695E1AD8B06700EC4961 /* vdmplayer */ = {
+			isa = PBXGroup;
+			children = (
+				7DAB695F1AD8B06700EC4961 /* libplayercore_iplayer.h */,
+				7DAB69601AD8B06700EC4961 /* Makefile */,
+				7DAB69611AD8B06700EC4961 /* Makefile.in */,
+				7DAB69621AD8B06700EC4961 /* VDMPlayer.cpp */,
+				7DAB69631AD8B06700EC4961 /* VDMPlayer.h */,
+				7DAB69641AD8B06700EC4961 /* VidonPlayerManager.h */,
+			);
+			path = vdmplayer;
+			sourceTree = "<group>";
+		};
 		B5426323197D2AB300726998 /* posix */ = {
 			isa = PBXGroup;
 			children = (
@@ -8766,6 +8787,7 @@
 		E38E149A0D25F9F900618676 /* cores */ = {
 			isa = PBXGroup;
 			children = (
+				7DAB695E1AD8B06700EC4961 /* vdmplayer */,
 				DFB65F6315373AE7006B8FF1 /* AudioEngine */,
 				E38E149D0D25F9F900618676 /* DllLoader */,
 				E38E14F80D25F9F900618676 /* dvdplayer */,
@@ -11930,6 +11952,8 @@
 				7D041A1F1AD7E5A5004C7BF9 /* VDMSettingsManager.cpp in Sources */,
 				7D041A221AD7E5A5004C7BF9 /* VDMUserInfo.cpp in Sources */,
 				7D041A251AD7E5A5004C7BF9 /* VDMVersionUpdate.cpp in Sources */,
+				7DAB69651AD8B06700EC4961 /* Makefile in Sources */,
+				7DAB69661AD8B06700EC4961 /* VDMPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

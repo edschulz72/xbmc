@@ -126,7 +126,7 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 	}
 
 #if !defined(AML_DEMO)
-	if (settingId == "audiooutput.passthrough")
+	if (settingId == "audiooutput.truehdpassthrough" || settingId == "audiooutput.dtshdpassthrough")
 	{
 		CSettingBool* pSettingsTmp = (CSettingBool*)setting;
 		if (pSettingsTmp->GetValue())

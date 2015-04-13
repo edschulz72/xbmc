@@ -1100,7 +1100,6 @@
 		7DAB69651AD8B06700EC4961 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 7DAB69601AD8B06700EC4961 /* Makefile */; };
 		7DAB69661AD8B06700EC4961 /* VDMPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DAB69621AD8B06700EC4961 /* VDMPlayer.cpp */; };
 		7DDAA7321AD8B4AE0022D375 /* HTTPFileHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DDAA7311AD8B4AE0022D375 /* HTTPFileHandler.cpp */; };
-		7DDAA93D1AD8C0430022D375 /* SlingboxLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DDAA9371AD8C0430022D375 /* SlingboxLib.cpp */; };
 		810C9FA90D67D1FB0095F5DD /* MythDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */; };
 		810C9FAA0D67D1FB0095F5DD /* MythFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA70D67D1FB0095F5DD /* MythFile.cpp */; };
 		815EE6350E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 815EE6330E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp */; };
@@ -4645,8 +4644,6 @@
 		7DAB69641AD8B06700EC4961 /* VidonPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidonPlayerManager.h; sourceTree = "<group>"; };
 		7DDAA7311AD8B4AE0022D375 /* HTTPFileHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTTPFileHandler.cpp; sourceTree = "<group>"; };
 		7DDAA7341AD8B4B70022D375 /* HTTPFileHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPFileHandler.h; sourceTree = "<group>"; };
-		7DDAA9371AD8C0430022D375 /* SlingboxLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlingboxLib.cpp; sourceTree = "<group>"; };
-		7DDAA9381AD8C0430022D375 /* SlingboxLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlingboxLib.h; sourceTree = "<group>"; };
 		810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythDirectory.cpp; sourceTree = "<group>"; };
 		810C9FA60D67D1FB0095F5DD /* MythDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MythDirectory.h; sourceTree = "<group>"; };
 		810C9FA70D67D1FB0095F5DD /* MythFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythFile.cpp; sourceTree = "<group>"; };
@@ -8035,16 +8032,6 @@
 			path = vdmplayer;
 			sourceTree = "<group>";
 		};
-		7DDAA9321AD8C0430022D375 /* SlingboxLib */ = {
-			isa = PBXGroup;
-			children = (
-				7DDAA9371AD8C0430022D375 /* SlingboxLib.cpp */,
-				7DDAA9381AD8C0430022D375 /* SlingboxLib.h */,
-			);
-			name = SlingboxLib;
-			path = lib/SlingboxLib;
-			sourceTree = SOURCE_ROOT;
-		};
 		B5426323197D2AB300726998 /* posix */ = {
 			isa = PBXGroup;
 			children = (
@@ -8670,7 +8657,6 @@
 		E38E14610D25F9F900618676 /* xbmc */ = {
 			isa = PBXGroup;
 			children = (
-				7DDAA9321AD8C0430022D375 /* SlingboxLib */,
 				7D0419EC1AD7E5A5004C7BF9 /* vidonme */,
 				18B49FF01152BEEB001AF8A6 /* addons */,
 				E38E147F0D25F9F900618676 /* cdrip */,
@@ -11974,7 +11960,6 @@
 				7DAB69651AD8B06700EC4961 /* Makefile in Sources */,
 				7DAB69661AD8B06700EC4961 /* VDMPlayer.cpp in Sources */,
 				7DDAA7321AD8B4AE0022D375 /* HTTPFileHandler.cpp in Sources */,
-				7DDAA93D1AD8C0430022D375 /* SlingboxLib.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

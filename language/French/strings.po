@@ -13085,16 +13085,16 @@ msgstr "Accélérée matériellement"
 
 
 msgctxt "#70000"
-msgid "Welcome to VidOn Kodi Demo"
-msgstr "Bienvenue à VidOn Kodi Demo"
+msgid "Welcome to VidOn XBMC Demo"
+msgstr "Bienvenue à VidOn XBMC Demo"
 
 msgctxt "#70001"
-msgid "VidOn.me offers for Android the most complete and reliable Kodi, with greatly optimized functions and features. On top of the traditional media management function, our Kodi has many unique features like Blu-ray menu navigation, HD audio output, and more."
-msgstr "VidOn.me offre le Kodi Android le plus complet et réalisable, avec les fonctions et fonctionnalités optimisées. Et plus de fonction de gestion média traditionnelle, notre Kodi a plusieurs fonctionnalités uniques come la navigation de menu Blu-ray, la sortie audio HD, ect."
+msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr "VidOn.me offre le XBMC Android le plus complet et réalisable, avec les fonctions et fonctionnalités optimisées. Et plus de fonction de gestion média traditionnelle, notre XBMC a plusieurs fonctionnalités uniques come la navigation de menu Blu-ray, la sortie audio HD, ect."
 
 msgctxt "#70002"
-msgid "\n\nTo upgrade to VidOn Kodi Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
-msgstr "\n\nTo upgrade à VidOn Kodi Pro, Veuillez visiter: [COLOR=blue]http://fr.vidon.me/ [/COLOR] "
+msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\nTo upgrade à VidOn XBMC Pro, Veuillez visiter: [COLOR=blue]http://fr.vidon.me/ [/COLOR] "
 
 msgctxt "#70003"
 msgid "OK"
@@ -13113,28 +13113,28 @@ msgid "Account/password verification failed. Please re-enter."
 msgstr "La vérification compte/mot de passe est échouée. Veuillez enter de nouveau."
 
 msgctxt "#70007"
-msgid "Welcome to VidOn Kodi"
-msgstr "Binevenue à VidOn Kodi"
+msgid "Welcome to VidOn XBMC"
+msgstr "Binevenue à VidOn XBMC"
 
 msgctxt "#70008"
-msgid "You are using the free version of VidOn Kodi."
-msgstr "Vous utiliser la version gratuite de VidOn Kodi"
+msgid "You are using the free version of VidOn XBMC."
+msgstr "Vous utiliser la version gratuite de VidOn XBMC"
 
 msgctxt "#70009"
-msgid "You already have a top-up card. Complete the binding to upgrade immediately to the Pro version!"
-msgstr "Vous avez déjà une carte de recharge. Finissez la liaison pour mettre à niveau à la version Pro tout de suite !"
+msgid "You already have a Top-Up Card. Apply to upgrade immediately to the Pro version!"
+msgstr " Vous avez déjà une carte de recharge. Appliquez pour mettre à jour immédiatement vers la version Pro!"
 
 msgctxt "#70010"
-msgid "You already have a top-up card. You can use advanced features after the binding!"
-msgstr " Vous avez déjà une carte de recharge. Vous pouvez utiliser les fonctionnalités avancées après la liaison."
+msgid "You already have a top-up card. You can use advanced features after applying!"
+msgstr "Vous avez déjà une carte de recharge. Vous pouvez accéder aux fonctionnalités avancées après l’utilisation de carte !"
 
 msgctxt "#70011"
-msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding to upgrade to the Pro version!"
-msgstr "Aucune carte n’est disponible dans votre compte. Vous pouvez entrer manuellement le code numérique de carte pour finir la liaison et mettre à niveau à la version Pro !"
+msgid "No available Top-Up Card. in your account. You can manually enter the 12 digit code of the card provided to you to complete the process and upgrade to the Pro version!"
+msgstr "Aucune carte n’est disponible dans votre compte. Vous pouvez entrer manuellement le code de 12 chiffres de carte fournie pour finir le processus et mettre à jour vers la version Pro !"
 
 msgctxt "#70012"
-msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding."
-msgstr " Aucune carte n’est disponible dans votre compte. Vous pouvez entrer manuellement le code numérique de carte pour finir la liaison. "
+msgid "No available Top-Up Card in your account. You can manually enter the 12 digit code of the card provided to you to complete the process."
+msgstr "Aucune carte n’est disponible dans votre compte. Vous pouvez entrer manuellement le code de 12 chiffres de carte fournie pour finir le processus. "
 
 msgctxt "#70013"
 msgid "Username and password must not be empty."
@@ -13149,20 +13149,21 @@ msgid "Successful!"
 msgstr "Avec succès!"
 
 msgctxt "#70016"
-msgid "Failed to bind!"
-msgstr "Échec de liaison!"
+msgid "Failed to apply!"
+msgstr "Impossible d’appliquer!"
 
 msgctxt "#70017"
-msgid "Your license is due to expire on %s. Please go to the official website to top it up as soon as possible."
-msgstr "Votre licence va expiré %s. Veuillez visiter le site web officiel pour la recharger le plus vite possible. "
+msgid "Your Subscription is due to expire on %s. Please go to the official website to top-up as soon as possible."
+msgstr "Votre licence va expirer %s. Veuillez visiter le site web officiel pour la recharger le plus vite possible.
 
 msgctxt "#70018"
-msgid "License term"
-msgstr "Termes de licence"
+msgid "Membership term"
+msgstr "Terme d’adhésion"
 
 msgctxt "#70019"
-msgid "Bind"
-msgstr "Lier"
+msgid "Apply"
+msgstr "Appliquer"
+
 
 msgctxt "#70020"
 msgid "Cancel"
@@ -13309,8 +13310,8 @@ msgid "User Center"
 msgstr "Centre utilisateur"
 
 msgctxt "#70056"
-msgid "Show username, email and license information. User can be switched."
-msgstr "Afficher l’information de nom d’utilisateur, d’email et de licence. L’utilisateur peut être changé."
+msgid "Show user name, email and Membership information. Accounts can be switched."
+msgstr "Afficher le nom d’utilisateur, email et information de l’adhésion. Les comptes peuvent être changés."
 
 msgctxt "#70057"
 msgid "Username"
@@ -13325,8 +13326,8 @@ msgid "Expiration Date"
 msgstr "Date d’expiration"
 
 msgctxt "#70060"
-msgid "License ID"
-msgstr "ID de licence"
+msgid "My Membership"
+msgstr "Mon adhésion"
 
 msgctxt "#70061"
 msgid "Switch User"
@@ -13471,8 +13472,8 @@ msgid "Without account?"
 msgstr "Pas de compte?"
 
 msgctxt "#70090"
-msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/ [COLOR=white]to finish registration.[/COLOR] "
-msgstr "[COLOR=white]Veuillez visiter le site officiel[/COLOR] http://fr.vidon.me/ [COLOR=white]pour terminer l'enregistrement.[/COLOR] "
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]Veuillez visiter le site officiel[/COLOR] http://vidon.me/uc/account/register [COLOR=white]pour terminer l'enregistrement.[/COLOR] "
 
 #: system/settings/settings.xml
 msgctxt "#70091"
@@ -13480,8 +13481,8 @@ msgid "Build Time"
 msgstr "Temps de compilation"
 
 msgctxt "#70092"
-msgid "Unlicensed"
-msgstr "Non autorisé"
+msgid "No subscription"
+msgstr "Aucun abonnement"
 
 msgctxt "#70093"
 msgid "You've got VidOn Membership Experience Qualification"
@@ -13519,3 +13520,6 @@ msgctxt "#70101"
 msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
 msgstr "Si vous n’avez pas de compte, veuillez aller au site officiel : http://fr.vidon.me/ pour en savoir plus."
 
+msgctxt "#70102"
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]Veuillez visiter le site officiel[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]pour terminer l'enregistrement.[/COLOR] "

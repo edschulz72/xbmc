@@ -2993,7 +2993,7 @@
   </section>
   <!--HAS_VIDONME-->
   <section id ="vidonme" label="70024" help="70025">
-    <category id="buffer" label="70102" help="70103">
+    <category id="buffer" label="70123" help="70103">
       <group id="1">
         <setting id="buffer.mode" type="integer" label="70104" help="70105">
           <level>0</level>
@@ -3139,7 +3139,7 @@
           <level>1</level>
           <control type="button" format="action" />
         </setting>
-        <setting id="using.vdmplayer" type="boolean" label="70098" help="70099">
+        <setting id="using.vdmplayer" type="boolean" label="70121" help="70122">
           <level>3</level>
           <default>true</default>
           <control type="toggle" />

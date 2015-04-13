@@ -514,7 +514,7 @@ bool CXBMCApp::StartActivity(const string &package, const string &intent, const 
 		}
 	}
 	else
-#else
+#endif
 	{
 		CJNIIntent newIntent = intent.empty() ?
 			GetPackageManager().getLaunchIntentForPackage(package) :

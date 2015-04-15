@@ -2368,7 +2368,7 @@
       <group id="1">
         <setting id="audiooutput.audiodevice" type="string" label="545" help="36371">
           <level>0</level>
-          <default>Default</default> <!-- will be properly set on startup -->
+          <default>VIDONME:HDMI</default> <!-- will be properly set on startup -->
           <constraints>
             <options>audiodevices</options>
           </constraints>

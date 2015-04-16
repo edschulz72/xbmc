@@ -12647,3 +12647,99 @@ msgstr "アカウントを持っていない場合、当社の公式サイトま
 msgctxt "#70102"
 msgid "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
 msgstr "[COLOR=white]公式サイトを訪問して[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]登録を完成してください。[/COLOR] "
+
+msgctxt "#70103"
+msgid "This will configure the buffer settings for your network sources."
+msgstr "これはネットワークソースバッファの設定を構成します。"
+
+msgctxt "#70104"
+msgid "Buffer Mode"
+msgstr "バッファモード"
+
+msgctxt "#70105"
+msgid "This setting will let you choose which files VidOn XBMC will buffer."
+msgstr "これはVidOn XBMC がバッファするファイルを選択する設定です。"
+
+msgctxt "#70106"
+msgid "Buffer all internet sources"
+msgstr "全てのインターネットソースをバッファする"
+
+msgctxt "#70107"
+msgid "Buffer all sources, both internet and local"
+msgstr "インターネット及びローカルの全てのソースをバッファする"
+
+msgctxt "#70108"
+msgid "Only buffer internet streams"
+msgstr "インターネットストリームだけをバッファする"
+
+msgctxt "#70109"
+msgid "No buffer"
+msgstr "バッファしない"
+
+msgctxt "#70110"
+msgid "Cache size"
+msgstr "キャッシュサイズ"
+
+msgctxt "#70111"
+msgid "Set the cache size"
+msgstr "キャッシュサイズを設定"
+
+msgctxt "#70112"
+msgid "Cache fill-rate"
+msgstr "キャッシュのフィルレート"
+
+msgctxt "#70113"
+msgid "Set the cache fill-rate"
+msgstr "キャッシュのフィルレートを設定"
+
+msgctxt "#70114"
+msgid "0MB"
+msgstr "0MB"
+
+msgctxt "#70115"
+msgid "20MB"
+msgstr "20MB"
+
+msgctxt "#70116"
+msgid "50MB"
+msgstr "50MB"
+
+msgctxt "#70117"
+msgid "100MB"
+msgstr "100MB"
+
+msgctxt "#70118"
+msgid "150MB"
+msgstr "150MB"
+
+msgctxt "#70119"
+msgid "10"
+msgstr "10"
+
+msgctxt "#70120"
+msgid "20"
+msgstr "20"
+
+msgctxt "#70121"
+msgid "Enable VidOn Play core"
+msgstr "VidOn 再生コアを有効にする"
+
+msgctxt "#70122"
+msgid "If VidOn Play Core is disabled, original XBMC player will be used."
+msgstr "VidOn 再生コアを無効にすると、オリジナルXBMC プレーヤーが使用されます。"
+
+msgctxt "#70123"
+msgid "Buffer Settings"
+msgstr "バッファの設定"
+
+msgctxt "#70124"
+msgid "BluryLib"
+msgstr "BluryLib"
+
+msgctxt "#70125"
+msgid "DVDLib"
+msgstr "DVDLib"
+
+msgctxt "#70126"
+msgid "VDMPlayer"
+msgstr "VDMPlayer"

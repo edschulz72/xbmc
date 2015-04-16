@@ -13522,3 +13522,99 @@ msgstr "如果您没有VidOn.me账户，请到我们的官方网站http://vidonm
 msgctxt "#70102"
 msgid "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
 msgstr "[COLOR=white]请访问官方网站[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]完成注册.[/COLOR] "
+
+msgctxt "#70103"
+msgid "This will configure the buffer settings for your network sources."
+msgstr "对您的播放缓存类型进行设置。"
+
+msgctxt "#70104"
+msgid "Buffer Mode"
+msgstr "缓存类型"
+
+msgctxt "#70105"
+msgid "This setting will let you choose which files VidOn XBMC will buffer."
+msgstr "选择缓存类型"
+
+msgctxt "#70106"
+msgid "Buffer all internet sources"
+msgstr "缓存互联网文件"
+
+msgctxt "#70107"
+msgid "Buffer all sources, both internet and local"
+msgstr "缓存所有互联网和局域网文件"
+
+msgctxt "#70108"
+msgid "Only buffer internet streams"
+msgstr "只缓存流媒体"
+
+msgctxt "#70109"
+msgid "No buffer"
+msgstr "不缓存任何文件"
+
+msgctxt "#70110"
+msgid "Cache size"
+msgstr "缓存大小"
+
+msgctxt "#70111"
+msgid "Set the cache size"
+msgstr "设置缓存大小"
+
+msgctxt "#70112"
+msgid "Cache fill-rate"
+msgstr "缓存填充速率"
+
+msgctxt "#70113"
+msgid "Set the cache fill-rate"
+msgstr "设置缓存填充速率"
+
+msgctxt "#70114"
+msgid "0MB"
+msgstr "0MB"
+
+msgctxt "#70115"
+msgid "20MB"
+msgstr "20MB"
+
+msgctxt "#70116"
+msgid "50MB"
+msgstr "50MB"
+
+msgctxt "#70117"
+msgid "100MB"
+msgstr "100MB"
+
+msgctxt "#70118"
+msgid "150MB"
+msgstr "150MB"
+
+msgctxt "#70119"
+msgid "10"
+msgstr "10"
+
+msgctxt "#70120"
+msgid "20"
+msgstr "20"
+
+msgctxt "#70121"
+msgid "Enable VidOn Play core"
+msgstr "启用VidOn Play Core "
+
+msgctxt "#70122"
+msgid "If VidOn Play Core is disabled, original XBMC player will be used."
+msgstr "如果禁用VidOn Play Core, 系统将使用XBMC播放器"
+
+msgctxt "#70123"
+msgid "Buffer Settings"
+msgstr "播放缓存设置"
+
+msgctxt "#70124"
+msgid "BluryLib"
+msgstr "BluryLib"
+
+msgctxt "#70125"
+msgid "DVDLib"
+msgstr "DVDLib"
+
+msgctxt "#70126"
+msgid "VDMPlayer"
+msgstr "VDMPlayer"

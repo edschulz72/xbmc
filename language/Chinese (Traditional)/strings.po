@@ -13170,3 +13170,99 @@ msgstr "如果您沒有帳號，請到我們的官方網站http://zh.vidon.me獲
 msgctxt "#70102"
 msgid "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
 msgstr "[COLOR=white]請訪問官方網站[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]完成註冊。[/COLOR] "
+
+msgctxt "#70103"
+msgid "This will configure the buffer settings for your network sources."
+msgstr "這將配置網路源檔案的緩衝設定。"
+
+msgctxt "#70104"
+msgid "Buffer Mode"
+msgstr "緩衝模式"
+
+msgctxt "#70105"
+msgid "This setting will let you choose which files VidOn XBMC will buffer."
+msgstr "此設定會讓你選擇VidOn XBMC緩衝哪些檔案。"
+
+msgctxt "#70106"
+msgid "Buffer all internet sources"
+msgstr "緩衝所有網路源檔案"
+
+msgctxt "#70107"
+msgid "Buffer all sources, both internet and local"
+msgstr "緩衝所有源檔案，包括網路檔案和本地檔案"
+
+msgctxt "#70108"
+msgid "Only buffer internet streams"
+msgstr "只緩衝網路流媒體"
+
+msgctxt "#70109"
+msgid "No buffer"
+msgstr "不緩衝"
+
+msgctxt "#70110"
+msgid "Cache size"
+msgstr "緩存大小"
+
+msgctxt "#70111"
+msgid "Set the cache size"
+msgstr "設定緩存大小"
+
+msgctxt "#70112"
+msgid "Cache fill-rate"
+msgstr "緩存填充速率"
+
+msgctxt "#70113"
+msgid "Set the cache fill-rate"
+msgstr "設定緩存填充速率"
+
+msgctxt "#70114"
+msgid "0MB"
+msgstr "0MB"
+
+msgctxt "#70115"
+msgid "20MB"
+msgstr "20MB"
+
+msgctxt "#70116"
+msgid "50MB"
+msgstr "50MB"
+
+msgctxt "#70117"
+msgid "100MB"
+msgstr "100MB"
+
+msgctxt "#70118"
+msgid "150MB"
+msgstr "150MB"
+
+msgctxt "#70119"
+msgid "10"
+msgstr "10"
+
+msgctxt "#70120"
+msgid "20"
+msgstr "20"
+
+msgctxt "#70121"
+msgid "Enable VidOn Play core"
+msgstr "啟用VidOn Play Core"
+
+msgctxt "#70122"
+msgid "If VidOn Play Core is disabled, original XBMC player will be used."
+msgstr "VidOn Play Core已啟用, 將會使用原始XBMC播放機。"
+
+msgctxt "#70123"
+msgid "Buffer Settings"
+msgstr "緩衝設定"
+
+msgctxt "#70124"
+msgid "BluryLib"
+msgstr "BluryLib"
+
+msgctxt "#70125"
+msgid "DVDLib"
+msgstr "DVDLib"
+
+msgctxt "#70126"
+msgid "VDMPlayer"
+msgstr "VDMPlayer"

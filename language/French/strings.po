@@ -13523,3 +13523,99 @@ msgstr "Si vous n’avez pas de compte, veuillez aller au site officiel : http:/
 msgctxt "#70102"
 msgid "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
 msgstr "[COLOR=white]Veuillez visiter le site officiel[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]pour terminer l'enregistrement.[/COLOR] "
+
+msgctxt "#70103"
+msgid "This will configure the buffer settings for your network sources."
+msgstr "Il va configurer les paramètres de la mémoire tampon de votre ressources de réseau."
+
+msgctxt "#70104"
+msgid "Buffer Mode"
+msgstr "Mode de tampon"
+
+msgctxt "#70105"
+msgid "This setting will let you choose which files VidOn XBMC will buffer."
+msgstr "Ce réglage vous permet de choisir le fichier de tampon de VidOn XBMC."
+
+msgctxt "#70106"
+msgid "Buffer all internet sources"
+msgstr "Mettre des fichiers Internet dans la mémoire tampon"
+
+msgctxt "#70107"
+msgid "Buffer all sources, both internet and local"
+msgstr "Mettre toutes les ressources Internet et locales dans la mémoire tampon"
+
+msgctxt "#70108"
+msgid "Only buffer internet streams"
+msgstr "Mettre seulement les streams Internet dans la mémoire tampon"
+
+msgctxt "#70109"
+msgid "No buffer"
+msgstr "Ne Mettre aucun de fichier dans la mémoire tampon"
+
+msgctxt "#70110"
+msgid "Cache size"
+msgstr "Taille de tampon"
+
+msgctxt "#70111"
+msgid "Set the cache size"
+msgstr "Régler la taille de tampon"
+
+msgctxt "#70112"
+msgid "Cache fill-rate"
+msgstr "Vitesse de tampon"
+
+msgctxt "#70113"
+msgid "Set the cache fill-rate"
+msgstr "Régler la vitesse de tampon"
+
+msgctxt "#70114"
+msgid "0MB"
+msgstr "0MB"
+
+msgctxt "#70115"
+msgid "20MB"
+msgstr "20MB"
+
+msgctxt "#70116"
+msgid "50MB"
+msgstr "50MB"
+
+msgctxt "#70117"
+msgid "100MB"
+msgstr "100MB"
+
+msgctxt "#70118"
+msgid "150MB"
+msgstr "150MB"
+
+msgctxt "#70119"
+msgid "10"
+msgstr "10"
+
+msgctxt "#70120"
+msgid "20"
+msgstr "20"
+
+msgctxt "#70121"
+msgid "Enable VidOn Play core"
+msgstr "Activer VidOn Play Core "
+
+msgctxt "#70122"
+msgid "If VidOn Play Core is disabled, original XBMC player will be used."
+msgstr "Si VidOn Play Core désactivé, le lecteur de XBMC d’origine sera utilisé."
+
+msgctxt "#70123"
+msgid "Buffer Settings"
+msgstr "Paramètres de tampon"
+
+msgctxt "#70124"
+msgid "BluryLib"
+msgstr "BluryLib"
+
+msgctxt "#70125"
+msgid "DVDLib"
+msgstr "DVDLib"
+
+msgctxt "#70126"
+msgid "VDMPlayer"
+msgstr "VDMPlayer"

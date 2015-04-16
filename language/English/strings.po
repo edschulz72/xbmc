@@ -16642,3 +16642,15 @@ msgstr "If VidOn Player is disabled, original XBMC player will be used."
 msgctxt "#70123"
 msgid "Playing buffer"
 msgstr "Playing buffer"
+
+msgctxt "#70124"
+msgid "BluryLib"
+msgstr "BluryLib"
+
+msgctxt "#70125"
+msgid "DVDLib"
+msgstr "DVDLib"
+
+msgctxt "#70126"
+msgid "VDMPlayer"
+msgstr "VDMPlayer"

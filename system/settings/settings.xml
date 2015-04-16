@@ -3188,6 +3188,30 @@
           <level>0</level>
           <control type="button" format="action" />
         </setting>
+        <setting id="upgrade.bluraylib" type="string" label="70124" help="0">
+          <level>0</level>
+          <default>1.0.3.0</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="upgrade.dvdlib" type="string" label="70125" help="0">
+          <level>0</level>
+          <default>1.0.0.7</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="upgrade.vdmplayer" type="string" label="70126" help="0">
+          <level>0</level>
+          <default>2.0.1.5-2015.4.2-fcabe0e</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
       </group>
     </category>
   </section>

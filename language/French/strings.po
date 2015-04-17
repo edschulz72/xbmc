@@ -13186,7 +13186,7 @@ msgid "VidOn"
 msgstr "VidOn"
 
 msgctxt "#70025"
-msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file · Send dump file · Default settings for 3D playback"
+msgid ""
 msgstr "[B]CONFIGURER LES REGLAGES VIDON[/B][CR][CR]Envoyer le fichier log · Envoyer le fichier dump · Réglages de lecture 3D par défaut"
 
 msgctxt "#70026"
@@ -13242,7 +13242,7 @@ msgid "2D Upper Half"
 msgstr "Moitié supérieure2D "
 
 msgctxt "#70039"
-msgid "3D Left/Droite"
+msgid "3D Left/Right"
 msgstr "3D Gauche-Right"
 
 msgctxt "#70040"
@@ -13376,7 +13376,7 @@ msgstr "Vérifier la nouvelle version à partir de notre site officiel."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp
 msgctxt "#70072"
-msgid "Installing..."
+msgid "Install ..."
 msgstr "Installation..."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp
@@ -13489,7 +13489,7 @@ msgid "You've got VidOn Membership Experience Qualification"
 msgstr "Vous avez obtenu la qualification d’expérience de l’adhésion VidOn."
 
 msgctxt "#70094"
-msgid "Congratulations! You've got the qualification to experience VidOn Membership.The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
 msgstr "Félicitations! Vous avez obtenu la qualification d’expérience de l’adhésion VidOn, qui sera expirée %s. Vous pouvez utiliser la fonctionnalité de navigation de menu Blu-ray et les autres fonctionnalités avancées. Allez, essayez-le ! "
 
 msgctxt "#70095"

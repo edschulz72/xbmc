@@ -13189,7 +13189,7 @@ msgid "VidOn"
 msgstr "VidOn"
 
 msgctxt "#70025"
-msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file · Send dump file · Default settings for 3D playback"
+msgid ""
 msgstr "[B]CONFIGURAR LOS AJUSTES DE VIDON [/B][CR][CR]Enviar archivo log ·Enviar archivo dump · Ajustes para reproducción de 3D por defecto"
 
 msgctxt "#70026"
@@ -13381,7 +13381,7 @@ msgstr " Verifique versión nueva desde nuestro sitio web official."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp
 msgctxt "#70072"
-msgid "Installing..."
+msgid "Install ..."
 msgstr "Instalando..."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp

@@ -13185,7 +13185,7 @@ msgid "VidOn"
 msgstr "VidOn"
 
 msgctxt "#70025"
-msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file · Send dump file · Default settings for 3D playback"
+msgid ""
 msgstr "[B] VidOn 설정 배치[/B][CR][CR]로그 파일 전송 · 덤프 파일 전송 · 3D 재생 기본 설정"
 
 msgctxt "#70026"
@@ -13217,7 +13217,7 @@ msgid "View log file in browse."
 msgstr "브라우저로 로그 파일 보기."
 
 msgctxt "#70033"
-msgid "3D playing"
+msgid "3D playback"
 msgstr "3D 재생"
 
 msgctxt "#70034"
@@ -13305,7 +13305,7 @@ msgid "Settings about Blu-ray playback."
 msgstr "블루레이 소스 재생에 대해 설정."
 
 msgctxt "#70055"
-msgid " User center "
+msgid "User Center"
 msgstr "사용자 센터"
 
 msgctxt "#70056"
@@ -13375,7 +13375,7 @@ msgstr "웹 사이트에서 새버전을 체크 가능합니다."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp
 msgctxt "#70072"
-msgid "Installing..."
+msgid "Install ..."
 msgstr "설치중..."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp

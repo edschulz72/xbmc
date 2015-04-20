@@ -146,7 +146,7 @@
             <texturenofocus></texturenofocus>
             <onup>401</onup>
             <ondown>403</ondown>
-            <onclick>VDMOpenURL(http://vidon.me)</onclick>
+            <onclick></onclick>
           </control>
           <control type="radiobutton" id="701">
       			<description>Default RadioButton</description>

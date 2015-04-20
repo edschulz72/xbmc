@@ -13086,16 +13086,16 @@ msgstr "Aceleración GPU"
 
 
 msgctxt "#70000"
-msgid "Welcome to VidOn Kodi Demo"
-msgstr "Bienvenida a VidOn Kodi Demo"
+msgid "Welcome to VidOn XBMC Demo"
+msgstr "Bienvenida a VidOn XBMC Demo"
 
 msgctxt "#70001"
-msgid "VidOn.me offers for Android the most complete and reliable Kodi, with greatly optimized functions and features. On top of the traditional media management function, our Kodi has many unique features like Blu-ray menu navigation, HD audio output, and more."
-msgstr " VidOn.me ofrece el XMBC más completo y seguro en Android, con funciones y características optimizada. Además de la function tradicional de administrar recurso multimedia, nuestro Kodi tiene muchas características únicas tales como la navegación por menú de Blu-ray, salida de HD audio , y más."
+msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr " VidOn.me ofrece el XMBC más completo y seguro en Android, con funciones y características optimizada. Además de la function tradicional de administrar recurso multimedia, nuestro XBMC tiene muchas características únicas tales como la navegación por menú de Blu-ray, salida de HD audio , y más."
 
 msgctxt "#70002"
-msgid "\n\nTo upgrade to VidOn Kodi Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
-msgstr "\n\nPara actualizar a VidOn Kodi Pro, por favor visite: [COLOR=blue]http://es.vidon.me/ [/COLOR] "
+msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\nPara actualizar a VidOn XBMC Pro, por favor visite: [COLOR=blue]http://es.vidon.me/ [/COLOR] "
 
 msgctxt "#70003"
 msgid "OK"
@@ -13114,28 +13114,30 @@ msgid "Account/password verification failed. Please re-enter."
 msgstr "Fallo en verificar Ccuenta/contraseña. Intente de nuevo por favor"
 
 msgctxt "#70007"
-msgid "Welcome to VidOn Kodi"
-msgstr " Bienvenida a VidOn Kodi"
+msgid "Welcome to VidOn XBMC"
+msgstr " Bienvenida a VidOn XBMC"
 
 msgctxt "#70008"
-msgid "You are using the free version of VidOn Kodi."
-msgstr "Está usando la versión gratuita de VidOn Kodi."
+msgid "You are using the free version of VidOn XBMC."
+msgstr "Está usando la versión gratuita de VidOn XBMC."
 
 msgctxt "#70009"
-msgid "You already have a top-up card. Complete the binding to upgrade immediately to the Pro version!"
-msgstr "Tiene una Tarjeta de Recarga. Complete la vinculación para actualizar a la versión Pro inmediatamente."
+msgid "You already have a Top-Up Card. Apply to upgrade immediately to the Pro version!"
+msgstr "Tiene una Tarjeta de Recarga ya. Aplique a actualizar a la versión Pro inmediatamente. "
+
 
 msgctxt "#70010"
-msgid "You already have a top-up card. You can use advanced features after the binding!"
-msgstr "Tiene una tarjeta de recarga. Puede disfrutar de características avanzadas después de la vinculación."
+msgid "You already have a top-up card. You can use advanced features after applying!"
+msgstr " Tiene una Tarjeta de Recarga ya. Puede usar características avanzadas después de la aplicación"
 
 msgctxt "#70011"
-msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding to upgrade to the Pro version!"
-msgstr "No hay tarjeta de recarga disponible en su cuenta. Puede entrar el código de la tarjeta manualmente para completar la vinculación y actualizar a la versión Pro."
+msgid "No available Top-Up Card. in your account. You can manually enter the 12 digit code of the card provided to you to complete the process and upgrade to the Pro version!"
+msgstr " No hay tarjeta de recarga disponible en su cuenta. Puede introducir manualmente el 12 código de la tarjeta proporcoinada a usted para completar el proceso y actualizar a la versión Pro!"
 
 msgctxt "#70012"
-msgid "No available top-up card in your account. You can enter manually the digital code of the card to complete the binding."
-msgstr " No hay tarjeta de recarga disponible en su cuenta. Puede entrar el código de la tarjeta manualmente para completar la vinculación." 
+msgid "No available Top-Up Card in your account. You can manually enter the 12 digit code of the card provided to you to complete the process."
+msgstr"No hay tarjeta de recarga disponible en su cuenta. Puede introducir manualmente el 12 código de la tarjeta proporcoinada a usted para completar el proceso."
+
 
 msgctxt "#70013"
 msgid "Username and password must not be empty."
@@ -13150,20 +13152,21 @@ msgid "Successful!"
 msgstr "¡Completado!"
 
 msgctxt "#70016"
-msgid "Failed to bind!"
-msgstr "¡Fallo en la vinculación!"
+msgid "Failed to apply!"
+msgstr "Falló la aplicación!"
 
 msgctxt "#70017"
-msgid "Your license is due to expire on %s. Please go to the official website to top it up as soon as possible."
-msgstr "Su licencia expirará en %s. Visite el sitio web official para regarcar lo antes posible por favor."
+msgid "Your Subscription is due to expire on %s. Please go to the official website to top-up as soon as possible."
+msgstr "Su suscripción expirará en %s. Por favor vaya al sitio web oficial para recargarlo cuanto antes."
 
 msgctxt "#70018"
-msgid "License term"
-msgstr "Duración de Licencia "
+msgid "Membership term"
+msgstr "Término de Membresía"
 
 msgctxt "#70019"
-msgid "Bind"
-msgstr "Vincular"
+msgid "Apply"
+msgstr "Aplicar"
+
 
 msgctxt "#70020"
 msgid "Cancel"
@@ -13186,7 +13189,7 @@ msgid "VidOn"
 msgstr "VidOn"
 
 msgctxt "#70025"
-msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file · Send dump file · Default settings for 3D playback"
+msgid ""
 msgstr "[B]CONFIGURAR LOS AJUSTES DE VIDON [/B][CR][CR]Enviar archivo log ·Enviar archivo dump · Ajustes para reproducción de 3D por defecto"
 
 msgctxt "#70026"
@@ -13310,8 +13313,9 @@ msgid "User Center"
 msgstr "Panel de Usuario"
 
 msgctxt "#70056"
-msgid "Show username, email and license information. User can be switched."
-msgstr "Mostrar el nombre de usuario y información de licencia. Se puede cambiar la cuenta."
+msgid "Show user name, email and Membership information. Accounts can be switched."
+msgstr "Mostrar nombre de usuario, email e información de Membresía. Se pueden cambiar las cuentas."
+
 
 msgctxt "#70057"
 msgid "Username"
@@ -13326,8 +13330,9 @@ msgid "Expiration Date"
 msgstr "Fecha de Expiración"
 
 msgctxt "#70060"
-msgid "License ID"
-msgstr " ID de Licencia"
+msgid "My Membership"
+msgstr "Mi Membresía"
+
 
 msgctxt "#70061"
 msgid "Switch User"
@@ -13376,7 +13381,7 @@ msgstr " Verifique versión nueva desde nuestro sitio web official."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp
 msgctxt "#70072"
-msgid "Installing..."
+msgid "Install ..."
 msgstr "Instalando..."
 
 #: xbmc/vidonme/VDMVersionUpdate.cpp
@@ -13472,8 +13477,8 @@ msgid "Without account?"
 msgstr "¿No tiene cuenta?"
 
 msgctxt "#70090"
-msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/ [COLOR=white]to finish registration.[/COLOR] "
-msgstr "[COLOR=white]Visite nuestro sitio web oficial por favor[/COLOR] http://es.vidon.me/ [COLOR=white]para registrar.[/COLOR] "
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]Visite nuestro sitio web oficial por favor[/COLOR] http://vidon.me/uc/account/register [COLOR=white]para registrar.[/COLOR] "
 
 #: system/settings/settings.xml
 msgctxt "#70091"
@@ -13481,8 +13486,9 @@ msgid "Build Time"
 msgstr "Tiempo de Contrucción"
 
 msgctxt "#70092"
-msgid "Unlicensed"
-msgstr "No licenciado"
+msgid "No subscription"
+msgstr " No suscripción "
+
 
 msgctxt "#70093"
 msgid "You've got VidOn Membership Experience Qualification"
@@ -13520,3 +13526,102 @@ msgctxt "#70101"
 msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
 msgstr "Si no tiene una cuenta, por favor visite nuestro sitio web official: http://vidon.me/ para conocer más."
 
+msgctxt "#70102"
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]Visite nuestro sitio web oficial por favor[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]para registrar.[/COLOR] "
+
+msgctxt "#70103"
+msgid "This will configure the buffer settings for your network sources."
+msgstr "Esto configurará los ajustes del buffer para sus recursos de red."
+
+msgctxt "#70104"
+msgid "Buffer Mode"
+msgstr "Modo de buffer"
+
+msgctxt "#70105"
+msgid "This setting will let you choose which files VidOn XBMC will buffer."
+msgstr "Este ajuste le permite elegir qué archivos de VidOn XBMC va a buffer."
+
+msgctxt "#70106"
+msgid "Buffer all internet sources"
+msgstr "Buffer para todos archivos de Internet"
+
+msgctxt "#70107"
+msgid "Buffer all sources, both internet and local"
+msgstr "Buffer para archivos ambos de Internet y local"
+
+msgctxt "#70108"
+msgid "Only buffer internet streams"
+msgstr "Buffer para canal de Internet"
+
+msgctxt "#70109"
+msgid "No buffer"
+msgstr "Sin buffer"
+
+msgctxt "#70110"
+msgid "Cache size"
+msgstr "Tamaño del Buffer"
+
+msgctxt "#70111"
+msgid "Set the cache size"
+msgstr "Ajustar el tamaño del buffer"
+
+msgctxt "#70112"
+msgid "Cache fill-rate"
+msgstr "Tasa de velocidad de Buffer"
+
+msgctxt "#70113"
+msgid "Set the cache fill-rate"
+msgstr "Ajustar la velocidad del buffer"
+
+msgctxt "#70114"
+msgid "0MB"
+msgstr "0MB"
+
+msgctxt "#70115"
+msgid "20MB"
+msgstr "20MB"
+
+msgctxt "#70116"
+msgid "50MB"
+msgstr "50MB"
+
+msgctxt "#70117"
+msgid "100MB"
+msgstr "100MB"
+
+msgctxt "#70118"
+msgid "150MB"
+msgstr "150MB"
+
+msgctxt "#70119"
+msgid "10"
+msgstr "10"
+
+msgctxt "#70120"
+msgid "20"
+msgstr "20"
+
+msgctxt "#70121"
+msgid "Enable VidOn Play core"
+msgstr "Activar VidOn Play Core"
+
+msgctxt "#70122"
+msgid "If VidOn Play Core is disabled, original XBMC player will be used."
+msgstr "Si desactiva VidOn Play Core, se usará el reproductor XBMC original."
+
+msgctxt "#70123"
+msgid "Buffer Settings"
+msgstr "Ajustes del Buffer"
+
+msgctxt "#70124"
+msgid "BluryLib"
+msgstr "BluryLib"
+
+msgctxt "#70125"
+msgid "DVDLib"
+msgstr "DVDLib"
+
+msgctxt "#70126"
+msgid "VDMPlayer"
+msgstr "VDMPlayer"

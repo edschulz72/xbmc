@@ -3,6 +3,7 @@
 
 #include "VDMSettingsManager.h"
 #include "URL.h"
+#include "GUIUserMessages.h"
 #include "settings/Settings.h"
 #include "settings/AdvancedSettings.h"
 #include "settings/lib/Setting.h"
@@ -66,6 +67,15 @@ void CVDMSettingsManager::OnSettingAction(const CSetting *setting)
 	{
 #if !defined(AML_DEMO)
 		CVDMDialogLogin::ShowSwitchUser();
+		if (CVDMUserInfo::Instance().IsLogin())
+		{
+			int label = setting->GetLabel();
+			if (label != 70061)
+			{
+				CGUIMessage msg(GUI_MSG_UPDATE, VDM_WINDOW_SETTINGS_VIDONME, 0, 0);
+				g_windowManager.SendThreadMessage(msg, VDM_WINDOW_SETTINGS_VIDONME);
+			}
+		}
 #endif
 	}
 
@@ -116,7 +126,7 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 	}
 
 #if !defined(AML_DEMO)
-	if (settingId == "audiooutput.passthrough")
+	if (settingId == "audiooutput.truehdpassthrough" || settingId == "audiooutput.dtshdpassthrough")
 	{
 		CSettingBool* pSettingsTmp = (CSettingBool*)setting;
 		if (pSettingsTmp->GetValue())

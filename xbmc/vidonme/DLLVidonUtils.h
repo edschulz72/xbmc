@@ -13,7 +13,7 @@
 #elif defined( TARGET_ANDROID )
 #define DLL_PATH_LIBVIDONUTILS "libvidonutils.so"
 #else
-#error NO Support Other OS
+#define DLL_PATH_LIBVIDONUTILS "libvidonutils.dylib"
 #endif
 
 class CVidonPlayerManager;

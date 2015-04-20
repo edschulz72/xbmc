@@ -2368,7 +2368,7 @@
       <group id="1">
         <setting id="audiooutput.audiodevice" type="string" label="545" help="36371">
           <level>0</level>
-          <default>Default</default> <!-- will be properly set on startup -->
+          <default>VIDONME:HDMI</default> <!-- will be properly set on startup -->
           <constraints>
             <options>audiodevices</options>
           </constraints>
@@ -2494,7 +2494,7 @@
         </setting>
         <setting id="audiooutput.passthroughdevice" type="string" label="546" help="36372">
           <level>2</level>
-          <default>Default</default> <!-- will be properly set on startup -->
+          <default>VIDONME:HDMI</default> <!-- will be properly set on startup -->
           <dependencies>
             <dependency type="visible">
               <and>
@@ -2502,7 +2502,8 @@
                 <condition on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</condition>
               </and>
             </dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <constraints>
             <options>audiodevicespassthrough</options>
@@ -2514,7 +2515,8 @@
           <default>true</default>
           <dependencies>
             <dependency type="visible" on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <control type="toggle" />
         </setting>
@@ -2524,7 +2526,8 @@
           <dependencies>
             <dependency type="enable">
               <and>
-                <condition setting="audiooutput.passthrough" operator="is">true</condition>
+				<!--Default not limited-->
+                <!--<condition setting="audiooutput.passthrough" operator="is">true</condition>-->
                 <condition setting="audiooutput.ac3passthrough" operator="is">true</condition>
               </and>
             </dependency>
@@ -2547,7 +2550,8 @@
                 <condition on="property" name="aesettingvisible" setting="audiooutput.passthroughdevice">audiooutput.eac3passthrough</condition>
               </and>
             </dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <control type="toggle" />
         </setting>
@@ -2556,7 +2560,8 @@
           <default>false</default>
           <dependencies>
             <dependency type="visible" on="property" name="aesettingvisible" setting="audiooutput.config">audiooutput.passthrough</dependency>
-            <dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>
+			<!--Default not limited-->
+            <!--<dependency type="enable" setting="audiooutput.passthrough" operator="is">true</dependency>-->
           </dependencies>
           <control type="toggle" />
         </setting>
@@ -2988,7 +2993,7 @@
   </section>
   <!--HAS_VIDONME-->
   <section id ="vidonme" label="70024" help="70025">
-    <category id="buffer" label="70102" help="70103">
+    <category id="buffer" label="70123" help="70103">
       <group id="1">
         <setting id="buffer.mode" type="integer" label="70104" help="70105">
           <level>0</level>
@@ -3134,7 +3139,7 @@
           <level>1</level>
           <control type="button" format="action" />
         </setting>
-        <setting id="using.vdmplayer" type="boolean" label="70098" help="70099">
+        <setting id="using.vdmplayer" type="boolean" label="70121" help="70122">
           <level>3</level>
           <default>true</default>
           <control type="toggle" />
@@ -3182,6 +3187,30 @@
         <setting id="upgrade.versioncheck" type="action" label="70070" help="70071">
           <level>0</level>
           <control type="button" format="action" />
+        </setting>
+        <setting id="upgrade.bluraylib" type="string" label="70124" help="0">
+          <level>0</level>
+          <default>1.0.3.0</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="upgrade.dvdlib" type="string" label="70125" help="0">
+          <level>0</level>
+          <default>1.0.0.7</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="upgrade.vdmplayer" type="string" label="70126" help="0">
+          <level>0</level>
+          <default>2.0.1.5-2015.4.2-fcabe0e</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
         </setting>
       </group>
     </category>

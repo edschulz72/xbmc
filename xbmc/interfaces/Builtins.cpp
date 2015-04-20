@@ -1817,9 +1817,7 @@ int CBuiltins::Execute(const std::string& execString)
 #elif defined(TARGET_ANDROID)
 		CXBMCApp::StartActivity("com.android.browser", "android.intent.action.VIEW", "application/vnd.android.package-archive", params[0].c_str());
 #else
-		CStdString cmd;
-		cmd.Format("open %s", params[0].c_str());
-
+		CStdString cmd = StringUtils::Format("open %s", params[0].c_str());
 		FILE* pOPen = NULL;
 		if ((pOPen = popen(cmd.c_str(), "r")) == NULL)
 		{

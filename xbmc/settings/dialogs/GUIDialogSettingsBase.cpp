@@ -532,10 +532,31 @@ std::set<std::string> CGUIDialogSettingsBase::CreateSettings()
     else
       AddSeparator(group->GetWidth(), iControlID);
 
+		bool bEmail = false;
     for (SettingList::const_iterator settingIt = settings.begin(); settingIt != settings.end(); settingIt++)
     {
       CSetting *pSetting = *settingIt;
       settingMap.insert(pSetting->GetId());
+#if defined(HAS_VIDONME)
+			if (pSetting->GetId() == "usercenter.email")
+			{
+				if (!pSetting->IsDefault())
+				{
+					bEmail = true;
+				}
+			}
+			if (pSetting->GetId() == "usercenter.switchuser")
+			{
+				if (!bEmail)
+				{
+					pSetting->SetLabel(70014);
+				}
+				else
+				{
+					pSetting->SetLabel(70061);
+				}
+			}
+#endif
       AddSetting(pSetting, group->GetWidth(), iControlID);
     }
   }

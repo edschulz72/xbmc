@@ -559,7 +559,7 @@ void CSettings::InitializeDefaults()
   #endif
 #endif
 
-#if !defined(TARGET_WINDOWS)
+#if !defined(TARGET_WINDOWS) && !defined (HAS_VIDONME)
   ((CSettingString*)m_settingsManager->GetSetting("audiooutput.audiodevice"))->SetDefault(CAEFactory::GetDefaultDevice(false));
   ((CSettingString*)m_settingsManager->GetSetting("audiooutput.passthroughdevice"))->SetDefault(CAEFactory::GetDefaultDevice(true));
 #endif
@@ -841,7 +841,8 @@ void CSettings::InitializeISettingCallbacks()
 #if defined (HAS_VIDONME)
   settingSet.clear();
 	settingSet.insert("d3.mode");
-	settingSet.insert("audiooutput.passthrough");
+	settingSet.insert("audiooutput.truehdpassthrough");
+	settingSet.insert("audiooutput.dtshdpassthrough");
   settingSet.insert("debugging.upload");
 	settingSet.insert("debugging.viewlog");
 	settingSet.insert("usercenter.switchuser");

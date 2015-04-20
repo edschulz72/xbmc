@@ -493,27 +493,52 @@ bool CXBMCApp::HasLaunchIntent(const string &package)
 // Note intent, dataType, dataURI all default to ""
 bool CXBMCApp::StartActivity(const string &package, const string &intent, const string &dataType, const string &dataURI)
 {
-  CJNIIntent newIntent = intent.empty() ?
-    GetPackageManager().getLaunchIntentForPackage(package) :
-    CJNIIntent(intent);
+#if defined(HAS_VIDONME)
+	if (package == "com.android.browser")
+	{
+		CJNIIntent newIntent = GetPackageManager().getLaunchIntentForPackage(package);
 
-  if (!newIntent && CJNIBuild::SDK_INT >= 21)
-    newIntent = GetPackageManager().getLeanbackLaunchIntentForPackage(package);
-  if (!newIntent)
-    return false;
+		if (!newIntent)
+			return false;
 
-  if (!dataURI.empty())
-  {
-    CJNIURI jniURI = CJNIURI::parse(dataURI);
+		if (!dataURI.empty())
+		{
+			CJNIURI jniURI = CJNIURI::parse(dataURI);
 
-    if (!jniURI)
-      return false;
+			if (!jniURI)
+				return false;
 
-    newIntent.setDataAndType(jniURI, dataType); 
-  }
+			newIntent.setAction("android.intent.action.VIEW");
+			newIntent.setData(jniURI);
+			startActivity(newIntent);
+		}
+	}
+	else
+#endif
+	{
+		CJNIIntent newIntent = intent.empty() ?
+			GetPackageManager().getLaunchIntentForPackage(package) :
+			CJNIIntent(intent);
 
-  newIntent.setPackage(package);
-  startActivity(newIntent);
+		if (!newIntent && CJNIBuild::SDK_INT >= 21)
+			newIntent = GetPackageManager().getLeanbackLaunchIntentForPackage(package);
+		if (!newIntent)
+			return false;
+
+		if (!dataURI.empty())
+		{
+			CJNIURI jniURI = CJNIURI::parse(dataURI);
+
+			if (!jniURI)
+				return false;
+
+			newIntent.setDataAndType(jniURI, dataType);
+		}
+
+		newIntent.setPackage(package);
+		startActivity(newIntent);
+	}
+  
   if (xbmc_jnienv()->ExceptionOccurred())
   {
     CLog::Log(LOGERROR, "CXBMCApp::StartActivity - ExceptionOccurred launching %s", package.c_str());

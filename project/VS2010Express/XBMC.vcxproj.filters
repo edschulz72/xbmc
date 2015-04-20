@@ -3089,6 +3089,9 @@
     <ClCompile Include="..\..\xbmc\win32\crts_caller.cpp">
       <Filter>win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\xbmc\dialogs\GUIDialogSimpleMenu.cpp">
+      <Filter>dialogs</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp">
       <Filter>vidonme</Filter>
     </ClCompile>
@@ -6069,7 +6072,10 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\win32\crts_caller.h">
       <Filter>win32</Filter>
-		</ClInclude>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\dialogs\GUIDialogSimpleMenu.h">
+      <Filter>dialogs</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h">
       <Filter>vidonme</Filter>
     </ClInclude>

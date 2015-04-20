@@ -76,7 +76,6 @@
 #include "GUIInfoManager.h"
 #include "utils/GroupUtils.h"
 #include "filesystem/File.h"
-#include "settings/DiscSettings.h"
 
 using namespace std;
 using namespace XFILE;
@@ -779,11 +778,6 @@ void CGUIWindowVideoBase::AddItemToPlayList(const CFileItemPtr &pItem, CFileItem
     if (!mediapath.empty())
     {
       CFileItemPtr item(new CFileItem(mediapath, false));
-      if (StringUtils::EndsWithNoCase(mediapath, "index.bdmv"))
-      {
-        if (!ShowPlaySelection(item))
-          return;
-      }
       queuedItems.Add(item);
       return;
     }
@@ -1729,8 +1723,6 @@ bool CGUIWindowVideoBase::OnPlayAndQueueMedia(const CFileItemPtr &item)
      g_playlistPlayer.SetShuffle(iPlaylist, false);
 
   CFileItemPtr movieItem(new CFileItem(*item));
-  if(!ShowPlaySelection(movieItem))
-    return false;
 
   // Call the base method to actually queue the items
   // and start playing the given item

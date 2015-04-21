@@ -213,6 +213,26 @@ void CJobManager::CancelJobs()
   }
 }
 
+#if defined (HAS_VIDONME)
+void CJobManager::ClearJobs()
+{
+	CSingleLock lock(m_section);
+	m_running = false;
+
+	// clear any pending jobs
+	for (unsigned int priority = CJob::PRIORITY_LOW_PAUSABLE; priority <= CJob::PRIORITY_HIGH; ++priority)
+	{
+		for_each(m_jobQueue[priority].begin(), m_jobQueue[priority].end(), mem_fun_ref(&CWorkItem::FreeJob));
+		m_jobQueue[priority].clear();
+	}
+
+	// cancel any callbacks on jobs still processing
+	for_each(m_processing.begin(), m_processing.end(), mem_fun_ref(&CWorkItem::Cancel));
+
+	m_jobEvent.Set();
+}
+#endif
+
 CJobManager::~CJobManager()
 {
 }

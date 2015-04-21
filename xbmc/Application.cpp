@@ -3598,7 +3598,11 @@ void CApplication::Stop(int exitCode)
     CLog::Log(LOGNOTICE, "stop all");
 
     // cancel any jobs from the jobmanager
+#if defined (HAS_VIDONME)
+		CJobManager::GetInstance().ClearJobs();
+#else
     CJobManager::GetInstance().CancelJobs();
+#endif
 
     // stop scanning before we kill the network and so on
     if (m_musicInfoScanner->IsScanning())

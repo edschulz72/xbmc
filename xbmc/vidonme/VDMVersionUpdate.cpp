@@ -181,7 +181,7 @@ CVDMVersionUpdate::CVDMVersionUpdate()
 
 CVDMVersionUpdate::~CVDMVersionUpdate()
 {
-  Stop();
+  //Stop();
 }
 
 void CVDMVersionUpdate::OnJobComplete(unsigned int jobID, bool success, CJob* job)

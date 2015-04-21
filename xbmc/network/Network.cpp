@@ -256,8 +256,10 @@ void CNetwork::NetworkMessage(EMESSAGE message, int param)
     case SERVICES_DOWN:
       CLog::Log(LOGDEBUG, "%s - Signaling network services to stop",__FUNCTION__);
       CNetworkServices::Get().Stop(false); // tell network services to stop, but don't wait for them yet
+#if !defined (HAS_VIDONME)
       CLog::Log(LOGDEBUG, "%s - Waiting for network services to stop",__FUNCTION__);
       CNetworkServices::Get().Stop(true); // wait for network services to stop
+#endif
       break;
   }
 }

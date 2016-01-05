@@ -97,8 +97,6 @@ static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
 	void* context,
 	bool succeeded)
 {
-	g_application.EndRecord();
-
 	CXBMCApp::android_printf("Dump path: %s", descriptor.path());
 	MoveFile(descriptor.path(), StringUtils::Format("%s/kodi.dmp", getenv("HOME")).c_str());
 

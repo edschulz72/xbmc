@@ -97,12 +97,28 @@ bool CPlayerController::OnAction(const CAction &action)
           {
             currentSub = 0;
             if (action.GetID() == ACTION_NEXT_SUBTITLE)
-            {
+						{
+#ifdef HAS_VIDONME
+							g_application.m_pPlayer->SetSubtitle(currentSub);
+#endif
               g_application.m_pPlayer->SetSubtitleVisible(false);
               currentSubVisible = false;
             }
+#ifdef HAS_VIDONME
+						else if (action.GetID() == ACTION_CYCLE_SUBTITLE)
+						{
+							g_application.m_pPlayer->SetSubtitle(currentSub);
+						}
+#endif
           }
-          g_application.m_pPlayer->SetSubtitle(currentSub);
+#ifdef HAS_VIDONME
+					else
+					{
+						g_application.m_pPlayer->SetSubtitle(currentSub);
+					}
+#else
+					g_application.m_pPlayer->SetSubtitle(currentSub);
+#endif
         }
         else if (action.GetID() == ACTION_NEXT_SUBTITLE)
         {
@@ -118,7 +134,13 @@ bool CPlayerController::OnAction(const CAction &action)
             lang = g_localizeStrings.Get(13205); // Unknown
 
           if (info.name.length() == 0)
-            sub = lang;
+						sub = lang;
+#ifdef HAS_VIDONME
+					else if (lang == g_localizeStrings.Get(13205))
+					{
+						sub = StringUtils::Format("%s", info.name.c_str());
+					}
+#endif
           else
             sub = StringUtils::Format("%s - %s", lang.c_str(), info.name.c_str());
         }
@@ -156,9 +178,13 @@ bool CPlayerController::OnAction(const CAction &action)
 
       case ACTION_SUBTITLE_DELAY:
       {
+#ifdef HAS_VIDONME
+				ShowSlider(action.GetID(), 22006, CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay,-7.0, 0.1f,7.0, true);
+#else
         ShowSlider(action.GetID(), 22006, CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay,
                                           -g_advancedSettings.m_videoSubsDelayRange, 0.1f,
                                            g_advancedSettings.m_videoSubsDelayRange, true);
+#endif
         return true;
       }
 

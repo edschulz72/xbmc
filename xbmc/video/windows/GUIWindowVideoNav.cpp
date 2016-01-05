@@ -51,6 +51,10 @@
 #include "pvr/recordings/PVRRecording.h"
 #include "ContextMenuManager.h"
 
+#ifdef HAS_VIDONME
+#include "filesystem/File.h"
+#endif
+
 using namespace XFILE;
 using namespace VIDEODATABASEDIRECTORY;
 using namespace std;
@@ -552,7 +556,21 @@ void CGUIWindowVideoNav::LoadVideoInfo(CFileItemList &items, CVideoDatabase &dat
       /* NOTE: Currently we GetPlayCounts on our items regardless of whether content is set
                 as if content is set, GetItemsForPaths doesn't return anything not in the content tables.
                 This code can be removed once the content tables are always filled */
+#ifdef HAS_VIDONME
+			std::string strDVDFolderPath, strBDFolderPath;
+
+			strDVDFolderPath = URIUtils::AddFileToFolder(pItem->GetPath(), "VIDEO_TS");
+			strDVDFolderPath = URIUtils::AddFileToFolder(strDVDFolderPath, "VIDEO_TS.IFO");
+			strBDFolderPath = URIUtils::AddFileToFolder(pItem->GetPath(), "BDMV");
+			strBDFolderPath = URIUtils::AddFileToFolder(strBDFolderPath, "index.bdmv");
+
+			if ((XFILE::CFile::Exists(strDVDFolderPath) ||
+				XFILE::CFile::Exists(strBDFolderPath) ||
+				!pItem->m_bIsFolder) &&
+				!fetchedPlayCounts)
+#else
       if (!pItem->m_bIsFolder && !fetchedPlayCounts)
+#endif
       {
         database.GetPlayCounts(items.GetPath(), items);
         fetchedPlayCounts = true;

@@ -2476,6 +2476,7 @@ OUTPUT_FILES="Makefile \
     xbmc/cores/dvdplayer/DVDSubtitles/Makefile \
     xbmc/cores/AudioEngine/Makefile \
     xbmc/cores/paplayer/Makefile \
+    xbmc/cores/vdmplayer/Makefile \
     xbmc/cores/omxplayer/Makefile \
     xbmc/cores/playercorefactory/Makefile \
     xbmc/music/karaoke/Makefile \

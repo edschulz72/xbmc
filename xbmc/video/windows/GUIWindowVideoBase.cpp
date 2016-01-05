@@ -64,6 +64,10 @@
 #include "utils/GroupUtils.h"
 #include "TextureDatabase.h"
 
+#ifdef HAS_VIDONME
+#include "filesystem/File.h"
+#endif
+
 using namespace std;
 using namespace XFILE;
 using namespace PLAYLIST;
@@ -854,6 +858,16 @@ bool CGUIWindowVideoBase::OnSelect(int iItem)
   CFileItemPtr item = m_vecItems->Get(iItem);
 
   std::string path = item->GetPath();
+
+#ifdef HAS_VIDONME
+	if ((item->GetVideoInfoTag()->m_resumePoint.timeInSeconds > 0 || !item->m_bIsFolder) &&
+		path != "add" && path != "addons://more/video" &&
+		!StringUtils::StartsWith(path, "newsmartplaylist://") &&
+		!StringUtils::StartsWith(path, "newplaylist://") &&
+		!StringUtils::StartsWith(path, "newtag://"))
+		return OnFileAction(iItem, CSettings::Get().GetInt("myvideos.selectaction"));
+#endif
+
   if (!item->m_bIsFolder && path != "add" && path != "addons://more/video" &&
       !StringUtils::StartsWith(path, "newsmartplaylist://") &&
       !StringUtils::StartsWith(path, "newplaylist://") &&
@@ -1021,7 +1035,11 @@ bool CGUIWindowVideoBase::OnResumeItem(int iItem)
   if (iItem < 0 || iItem >= m_vecItems->Size()) return true;
   CFileItemPtr item = m_vecItems->Get(iItem);
 
-  if (item->m_bIsFolder)
+#ifdef HAS_VIDONME
+	if (item->m_bIsFolder && !(item->GetVideoInfoTag()->m_resumePoint.timeInSeconds > 0))
+#else
+	if (item->m_bIsFolder)
+#endif
   {
     // resuming directories isn't supported yet. play.
     PlayItem(iItem);
@@ -1029,6 +1047,25 @@ bool CGUIWindowVideoBase::OnResumeItem(int iItem)
   }
 
   std::string resumeString = GetResumeString(*item);
+
+#ifdef HAS_VIDONME
+
+	if (URIUtils::HasExtension(item->GetPath(), ".iso|.img"))
+	{
+		CURL url2("udf://");
+		url2.SetHostName(item->GetPath());
+		url2.SetFileName("VIDEO_TS/VIDEO_TS.IFO");
+		if (CFile::Exists(url2.Get()))
+		{
+			resumeString.clear();
+		}
+	}
+
+	if (item->IsDVD() || item->IsDVDFile())
+	{
+		resumeString.clear();
+	}
+#endif
 
   if (!resumeString.empty())
   {

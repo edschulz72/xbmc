@@ -117,6 +117,16 @@ bool CGUIWindowVisualisation::OnAction(const CAction &action)
       return true;
     }
     break;*/
+
+#ifdef HAS_VIDONME
+		case ACTION_NEXT_ITEM:
+		case ACTION_PREV_ITEM:
+		{
+			Close();
+			g_windowManager.ActivateWindow(WINDOW_VISUALISATION);
+			break;
+		}
+#endif
   }
 
   if (passToVis)

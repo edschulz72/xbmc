@@ -214,6 +214,11 @@ void CGUIDialogAudioSubtitleSettings::OnSettingAction(const CSetting *setting)
       }
       
       g_application.m_pPlayer->AddSubtitle(strPath);
+
+#ifdef HAS_VIDONME
+			g_application.AddSubtitle(strPath);
+#endif
+
       Close();
     }
   }
@@ -320,7 +325,11 @@ void CGUIDialogAudioSubtitleSettings::InitializeSettings()
   // audio delay setting
   if (SupportsAudioFeature(IPC_AUD_OFFSET))
   {
-    CSettingNumber *settingAudioDelay = AddSlider(groupAudio, SETTING_AUDIO_DELAY, 297, 0, videoSettings.m_AudioDelay, 0, -g_advancedSettings.m_videoAudioDelayRange, 0.025f, g_advancedSettings.m_videoAudioDelayRange, 297, usePopup);
+#ifdef HAS_VIDONME
+		CSettingNumber *settingAudioDelay = AddSlider(groupAudio, SETTING_AUDIO_DELAY, 297, 0, videoSettings.m_AudioDelay, 0, -6.0, 0.025f, 6.0, 297, usePopup);
+#else
+		CSettingNumber *settingAudioDelay = AddSlider(groupAudio, SETTING_AUDIO_DELAY, 297, 0, videoSettings.m_AudioDelay, 0, -g_advancedSettings.m_videoAudioDelayRange, 0.025f, g_advancedSettings.m_videoAudioDelayRange, 297, usePopup);
+#endif
     static_cast<CSettingControlSlider*>(settingAudioDelay->GetControl())->SetFormatter(SettingFormatterDelay);
   }
   
@@ -348,7 +357,11 @@ void CGUIDialogAudioSubtitleSettings::InitializeSettings()
   // subtitle delay setting
   if (SupportsSubtitleFeature(IPC_SUBS_OFFSET))
   {
+#ifdef HAS_VIDONME
+		CSettingNumber *settingSubtitleDelay = AddSlider(groupSubtitles, SETTING_SUBTITLE_DELAY, 22006, 0, videoSettings.m_SubtitleDelay, 0, -7.0, 0.1f, 7.0, 22006, usePopup);
+#else
     CSettingNumber *settingSubtitleDelay = AddSlider(groupSubtitles, SETTING_SUBTITLE_DELAY, 22006, 0, videoSettings.m_SubtitleDelay, 0, -g_advancedSettings.m_videoSubsDelayRange, 0.1f, g_advancedSettings.m_videoSubsDelayRange, 22006, usePopup);
+#endif
     static_cast<CSettingControlSlider*>(settingSubtitleDelay->GetControl())->SetFormatter(SettingFormatterDelay);
   }
 
@@ -464,7 +477,13 @@ void CGUIDialogAudioSubtitleSettings::SubtitleStreamsOptionFiller(const CSetting
       strLanguage = g_localizeStrings.Get(13205); // Unknown
 
     if (info.name.length() == 0)
-      strItem = strLanguage;
+			strItem = strLanguage;
+#ifdef HAS_VIDONME
+		else if (strLanguage == g_localizeStrings.Get(13205))
+		{
+			strItem = StringUtils::Format("%s", info.name.c_str());
+		}
+#endif
     else
       strItem = StringUtils::Format("%s - %s", strLanguage.c_str(), info.name.c_str());
 

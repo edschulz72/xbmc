@@ -34,6 +34,10 @@
 #include "utils/SystemInfo.h"
 #include "utils/MathUtils.h"
 
+#ifdef HAS_VIDONME
+#include "Application.h"
+#endif
+
 static const char* ShaderNames[SM_ESHADERCOUNT] =
     {"guishader_frag_default.glsl",
      "guishader_frag_texture.glsl",
@@ -526,6 +530,13 @@ void CRenderSystemGLES::SetViewPort(CRect& viewPort)
   m_viewPort[1] = m_height - viewPort.y1 - viewPort.Height();
   m_viewPort[2] = viewPort.Width();
   m_viewPort[3] = viewPort.Height();
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetRenderViewPort(viewPort.x1, viewPort.y1, viewPort.x2, viewPort.y2);
+	}
+#endif
 }
 
 bool CRenderSystemGLES::ScissorsCanEffectClipping()

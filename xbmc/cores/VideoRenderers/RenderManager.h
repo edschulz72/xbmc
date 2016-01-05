@@ -132,7 +132,13 @@ public:
   RESOLUTION GetResolution();
 
   static float GetMaximumFPS();
-  inline bool IsStarted() { return m_bIsStarted;}
+
+#ifdef HAS_VIDONME
+	bool IsStarted();
+#else
+	inline bool IsStarted() { return m_bIsStarted; }
+#endif
+
   double GetDisplayLatency() { return m_displayLatency; }
   int    GetSkippedFrames()  { return m_QueueSkip; }
 

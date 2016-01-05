@@ -28,6 +28,10 @@
 #include "guilib/GUIFontTTFGL.h"
 #endif
 
+#ifdef HAS_VIDONME
+#include "Application.h"
+#endif
+
 using namespace std;
 
 CWinSystemBase::CWinSystemBase()
@@ -121,6 +125,13 @@ void CWinSystemBase::SetWindowResolution(int width, int height)
   window.iScreenHeight = height;
   window.iSubtitles = (int)(0.965 * window.iHeight);
   g_graphicsContext.ResetOverscan(window);
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetWindowResolution(width, height);
+	}
+#endif
 }
 
 int CWinSystemBase::DesktopResolution(int screen)

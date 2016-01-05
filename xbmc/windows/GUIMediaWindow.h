@@ -199,4 +199,9 @@ protected:
    \sa Update
    */
   std::string m_strFilterPath;
+
+#ifdef HAS_VIDONME
+	std::string	m_itemType;
+	bool	m_bCheckFolder;
+#endif
 };

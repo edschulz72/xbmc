@@ -69,7 +69,12 @@ bool CPasswordManager::PromptToAuthenticateURL(CURL &url)
   std::string passcode;
   std::string username = url.GetUserName();
 
+#ifdef HAS_VIDONME
+  bool saveDetails = true;
+#else
   bool saveDetails = false;
+#endif
+
   if (!CGUIDialogLockSettings::ShowAndGetUserAndPassword(username, passcode, url.GetWithoutUserDetails(), &saveDetails))
     return false;
 

@@ -255,6 +255,58 @@ void CGUIWindowSettingsCategory::Save()
 #ifdef HAS_VIDONME
 void CGUIWindowSettingsCategory::OnSettingChanged(const CSetting *setting)
 {
+	const std::string &settingId = setting->GetId();
+	
+	if (settingId == "subtitles.height")
+	{
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetSubtitleSize(static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue()));
+		}
+	}
+	else if (settingId == "subtitles.align")
+	{
+		g_application.m_pPlayer->SetSubtitlePos((SubtitleAlign)static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue()), 0);
+	}
+	else if (settingId == "subtitles.color")
+	{
+		g_application.m_pPlayer->SetSubColor(static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue()));
+	}
+	else if (settingId == "subtitles.style")
+	{
+		int nStyle = static_cast<const CSettingInt*>(setting)->GetValue();
+		g_application.m_pPlayer->SetSubtitleStyle(nStyle);
+		switch (nStyle)
+		{
+		case 0:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(false);
+			g_application.m_pPlayer->SetSubtitleItalic(false);
+			break;
+		}
+		case 1:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(true);
+			g_application.m_pPlayer->SetSubtitleItalic(false);
+			break;
+		}
+		case 2:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(false);
+			g_application.m_pPlayer->SetSubtitleItalic(true);
+			break;
+		}
+		case 3:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(true);
+			g_application.m_pPlayer->SetSubtitleItalic(true);
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	
 	return CGUIDialogSettingsManagerBase::OnSettingChanged(setting);
 }
 #endif

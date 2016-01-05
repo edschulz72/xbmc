@@ -117,6 +117,14 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 
 	const std::string &settingId = setting->GetId();
 
+	if (settingId == "d3.mode")
+	{
+		if (g_application.m_pPlayer)
+		{
+			g_application.m_pPlayer->SetPlayMode((DIMENSIONMODE)((CSettingInt*)setting)->GetValue());
+		}
+	}
+
 #if !defined(AML_DEMO)
 	if (settingId == "audiooutput.truehdpassthrough" || settingId == "audiooutput.dtshdpassthrough")
 	{

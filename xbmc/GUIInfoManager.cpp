@@ -4965,7 +4965,17 @@ std::string CGUIInfoManager::GetItemLabel(const CFileItem *item, int info, std::
         *fallback = item->GetIconImage();
       return strThumb;
     }
-  case LISTITEM_OVERLAY:
+	case LISTITEM_OVERLAY:
+#ifdef HAS_VIDONME
+	{
+		if (item->HasVideoInfoTag() && item->GetVideoInfoTag()->m_resumePoint.timeInSeconds > 0)
+		{
+			return "";
+		}
+
+		return item->GetOverlayImage();
+	}
+#endif
     return item->GetOverlayImage();
   case LISTITEM_THUMB:
     return item->GetArt("thumb");

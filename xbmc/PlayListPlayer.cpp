@@ -64,12 +64,26 @@ CPlayListPlayer::~CPlayListPlayer(void)
 bool CPlayListPlayer::OnAction(const CAction &action)
 {
   if (action.GetID() == ACTION_PREV_ITEM && !IsSingleItemNonRepeatPlaylist())
-  {
+	{
+#ifdef HAS_VIDONME
+		if (g_application.m_pPlayer && g_application.m_pPlayer->GetChapter() > 1 && g_application.m_pPlayer->GetChapterCount() > 1)
+		{
+			return false;
+		}
+#endif
+
     PlayPrevious();
     return true;
   }
   else if (action.GetID() == ACTION_NEXT_ITEM && !IsSingleItemNonRepeatPlaylist())
-  {
+	{
+#ifdef HAS_VIDONME
+		if (g_application.m_pPlayer && g_application.m_pPlayer->GetChapter() < g_application.m_pPlayer->GetChapterCount())
+		{
+			return false;
+		}
+#endif
+
     PlayNext();
     return true;
   }

@@ -68,6 +68,10 @@
   #include "xbmc/android/activity/XBMCApp.h"
 #endif
 
+#ifdef HAS_VIDONME
+#include "windowing/WindowingFactory.h"
+#endif
+
 using namespace PVR;
 using namespace std;
 using namespace MUSIC_INFO;
@@ -869,6 +873,21 @@ void CApplicationMessenger::ProcessMessage(ThreadMessage *pMsg)
       else
         g_application.StopPVRManager();
     }
+
+#ifdef HAS_VIDONME
+
+		case TMSG_SETFULLSCREEN:
+		{
+			bool bFull = pMsg->param1 != 0;
+
+			g_graphicsContext.Lock();
+			g_graphicsContext.SetFullScreenVideo(bFull);
+			g_graphicsContext.Unlock();
+
+			break;
+		}
+
+#endif
   }
 }
 

@@ -115,6 +115,12 @@ namespace MUSIC_INFO
 #define TMSG_DISPLAY_SETUP      1000
 #define TMSG_DISPLAY_DESTROY    1001
 
+#ifdef HAS_VIDONME
+
+#define TMSG_SETFULLSCREEN					2000
+
+#endif
+
 typedef struct
 {
   unsigned int dwMessage;

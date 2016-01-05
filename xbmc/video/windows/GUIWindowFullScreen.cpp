@@ -121,6 +121,9 @@ bool CGUIWindowFullScreen::OnAction(const CAction &action)
 
   switch (action.GetID())
   {
+#ifdef HAS_VIDONME
+	case ACTION_CONTEXT_MENU:
+#endif
   case ACTION_SHOW_OSD:
     ToggleOSD();
     return true;
@@ -557,9 +560,11 @@ void CGUIWindowFullScreen::Process(unsigned int currentTime, CDirtyRegionList &d
 
 void CGUIWindowFullScreen::Render()
 {
-  g_graphicsContext.SetRenderingResolution(g_graphicsContext.GetVideoResolution(), false);
-  g_renderManager.Render(true, 0, 255);
-  g_graphicsContext.SetRenderingResolution(m_coordsRes, m_needsScaling);
+	g_graphicsContext.SetRenderingResolution(g_graphicsContext.GetVideoResolution(), false);
+	g_renderManager.Render(true, 0, 255);
+
+	g_graphicsContext.SetRenderingResolution(m_coordsRes, m_needsScaling);
+
   CGUIWindow::Render();
 }
 

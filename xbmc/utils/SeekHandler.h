@@ -75,4 +75,9 @@ private:
   CStopWatch m_timer;
 
   CCriticalSection m_critSection;
+
+#ifdef HAS_VIDONME
+	CStopWatch m_timerSeekBigStep;
+	bool m_requireSeekBigStep;
+#endif
 };

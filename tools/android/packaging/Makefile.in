@@ -6,7 +6,7 @@ OBJS = libcurl.so \
   libxbogg.so libxbvorbis.so libxbvorbisfile.so libxbmpeg2.so \
   libxbmpeg2convert.so libnfs.so libass.so \
   libbluray.so libsmbclient.so \
-  libvidonutils.so
+  libCedarX-vidonme.so libCedarX-vidonme4.so libbdjvm.so libdvdnav-vidonme.so libvidonutils.so lib3DMode.so lib3DMode-s905.so libawrender.so librkffplayer.so libplcore.so  libvtx.so libvidonplayer.so 
 
 PLATFORM_OBJS =
 EXCLUDED_ADDONS = screensaver.rsxs.euphoria visualization.dxspectrum visualization.milkdrop visualization.projectm
@@ -84,6 +84,9 @@ shared:
 	mkdir -p assets
 	mkdir -p assets/files/system
 	cp -rfp $(PREFIX)/share/@APP_NAME_LC@/* ./assets
+	cp -dprf $(XBMCROOT)/system/players/vdmplayer/system/lib ./assets/files/system/
+	cp -dprf $(XBMCROOT)/system/players/vdmplayer/system/settings ./assets/files/system/
+	cp -dprf $(XBMCROOT)/system/players/vdmplayer/system/shaders ./assets/files/system/
 	find `pwd`/assets/ -depth -name ".git" -exec rm -rf {} \;
 	find `pwd`/assets/ -name "*.so" -exec rm {} \;
 	find `pwd`/assets/addons/skin.*/media/* -depth -not -iname "Textures.xbt" -exec rm -rf {} \;

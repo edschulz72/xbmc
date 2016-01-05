@@ -343,6 +343,9 @@
     <Filter Include="vidonme">
       <UniqueIdentifier>{e512bbaa-c007-46fa-9a5c-42902ae39521}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cores\vdmplayer">
+      <UniqueIdentifier>{fa04a6fb-e43d-48f7-8c64-620794a5bb07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xbmc\win32\pch.cpp">
@@ -3123,11 +3126,17 @@
     <ClCompile Include="..\..\xbmc\vidonme\SynchroMethod.cpp">
       <Filter>vidonme</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.cpp">
+      <Filter>cores\vdmplayer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\xbmc\vidonme\VDMUserRecord.cpp">
       <Filter>vidonme</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\vidonme\VDMWindowRecommend.cpp">
       <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\cores\vdmplayer\VDMPlayerConfig.cpp">
+      <Filter>cores\vdmplayer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\windows\GUIWindowSplash.cpp">
       <Filter>windows</Filter>
@@ -5986,7 +5995,7 @@
     <ClInclude Include="..\..\xbmc\addons\LanguageResource.h">
       <Filter>addons</Filter>
     </ClInclude>
-     <ClInclude Include="..\..\xbmc\addons\UISoundsResource.h">
+    <ClInclude Include="..\..\xbmc\addons\UISoundsResource.h">
       <Filter>addons</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\filesystem\ResourceFile.h">
@@ -6058,11 +6067,47 @@
     <ClInclude Include="..\..\xbmc\vidonme\libVidonUtils.h">
       <Filter>vidonme</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\xbmc\vidonme\VDMUserRecord.h">
       <Filter>vidonme</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\vidonme\VDMWindowRecommend.h">
       <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_addon.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_aesink.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_coreplayer.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_coreplayer_decls.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_mediainfo.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_mediatool.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_player.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_playtool.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_playtool_decls.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VDMPlayerConfig.h">
+      <Filter>cores\vdmplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VidonCommon.h">
+      <Filter>cores\vdmplayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\windows\GUIWindowSplash.h">
       <Filter>windows</Filter>

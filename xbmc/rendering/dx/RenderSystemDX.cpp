@@ -952,6 +952,13 @@ void CRenderSystemDX::SetViewPort(CRect& viewPort)
   m_viewPort.Width  = (DWORD)(viewPort.x2 - viewPort.x1);
   m_viewPort.Height = (DWORD)(viewPort.y2 - viewPort.y1);
   m_pD3DDevice->SetViewport(&m_viewPort);
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetRenderViewPort(viewPort.x1, viewPort.y1, viewPort.x2, viewPort.y2);
+	}
+#endif
 }
 
 void CRenderSystemDX::RestoreViewPort()
@@ -1035,6 +1042,13 @@ void CRenderSystemDX::SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW 
     else if(m_stereoView == RENDER_STEREO_VIEW_RIGHT)
       m_pD3DDevice->SetRenderState( D3DRS_COLORWRITEENABLE, D3DCOLORWRITEENABLE_BLUE);
   }
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetStereoMode(mode, view);
+	}
+#endif
 }
 
 bool CRenderSystemDX::SupportsStereo(RENDER_STEREO_MODE mode) const

@@ -372,6 +372,13 @@ bool CSettings::GetBool(const std::string &id) const
 
 bool CSettings::SetBool(const std::string &id, bool value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value);
+	}
+#endif
+
   return m_settingsManager->SetBool(id, value);
 }
 
@@ -387,6 +394,13 @@ int CSettings::GetInt(const std::string &id) const
 
 bool CSettings::SetInt(const std::string &id, int value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value);
+	}
+#endif
+
   return m_settingsManager->SetInt(id, value);
 }
 
@@ -397,6 +411,13 @@ double CSettings::GetNumber(const std::string &id) const
 
 bool CSettings::SetNumber(const std::string &id, double value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value);
+	}
+#endif
+
   return m_settingsManager->SetNumber(id, value);
 }
 
@@ -407,6 +428,13 @@ std::string CSettings::GetString(const std::string &id) const
 
 bool CSettings::SetString(const std::string &id, const std::string &value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value.c_str());
+	}
+#endif
+
   return m_settingsManager->SetString(id, value);
 }
 

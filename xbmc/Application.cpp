@@ -233,6 +233,7 @@
 #include "vidonme/VDMVersionUpdate.h"
 #include "network/DNSNameCache.h"
 #include "filesystem/CurlFile.h"
+#include "cores/vdmplayer/VDMPlayer.h"
 #endif
 
 
@@ -324,6 +325,10 @@ CApplication::CApplication(void)
 
   m_muted = false;
   m_volumeLevel = VOLUME_MAXIMUM;
+
+#ifdef HAS_VIDONME
+	m_bPlayWithMenu = false;
+#endif
 }
 
 CApplication::~CApplication(void)
@@ -352,8 +357,15 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
   switch(newEvent.type)
   {
     case XBMC_QUIT:
-      if (!g_application.m_bStop)
-        CApplicationMessenger::Get().Quit();
+			if (!g_application.m_bStop)
+#ifdef HAS_VIDONME
+			{
+				g_application.StopPlaying();
+				CApplicationMessenger::Get().Quit();
+			}
+#else
+				CApplicationMessenger::Get().Quit();
+#endif
       break;
     case XBMC_VIDEORESIZE:
       if (g_windowManager.Initialized() &&
@@ -363,7 +375,14 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
         g_graphicsContext.SetVideoResolution(RES_WINDOW, true);
         CSettings::Get().SetInt("window.width", newEvent.resize.w);
         CSettings::Get().SetInt("window.height", newEvent.resize.h);
-        CSettings::Get().Save();
+				CSettings::Get().Save();
+
+#ifdef HAS_VIDONME
+				if (g_application.m_pPlayer)
+				{
+					g_application.m_pPlayer->UpdateWindowSize();
+				}
+#endif
       }
       break;
     case XBMC_VIDEOMOVE:
@@ -1334,6 +1353,11 @@ bool CApplication::Initialize()
 	
 	m_RecordUploadTimer.StartZero();
 
+	if (CVDMPlayer::InitPlayCore())
+	{
+		CLog::Log(LOGERROR, "InitPlayCore failed!");
+	}
+
 #endif
 
   return true;
@@ -1493,6 +1517,13 @@ void CApplication::OnSettingChanged(const CSetting *setting)
   {
     // AE is master of audio settings and needs to be informed first
     CAEFactory::OnSettingsChange(settingId);
+
+#ifdef HAS_VIDONME
+		if (m_pPlayer)
+		{
+			m_pPlayer->NotifyAudioOutputSettingsChanged();
+		}
+#endif
 
     if (settingId == "audiooutput.guisoundmode")
     {
@@ -2088,6 +2119,11 @@ void CApplication::Render()
 
   CDirtyRegionList dirtyRegions;
 
+#ifdef HAS_VIDONME
+	// render video layer
+	g_windowManager.RenderEx();
+#endif
+
   // render gui layer
   if (!m_skipGuiRender)
   {
@@ -2115,8 +2151,10 @@ void CApplication::Render()
     g_windowManager.AfterRender();
   }
 
+#ifndef HAS_VIDONME
   // render video layer
   g_windowManager.RenderEx();
+#endif
 
   g_Windowing.EndRender();
 
@@ -2224,7 +2262,15 @@ bool CApplication::OnAction(const CAction &action)
 
   if (action.GetID() == ACTION_TOGGLE_FULLSCREEN)
   {
-    g_graphicsContext.ToggleFullScreenRoot();
+		g_graphicsContext.ToggleFullScreenRoot();
+
+#ifdef HAS_VIDONME
+		if (m_pPlayer)
+		{
+			m_pPlayer->UpdateWindowSize();
+		}
+#endif
+
     return true;
   }
 
@@ -2655,6 +2701,8 @@ bool CApplication::Cleanup()
 
 		EndRecord();
 
+		CVDMPlayer::DeInitPlayCore();
+
 #endif
 
     g_windowManager.DestroyWindows();
@@ -2764,8 +2812,12 @@ void CApplication::Stop(int exitCode)
     m_ExitCode = exitCode;
     CLog::Log(LOGNOTICE, "stop all");
 
-    // cancel any jobs from the jobmanager
-    CJobManager::GetInstance().CancelJobs();
+#ifdef HAS_VIDONME
+		CJobManager::GetInstance().ClearJobs();
+#else
+		// cancel any jobs from the jobmanager
+		CJobManager::GetInstance().CancelJobs();
+#endif
 
     // stop scanning before we kill the network and so on
     if (m_musicInfoScanner->IsScanning())
@@ -3146,6 +3198,19 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
       return PLAYBACK_CANCELED;
   }
 
+#ifdef HAS_VIDONME
+	if (IsPlayBDMenu(item))
+	{
+		CVDMUserInfo::Instance().WaitLoginInBackground();
+		if (!CVDMDialogLogin::ShowLoginTip())
+		{
+			return PLAYBACK_CANCELED;
+		}
+
+		g_application.AddAdvanceFeatureUse("Menu");
+	}
+#endif
+
 #ifdef HAS_UPNP
   if (URIUtils::IsUPnP(item.GetPath()))
   {
@@ -3205,7 +3270,11 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
         std::string path = item.GetPath();
         if (item.HasVideoInfoTag() && StringUtils::StartsWith(item.GetVideoInfoTag()->m_strFileNameAndPath, "removable://"))
           path = item.GetVideoInfoTag()->m_strFileNameAndPath;
-        else if (item.HasProperty("original_listitem_url") && URIUtils::IsPlugin(item.GetProperty("original_listitem_url").asString()))
+#ifdef HAS_VIDONME
+				else if (item.HasProperty("original_listitem_url"))
+#else
+				else if (item.HasProperty("original_listitem_url") && URIUtils::IsPlugin(item.GetProperty("original_listitem_url").asString()))
+#endif
           path = item.GetProperty("original_listitem_url").asString();
         if(dbs.GetResumeBookMark(path, bookmark))
         {
@@ -3348,6 +3417,18 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
 
   if(iResult == PLAYBACK_OK)
   {
+#ifdef HAS_VIDONME
+		m_strLastPlayedFile = item.GetPath();
+
+		if (m_pPlayer)
+		{
+			m_pPlayer->SetSubtitle(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
+			m_pPlayer->SetSubtitleVisible(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
+
+			AddExternalSubtitles();
+		}
+#endif
+
     if (m_pPlayer->GetPlaySpeed() != 1)
     {
       int iSpeed = m_pPlayer->GetPlaySpeed();
@@ -3709,9 +3790,25 @@ void CApplication::LoadVideoSettings(const CFileItem& item)
   if (dbs.Open())
   {
     CLog::Log(LOGDEBUG, "Loading settings for %s", item.GetPath().c_str());
-    
+
+#ifdef HAS_VIDONME
+		std::string strPath = item.GetPath();
+		if (URIUtils::GetFileName(strPath) == "1048575.mpls")
+		{
+			strPath = URIUtils::GetParentPath(strPath);
+			strPath = URIUtils::GetParentPath(strPath);
+			strPath = URIUtils::GetParentPath(strPath);
+			URIUtils::RemoveSlashAtEnd(strPath);
+			if (!StringUtils::EndsWithNoCase(strPath, ".iso"))
+			{
+				URIUtils::AddSlashAtEnd(strPath);
+			}
+		}
+		if (!dbs.GetVideoSettings(strPath, CMediaSettings::Get().GetCurrentVideoSettings()))
+#else
     // Load stored settings if they exist, otherwise use default
     if (!dbs.GetVideoSettings(item, CMediaSettings::Get().GetCurrentVideoSettings()))
+#endif
       CMediaSettings::Get().GetCurrentVideoSettings() = CMediaSettings::Get().GetDefaultVideoSettings();
     
     dbs.Close();
@@ -4243,6 +4340,13 @@ bool CApplication::OnMessage(CGUIMessage& message)
         g_windowManager.PreviousWindow();
       }
 
+#if defined(HAS_VIDONME) && defined(TARGET_ANDROID)
+			if (CXBMCApp::InvokedByFileManager())
+			{
+				CApplicationMessenger::Get().Quit();
+			}
+#endif
+
       if (IsEnableTestMode())
         CApplicationMessenger::Get().Quit();
       return true;
@@ -4692,6 +4796,13 @@ int CApplication::GetSubtitleDelay() const
 
 int CApplication::GetAudioDelay() const
 {
+#ifdef HAS_VIDONME
+	if (m_pPlayer && m_pPlayer->IsSelfPresent())
+	{
+		return (int)m_pPlayer->GetAudioDelay();
+	}
+#endif
+
   // converts audio delay to a percentage
   return int(((float)(CMediaSettings::Get().GetCurrentVideoSettings().m_AudioDelay + g_advancedSettings.m_videoAudioDelayRange)) / (2 * g_advancedSettings.m_videoAudioDelayRange)*100.0f + 0.5f);
 }
@@ -5150,6 +5261,36 @@ bool CApplication::NotifyActionListeners(const CAction &action) const
 
 #ifdef HAS_VIDONME
 
+const std::string CApplication::GetLastPlayedFile(void)
+{ 
+	return m_strLastPlayedFile;
+}
+
+bool CApplication::IsPlayBDMenu(const CFileItem& item)
+{
+	std::string strFilepath = item.GetPath();
+	if (StringUtils::EndsWith(strFilepath, "BDMV/MovieObject.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV/index.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV\\MovieObject.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV\\index.bdmv"))
+	{
+		return true;
+	}
+	//refer to bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item)
+	if (URIUtils::HasExtension(item.GetPath(), ".iso|.img"))
+	{
+		CURL url2("udf://");
+		url2.SetHostName(item.GetPath());
+		url2.SetFileName("BDMV/index.bdmv");
+		if (CFile::Exists(url2.Get()))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void CApplication::AddAdvanceFeatureUse(const std::string& strFeatureType)
 {
 	CVDMUserRecord::Instance().AddAdvanceFeatureUseRecord(strFeatureType, CDateTime::GetCurrentDateTime().GetAsDBDateTime());
@@ -5222,6 +5363,71 @@ void CApplication::Locate(void)
 {
 	std::string strHostName = "www.ip138.com";
 	CDNSNameCache::Lookup(strHostName, m_strPublicIP);
+}
+
+void CApplication::AddSubtitle(std::string strSubtitlePath)
+{
+	if (!m_pPlayer || !m_pPlayer->IsSelfPresent())
+	{
+		return;
+	}
+
+	std::string strCurrentFile = CurrentFile();
+	std::vector<std::string> vecSubtitles = m_mapExternalSubtitleMap[strCurrentFile];
+	bool bExist = false;
+	
+	for (size_t i = 0; i < vecSubtitles.size(); i++)
+	{
+		if (strSubtitlePath == vecSubtitles[i])
+		{
+			bExist = true;
+			break;
+		}
+	}
+
+	if (!bExist)
+	{
+		vecSubtitles.push_back(strSubtitlePath);
+	}
+
+	m_mapExternalSubtitleMap[strCurrentFile] = vecSubtitles;
+
+	CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn = true;
+	CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream = m_pPlayer->GetSubtitle();
+}
+
+void CApplication::AddExternalSubtitles(void)
+{
+	if (!m_pPlayer || !m_pPlayer->IsSelfPresent())
+	{
+		return;
+	}
+
+	int nSubtitleID = CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream;
+
+	bool bShowExternalSubtitle = nSubtitleID >= m_pPlayer->GetSubtitleCount();
+	std::vector<std::string> vecSubtitles = m_mapExternalSubtitleMap[CurrentFile()];
+
+	for (size_t i = 0; i < vecSubtitles.size(); i++)
+	{
+		m_pPlayer->AddSubtitle(vecSubtitles[i]);
+	}
+
+	if (bShowExternalSubtitle)
+	{
+		m_pPlayer->SetSubtitle(nSubtitleID);
+		m_pPlayer->SetSubtitleVisible(true);
+	}
+}
+
+void CApplication::SetPlayWithMenu(bool bPlayWithMenu)
+{
+	m_bPlayWithMenu = bPlayWithMenu;
+}
+
+bool CApplication::IsPlayWithMenu(void)
+{
+	return m_bPlayWithMenu;
 }
 
 #endif

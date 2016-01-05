@@ -63,7 +63,8 @@
       <OutputFile>..\..\..\..\..\addons\library.kodi.guilib\$(ProjectName).dll</OutputFile>
     </Link>
     <PostBuildEvent>
-      <Command>powershell -ExecutionPolicy ByPass  -File $(ProjectDir)\post-build.ps1 $(ProjectDir)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -52,6 +52,9 @@ DEFINES+= \
 	-D__STDC_CONSTANT_MACROS \
 	-DBIN_INSTALL_PATH="\"$(libdir)/@APP_NAME_LC@\"" \
 	-DINSTALL_PATH="\"$(datarootdir)/@APP_NAME_LC@\"" \
+        -DTARGET_VIDONME_BOX \
+        -DHAS_VIDONME \
+	-DVDPLAYER_FOR_KODI \
 	@SDL_DEFINES@ \
 	@UPNP_DEFINES@ \
 	@DEFS@ \

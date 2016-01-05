@@ -93,6 +93,17 @@ void CJNIIntent::addCategory(const std::string &category)
     jcast<jhstring>(category));
 }
 
+#ifdef HAS_VIDONME
+
+void CJNIIntent::setData(const CJNIURI &uri)
+{
+	call_method<jhobject>(m_object,
+		"setData", "(Landroid/net/Uri;)Landroid/content/Intent;",
+		uri.get_raw());
+}
+
+#endif
+
 void CJNIIntent::setAction(const std::string &action)
 {
   call_method<jhobject>(m_object,
@@ -123,9 +134,19 @@ void CJNIIntent::setDataAndType(const CJNIURI &uri, const std::string &type)
 
 void CJNIIntent::setFlags(int flags)
 {
+#ifdef HAS_VIDONME
+	
+	call_method<jhobject>(m_object,
+		"setFlags", "(I)Landroid/content/Intent;",
+		flags);
+
+#else
+
   call_method<jhobject>(m_object,
     "setFlags", "(I;)Landroid/content/Intent;",
     flags);
+
+#endif
 }
 
 void CJNIIntent::setPackage(const std::string &packageName)

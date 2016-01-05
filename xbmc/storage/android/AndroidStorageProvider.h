@@ -42,4 +42,10 @@ public:
 private:
   std::string unescape(const std::string& str);
   unsigned int m_removableLength;
+
+#ifdef HAS_VIDONME
+  void ConvertDeviceName(std::string &strName);
+  unsigned int m_UsbHost1Num;
+  unsigned int m_UsbHost2Num;
+#endif
 };

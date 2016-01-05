@@ -27,6 +27,10 @@
 #include "cores/AudioEngine/Utils/AEUtil.h"
 #include "utils/log.h"
 
+#if defined(TARGET_ANDROID) && defined(HAS_VIDONME)
+#include "android/activity/XBMCApp.h"
+#endif
+
 CAESinkNULL::CAESinkNULL()
   : CThread("AESinkNull"),
     m_draining(false),
@@ -161,4 +165,16 @@ void CAESinkNULL::Process()
     }
   }
   SetPriority(THREAD_PRIORITY_NORMAL);
+}
+
+bool CAESinkNULL::HasVolume()
+{
+  return true;
+}
+
+void  CAESinkNULL::SetVolume(float scale)
+{
+#if defined(TARGET_ANDROID) && defined(HAS_VIDONME)
+  CXBMCApp::SetSystemVolume(scale);
+#endif
 }

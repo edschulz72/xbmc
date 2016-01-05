@@ -105,6 +105,13 @@
 #include "powermanagement/PowerManager.h"
 #include "filesystem/Directory.h"
 
+
+#ifdef HAS_VIDONME
+#ifdef TARGET_ANDROID
+#include "android/activity/XBMCApp.h"
+#endif
+#endif
+
 using namespace std;
 using namespace XFILE;
 using namespace ADDON;
@@ -233,7 +240,10 @@ const BUILT_IN commands[] = {
   { "VideoLibrary.Search",        false,  "Brings up a search dialog which will search the library" },
   { "ToggleDebug",                false,  "Enables/disables debug mode" },
   { "StartPVRManager",            false,  "(Re)Starts the PVR manager" },
-  { "StopPVRManager",             false,  "Stops the PVR manager" },
+	{ "StopPVRManager",							false,	"Stops the PVR manager" },
+#ifdef HAS_VIDONME
+	{ "VDMOpenURL",                 true,   "open a website"},
+#endif
 #if defined(TARGET_ANDROID)
   { "StartAndroidActivity",       true,   "Launch an Android native app with the given package name.  Optional parms (in order): intent, dataType, dataURI." },
 #endif
@@ -1865,7 +1875,25 @@ int CBuiltins::Execute(const std::string& execString)
       CLog::Log(LOGERROR,"Builtin 'SetStereoMode' called with unknown parameter: %s", parameter.c_str());
       return -2;
     }
-  }
+	}
+#ifdef HAS_VIDONME
+	else if (execute == "vdmopenurl" && params.size())
+	{
+#if defined(TARGET_WINDOWS)
+		::ShellExecute(0, _T("open"), params[0].c_str(), 0, 0, SW_SHOWNORMAL);
+#elif defined(TARGET_ANDROID)
+		CXBMCApp::StartActivity("com.android.browser", "android.intent.action.VIEW", "application/vnd.android.package-archive", params[0].c_str());
+#else
+		CStdString cmd = StringUtils::Format("open %s", params[0].c_str());
+		FILE* pOPen = NULL;
+		if ((pOPen = popen(cmd.c_str(), "r")) == NULL)
+		{
+			printf("popen error! \n");
+			return -1;
+		}
+#endif
+	}
+#endif
   else
     return CInputManager::Get().ExecuteBuiltin(execute, params);
   return 0;

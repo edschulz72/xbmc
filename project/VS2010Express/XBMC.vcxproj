@@ -76,7 +76,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\;..\..\xbmc\;..\..\xbmc\cores\dvdplayer;..\..\xbmc\win32;..\..\lib;..\..\lib\win32\ffmpeg;..\..\lib\libUPnP;..\..\lib\libUPnP\Platinum\Source\Devices\MediaRenderer;..\..\lib\libUPnP\Platinum\Source\Devices\MediaConnect;..\..\lib\libUPnP\Platinum\Source\Devices\MediaServer;..\..\lib\libUPnP\Platinum\Source\Platinum;..\..\lib\libUPnP\Platinum\Source\Core;..\..\lib\libUPnP\Platinum\Source\Extras;..\..\lib\libUPnP\Neptune\Source\Core;..\..\lib\libUPnP\Neptune\Source\System\Win32;..\..\lib\win32\pcre;..\..\lib\win32;..\..\xbmc\cores\AudioEngine\;..\..\addons\library.kodi.guilib;..\..\addons\library.xbmc.addon;..\..\addons\library.xbmc.pvr;..\..\addons\library.xbmc.codec;..\..\tools\depends\native\libsquish-native\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;_USE_32BIT_TIME_T;HAS_DX;D3D_DEBUG_INFO;__STDC_CONSTANT_MACROS;_SECURE_SCL=0;TAGLIB_STATIC;NPT_CONFIG_ENABLE_LOGGING;PLT_HTTP_DEFAULT_USER_AGENT="UPnP/1.0 DLNADOC/1.50 Kodi";PLT_HTTP_DEFAULT_SERVER="UPnP/1.0 DLNADOC/1.50 Kodi";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_USE_32BIT_TIME_T;HAS_DX;D3D_DEBUG_INFO;__STDC_CONSTANT_MACROS;_SECURE_SCL=0;TAGLIB_STATIC;NPT_CONFIG_ENABLE_LOGGING;PLT_HTTP_DEFAULT_USER_AGENT="UPnP/1.0 DLNADOC/1.50 Kodi";PLT_HTTP_DEFAULT_SERVER="UPnP/1.0 DLNADOC/1.50 Kodi";HAS_VIDONME;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -142,7 +142,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\;..\..\xbmc\;..\..\xbmc\cores\dvdplayer;..\..\xbmc\win32;..\..\lib;..\..\lib\win32\ffmpeg;..\..\lib\libUPnP;..\..\lib\libUPnP\Platinum\Source\Devices\MediaRenderer;..\..\lib\libUPnP\Platinum\Source\Devices\MediaConnect;..\..\lib\libUPnP\Platinum\Source\Devices\MediaServer;..\..\lib\libUPnP\Platinum\Source\Platinum;..\..\lib\libUPnP\Platinum\Source\Core;..\..\lib\libUPnP\Platinum\Source\Extras;..\..\lib\libUPnP\Neptune\Source\Core;..\..\lib\libUPnP\Neptune\Source\System\Win32;..\..\lib\win32\pcre;..\..\lib\win32;..\..\xbmc\cores\AudioEngine\;..\..\addons\library.kodi.guilib;..\..\addons\library.xbmc.addon;..\..\addons\library.xbmc.pvr;..\..\addons\library.xbmc.codec;..\..\tools\depends\native\libsquish-native\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;_USE_32BIT_TIME_T;HAS_DX;__STDC_CONSTANT_MACROS;TAGLIB_STATIC;NPT_CONFIG_ENABLE_LOGGING;PLT_HTTP_DEFAULT_USER_AGENT="UPnP/1.0 DLNADOC/1.50 Kodi";PLT_HTTP_DEFAULT_SERVER="UPnP/1.0 DLNADOC/1.50 Kodi";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_USE_32BIT_TIME_T;HAS_DX;__STDC_CONSTANT_MACROS;TAGLIB_STATIC;NPT_CONFIG_ENABLE_LOGGING;PLT_HTTP_DEFAULT_USER_AGENT="UPnP/1.0 DLNADOC/1.50 Kodi";PLT_HTTP_DEFAULT_SERVER="UPnP/1.0 DLNADOC/1.50 Kodi";HAS_VIDONME;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -1472,6 +1472,14 @@
     <ClCompile Include="..\..\xbmc\video\windows\GUIWindowVideoBase.cpp" />
     <ClCompile Include="..\..\xbmc\video\windows\GUIWindowVideoNav.cpp" />
     <ClCompile Include="..\..\xbmc\video\windows\GUIWindowVideoPlaylist.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\SynchroMethod.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogLogin.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMLogReportUpload.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMRegionFeature.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserInfo.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewControl.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewState.cpp" />
     <ClCompile Include="..\..\xbmc\view\ViewDatabase.cpp" />
@@ -2143,6 +2151,17 @@
     <ClInclude Include="..\..\xbmc\video\windows\GUIWindowVideoBase.h" />
     <ClInclude Include="..\..\xbmc\video\windows\GUIWindowVideoNav.h" />
     <ClInclude Include="..\..\xbmc\video\windows\GUIWindowVideoPlaylist.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\CommonHeader.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\DLLVidonUtils.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\libVidonUtils.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\SynchroMethod.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogLogin.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMLogReportUpload.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMRegionFeature.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserInfo.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMVersionUpdate.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewControl.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewState.h" />
     <ClInclude Include="..\..\xbmc\view\ViewDatabase.h" />

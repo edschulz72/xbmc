@@ -16642,3 +16642,618 @@ msgstr ""
 msgctxt "#38016"
 msgid "%d fps"
 msgstr ""
+
+
+msgctxt "#70000"
+msgid "Welcome to VidOn XBMC Demo"
+msgstr "Welcome to VidOn XBMC Demo"
+
+msgctxt "#70001"
+msgid "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
+msgstr "VidOn.me offers for Android the most complete and reliable XBMC, with greatly optimized functions and features. On top of the traditional media management function, our XBMC has many unique features like Blu-ray menu navigation, HD audio output, and more."
+
+msgctxt "#70002"
+msgid "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+msgstr "\n\nTo upgrade to VidOn XBMC Pro, please visit: [COLOR=blue]http://vidon.me/ [/COLOR] "
+
+msgctxt "#70003"
+msgid "OK"
+msgstr "OK"
+
+msgctxt "#70004"
+msgid "Dolby/DTS codec package is required to play the video, or audio may be lost. Download and install Dolby/DTS codec package now?"
+msgstr "Dolby/DTS codec package is required to play the video, or it may result in audio missing, download and install Dolby/DTS codec package now?"
+
+msgctxt "#70005"
+msgid "Failed to connect to the Internet. Please check the network connection."
+msgstr "Failed to connect to the Internet. Please check the network connection."
+
+msgctxt "#70006"
+msgid "Account/password verification failed. Please re-enter."
+msgstr "Account/password verification failed. Please re-enter."
+
+msgctxt "#70007"
+msgid "Welcome to VidOn XBMC"
+msgstr "Welcome to VidOn XBMC"
+
+msgctxt "#70008"
+msgid "You are using the free version of VidOn XBMC."
+msgstr "You are using the free version of VidOn XBMC."
+
+msgctxt "#70009"
+msgid "You already have a Top-Up Card. Apply to upgrade immediately to the Pro version!"
+msgstr "You already have a Top-Up Card. Apply to upgrade immediately to the Pro version!"
+
+msgctxt "#70010"
+msgid "You already have a top-up card. You can use advanced features after applying!"
+msgstr "You already have a top-up card. You can use advanced features after applying!"
+
+msgctxt "#70011"
+msgid "No available Top-Up Card. in your account. You can manually enter the 12 digit code of the card provided to you to complete the process and upgrade to the Pro version!"
+msgstr "No available Top-Up Card. in your account. You can manually enter the 12 digit code of the card provided to you to complete the process and upgrade to the Pro version!"
+
+msgctxt "#70012"
+msgid "No available Top-Up Card in your account. You can manually enter the 12 digit code of the card provided to you to complete the process."
+msgstr "No available Top-Up Card in your account. You can manually enter the 12 digit code of the card provided to you to complete the process."
+
+msgctxt "#70013"
+msgid "Username and password must not be empty."
+msgstr "Username and password must not be empty."
+
+msgctxt "#70014"
+msgid "Login"
+msgstr "Login"
+
+msgctxt "#70015"
+msgid "Successful!"
+msgstr "Successful!"
+
+msgctxt "#70016"
+msgid "Failed to apply!"
+msgstr "Failed to apply!"
+
+msgctxt "#70017"
+msgid "Your Subscription is due to expire on %s. Please go to the official website to top-up as soon as possible."
+msgstr "Your Subscription is due to expire on %s. Please go to the official website to top-up as soon as possible."
+
+msgctxt "#70018"
+msgid "Membership term"
+msgstr "Membership term"
+
+msgctxt "#70019"
+msgid "Apply"
+msgstr "Apply"
+
+msgctxt "#70020"
+msgid "Cancel"
+msgstr "Cancel"
+
+msgctxt "#70021"
+msgid "VidOn.me Account"
+msgstr "VidOn.me Account"
+
+msgctxt "#70022"
+msgid "Password"
+msgstr "Password"
+
+msgctxt "#70023"
+msgid "Login"
+msgstr "Login"
+
+msgctxt "#70024"
+msgid "VidOn"
+msgstr "VidOn"
+
+msgctxt "#70025"
+msgid "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file ， Send dump file ， Default settings for 3D playback"
+msgstr "[B]CONFIGURE VIDON SETTINGS[/B][CR][CR]Send log file ， Send dump file ， Default settings for 3D playback"
+
+msgctxt "#70026"
+msgid "Debugging"
+msgstr "Debugging"
+
+msgctxt "#70027"
+msgid "Send log file and dump file to us. View your log file in browser."
+msgstr " Upload log file and dump file to us.View your log file by browser."
+
+msgctxt "#70028"
+msgid "Send log file and dump file now"
+msgstr "Upload log file and dump file now"
+
+msgctxt "#70029"
+msgid "Sending log file and dump file can help us find out the unexpected error quickly."
+msgstr "Upload log file and dump file can help us to find the unexpected error out quickly."
+
+msgctxt "#70030"
+msgid "Send log file and dump file to us once an unexpected error occurs"
+msgstr "Send log file and dump file to us once an unexpected error occurs"
+
+msgctxt "#70031"
+msgid "View log file"
+msgstr "View log file"
+
+msgctxt "#70032"
+msgid "View log file in browse."
+msgstr "View log file by browse."
+
+msgctxt "#70033"
+msgid "3D playback"
+msgstr "3D playing"
+
+msgctxt "#70034"
+msgid "Set default play mode of 3D source."
+msgstr "Set default playing mode of 3D source."
+
+msgctxt "#70035"
+msgid "Set 2D/3D Mode"
+msgstr "Set 2D/3D Mode"
+
+msgctxt "#70036"
+msgid "2D"
+msgstr "2D"
+
+msgctxt "#70037"
+msgid "2D Left Half"
+msgstr "2D left half"
+
+msgctxt "#70038"
+msgid "2D Upper Half"
+msgstr "2D upper half"
+
+msgctxt "#70039"
+msgid "3D Left/Right"
+msgstr "3D Left-Right"
+
+msgctxt "#70040"
+msgid "3D Top/Bottom"
+msgstr "3D Top-Bottom"
+
+msgctxt "#70041"
+msgid "3D"
+msgstr "3D"
+
+msgctxt "#70042"
+msgid "3D Line Interlacing"
+msgstr "3D Line Interlacing"
+
+msgctxt "#70043"
+msgid "3D Column Interlacing"
+msgstr "3D Column Interlacing"
+
+msgctxt "#70044"
+msgid "Region Code"
+msgstr "Region code"
+
+msgctxt "#70045"
+msgid "Region A"
+msgstr "Region A"
+
+msgctxt "#70046"
+msgid "Region B"
+msgstr "Region B"
+
+msgctxt "#70047"
+msgid "Region C"
+msgstr "Region C"
+
+msgctxt "#70048"
+msgid "Set region for Blu-ray playback."
+msgstr "Set region for blu-ray source playing."
+
+msgctxt "#70049"
+msgid "Chose a Player"
+msgstr "Chose Player"
+
+msgctxt "#70050"
+msgid "Chose VidOn Player or XBMC Player to play."
+msgstr "Chose VidOnMe Player to pay or XBMC Player to play."
+
+msgctxt "#70051"
+msgid "VidOn Player"
+msgstr "VidOnMe Player"
+
+msgctxt "#70052"
+msgid "XBMC Player"
+msgstr "XBMC Player"
+
+msgctxt "#70053"
+msgid "Blu-ray"
+msgstr "Blu-ray"
+
+msgctxt "#70054"
+msgid "Settings about Blu-ray playback."
+msgstr "Settings about playing of blu-ray sources."
+
+msgctxt "#70055"
+msgid "User Center"
+msgstr "User center"
+
+msgctxt "#70056"
+msgid "Show user name, email and Membership information. Accounts can be switched."
+msgstr "Show user name, email and Membership information. Accounts can be switched."
+
+msgctxt "#70057"
+msgid "Username"
+msgstr "User Name"
+
+msgctxt "#70058"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "#70059"
+msgid "Expiration Date"
+msgstr "Expiration Date"
+
+msgctxt "#70060"
+msgid "My Membership"
+msgstr "My Membership"
+
+msgctxt "#70061"
+msgid "Switch User"
+msgstr "Switch user"
+
+msgctxt "#70062"
+msgid "Please enter other username and password to switch user."
+msgstr "Please enter other username and password to switch user."
+
+msgctxt "#70063"
+msgid "Upgrade"
+msgstr "Upgrade"
+
+msgctxt "#70064"
+msgid "Show info of current version and check for new version."
+msgstr "Upgrade settings showing the version informations and checkout new versions."
+
+msgctxt "#70065"
+msgid "Version"
+msgstr "Version"
+
+msgctxt "#70066"
+msgid "Website"
+msgstr "Website"
+
+msgctxt "#70067"
+msgid "Visit our official website."
+msgstr "Visit our official website."
+
+msgctxt "#70068"
+msgid "Forum"
+msgstr "Forum"
+
+msgctxt "#70069"
+msgid "Visit our official forum."
+msgstr "Visit our official forum."
+
+msgctxt "#70070"
+msgid "Check new version"
+msgstr "Check new version"
+
+msgctxt "#70071"
+msgid "Check new version from our official website."
+msgstr "Check new version from our official website."
+
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70072"
+msgid "Install ..."
+msgstr "Install ..."
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70073"
+msgid "File download failed"
+msgstr "File download failed"
+
+
+#: xbmc/vidonme/VDMVersionUpdate.cpp
+msgctxt "#70074"
+msgid "File verification failed"
+msgstr "File verification failed"
+
+
+#: xbmc/vidonme/VDMDialogVersionCheck.cpp
+msgctxt "#70075"
+msgid "New Version"
+msgstr "New Version"
+
+
+#: xbmc/settings/windows/GUIWindowSettingsCategory.cpp
+msgctxt "#70076"
+msgid "Downloading"
+msgstr "Downloading"
+
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70077"
+msgid "Send log file and dump file"
+msgstr "Send log file and dump file"
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70078"
+msgid "Network connection error"
+msgstr "Network connection error"
+
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70079"
+msgid "Succeeded to send log file and dump file"
+msgstr "Succeeded to send log file and dump file"
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70080"
+msgid "Failed to collect the log file"
+msgstr "Failed to collect the log file"
+
+
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+#: "current version: V13.2"
+msgctxt "#70081"
+msgid "Current Version"
+msgstr "Current Version"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70082"
+msgid "Checking for the latest version..."
+msgstr "Checking for the latest version..."
+
+#: xbmc/vidonme/VDMLogReportUpload.cpp
+msgctxt "#70083"
+msgid "Network connection error"
+msgstr "Network connection error"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70084"
+msgid "Retry"
+msgstr "Retry"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+#: msgctxt "#70085"
+#: msgid "Cancel"
+#: msgstr "Cancel"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70086"
+msgid "Already the latest version"
+msgstr "Already the latest version"
+
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70087"
+msgid "Close"
+msgstr "Close"
+
+#: addons/skin.confluence/720p/VDMDialogVersionCheck.xml
+msgctxt "#70088"
+msgid "Update"
+msgstr "Update"
+
+msgctxt "#70089"
+msgid "Without account?"
+msgstr "Without account?"
+
+msgctxt "#70090"
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]Please visit our official website[/COLOR] http://vidon.me/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+
+#: system/settings/settings.xml
+msgctxt "#70091"
+msgid "Build Time"
+msgstr "Build Time"
+
+msgctxt "#70092"
+msgid "No subscription"
+msgstr " No subscription "
+
+msgctxt "#70093"
+msgid "You've got VidOn Membership Experience Qualification"
+msgstr "You've got VidOn Membership Experience Qualification"
+
+msgctxt "#70094"
+msgid "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+msgstr "Congratulations! You've got the qualification to experience VidOn Membership. The experience qualification, due to %s, allows you to use Blu-ray menu navigation and other advanced features free. Go to try it out!"
+
+msgctxt "#70095"
+msgid "Play main title"
+msgstr "Play main title"
+
+msgctxt "#70096"
+msgid "Open folder"
+msgstr "Open folder"
+
+msgctxt "#70097"
+msgid "I am a user in Mainland China"
+msgstr "I am a user in Mainland China"
+
+msgctxt "#70098"
+msgid "Left right to 3D"
+msgstr "Left right to 3D"
+
+msgctxt "#70099"
+msgid "Top bottom to 3D"
+msgstr "Top bottom to 3D"
+
+msgctxt "#70100"
+msgid "Please login with your VidOn.me account to access this subscription feature."
+msgstr "Please login with your VidOn.me account to access this subscription feature."
+
+msgctxt "#70101"
+msgid "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+msgstr "If you do not have an account, please go to our official website: http://vidon.me/ to learn more."
+
+msgctxt "#70102"
+msgid "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+msgstr "[COLOR=white]Please visit our official website[/COLOR] http://www.vidonme.cn/uc/account/register [COLOR=white]to finish registration.[/COLOR] "
+
+msgctxt "#70103"
+msgid "This will configure the buffer settings for your network sources."
+msgstr "This will configure the buffer settings for your network sources."
+
+msgctxt "#70104"
+msgid "Buffer Mode"
+msgstr "Buffer Mode"
+
+msgctxt "#70105"
+msgid "This setting will let you choose which files VidOn XBMC will buffer."
+msgstr "This setting will let you choose which files VidOn XBMC will buffer."
+
+msgctxt "#70106"
+msgid "Buffer all internet sources"
+msgstr "Buffer all internet sources"
+
+msgctxt "#70107"
+msgid "Buffer all sources, both internet and local"
+msgstr "Buffer all sources, both internet and local"
+
+msgctxt "#70108"
+msgid "Only buffer internet streams"
+msgstr "Only buffer internet streams"
+
+msgctxt "#70109"
+msgid "No buffer"
+msgstr "No buffer"
+
+msgctxt "#70110"
+msgid "Cache size"
+msgstr "Cache size"
+
+msgctxt "#70111"
+msgid "Set the cache size"
+msgstr "Set the cache size"
+
+msgctxt "#70112"
+msgid "Cache fill-rate"
+msgstr "Cache fill-rate"
+
+msgctxt "#70113"
+msgid "Set the cache fill-rate"
+msgstr "Set the cache fill-rate"
+
+msgctxt "#70114"
+msgid "0MB"
+msgstr "0MB"
+
+msgctxt "#70115"
+msgid "5MB"
+msgstr "5MB"
+
+msgctxt "#70116"
+msgid "10MB"
+msgstr "10MB"
+
+msgctxt "#70117"
+msgid "15MB"
+msgstr "15MB"
+
+msgctxt "#70118"
+msgid "20MB"
+msgstr "20MB"
+
+msgctxt "#70119"
+msgid "10"
+msgstr "10"
+
+msgctxt "#70120"
+msgid "20"
+msgstr "20"
+
+msgctxt "#70121"
+msgid "Enable VidOn Play core"
+msgstr "Enable VidOn Play core"
+
+msgctxt "#70122"
+msgid "If VidOn Play Core is disabled, original XBMC player will be used."
+msgstr "If VidOn Play Core is disabled, original XBMC player will be used."
+
+msgctxt "#70123"
+msgid "Buffer Settings"
+msgstr "Buffer Settings"
+
+msgctxt "#70124"
+msgid "BluryLib"
+msgstr "BluryLib"
+
+msgctxt "#70125"
+msgid "DVDLib"
+msgstr "DVDLib"
+
+msgctxt "#70126"
+msgid "VDMPlayer"
+msgstr "VDMPlayer"
+
+msgctxt "#70127"
+msgid "Join User Experience Improvement Program"
+msgstr "Join User Experience Improvement Program"
+
+msgctxt "#70128"
+msgid "In order to better understand our users' needs, and deliver better products and services accordingly, we sincerely invite you to join our VidOn User Experience Improvement Program. We will consistently improve VidOn XBMC based on your product usages and settings. No personally identifiable information will be collected. The data is collected anonymously and only useful to our product team."
+msgstr "In order to better understand our users' needs, and deliver better products and services accordingly, we sincerely invite you to join our VidOn User Experience Improvement Program. We will consistently improve VidOn XBMC based on your product usages and settings. No personally identifiable information will be collected. The data is collected anonymously and only useful to our product team."
+
+msgctxt "#70129"
+msgid "50MB"
+msgstr "50MB"
+
+msgctxt "#70130"
+msgid "100MB"
+msgstr "100MB"
+
+msgctxt "#70131"
+msgid "Recommended Add-ons"
+msgstr "Recommended Add-ons"
+
+msgctxt "#70132"
+msgid "The Add-ons have already been installed, do you want to install them again?"
+msgstr "The Add-ons have already been installed, do you want to install them again?"
+
+msgctxt "#70133"
+msgid "Add-ons download successful."
+msgstr "Add-ons download successful."
+
+msgctxt "#70134"
+msgid "Add-ons download failed!"
+msgstr "Add-ons download failed!"
+
+msgctxt "#70135"
+msgid "Add-ons installation successful."
+msgstr "Add-ons installation successful."
+
+msgctxt "#70136"
+msgid "Add-ons installation failed"
+msgstr "Add-ons installation failed"
+
+#: system/settings/settings.xml
+msgctxt "#70137"
+msgid "Allow hardware acceleration (awcodec)"
+msgstr "Allow hardware acceleration (awcodec)"
+
+#: system/settings/settings.xml
+msgctxt "#70138"
+msgid "Allow hardware acceleration - RockchipCodec"
+msgstr "Allow hardware acceleration - RockchipCodec"
+
+#: system/settings/settings.xml
+msgctxt "#70139"
+msgid "Allow hardware acceleration (A31codec)"
+msgstr "Allow hardware acceleration (A31codec)"
+
+msgctxt "#70140"
+msgid "The recommended Add-ons are categorized by location. Please choose a country to continue."
+msgstr "The recommended Add-ons are categorized by location. Please choose a country to continue."
+
+msgctxt "#70141"
+msgid "If you wish to install another country's add-ons, please navigate to "System" -> "Settings" -> "Add-ons" -> "Recommended Add-ons"."
+msgstr "If you wish to install another country's add-ons, please navigate to "System" -> "Settings" -> "Add-ons" -> "Recommended Add-ons"."
+
+#: system/settings/settings.xml
+msgctxt "#70142"
+msgid "Allow hardware acceleration (awcodec)"
+msgstr "Allow hardware acceleration (awcodec)"
+
+#: system/settings/settings.xml
+msgctxt "#70143"
+msgid "Allow hardware acceleration (rkcodec)"
+msgstr "Allow hardware acceleration (rkcodec)"
+
+#: system/settings/settings.xml
+msgctxt "#70144"
+msgid "Allow hardware acceleration (A31codec)"
+msgstr "Allow hardware acceleration (A31codec)"

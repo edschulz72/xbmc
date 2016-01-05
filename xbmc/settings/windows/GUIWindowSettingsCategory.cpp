@@ -27,6 +27,14 @@
 #include "settings/lib/SettingSection.h"
 #include "view/ViewStateSettings.h"
 
+#ifdef HAS_VIDONME
+#include "guilib/GUIButtonControl.h"
+#include "settings/windows/GUIControlSettings.h"
+#include "vidonme/VDMVersionUpdate.h"
+#include "vidonme/VDMRegionFeature.h"
+#include "utils/StringUtils.h"
+#endif
+
 using namespace std;
 
 #define SETTINGS_PICTURES               WINDOW_SETTINGS_MYPICTURES - WINDOW_SETTINGS_START
@@ -38,6 +46,10 @@ using namespace std;
 #define SETTINGS_SERVICE                WINDOW_SETTINGS_SERVICE - WINDOW_SETTINGS_START
 #define SETTINGS_APPEARANCE             WINDOW_SETTINGS_APPEARANCE - WINDOW_SETTINGS_START
 #define SETTINGS_PVR                    WINDOW_SETTINGS_MYPVR - WINDOW_SETTINGS_START
+
+#ifdef HAS_VIDONME
+#define SETTINGS_VIDONME                VDM_WINDOW_SETTINGS_VIDONME - WINDOW_SETTINGS_START
+#endif
 
 #define CONTRL_BTN_LEVELS               20
 
@@ -54,6 +66,9 @@ static const SettingGroup s_settingGroupMap[] = { { SETTINGS_PICTURES,    "pictu
                                                   { SETTINGS_VIDEOS,      "videos" },
                                                   { SETTINGS_SERVICE,     "services" },
                                                   { SETTINGS_APPEARANCE,  "appearance" },
+#ifdef HAS_VIDONME
+																									{ SETTINGS_VIDONME,			"vidonme" },
+#endif
                                                   { SETTINGS_PVR,         "pvr" } };
                                                   
 #define SettingGroupSize sizeof(s_settingGroupMap) / sizeof(SettingGroup)
@@ -76,11 +91,43 @@ CGUIWindowSettingsCategory::CGUIWindowSettingsCategory()
   m_idRange.push_back(WINDOW_SETTINGS_MYVIDEOS);
   m_idRange.push_back(WINDOW_SETTINGS_SERVICE);
   m_idRange.push_back(WINDOW_SETTINGS_APPEARANCE);
-  m_idRange.push_back(WINDOW_SETTINGS_MYPVR);
+	m_idRange.push_back(WINDOW_SETTINGS_MYPVR);
+
+#ifdef HAS_VIDONME
+	m_idRange.push_back(VDM_WINDOW_SETTINGS_VIDONME);
+#endif
 }
 
 CGUIWindowSettingsCategory::~CGUIWindowSettingsCategory()
 { }
+
+#ifdef HAS_VIDONME
+void CGUIWindowSettingsCategory::FrameMove()
+{
+	CGUIDialogSettingsManagerBase::FrameMove();
+
+	for (vector<BaseSettingControlPtr>::iterator it = m_settingControls.begin(); it != m_settingControls.end(); it++)
+	{
+		BaseSettingControlPtr pSettingControl = *it;
+		CSetting *pSetting = pSettingControl->GetSetting();
+		CGUIControl *pControl = pSettingControl->GetControl();
+		if (pSetting == NULL || pControl == NULL)
+			continue;
+
+		if (pSetting->GetId() == "upgrade.versioncheck")
+		{
+			std::string strShowing;
+
+			if (g_vdmVersionUpdate.running())
+			{
+				strShowing = StringUtils::Format("%s: %d%%", g_localizeStrings.Get(70076).c_str(), g_vdmVersionUpdate.progress());
+			}
+
+			((CGUIButtonControl*)pControl)->SetLabel2(strShowing);
+		}
+	}
+}
+#endif
 
 bool CGUIWindowSettingsCategory::OnMessage(CGUIMessage &message)
 {
@@ -204,3 +251,10 @@ void CGUIWindowSettingsCategory::Save()
 {
   m_settings.Save();
 }
+
+#ifdef HAS_VIDONME
+void CGUIWindowSettingsCategory::OnSettingChanged(const CSetting *setting)
+{
+	return CGUIDialogSettingsManagerBase::OnSettingChanged(setting);
+}
+#endif

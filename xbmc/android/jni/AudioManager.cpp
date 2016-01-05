@@ -85,7 +85,7 @@ int CJNIAudioManager::abandonAudioFocus(const CJNIAudioManagerAudioFocusChangeLi
 CJNIAudioManagerAudioFocusChangeListener* CJNIAudioManagerAudioFocusChangeListener::m_listenerInstance(NULL);
 
 CJNIAudioManagerAudioFocusChangeListener::CJNIAudioManagerAudioFocusChangeListener()
-: CJNIBase("org/xbmc/kodi/XBMCOnAudioFocusChangeListener")
+: CJNIBase("org/vidonme/xbmc/XBMCOnAudioFocusChangeListener")
 {
   CJNIApplicationMainActivity *appInstance = CJNIApplicationMainActivity::GetAppInstance();
   if (!appInstance)

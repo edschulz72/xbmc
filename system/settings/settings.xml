@@ -44,7 +44,7 @@
         </setting>
         <setting id="lookandfeel.font" type="string" parent="lookandfeel.skin" label="13303" help="36107">
           <level>1</level>
-          <default>Default</default>
+          <default>Arial</default>
           <constraints>
             <options>skinfonts</options>
           </constraints>
@@ -515,7 +515,8 @@
       <group id="2">
         <setting id="videoplayer.seeksteps" type="list[integer]" label="13556" help="37042">
           <level>2</level>
-          <default>-600,-300,-180,-60,-30,-10,10,30,60,180,300,600</default>
+          <!--<default>-600,-300,-180,-60,-30,-10,10,30,60,180,300,600</default>-->
+		  <default>-60,-50,-40,-30,-20,-10,10,20,30,40,50,60</default> <!--HAS_VIDONME-->
           <constraints>
             <options>videoseeksteps</options>
             <delimiter>,</delimiter>
@@ -673,6 +674,35 @@
           </updates>
           <control type="toggle" />
         </setting>
+		<!--HAS_VIDONME begin-->
+        <setting id="videoplayer.useawcodec" type="boolean" label="70142" help="">
+          <requirement>HAVE_AWCODEC</requirement>
+          <level>2</level>
+          <default>true</default>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="toggle" />
+        </setting>
+        <setting id="videoplayer.userkcodec" type="boolean" label="70143" help="">
+          <requirement>HAVE_RKCODEC</requirement>
+          <level>2</level>
+          <default>true</default>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="toggle" />
+        </setting>
+        <setting id="videoplayer.usea31codec" type="boolean" label="70144" help="">
+          <requirement>HAVE_A31CODEC</requirement>
+          <level>2</level>
+          <default>true</default>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="toggle" />
+        </setting>
+		<!--HAS_VIDONME end-->
         <setting id="videoplayer.usevdpau" type="boolean" label="13425" help="36155">
           <requirement>HAVE_LIBVDPAU</requirement>
           <level>2</level>
@@ -911,7 +941,7 @@
           <level>1</level>
           <default>28</default>
           <constraints>
-            <minimum>12</minimum>
+            <minimum>16</minimum><!--HAS_VIDONME-->
             <step>2</step>
             <maximum>74</maximum>
           </constraints>
@@ -3118,4 +3148,236 @@
       </group>
     </category>
   </section>
+  <!--HAS_VIDONME-->
+  <section id ="vidonme" label="70024" help="70025">
+    <category id="buffer" label="70123" help="70103">
+      <group id="1">
+        <setting id="buffer.mode" type="integer" label="70104" help="70105">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="70106">0</option>
+              <option label="70107">1</option>
+              <option label="70108">2</option>
+              <option label="70109">3</option>
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+        <setting id="buffer.size" type="integer" label="70110" help="70111">
+          <level>0</level>
+          <default>20</default>
+          <constraints>
+            <options>
+              <option label="70114">0</option>
+              <option label="70115">5</option>
+              <option label="70116">10</option>
+              <option label="70117">15</option>
+              <option label="70118">20</option>
+              <option label="70129">50</option>
+              <option label="70130">100</option>
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+        <setting id="buffer.speed" type="integer" label="70112" help="70113">
+          <level>0</level>
+          <default>1</default>
+          <constraints>
+            <options>
+              <option label="12311">1</option>
+              <option label="12315">5</option>
+              <option label="70119">10</option>
+              <option label="70120">20</option>
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+      </group>
+    </category>
+    <category id="bd" label="70053" help="70054">
+      <group id="1">
+        <setting id="bd.regincode" type="integer" label="70044" help="70048">
+          <level>0</level>
+          <default>1</default>
+          <constraints>
+            <options>
+              <option label="70045">1</option>
+              <!-- VS_REGIONCODE_A -->
+              <option label="70046">2</option>
+              <!-- VS_REGIONCODE_B -->
+              <option label="70047">3</option>
+              <!-- VS_REGIONCODE_C -->
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+      </group>
+      <group id="1">
+        <setting id="d3.mode" type="integer" label="70035" help="70034">
+          <level>0</level>
+          <default>0</default>
+          <constraints>
+            <options>
+              <option label="70036">0</option>
+              <!-- VS_2D_DISPLAY_THE_ORIGINAL -->
+              <option label="70037">1</option>
+              <!-- VS_2D_DISPLAY_THE_LEFT_HALF -->
+              <option label="70038">2</option>
+              <!-- VS_2D_DISPLAY_THE_UPPER_HALF -->
+              <option label="70039">3</option>
+              <!-- VS_3D_LEFT_RIGHT -->
+              <option label="70040">4</option>
+              <!-- VS_3D_TOM_BOTTOM -->
+              <option label="70041">5</option>
+              <!-- VS_3D_INTERLACING -->
+              <option label="70042">6</option>
+              <!-- VS_3D_LINE_INTERLACING -->
+              <option label="70043">7</option>
+              <!-- VS_3D_COLUMN_INTERLACING -->
+            </options>
+          </constraints>
+          <control type="list" format="string" />
+        </setting>
+      </group>
+    </category>
+    <category id="usercenter" label="70055" help="70056">
+      <group id="1">
+        <setting id="usercenter.name" type="string" label="70057" help="0">
+          <level>0</level>
+          <default>user-name</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="usercenter.email" type="string" label="70058" help="0">
+          <level>0</level>
+          <default>E-Mail</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="usercenter.licensetime" type="string" label="70059" help="0">
+          <level>0</level>
+          <default>Unlicensed</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="usercenter.licenseid" type="string" label="70060" help="0">
+          <level>0</level>
+          <default>Unlicensed</default>
+          <visible>false</visible>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="usercenter.switchuser" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="usercenter.switchuser" type="action" label="70061" help="70062">
+          <level>0</level>
+          <control type="button" format="action" />
+        </setting>
+      </group>
+    </category>
+    <category id="debugging" label="70026" help="70027">
+      <group id="1">
+        <setting id="debugging.upload" type="action" label="70028" help="70029">
+          <level>0</level>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="debugging.uploadchoice" type="boolean" label="70030" help="70029">
+          <level>0</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="debugging.viewlog" type="action" label="70031" help="70032">
+          <level>1</level>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="using.vdmplayer" type="boolean" label="70121" help="70122">
+          <level>3</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+        <setting id="debugging.record" type="boolean" label="70127" help="70128">
+          <level>3</level>
+          <default>true</default>
+          <control type="toggle" />
+        </setting>
+      </group>
+    </category>
+    <category id="upgrade" label="70063" help="70064">
+      <group id="1">
+        <setting id="upgrade.currVerName" type="string" label="70065" help="0">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="edit" format="string" />
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+        </setting>
+        <setting id="upgrade.currVerTime" type="string" label="70091" help="0">
+          <level>0</level>
+          <default></default>
+          <constraints>
+            <allowempty>true</allowempty>
+          </constraints>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="edit" format="string" />
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+        </setting>
+        <setting id="upgrade.website" type="action" label="70066" help="70067">
+          <level>0</level>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="upgrade.forum" type="action" label="70068" help="70069">
+          <level>0</level>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="upgrade.versioncheck" type="action" label="70070" help="70071">
+          <level>0</level>
+          <control type="button" format="action" />
+        </setting>
+        <setting id="upgrade.bluraylib" type="string" label="70124" help="0">
+          <level>0</level>
+          <default>1.0.3.0</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="upgrade.dvdlib" type="string" label="70125" help="0">
+          <level>0</level>
+          <default>1.0.0.7</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+        <setting id="upgrade.vdmplayer" type="string" label="70126" help="0">
+          <level>0</level>
+          <default>2.0.1.5-2015.7.6-fcabe0e</default>
+          <dependencies>
+            <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
+          </dependencies>
+          <control type="edit" format="string" />
+        </setting>
+      </group>
+    </category>
+  </section>
+  <!--HAS_VIDONME-->
 </settings>

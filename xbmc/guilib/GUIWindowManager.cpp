@@ -146,6 +146,11 @@
 #include "peripherals/dialogs/GUIDialogPeripheralManager.h"
 #include "peripherals/dialogs/GUIDialogPeripheralSettings.h"
 
+#ifdef HAS_VIDONME
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/VDMDialogVersionCheck.h"
+#endif
+
 using namespace std;
 using namespace PVR;
 using namespace PERIPHERALS;
@@ -294,6 +299,12 @@ void CGUIWindowManager::CreateWindows()
   Add(new CGUIWindowWeather);
   Add(new CGUIWindowStartup);
   Add(new CGUIWindowSplash);
+
+#ifdef HAS_VIDONME
+	Add(new CVDMDialogLogin);
+	Add(new CVDMDialogVersionCheck);
+#endif
+
 }
 
 bool CGUIWindowManager::DestroyWindows()
@@ -397,6 +408,11 @@ bool CGUIWindowManager::DestroyWindows()
     Delete(WINDOW_PICTURES);
     Delete(WINDOW_WEATHER);
 
+#ifdef HAS_VIDONME
+		Delete(VDM_DIALOG_VERSIONCHECK);
+		Delete(VDM_WINDOW_DIALOG_LOGIN);
+#endif
+
     Delete(WINDOW_SETTINGS_MYPICTURES);
     Remove(WINDOW_SETTINGS_MYPROGRAMS);
     Remove(WINDOW_SETTINGS_MYWEATHER);
@@ -410,6 +426,10 @@ bool CGUIWindowManager::DestroyWindows()
 
     Remove(WINDOW_DIALOG_SEEK_BAR);
     Remove(WINDOW_DIALOG_VOLUME_BAR);
+
+#ifdef HAS_VIDONME
+		Remove(VDM_WINDOW_SETTINGS_VIDONME);
+#endif
   }
   catch (...)
   {

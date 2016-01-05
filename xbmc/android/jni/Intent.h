@@ -49,6 +49,10 @@ public:
   void setDataAndType(const CJNIURI &uri, const std::string &type);
   void setData(const std::string &uri);
 
+#ifdef HAS_VIDONME
+	void setData(const CJNIURI &uri);
+#endif
+
   void setPackage(const std::string &packageName);
   void setType(const std::string &type);
   CJNIURI getData() const;

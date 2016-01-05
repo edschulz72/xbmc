@@ -45,7 +45,7 @@ if [ -f "$XBMC_DEPENDS_ROOT/buildtools-native/bin/dpkg-deb" ]; then
   export PATH=${bin_path}:${PATH}
 fi
 
-PACKAGE=org.xbmc.@APP_NAME_LC@-atv2
+PACKAGE=org.vidonme.@APP_NAME_LC@-atv2
 
 VERSION=@APP_VERSION_MAJOR@.@APP_VERSION_MINOR@
 REVISION=0
@@ -66,7 +66,7 @@ mkdir -p $DIRNAME/$PACKAGE/DEBIAN
 echo "Package: $PACKAGE"                          >  $DIRNAME/$PACKAGE/DEBIAN/control
 echo "Priority: Extra"                            >> $DIRNAME/$PACKAGE/DEBIAN/control
 echo "Name: @APP_NAME@-ATV2"                      >> $DIRNAME/$PACKAGE/DEBIAN/control
-echo "Depends: curl, org.awkwardtv.whitelist, com.nito.updatebegone, org.xbmc.@APP_NAME_LC@-seatbeltunlock" >> $DIRNAME/$PACKAGE/DEBIAN/control
+echo "Depends: curl, org.awkwardtv.whitelist, com.nito.updatebegone, org.vidonme.@APP_NAME_LC@-seatbeltunlock" >> $DIRNAME/$PACKAGE/DEBIAN/control
 echo "Version: $VERSION-$REVISION"                >> $DIRNAME/$PACKAGE/DEBIAN/control
 echo "Architecture: iphoneos-arm"                 >> $DIRNAME/$PACKAGE/DEBIAN/control
 echo "Installed-Size: $SIZE"                      >> $DIRNAME/$PACKAGE/DEBIAN/control

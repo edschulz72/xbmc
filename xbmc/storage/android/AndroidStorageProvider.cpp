@@ -35,6 +35,10 @@
 #include "utils/StringUtils.h"
 #include "utils/URIUtils.h"
 
+#ifdef HAS_VIDONME
+#include "utils/CPUInfo.h"
+#endif
+
 static const char * typeWL[] = { "vfat", "exfat", "sdcardfs", "fuse", "ntfs", "fat32", "ext3", "ext4", "esdfs" };
 static const char * mountWL[] = { "/mnt", "/Removable", "/storage" };
 static const char * mountBL[] = {
@@ -57,6 +61,11 @@ CAndroidStorageProvider::CAndroidStorageProvider()
 {
   m_removableLength = 0;
   PumpDriveChangeEvents(NULL);
+
+#ifdef HAS_VIDONME
+  m_UsbHost1Num = 0;
+  m_UsbHost2Num = 0;
+#endif
 }
 
 std::string CAndroidStorageProvider::unescape(const std::string& str)
@@ -171,6 +180,10 @@ void CAndroidStorageProvider::GetRemovableDrives(VECSOURCES &removableDrives)
 
     line = strtok_r(buf, "\n", &saveptr);
 
+#ifdef HAS_VIDONME
+		m_UsbHost1Num = 0; m_UsbHost2Num = 0;
+#endif
+
     while (line)
     {
       if (reMount.RegFind(line) != -1)
@@ -216,7 +229,10 @@ void CAndroidStorageProvider::GetRemovableDrives(VECSOURCES &removableDrives)
               CMediaSource share;
               share.strPath = unescape(mountStr);
               share.strName = URIUtils::GetFileName(mountStr);
-              share.m_ignore = true;
+							share.m_ignore = true;
+#ifdef HAS_VIDONME
+							ConvertDeviceName(share.strName);
+#endif
               removableDrives.push_back(share);
             }
           }
@@ -227,6 +243,39 @@ void CAndroidStorageProvider::GetRemovableDrives(VECSOURCES &removableDrives)
     free(buf);
   }
 }
+
+#ifdef HAS_VIDONME
+void CAndroidStorageProvider::ConvertDeviceName(std::string &strName)
+{
+  if(CT_ALLWINNER_A31 != g_cpuInfo.GetCPUType())
+  {
+    CLog::Log(LOGDEBUG, "Not VidonBox ,need not ConvertDeviceName!");
+    return;
+  }
+#define USBHOST1 "usbhost1-"
+#define USBHOST2 "usbhost2-"
+#define VIDON_BLOCK_USB1_PATH       "/dev/block/platform/sw_hcd_host0/" //hdmi
+#define VIDON_BLOCK_USB2_1_PATH     "/dev/block/platform/sw-ehci.1/"
+#define VIDON_BLOCK_USB2_2_PATH     "/dev/block/platform/sw-ohci.1/"
+
+  std::string devicePathUSB1 = VIDON_BLOCK_USB1_PATH + strName;
+  std::string devicePathUSB2_1 = VIDON_BLOCK_USB2_1_PATH + strName;
+  std::string devicePathUSB2_2 = VIDON_BLOCK_USB2_1_PATH + strName;
+
+  if (XFILE::CFile::Exists(devicePathUSB1))
+  {
+    strName = StringUtils::Format("%s%d", USBHOST1, ++m_UsbHost1Num);;
+  }
+  else if (XFILE::CFile::Exists(devicePathUSB2_1) || XFILE::CFile::Exists(devicePathUSB2_2))
+  {
+    strName = StringUtils::Format("%s%d", USBHOST2, ++m_UsbHost2Num);;
+  }
+  else 
+  {
+    CLog::Log(LOGERROR, "something error, the usb devices not found !");
+  }
+}
+#endif
 
 std::vector<std::string> CAndroidStorageProvider::GetDiskUsage()
 {

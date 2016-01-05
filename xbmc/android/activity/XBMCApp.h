@@ -35,6 +35,10 @@
 #include "android/jni/AudioManager.h"
 #include "threads/Event.h"
 
+#ifdef HAS_VIDONME
+#include "android/jni/PackageInfo.h"
+#endif
+
 // forward delares
 class CJNIWakeLock;
 class CAESinkAUDIOTRACK;
@@ -151,4 +155,16 @@ private:
   void XBMC_Stop();
   bool XBMC_DestroyDisplay();
   bool XBMC_SetupDisplay();
+
+#ifdef HAS_VIDONME
+
+public:
+	static ANativeActivity *GetCurrentActivity();
+	static CJNIPackageInfo GetPackageInfo(const std::string& packageName = "org.vidonme.xbmc");
+	static bool InvokedByFileManager();
+	
+public:
+	static bool m_InvokedByFileManager;
+
+#endif
 };

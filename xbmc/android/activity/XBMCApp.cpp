@@ -80,9 +80,53 @@
 
 #include "CompileInfo.h"
 
+#ifdef HAS_VIDONME
+#include "utils/StringUtils.h"
+#include "client/linux/handler/exception_handler.h"
+#include "client/linux/handler/minidump_descriptor.h"
+#include "android/jni/Intent.h"
+#endif
+
 #define GIGABYTES       1073741824
 
 using namespace std;
+
+#ifdef HAS_VIDONME
+
+static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
+	void* context,
+	bool succeeded)
+{
+	g_application.EndRecord();
+
+	CXBMCApp::android_printf("Dump path: %s", descriptor.path());
+	MoveFile(descriptor.path(), StringUtils::Format("%s/kodi.dmp", getenv("HOME")).c_str());
+
+	FILE* process = popen("logcat -d", "r");
+	FILE* file = fopen(StringUtils::Format("%s/kodi.logcat", getenv("HOME")).c_str(), "w+");
+
+	char buf[1024];
+	int nRead = fread(buf, sizeof(char), sizeof(buf), process);
+	while (nRead > 0)
+	{
+		fwrite(buf, sizeof(char), nRead, file);
+		nRead = fread(buf, sizeof(char), sizeof(buf), process);
+	}
+
+	pclose(process);
+	fclose(file);
+
+	return succeeded;
+	return false;
+}
+
+static void InitDump()
+{
+	static google_breakpad::MinidumpDescriptor descriptor(getenv("HOME"));
+	static google_breakpad::ExceptionHandler exceptionHandler(descriptor, NULL, DumpCallback, NULL, true, -1);
+}
+
+#endif
 
 template<class T, void(T::*fn)()>
 void* thread_run(void* obj)
@@ -101,10 +145,14 @@ bool CXBMCApp::m_hasFocus = false;
 CCriticalSection CXBMCApp::m_applicationsMutex;
 std::vector<androidPackage> CXBMCApp::m_applications;
 
+#ifdef HAS_VIDONME
+bool CXBMCApp::m_InvokedByFileManager = NULL;
+#endif
+
 
 CXBMCApp::CXBMCApp(ANativeActivity* nativeActivity)
   : CJNIApplicationMainActivity(nativeActivity)
-  , CJNIBroadcastReceiver("org/xbmc/kodi/XBMCBroadcastReceiver")
+  , CJNIBroadcastReceiver("org/vidonme/xbmc/XBMCBroadcastReceiver")
 {
   m_xbmcappinstance = this;
   m_activity = nativeActivity;
@@ -283,7 +331,7 @@ bool CXBMCApp::EnableWakeLock(bool on)
   {
     std::string appName = CCompileInfo::GetAppName();
     StringUtils::ToLower(appName);
-    std::string className = "org.xbmc." + appName;
+    std::string className = "org.vidonme." + appName;
     // SCREEN_BRIGHT_WAKE_LOCK is marked as deprecated but there is no real alternatives for now
     m_wakeLock = new CJNIWakeLock(CJNIPowerManager(getSystemService("power")).newWakeLock(CJNIPowerManager::SCREEN_BRIGHT_WAKE_LOCK, className.c_str()));
     if (m_wakeLock)
@@ -357,6 +405,11 @@ void CXBMCApp::run()
   SetupEnv();
   XBMC::Context context;
 
+#ifdef HAS_VIDONME
+	InitDump();
+	m_InvokedByFileManager = false;
+#endif
+
   CJNIIntent startIntent = getIntent();
 
   android_printf("%s Started with action: %s\n", CCompileInfo::GetAppName(), startIntent.getAction().c_str());
@@ -373,6 +426,10 @@ void CXBMCApp::run()
 
     CAppParamParser appParamParser;
     appParamParser.Parse((const char **)argv, argc);
+
+#ifdef HAS_VIDONME
+		m_InvokedByFileManager = true;
+#endif
 
     free(argv);
   }
@@ -400,8 +457,12 @@ void CXBMCApp::XBMC_Pause(bool pause)
 {
   android_printf("XBMC_Pause(%s)", pause ? "true" : "false");
   // Only send the PAUSE action if we are pausing XBMC and video is currently playing
-  if (pause && g_application.m_pPlayer->IsPlayingVideo() && !g_application.m_pPlayer->IsPaused())
+	if (pause && g_application.m_pPlayer->IsPlayingVideo() && !g_application.m_pPlayer->IsPaused())
+#ifdef HAS_VIDONME
+		CApplicationMessenger::Get().SendAction(CAction(ACTION_STOP), WINDOW_INVALID, true);
+#else
     CApplicationMessenger::Get().SendAction(CAction(ACTION_PAUSE), WINDOW_INVALID, true);
+#endif
 }
 
 void CXBMCApp::XBMC_Stop()
@@ -567,6 +628,39 @@ bool CXBMCApp::HasLaunchIntent(const string &package)
 // Note intent, dataType, dataURI all default to ""
 bool CXBMCApp::StartActivity(const string &package, const string &intent, const string &dataType, const string &dataURI)
 {
+#ifdef HAS_VIDONME
+
+	if (package == "com.android.browser")
+	{
+		CJNIIntent newIntent = GetPackageManager().getLaunchIntentForPackage(package);
+
+		if (!newIntent)
+			return false;
+
+		if (!dataURI.empty())
+		{
+			CJNIURI jniURI = CJNIURI::parse(dataURI);
+
+			if (!jniURI)
+				return false;
+
+			newIntent.setAction("android.intent.action.VIEW");
+			newIntent.setData(jniURI);
+			startActivity(newIntent);
+		}
+
+		if (xbmc_jnienv()->ExceptionCheck())
+		{
+			CLog::Log(LOGERROR, "CXBMCApp::StartActivity - ExceptionOccurred launching %s", package.c_str());
+			xbmc_jnienv()->ExceptionClear();
+			return false;
+		}
+
+		return true;
+	}
+
+#endif
+
   CJNIIntent newIntent = intent.empty() ?
     GetPackageManager().getLaunchIntentForPackage(package) :
     CJNIIntent(intent);
@@ -768,7 +862,7 @@ void CXBMCApp::SetupEnv()
 
   std::string appName = CCompileInfo::GetAppName();
   StringUtils::ToLower(appName);
-  std::string className = "org.xbmc." + appName;
+  std::string className = "org.vidonme." + appName;
 
   std::string xbmcHome = CJNISystem::getProperty("xbmc.home", "");
   if (xbmcHome.empty())
@@ -844,3 +938,22 @@ const ANativeWindow** CXBMCApp::GetNativeWindow(int timeout)
   m_windowCreated.WaitMSec(timeout);
   return (const ANativeWindow**)&m_window;
 }
+
+#ifdef HAS_VIDONME
+
+ANativeActivity *CXBMCApp::GetCurrentActivity()
+{
+	return m_activity;
+}
+
+CJNIPackageInfo CXBMCApp::GetPackageInfo(const std::string& packageName)
+{
+	return CJNIContext::GetPackageManager().getPackageInfo(packageName, 0);
+}
+
+bool CXBMCApp::InvokedByFileManager()
+{
+	return m_InvokedByFileManager;
+}
+
+#endif

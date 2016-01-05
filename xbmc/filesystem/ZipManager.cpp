@@ -27,6 +27,11 @@
 #include "utils/EndianSwap.h"
 #include "utils/URIUtils.h"
 
+#ifdef HAS_VIDONME
+#include "dialogs/GUIDialogExtendedProgressBar.h"
+#include "guilib/GUIWindowManager.h"
+#endif
+
 
 #ifndef min
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
@@ -249,19 +254,60 @@ bool CZipManager::GetZipEntry(const CURL& url, SZipEntry& item)
   return false;
 }
 
-bool CZipManager::ExtractArchive(const std::string& strArchive, const std::string& strPath)
+#ifdef HAS_VIDONME
+bool CZipManager::ExtractArchive(const std::string& strArchive, const std::string& strPath, bool bShowProcess, const std::string&  strTile)
 {
-  const CURL pathToUrl(strArchive);
-  return ExtractArchive(pathToUrl, strPath);
+	const CURL pathToUrl(strArchive);
+	return ExtractArchive(pathToUrl, strPath, bShowProcess, strTile);
 }
 
+#else
+bool CZipManager::ExtractArchive(const std::string& strArchive, const std::string& strPath)
+{
+	const CURL pathToUrl(strArchive);
+	return ExtractArchive(pathToUrl, strPath);
+}
+
+#endif
+
+
+#ifdef HAS_VIDONME
+bool CZipManager::ExtractArchive(const CURL& archive, const std::string& strPath, bool bShowProcess, const std::string&  strTile)
+#else
 bool CZipManager::ExtractArchive(const CURL& archive, const std::string& strPath)
+#endif
 {
   vector<SZipEntry> entry;
   CURL url = URIUtils::CreateArchivePath("zip", archive);
   GetZipList(url, entry);
+
+#ifdef HAS_VIDONME
+	CGUIDialogProgressBarHandle* handle;
+	if (bShowProcess)
+	{
+		CGUIDialogExtendedProgressBar* dialog =
+			(CGUIDialogExtendedProgressBar*)g_windowManager.GetWindow(WINDOW_DIALOG_EXT_PROGRESS);
+		handle = dialog->GetHandle(strTile);
+	}
+
+	int nIndex = 0;
+	int nCount = entry.size();
+
+#endif
+
   for (vector<SZipEntry>::iterator it=entry.begin();it != entry.end();++it)
   {
+#ifdef HAS_VIDONME
+
+		if (bShowProcess)
+		{
+			handle->SetText(it->name);
+			handle->SetPercentage((float)nIndex*100/nCount);
+			nIndex++;
+		}
+
+#endif
+
     if (it->name[strlen(it->name)-1] == '/') // skip dirs
       continue;
     std::string strFilePath(it->name);
@@ -271,6 +317,14 @@ bool CZipManager::ExtractArchive(const CURL& archive, const std::string& strPath
     if (!CFile::Copy(zipPath, pathToUrl))
       return false;
   }
+
+#ifdef HAS_VIDONME
+
+	if (bShowProcess && handle)
+		handle->MarkFinished();
+
+#endif
+
   return true;
 }
 

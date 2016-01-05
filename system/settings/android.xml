@@ -35,13 +35,13 @@
     <category id="videoscreen">
       <group id="1">
         <setting id="videoscreen.resolution">
-          <visible>false</visible>
+          <visible>true</visible><!--HAS_VIDONME Modified-->
         </setting>
         <setting id="videoscreen.screen">
-          <visible>false</visible>
+          <visible>true</visible><!--HAS_VIDONME Modified-->
         </setting>
         <setting id="videoscreen.screenmode">
-          <visible>false</visible>
+          <visible>true</visible><!--HAS_VIDONME Modified-->
         </setting>
         <setting id="videoscreen.fakefullscreen">
           <visible>false</visible>

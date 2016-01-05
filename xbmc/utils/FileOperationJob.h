@@ -77,6 +77,12 @@ private:
     FileAction m_action;
     std::string m_strFileA, m_strFileB;
     int64_t m_time;
+
+#ifdef HAS_VIDONME
+	public:
+		bool m_bKeepCache;
+#endif
+
   };
   friend class CFileOperation;
 
@@ -94,4 +100,10 @@ private:
   bool m_displayProgress;
   int m_heading;
   int m_line;
+
+#ifdef HAS_VIDONME
+public:
+	bool m_bKeepCache;
+#endif
+
 };

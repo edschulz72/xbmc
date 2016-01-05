@@ -196,6 +196,24 @@ void CVirtualDirectory::GetSources(VECSOURCES &shares) const
     }
   }
 #endif
+
+#ifdef HAS_VIDONME
+	for (int iIndex = 1; iIndex < shares.size(); ++iIndex)
+	{
+		for (int jIndex = iIndex - 1; jIndex >= 0; --jIndex)
+		{
+			if (shares[iIndex].strPath == shares[jIndex].strPath)
+			{
+				if (shares[iIndex].m_iDriveType != CMediaSource::SOURCE_TYPE_REMOVABLE)
+					shares.erase(shares.begin() + iIndex);
+				else
+					shares.erase(shares.begin() + jIndex);
+				--iIndex;
+				break;
+			}
+		}
+	}
+#endif
 }
 }
 

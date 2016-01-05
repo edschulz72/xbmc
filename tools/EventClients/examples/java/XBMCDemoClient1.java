@@ -1,10 +1,10 @@
-package org.xbmc.eventclient.demo;
+package org.vidonme.eventclient.demo;
 
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 
-import org.xbmc.eventclient.XBMCClient;
+import org.vidonme.eventclient.XBMCClient;
 
 /**
  * Simple Demo EventClient

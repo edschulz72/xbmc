@@ -417,12 +417,12 @@ lib/cpluff/stamp-h1
 #/tools/android
 /tools/android/packaging/xbmc/AndroidManifest.xml
 /tools/android/packaging/Makefile
-/tools/android/packaging/xbmc/src/org/xbmc/kodi/Main.java
-/tools/android/packaging/xbmc/src/org/xbmc/kodi/Splash.java
-/tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCBroadcastReceiver.java
-/tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCOnAudioFocusChangeListener.java
-/tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCOnFrameAvailableListener.java
-/tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCSettingsContentObserver.java
+/tools/android/packaging/xbmc/src/org/vidonme/xbmc/Main.java
+/tools/android/packaging/xbmc/src/org/vidonme/xbmc/Splash.java
+/tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCBroadcastReceiver.java
+/tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCOnAudioFocusChangeListener.java
+/tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCOnFrameAvailableListener.java
+/tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCSettingsContentObserver.java
 /tools/android/packaging/xbmc/strings.xml
 
 #/tools/depends

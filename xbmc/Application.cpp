@@ -221,6 +221,20 @@
 #include "cores/FFmpeg.h"
 #include "utils/CharsetConverter.h"
 
+
+#ifdef HAS_VIDONME
+#include "vidonme/VDMSettingsManager.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/VDMUserInfo.h"
+#include "vidonme/DLLVidonUtils.h"
+#include "vidonme/VDMRegionFeature.h"
+#include "vidonme/VDMLogReportUpload.h"
+#include "vidonme/VDMVersionUpdate.h"
+#include "network/DNSNameCache.h"
+#include "filesystem/CurlFile.h"
+#endif
+
+
 using namespace std;
 using namespace ADDON;
 using namespace XFILE;
@@ -1146,6 +1160,22 @@ bool CApplication::Initialize()
   // initialize (and update as needed) our databases
   CDatabaseManager::Get().Initialize();
 
+#ifdef HAS_VIDONME
+
+	g_DllVidonUtils.Load();
+	if (g_DllVidonUtils.IsLoaded())
+	{
+		libVidonUtils::LibVidonUtilsConfig config;
+		std::string strUserData = CSpecialProtocol::TranslatePath(CProfilesManager::Get().GetUserDataFolder());
+		std::string strBinPath = CSpecialProtocol::TranslatePath("special://xbmc/system/");
+
+		strncpy(config.bindatapath, strBinPath.c_str(), sizeof(config.bindatapath) / sizeof(config.bindatapath[0]));
+		strncpy(config.userdatapath, strUserData.c_str(), sizeof(config.userdatapath) / sizeof(config.userdatapath[0]));
+		g_DllVidonUtils.LibVidonUtilsInit(&config);
+	}
+
+#endif
+
   StartServices();
 
   // Init DPMS, before creating the corresponding setting control.
@@ -1255,6 +1285,39 @@ bool CApplication::Initialize()
     CGUIMessage msg(GUI_MSG_NOTIFY_ALL, 0, 0, GUI_MSG_UI_READY);
     g_windowManager.SendThreadMessage(msg);
   }
+
+#ifdef HAS_VIDONME
+
+	std::string strHomePath;
+
+#if defined(TARGET_DARWIN)
+	strHomePath = getenv("HOME");
+#else
+	CUtil::GetHomePath(strHomePath);
+#endif
+
+	std::string strDumpFile = URIUtils::AddFileToFolder(strHomePath, "kodi.dmp");
+	if (XFILE::CFile::Exists(strDumpFile))
+	{
+		std::string strUserName;
+		std::string strPassword;
+		if (!CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword))
+		{
+			strUserName = "unknown username";
+		}
+
+		std::string strEmail = CSettings::Get().GetString("usercenter.email");
+
+		Method_LogReportUpload* LogUpload = new Method_LogReportUpload(strUserName, strEmail);
+		SynchroMethodCall(std::shared_ptr<MethodPtr>(new MethodPtr(LogUpload)));
+
+		XFILE::CFile::Delete(strDumpFile);
+	}
+
+	std::string strUserName, strPassword;
+	CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword);
+
+#endif
 
   return true;
 }
@@ -1482,6 +1545,49 @@ bool CApplication::OnSettingUpdate(CSetting* &setting, const char *oldSettingId,
     }
   }
 #endif
+
+#if defined(HAS_LIBAWCODEC)
+  if (settingId == "videoplayer.useawcodec")
+  {
+    // Do not permit awcodec to be used on non-aml platforms.
+    // The setting will be hidden but the default value is true,
+    // so change it to false.
+    if (CT_ALLWINNER_H3 != g_cpuInfo.GetCPUType())
+    {
+      CSettingBool *useawcodec = (CSettingBool*)setting;
+      return useawcodec->SetValue(false);
+    }
+  }
+#endif
+
+#if defined(HAS_LIBRKCODEC)
+  if (settingId == "videoplayer.userkcodec")
+  {
+    // Do not permit rkcodec to be used on non-aml platforms.
+    // The setting will be hidden but the default value is true,
+    // so change it to false.
+    if (CT_ROCKCHIPS_RK3368 != g_cpuInfo.GetCPUType())
+    {
+      CSettingBool *userkcodec = (CSettingBool*)setting;
+      return userkcodec->SetValue(false);
+    }
+  }
+#endif
+
+#if defined(HAS_LIBA31CODEC)
+  if (settingId == "videoplayer.usea31codec")
+  {
+    // Do not permit a31codec to be used on non-aml platforms.
+    // The setting will be hidden but the default value is true,
+    // so change it to false.
+    if (CT_ALLWINNER_A31 != g_cpuInfo.GetCPUType())
+    {
+      CSettingBool *usea31codec = (CSettingBool*)setting;
+      return usea31codec->SetValue(false);
+    }
+  }
+#endif
+
 #if defined(TARGET_ANDROID)
   if (settingId == "videoplayer.usestagefright")
   {
@@ -2579,6 +2685,16 @@ bool CApplication::Cleanup()
 
     delete m_network;
     m_network = NULL;
+
+#ifdef HAS_VIDONME
+		
+		if (g_DllVidonUtils.IsLoaded())
+		{
+			g_DllVidonUtils.LibVidonUtilsDeInit();
+		}
+		g_DllVidonUtils.Unload();
+
+#endif
 
     return true;
   }

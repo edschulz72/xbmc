@@ -56,10 +56,15 @@ std::string CAEDeviceInfo::DeviceTypeToString(enum AEDeviceType deviceType)
 {
   switch (deviceType)
   {
-    case AE_DEVTYPE_PCM   : return "AE_DEVTYPE_PCM"   ; break;
-    case AE_DEVTYPE_IEC958: return "AE_DEVTYPE_IEC958"; break;
-    case AE_DEVTYPE_HDMI  : return "AE_DEVTYPE_HDMI"  ; break;
-    case AE_DEVTYPE_DP    : return "AE_DEVTYPE_DP"    ; break;
+    case AE_DEVTYPE_PCM   		: return "AE_DEVTYPE_PCM"   		; break;
+    case AE_DEVTYPE_IEC958		: return "AE_DEVTYPE_IEC958"		; break;
+    case AE_DEVTYPE_HDMI  		: return "AE_DEVTYPE_HDMI"  		; break;
+    case AE_DEVTYPE_DP    		: return "AE_DEVTYPE_DP"    		; break;
+#if defined(TARGET_ANDROID) && defined(HAS_VIDONME)
+    case AE_DEVTYPE_PASSTHROUGH_IEC958	: return "AE_DEVTYPE_PASSTHROUGH_IEC958"; break;
+    case AE_DEVTYPE_PASSTHROUGH_HDMI	: return "AE_DEVTYPE_PASSTHROUGH_HDMI"	; break;
+    case AE_DEVTYPE_PCM_HDMI		: return "AE_DEVTYPE_PCM_HDMI"		; break;
+#endif
   }
   return "INVALID";
 }

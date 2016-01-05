@@ -340,6 +340,9 @@
     <Filter Include="contrib\kissfft">
       <UniqueIdentifier>{d811b1d1-5e81-4d89-9173-f02818c897ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vidonme">
+      <UniqueIdentifier>{e512bbaa-c007-46fa-9a5c-42902ae39521}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\xbmc\win32\pch.cpp">
@@ -3095,6 +3098,30 @@
     </ClCompile>
     <ClCompile Include="..\..\xbmc\contrib\kissfft\kiss_fftr.c">
       <Filter>contrib\kissfft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogLogin.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMLogReportUpload.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMRegionFeature.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserInfo.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\SynchroMethod.cpp">
+      <Filter>vidonme</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\windows\GUIWindowSplash.cpp">
       <Filter>windows</Filter>
@@ -5991,6 +6018,39 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\contrib\kissfft\kiss_fftr.h">
       <Filter>contrib\kissfft</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogLogin.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMLogReportUpload.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMRegionFeature.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserInfo.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMVersionUpdate.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\SynchroMethod.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\CommonHeader.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\DLLVidonUtils.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\libVidonUtils.h">
+      <Filter>vidonme</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\windows\GUIWindowSplash.h">
       <Filter>windows</Filter>

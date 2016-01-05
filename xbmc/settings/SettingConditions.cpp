@@ -43,6 +43,7 @@
 #if defined(TARGET_DARWIN_OSX)
 #include "osx/DarwinUtils.h"
 #endif// defined(TARGET_DARWIN_OSX)
+#include "utils/CPUInfo.h"
 
 bool AddonHasSettings(const std::string &condition, const std::string &value, const CSetting *setting)
 {
@@ -253,6 +254,18 @@ void CSettingConditions::Initialize()
 #ifdef HAS_LIBAMCODEC
   if (aml_present())
     m_simpleConditions.insert("have_amcodec");
+#endif
+#ifdef HAS_LIBAWCODEC
+  if (CT_ALLWINNER_H3 == g_cpuInfo.GetCPUType())
+    m_simpleConditions.insert("have_awcodec");
+#endif
+#ifdef HAS_LIBRKCODEC
+  if (CT_ROCKCHIPS_RK3368 == g_cpuInfo.GetCPUType())
+    m_simpleConditions.insert("have_rkcodec");
+#endif
+#ifdef HAS_LIBA31CODEC
+  if (CT_ALLWINNER_A31 == g_cpuInfo.GetCPUType())
+    m_simpleConditions.insert("have_a31codec");
 #endif
 #ifdef TARGET_DARWIN_IOS_ATV2
   if (g_sysinfo.IsAppleTV2())

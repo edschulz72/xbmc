@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT([kodi], [15.2.000], [http://trac.kodi.tv])
+AC_INIT([xbmc], [15.2.000], [http://trac.kodi.tv])
 AC_CONFIG_HEADERS([xbmc/config.h])
 AH_TOP([#pragma once])
 m4_include([m4/ax_prog_cc_for_build.m4])
@@ -1936,6 +1936,15 @@ for codecs in `echo $add_codecs | sed 's/,/ /g'`; do
         AC_CHECK_HEADER([amcodec/codec_error.h],, AC_MSG_ERROR($missing_headers))
         XB_ADD_CODEC([LIBAMCODEC], [amcodec], [$codecs])
         ;;
+     *awcodec*)
+         XB_ADD_CODEC([LIBAWCODEC], [awcodec], [$codecs])
+         ;;
+     *rkcodec*)
+         XB_ADD_CODEC([LIBRKCODEC], [rkcodec], [$codecs])
+         ;;
+    *a31codec*)
+        XB_ADD_CODEC([LIBA31CODEC], [a31codec], [$codecs])
+        ;;
     *libstagefright*)
         XB_ADD_CODEC([LIBSTAGEFRIGHT], [libstagefright], [$codecs])
         ;;
@@ -2524,12 +2533,12 @@ OUTPUT_FILES="Makefile \
     project/cmake/xbmc-config.cmake \
     tools/android/packaging/xbmc/AndroidManifest.xml \
     tools/android/packaging/Makefile \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/Splash.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/Main.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCBroadcastReceiver.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCOnFrameAvailableListener.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCSettingsContentObserver.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCOnAudioFocusChangeListener.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/Splash.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/Main.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCBroadcastReceiver.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCOnFrameAvailableListener.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCSettingsContentObserver.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCOnAudioFocusChangeListener.java \
     tools/android/packaging/xbmc/strings.xml \
     addons/xbmc.addon/addon.xml"
 

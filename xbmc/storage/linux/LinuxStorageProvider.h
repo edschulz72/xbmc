@@ -70,6 +70,11 @@ public:
     share.m_ignore = true;
     share.m_iDriveType = CMediaSource::SOURCE_TYPE_LOCAL;
     localDrives.push_back(share);
+
+#ifdef HAS_VIDONME
+		GetRemovableDrives(localDrives);
+#endif
+
     share.strPath = "/";
     share.strName = g_localizeStrings.Get(21453);
     localDrives.push_back(share);

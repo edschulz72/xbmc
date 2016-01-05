@@ -25,6 +25,20 @@
 #include "windowing/WinEvents.h"
 #include "android/jni/KeyCharacterMap.h"
 
+#ifdef HAS_VIDONME
+
+#if defined AKEYCODE_AUDIO
+#undef AKEYCODE_AUDIO
+#endif
+#define AKEYCODE_AUDIO 10003
+
+#if defined AKEYCODE_SUBTITLE
+#undef AKEYCODE_SUBTITLE
+#endif
+#define AKEYCODE_SUBTITLE 10002
+
+#endif
+
 
 typedef struct {
   int32_t nativeKey;
@@ -56,8 +70,13 @@ static KeyMap keyMap[] = {
   { AKEYCODE_DPAD_LEFT       , XBMCK_LEFT },
   { AKEYCODE_DPAD_RIGHT      , XBMCK_RIGHT },
   { AKEYCODE_DPAD_CENTER     , XBMCK_RETURN },
+#ifdef HAS_VIDONME
+	{ AKEYCODE_VOLUME_UP			 , XBMCK_EQUALS},
+	{ AKEYCODE_VOLUME_DOWN		 , XBMCK_MINUS},
+#else
   { AKEYCODE_VOLUME_UP       , XBMCK_LAST },
   { AKEYCODE_VOLUME_DOWN     , XBMCK_LAST },
+#endif
   { AKEYCODE_POWER           , XBMCK_POWER },
   { AKEYCODE_CAMERA          , XBMCK_LAST },
   { AKEYCODE_CLEAR           , XBMCK_LAST },
@@ -162,6 +181,10 @@ static KeyMap keyMap[] = {
   { AKEYCODE_PROG_GREEN      , XBMCK_GREEN },
   { AKEYCODE_PROG_YELLOW     , XBMCK_YELLOW },
   { AKEYCODE_PROG_BLUE       , XBMCK_BLUE },
+#ifdef HAS_VIDONME
+	{ AKEYCODE_AUDIO					 , XBMCK_AUDIO },
+	{ AKEYCODE_SUBTITLE				 , XBMCK_SUBTITLE },
+#endif
 };
 
 bool CAndroidKey::onKeyboardEvent(AInputEvent *event)

@@ -149,6 +149,7 @@
 #ifdef HAS_VIDONME
 #include "vidonme/VDMDialogLogin.h"
 #include "vidonme/VDMDialogVersionCheck.h"
+#include "vidonme/VDMWindowRecommend.h"
 #endif
 
 using namespace std;
@@ -303,6 +304,7 @@ void CGUIWindowManager::CreateWindows()
 #ifdef HAS_VIDONME
 	Add(new CVDMDialogLogin);
 	Add(new CVDMDialogVersionCheck);
+	Add(new CVDMWindowRecommend);
 #endif
 
 }
@@ -411,6 +413,7 @@ bool CGUIWindowManager::DestroyWindows()
 #ifdef HAS_VIDONME
 		Delete(VDM_DIALOG_VERSIONCHECK);
 		Delete(VDM_WINDOW_DIALOG_LOGIN);
+		Delete(VDM_WINDOW_RECOMMEND);
 #endif
 
     Delete(WINDOW_SETTINGS_MYPICTURES);

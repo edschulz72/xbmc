@@ -37,6 +37,7 @@
 #include "vidonme/VDMUserInfo.h"
 #include "vidonme/VDMUserInfo.h"
 #include "vidonme/VDMDialogVersionCheck.h"
+#include "vidonme/VDMWindowRecommend.h"
 #include "guilib/GUIImage.h"
 #include "addons/Skin.h"
 
@@ -89,6 +90,7 @@ void CGUIWindowHome::OnInitWindow()
 
 #ifdef HAS_VIDONME
 	UpdateVidonLogo();
+	CVDMWindowRecommend::SetCanActive(true);
 #endif
 
   CGUIWindow::OnInitWindow();

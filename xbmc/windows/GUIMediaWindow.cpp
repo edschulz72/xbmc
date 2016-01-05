@@ -67,6 +67,10 @@
 #include "utils/URIUtils.h"
 #include "video/VideoLibraryQueue.h"
 
+#ifdef HAS_VIDONME
+#include "vidonme/VDMWindowRecommend.h"
+#endif
+
 #define CONTROL_BTNVIEWASICONS       2
 #define CONTROL_BTNSORTBY            3
 #define CONTROL_BTNSORTASC           4
@@ -83,6 +87,7 @@
 
 using namespace std;
 using namespace ADDON;
+
 
 CGUIMediaWindow::CGUIMediaWindow(int id, const char *xmlFile)
     : CGUIWindow(id, xmlFile)
@@ -719,6 +724,22 @@ bool CGUIMediaWindow::Update(const std::string &strDirectory, bool updateFilterP
   // TODO: OnInitWindow calls Update() before window path has been set properly.
   if (strDirectory == "?")
     return false;
+
+#ifdef HAS_VIDONME
+
+	if (!CVDMWindowRecommend::AddonInstalled() &&
+		CVDMWindowRecommend::CanActive() &&
+		(strDirectory == "addons://sources/video/" ||
+		strDirectory == "addons://sources/image/" ||
+		strDirectory == "addons://sources/audio/" ||
+		strDirectory == "addons://sources/executable/" ||
+		strDirectory == "library://video/addons.xml/"))
+	{
+		g_windowManager.ActivateWindow(VDM_WINDOW_RECOMMEND);
+		return true;
+	}
+
+#endif
 
   // get selected item
   int iItem = m_viewControl.GetSelectedItem();

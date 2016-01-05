@@ -45,6 +45,7 @@ SRCS=Application.cpp \
      vidonme/VDMLogReportUpload.cpp \
      vidonme/SynchroMethod.cpp \
      vidonme/VDMUserRecord.cpp \
+     vidonme/VDMWindowRecommend.cpp \
 
 LIB=xbmc.a
 

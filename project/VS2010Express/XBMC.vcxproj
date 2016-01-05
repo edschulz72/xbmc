@@ -875,6 +875,7 @@
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDDemuxers\DVDDemuxCC.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDDemuxers\DVDDemuxCDDA.h" />
     <ClInclude Include="..\..\xbmc\cores\FFmpeg.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VidonCommon.h" />
     <ClInclude Include="..\..\xbmc\cores\VideoRenderers\OverlayRendererGUI.h" />
     <ClInclude Include="..\..\xbmc\dialogs\GUIDialogKeyboardGeneric.h" />
     <ClInclude Include="..\..\xbmc\DbUrl.h" />
@@ -1481,6 +1482,7 @@
     <ClCompile Include="..\..\xbmc\vidonme\VDMUserInfo.cpp" />
     <ClCompile Include="..\..\xbmc\vidonme\VDMUserRecord.cpp" />
     <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMWindowRecommend.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewControl.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewState.cpp" />
     <ClCompile Include="..\..\xbmc\view\ViewDatabase.cpp" />
@@ -2164,6 +2166,7 @@
     <ClInclude Include="..\..\xbmc\vidonme\VDMUserInfo.h" />
     <ClInclude Include="..\..\xbmc\vidonme\VDMUserRecord.h" />
     <ClInclude Include="..\..\xbmc\vidonme\VDMVersionUpdate.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMWindowRecommend.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewControl.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewState.h" />
     <ClInclude Include="..\..\xbmc\view\ViewDatabase.h" />

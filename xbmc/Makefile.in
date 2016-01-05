@@ -44,6 +44,7 @@ SRCS=Application.cpp \
      vidonme/VDMDialogVersionCheck.cpp \
      vidonme/VDMLogReportUpload.cpp \
      vidonme/SynchroMethod.cpp \
+     vidonme/VDMUserRecord.cpp \
 
 LIB=xbmc.a
 

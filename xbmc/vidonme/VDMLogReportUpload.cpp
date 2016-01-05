@@ -92,4 +92,29 @@ bool Method_LogReportUpload::Upload(const std::string& strUserID, const std::str
 
 }
 
+bool Method_UserRecordUpload::MethodCall()
+{
+	return Upload(m_strUserID, m_strUserEmail, m_strFilePath);
+}
+
+bool Method_UserRecordUpload::Upload(const std::string& strUserID, const std::string& strUserEmail, const std::string& strFilePath)
+{
+	bool bRet = false;
+	if (g_DllVidonUtils.IsLoaded())
+	{
+		VidonUploadReportHandle hHandle = g_DllVidonUtils.Vidon_CreateUploadReportHandle();
+		g_DllVidonUtils.Vidon_SetUploadStringParam(hHandle, libVidonUtils::VdionUpload_TempDir, CSpecialProtocol::TranslatePath("special://temp/").c_str());
+		g_DllVidonUtils.Vidon_SetUploadStringParam(hHandle, libVidonUtils::VidonUploadParams_Title, "XBMC15");
+		g_DllVidonUtils.Vidon_SetUploadStringParam(hHandle, libVidonUtils::VidonUploadParams_Username, strUserID.c_str());
+		g_DllVidonUtils.Vidon_SetUploadStringParam(hHandle, libVidonUtils::VidonUploadParams_Email, strUserEmail.c_str());
+		g_DllVidonUtils.Vidon_SetUploadStringParam(hHandle, libVidonUtils::VidonUploadParams_Version, CVDMVersionCheck::GetCurrVersionCode().c_str());
+		g_DllVidonUtils.Vidon_SetUploadStringParam(hHandle, libVidonUtils::VdionUploadParams_RecordType, "VidonRecord");
+		g_DllVidonUtils.Vidon_PushUploadFileParam(hHandle, strFilePath.c_str());
+		bRet = g_DllVidonUtils.Vidon_UploadReport(hHandle);
+		g_DllVidonUtils.Vidon_DestroyUploadReportHandle(hHandle);
+	}
+
+	return bRet;
+}
+
 #endif

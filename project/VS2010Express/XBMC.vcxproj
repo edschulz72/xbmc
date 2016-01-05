@@ -1479,6 +1479,7 @@
     <ClCompile Include="..\..\xbmc\vidonme\VDMRegionFeature.cpp" />
     <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp" />
     <ClCompile Include="..\..\xbmc\vidonme\VDMUserInfo.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserRecord.cpp" />
     <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewControl.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewState.cpp" />
@@ -2161,6 +2162,7 @@
     <ClInclude Include="..\..\xbmc\vidonme\VDMRegionFeature.h" />
     <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h" />
     <ClInclude Include="..\..\xbmc\vidonme\VDMUserInfo.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserRecord.h" />
     <ClInclude Include="..\..\xbmc\vidonme\VDMVersionUpdate.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewControl.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewState.h" />

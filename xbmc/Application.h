@@ -384,6 +384,14 @@ public:
    */
   void UnregisterActionListener(IActionListener *listener);
 
+#ifdef HAS_VIDONME
+
+	void AddAdvanceFeatureUse(const std::string& strFeatureType);
+	void EndRecord(void);
+	void SaveRecord(bool bUpload = false);
+	void Locate(void);
+#endif
+
 protected:
   virtual bool OnSettingsSaving() const;
 
@@ -498,7 +506,14 @@ protected:
   std::vector<IActionListener *> m_actionListeners;
 
   bool m_fallbackLanguageLoaded;
-  
+
+#ifdef HAS_VIDONME
+
+	std::string	m_strPublicIP;
+
+	CStopWatch	m_RecordUploadTimer;
+#endif
+
 private:
   CCriticalSection                m_critSection;                 /*!< critical section for all changes to this class, except for changes to triggers */
 };

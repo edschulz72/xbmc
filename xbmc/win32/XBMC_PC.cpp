@@ -42,6 +42,11 @@ LONG WINAPI CreateMiniDump( EXCEPTION_POINTERS* pEp )
 {
   win32_exception::write_stacktrace(pEp);
   win32_exception::write_minidump(pEp);
+
+#ifdef HAS_VIDONME
+	g_application.EndRecord();
+#endif
+
   return pEp->ExceptionRecord->ExceptionCode;;
 }
 

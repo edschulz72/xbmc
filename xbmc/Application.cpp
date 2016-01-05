@@ -229,6 +229,7 @@
 #include "vidonme/DLLVidonUtils.h"
 #include "vidonme/VDMRegionFeature.h"
 #include "vidonme/VDMLogReportUpload.h"
+#include "vidonme/VDMUserRecord.h"
 #include "vidonme/VDMVersionUpdate.h"
 #include "network/DNSNameCache.h"
 #include "filesystem/CurlFile.h"
@@ -1288,6 +1289,8 @@ bool CApplication::Initialize()
 
 #ifdef HAS_VIDONME
 
+	Locate();
+
 	std::string strHomePath;
 
 #if defined(TARGET_DARWIN)
@@ -1316,6 +1319,20 @@ bool CApplication::Initialize()
 
 	std::string strUserName, strPassword;
 	CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword);
+	CVDMUserRecord::Instance().SetUserName(strUserName);
+
+	std::string strEmail = CSettings::Get().GetString("usercenter.email");
+	if (strEmail == "E-Mail")
+	{
+		strEmail.clear();
+	}
+	CVDMUserRecord::Instance().SetUserEmail(strEmail);
+	CVDMUserRecord::Instance().UploadRecord();
+
+	CVDMUserRecord::Instance().SetStartTime(CDateTime::GetCurrentDateTime());
+	SaveRecord();
+	
+	m_RecordUploadTimer.StartZero();
 
 #endif
 
@@ -2633,6 +2650,13 @@ bool CApplication::Cleanup()
 {
   try
   {
+
+#ifdef HAS_VIDONME
+
+		EndRecord();
+
+#endif
+
     g_windowManager.DestroyWindows();
 
     CAddonMgr::Get().DeInit();
@@ -4358,6 +4382,18 @@ void CApplication::Process()
     ProcessSlow();
   }
 
+#ifdef HAS_VIDONME
+
+	if (m_RecordUploadTimer.GetElapsedMilliseconds() > 10000)
+	{
+		SaveRecord(true);
+
+		m_RecordUploadTimer.Reset();
+		m_RecordUploadTimer.Stop();
+	}
+
+#endif
+
   g_cpuInfo.getUsedPercentage(); // must call it to recalculate pct values
 }
 
@@ -5111,3 +5147,81 @@ bool CApplication::NotifyActionListeners(const CAction &action) const
   
   return false;
 }
+
+#ifdef HAS_VIDONME
+
+void CApplication::AddAdvanceFeatureUse(const std::string& strFeatureType)
+{
+	CVDMUserRecord::Instance().AddAdvanceFeatureUseRecord(strFeatureType, CDateTime::GetCurrentDateTime().GetAsDBDateTime());
+
+	SaveRecord();
+}
+
+void CApplication::EndRecord(void)
+{
+	CVDMUserRecord::Instance().SetEndTime(CDateTime::GetCurrentDateTime());
+	SaveRecord();
+}
+
+void CApplication::SaveRecord(bool bUpload)
+{
+	if (CSettings::Get().GetBool("debugging.record"))
+	{
+		std::string strVersionName = CVDMVersionCheck::GetCurrVersionName();
+		CVDMUserRecord::Instance().SetVersion(strVersionName);
+
+		CVDMUserRecord::Instance().SetUserLogin(CVDMUserInfo::Instance().IsLogin());
+
+		std::string strUserName, strPassword;
+		CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword);
+		CVDMUserRecord::Instance().SetUserName(strUserName);
+
+		std::string strEmail = CSettings::Get().GetString("usercenter.email");
+		if (strEmail == "E-Mail")
+		{
+			strEmail.clear();
+		}
+		CVDMUserRecord::Instance().SetUserEmail(strEmail);
+
+		std::string strLanguage = CSettings::Get().GetString("locale.language");
+		CVDMUserRecord::Instance().SetUserLanguage(strLanguage);
+
+		std::string strIP;
+		CNetworkInterface* iface = g_application.getNetwork().GetFirstConnectedInterface();
+
+		if (!m_strPublicIP.empty() && inet_addr(m_strPublicIP.c_str()) > 0)
+		{
+			strIP = m_strPublicIP;
+		}
+		else if (iface)
+		{
+			strIP = iface->GetCurrentIPAddress();
+		}
+
+		CVDMUserRecord::Instance().SetUserIP(strIP);
+
+		std::string strMac;
+		if (iface)
+		{
+			strMac = iface->GetMacAddress();
+		}
+
+		CVDMUserRecord::Instance().SetUserMacAdress(strMac);
+
+		std::string strVendorName = g_DllVidonUtils.Vidon_GetVendorName();
+		CVDMUserRecord::Instance().SetBoxType(strVendorName);
+
+		std::string strRecordInforPath = URIUtils::AddFileToFolder(CSpecialProtocol::TranslatePath(g_advancedSettings.m_logFolder), "RecordInfo");
+		CVDMUserRecord::Instance().SetFirstRun(!XFILE::CFile::Exists(strRecordInforPath));
+
+		CVDMUserRecord::Instance().SaveRecord(bUpload);
+	}
+}
+
+void CApplication::Locate(void)
+{
+	std::string strHostName = "www.ip138.com";
+	CDNSNameCache::Lookup(strHostName, m_strPublicIP);
+}
+
+#endif

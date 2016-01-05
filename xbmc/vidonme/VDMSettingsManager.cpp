@@ -130,6 +130,8 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 				{
 					pSettingsTmp->SetValue(false);
 				}
+
+				g_application.AddAdvanceFeatureUse("PassThrough");
 			}
 		}
 	}

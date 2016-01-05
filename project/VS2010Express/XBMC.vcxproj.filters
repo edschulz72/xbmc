@@ -3123,6 +3123,9 @@
     <ClCompile Include="..\..\xbmc\vidonme\SynchroMethod.cpp">
       <Filter>vidonme</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserRecord.cpp">
+      <Filter>vidonme</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\xbmc\windows\GUIWindowSplash.cpp">
       <Filter>windows</Filter>
     </ClCompile>
@@ -6050,6 +6053,9 @@
       <Filter>vidonme</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\vidonme\libVidonUtils.h">
+      <Filter>vidonme</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserRecord.h">
       <Filter>vidonme</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\windows\GUIWindowSplash.h">

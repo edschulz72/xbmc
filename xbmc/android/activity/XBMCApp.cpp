@@ -97,6 +97,8 @@ static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
 	void* context,
 	bool succeeded)
 {
+	g_application.EndRecord();
+
 	CXBMCApp::android_printf("Dump path: %s", descriptor.path());
 	MoveFile(descriptor.path(), StringUtils::Format("%s/kodi.dmp", getenv("HOME")).c_str());
 
@@ -233,11 +235,19 @@ void CXBMCApp::onPause()
 #endif
 
   EnableWakeLock(false);
+
+#ifdef HAS_VIDONME
+	g_application.EndRecord();
+#endif
 }
 
 void CXBMCApp::onStop()
 {
-  android_printf("%s: ", __PRETTY_FUNCTION__);
+	android_printf("%s: ", __PRETTY_FUNCTION__);
+
+#ifdef HAS_VIDONME
+	g_application.EndRecord();
+#endif
 }
 
 void CXBMCApp::onDestroy()

@@ -884,6 +884,8 @@ void CGUIDialogSettingsBase::OnClick(BaseSettingControlPtr pSettingControl)
 			pSettingControl->Update();
 			return;
 		}
+
+		g_application.AddAdvanceFeatureUse("PassThrough");
 	}
 #endif
 

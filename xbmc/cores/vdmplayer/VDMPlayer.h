@@ -62,6 +62,7 @@ public:
 	virtual int GetSubtitle();
 	virtual void GetSubtitleStreamInfo(int index, SPlayerSubtitleStreamInfo &info);
 	virtual void SetSubtitle(int iStream);
+	virtual void SetSubtitleWhetherOverAssOrig(bool bOver);
 	virtual bool GetSubtitleVisible();
 	virtual void SetSubtitleVisible(bool bVisible);
 	virtual void AddSubtitle(const std::string& strSubPath);

@@ -204,6 +204,7 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 	SetSubtitle(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
 	SetSubTitleDelay(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
 	SetSubtitleVisible(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
+	SetSubtitleWhetherOverAssOrig(CSettings::Get().GetBool("subtitles.overrideassfonts"));
 	SetSubttileFeatures();
 	
 	g_graphicsContext.SetFullScreenVideo(true);
@@ -605,6 +606,18 @@ void CVDMPlayer::SetSubtitle(int iStream)
 	}
 
 	m_pCorePlayer->SetSubtitle(iStream);
+
+	SetSubttileFeatures();
+}
+
+void CVDMPlayer::SetSubtitleWhetherOverAssOrig(bool bOver)
+{
+ 	if (!m_pPlayTool)
+	{
+		return;
+	}
+
+	m_pPlayTool->SetWhetherOverAssOrigSettings(bOver);
 
 	SetSubttileFeatures();
 }
@@ -2139,7 +2152,6 @@ bool CVDMPlayer::InitPlayer(void)
 	SetCSettings("subtitles.style", CSettings::Get().GetInt("subtitles.style"));
 	SetCSettings("subtitles.color", CSettings::Get().GetInt("subtitles.color"));
 	SetCSettings("subtitles.charset", CSettings::Get().GetString("subtitles.charset").c_str());
-	SetCSettings("subtitles.overrideassfonts", CSettings::Get().GetBool("subtitles.overrideassfonts"));
 	SetCSettings("subtitles.languages", CSettings::Get().GetString("subtitles.languages").c_str());
 	SetCSettings("subtitles.storagemode", CSettings::Get().GetInt("subtitles.storagemode"));
 	SetCSettings("subtitles.custompath", CSettings::Get().GetString("subtitles.custompath").c_str());

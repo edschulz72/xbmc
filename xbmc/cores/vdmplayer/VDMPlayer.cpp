@@ -685,6 +685,11 @@ void CVDMPlayer::SetAudioStream(int iStream)
 		return;
 	}
 
+	if (iStream < 0 || iStream >= m_pCorePlayer->GetAudioStreamCount())
+	{
+		return;
+	}
+
 	m_nAudioStream = iStream;
 	m_pCorePlayer->SetAudioStream(iStream);
 

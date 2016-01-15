@@ -25,6 +25,7 @@
 #include "utils/URIUtils.h"
 #include "URL.h"
 #include "PasswordManager.h"
+#include "LangInfo.h"
 
 IVDPlayer* m_pPlcore;
 CVDMPlcoreConfig* m_pConfig;
@@ -199,9 +200,54 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 		return false;
 	}
 
+	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.audiolanguage"), "original") &&
+		CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream <= 0)
+	{
+		int nAudioStreamCount = GetAudioStreamCount();
 
-	SetAudioStream(CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream);
-	SetSubtitle(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
+		for (size_t i = 0; i < nAudioStreamCount; i++)
+		{
+			SPlayerAudioStreamInfo info;
+			GetAudioStreamInfo(i, info);
+
+			std::string audio_language = g_langInfo.GetAudioLanguage();
+
+			if (StringUtils::EqualsNoCase(audio_language, info.language))
+			{
+				SetAudioStream(i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		SetAudioStream(CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream);
+	}
+
+	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.subtitlelanguage"), "original") &&
+		CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream <= 0)
+	{
+		int nSubtitleCount = GetSubtitleCount();
+
+		for (size_t i = 0; i < nSubtitleCount; i++)
+		{
+			std::string subtitle_language = g_langInfo.GetSubtitleLanguage();
+
+			SPlayerSubtitleStreamInfo info;
+			GetSubtitleStreamInfo(i, info);
+
+			if (StringUtils::EqualsNoCase(subtitle_language, info.language))
+			{
+				SetSubtitle(i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		SetSubtitle(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
+	}
+
 	SetSubTitleDelay(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
 	SetSubtitleVisible(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
 	SetSubttileFeatures();

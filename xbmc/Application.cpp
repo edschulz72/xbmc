@@ -3422,9 +3422,6 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
 
 		if (m_pPlayer)
 		{
-			m_pPlayer->SetSubtitle(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
-			m_pPlayer->SetSubtitleVisible(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
-
 			AddExternalSubtitles();
 		}
 #endif

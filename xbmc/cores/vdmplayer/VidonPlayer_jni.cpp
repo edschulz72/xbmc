@@ -125,7 +125,7 @@ extern "C"
   void NFUNC(ntExtractMeidaInfo)(JNIEnv* env, jobject thiz, jstring file, jobject info);
 
   jlong NFUNC(ntReadFileData)(JNIEnv* env, jobject thiz, jstring src, jstring dst,jint startpos, jint datalen);
-
+  jint NFUNC(ntGetErrorNum)(JNIEnv* env,jobject thiz);
 }
 /*
  * internal function
@@ -2031,7 +2031,14 @@ void NFUNC(ntExtractMeidaInfo)(JNIEnv* env, jobject thiz, jstring file, jobject 
   env->DeleteLocalRef(iclazz);
 }
 
-
+jint NFUNC(ntGetErrorNum)(JNIEnv* env,jobject thiz)
+{
+  if(AndroidRuntime::Get().m_pVDCorePlayer)
+  {
+    return AndroidRuntime::Get().m_pVDCorePlayer->GetErrorNum();
+  }
+  return -1;
+}
 
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {

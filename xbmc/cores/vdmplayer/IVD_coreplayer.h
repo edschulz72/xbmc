@@ -141,6 +141,7 @@ public:
   virtual libvp::vidonOutInfo*  GetVMFOutInfo() = 0;
   virtual int64_t ReadFileData( const char* pReadFileName,const char* pSaveFileName, int64_t nStartPos, int64_t nLenght ) = 0;
   virtual bool GetTitleInfo(int &iTitleNum, bool &bMainTitle) = 0;
+  virtual int  GetErrorNum() = 0;
 protected:
 
 };

@@ -126,6 +126,9 @@ extern "C"
 
   jlong NFUNC(ntReadFileData)(JNIEnv* env, jobject thiz, jstring src, jstring dst,jint startpos, jint datalen);
   jint NFUNC(ntGetErrorNum)(JNIEnv* env,jobject thiz);
+
+  void NFUNC(ntSupportAC3)(JNIEnv* env,jobject thiz, jboolean bSupportAC3);
+  void NFUNC(ntSupportDTS)(JNIEnv* env,jobject thiz, jboolean bSupportDTS);
 }
 /*
  * internal function
@@ -2039,7 +2042,22 @@ jint NFUNC(ntGetErrorNum)(JNIEnv* env,jobject thiz)
   }
   return -1;
 }
+void NFUNC(ntSupportAC3)(JNIEnv* env,jobject thiz, jboolean bSupportAC3)
+{
 
+  if(AndroidRuntime::Get().m_pVDPlayTool)
+  {
+    AndroidRuntime::Get().m_pVDPlayTool->SetWhetherSupportAC3(bSupportAC3);
+  }
+}
+void NFUNC(ntSupportDTS)(JNIEnv* env,jobject thiz, jboolean bSupportDTS)
+{
+
+  if(AndroidRuntime::Get().m_pVDPlayTool)
+  {
+    AndroidRuntime::Get().m_pVDPlayTool->SupportDTS(bSupportDTS);
+  }
+}
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
   AndroidRuntime::Get().m_jvm = vm;

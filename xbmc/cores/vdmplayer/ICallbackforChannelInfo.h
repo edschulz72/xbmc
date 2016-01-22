@@ -13,5 +13,6 @@ class ICallbackforChannelInfo
 {
 public:
  virtual bool OnStreamConnect( ChannelInfo& channelInfo) = 0;
+ virtual bool OnCallBackCacheLevel( int& nCacheLevel) = 0;
 };
 

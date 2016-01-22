@@ -153,6 +153,9 @@ namespace libVidonUtils
   DLL_LIBVIDONUTILS_API CVidonPlayerManager* GetVidonPlayerManagerInstance();
 
 
+  DLL_LIBVIDONUTILS_API bool IsFunctionAvailable( int nFuncID );
+
+
 #ifdef __cplusplus
 }
 #endif

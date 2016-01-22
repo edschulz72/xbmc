@@ -18,6 +18,9 @@ SRCS      += GraphicBuffer.cpp
 SRCS      += EventLoop.cpp
 SRCS      += XBMCApp.cpp
 
+# Add
+SRCS      += SettingsBase.cpp
+
 OBJS      += $(APP_GLUE) $(CPU_OBJ)
 
 LIB        = activity.a

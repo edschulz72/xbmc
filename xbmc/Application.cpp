@@ -234,6 +234,11 @@
 #include "network/DNSNameCache.h"
 #include "filesystem/CurlFile.h"
 #include "cores/vdmplayer/VDMPlayer.h"
+
+#if defined(TARGET_ANDROID)
+#include "android/activity/SettingsBase.h"
+#endif
+
 #endif
 
 
@@ -1193,6 +1198,38 @@ bool CApplication::Initialize()
 		strncpy(config.userdatapath, strUserData.c_str(), sizeof(config.userdatapath) / sizeof(config.userdatapath[0]));
 		g_DllVidonUtils.LibVidonUtilsInit(&config);
 	}
+
+#if defined(TARGET_ANDROID)
+	std::map<std::string, std::string> language;
+	if (language.empty())
+	{
+		language["en_US"] = "English";
+		language["fr_FR"] = "French";
+		language["zh_CN"] = "Chinese (Simple)";
+		language["zh_TW"] = "Chinese (Traditional)";
+		language["de_DE"] = "German";
+		language["ja_JP"] = "Japanese";
+		language["es_ES"] = "Spanish";
+		language["pt_PT"] = "Portuguese (Brazil)";
+		language["ru_RU"] = "Russian";
+		language["ko_KR"] = "Korean";
+		language["da_DK"] = "Danish";
+		language["vi_VN"] = "Vietnamese";
+		language["th_TH"] = "Thai";
+	}
+
+	std::string	strCurKey = CSettingsBase::getCurrLanguage().strKey;
+	CSettingsBase::LangNodes	vecLangNode = CSettingsBase::getLanguageList();
+
+	for (int i = 0; i < vecLangNode.size(); ++i)
+	{
+		std::string	strKey = vecLangNode[i].strKey;
+		if (strKey == strCurKey)
+		{
+			g_application.SetLanguage(language[strKey]);
+		}
+	}
+#endif
 
 #endif
 

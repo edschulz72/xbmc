@@ -1224,7 +1224,7 @@ bool CApplication::Initialize()
 	for (int i = 0; i < vecLangNode.size(); ++i)
 	{
 		std::string	strKey = vecLangNode[i].strKey;
-		if (strKey == strCurKey)
+		if (strKey == strCurKey && strKey == "zh_CN")
 		{
 			g_application.SetLanguage(language[strKey]);
 		}

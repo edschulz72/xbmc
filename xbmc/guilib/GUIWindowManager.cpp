@@ -677,8 +677,7 @@ void CGUIWindowManager::PreviousWindow()
 	}
 
 #ifdef HAS_VIDONME
-	if (pCurrentWindow->GetPreviousWindow() == WINDOW_INVALID ||
-		pCurrentWindow->GetPreviousWindow() == WINDOW_SPLASH)
+	if (GetActiveWindow() == WINDOW_HOME)
 	{
 		return;
 	}

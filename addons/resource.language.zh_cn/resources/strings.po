@@ -3923,7 +3923,7 @@ msgstr "从头开始播放"
 
 msgctxt "#12022"
 msgid "Resume from %s"
-msgstr "从 %s 处继续播放"
+msgstr "%s 处继续播放"
 
 msgctxt "#12310"
 msgid "0"

@@ -674,7 +674,16 @@ void CGUIWindowManager::PreviousWindow()
       ActivateWindow(WINDOW_HOME);
     }
     return;
-  }
+	}
+
+#ifdef HAS_VIDONME
+	if (pCurrentWindow->GetPreviousWindow() == WINDOW_INVALID ||
+		pCurrentWindow->GetPreviousWindow() == WINDOW_SPLASH)
+	{
+		return;
+	}
+#endif
+
   m_windowHistory.pop();
   int previousWindow = GetActiveWindow();
   m_windowHistory.push(currentWindow);

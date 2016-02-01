@@ -295,10 +295,6 @@ bool CGUIDialogSettingsBase::OnBack(int actionID)
 {
   m_lastControlID = 0; // don't save the control as we go to a different window each time
 
-#ifdef HAS_VIDONME
-	CStereoscopicsManager::Get().SetStereoMode((RENDER_STEREO_MODE)CMediaSettings::Get().GetCurrentVideoSettings().m_StereoMode);
-#endif
-
   // if the setting dialog is not a window but a dialog we need to close differently
   if (!IsDialog())
     return CGUIWindow::OnBack(actionID);

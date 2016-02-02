@@ -53,6 +53,11 @@ ifneq ($(shell test -f $(GDBPATH) && echo 1),1)
 GDBPATH=$(NDKROOT)/prebuilt/android-$(ARCH)/gdbserver/gdbserver
 endif
 
+ifndef VERSION_CODE
+  VERSION_CODE=1522
+  VERSION_NAME=1.5.2.2
+endif
+
 SRCLIBS = $(addprefix $(PREFIX)/lib/,$(OBJS)) $(addprefix $(PREFIX)/lib/$(SDK_PLATFORM)/,$(PLATFORM_OBJS))
 DSTLIBS = $(CPU)/lib/lib@APP_NAME_LC@.so $(addprefix $(CPU)/lib/,$(OBJS)) $(addprefix $(CPU)/lib/,$(PLATFORM_OBJS))
 libs= $(DSTLIBS)

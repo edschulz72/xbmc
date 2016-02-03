@@ -244,7 +244,7 @@ SKIN_DIRS+=$(TOUCH_SKIN_MEDIA)
 endif
 
 LIBS=@LIBS@
-LIBS+= -lplcore -lvidonplayer -lvtx
+LIBS+= -lvidonplayer
 CFLAGS=@CFLAGS@
 CXXFLAGS=@CXXFLAGS@
 LDFLAGS=@LDFLAGS@

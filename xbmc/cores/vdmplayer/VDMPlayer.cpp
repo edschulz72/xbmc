@@ -26,6 +26,7 @@
 #include "URL.h"
 #include "PasswordManager.h"
 #include "LangInfo.h"
+#include "GUIUserMessages.h"
 
 IVDPlayer* m_pPlcore;
 CVDMPlcoreConfig* m_pConfig;
@@ -1039,6 +1040,10 @@ bool CVDMPlayer::OnAction(const CAction &action)
 	case ACTION_SHOW_VIDEOMENU:
 	{
 		actionID = VD_ACTION_SHOW_VIDEOMENU;
+
+		CGUIMessage msg(GUI_MSG_VIDEO_MENU_STARTED, 0, 0);
+		g_windowManager.SendThreadMessage(msg);
+
 		break;
 	}
 	case ACTION_PREVIOUS_MENU:

@@ -129,6 +129,11 @@ extern "C"
 
   void NFUNC(ntSupportAC3)(JNIEnv* env,jobject thiz, jboolean bSupportAC3);
   void NFUNC(ntSupportDTS)(JNIEnv* env,jobject thiz, jboolean bSupportDTS);
+  void NFUNC(ntSetAudioPassthoughInfo)(JNIEnv* env,jobject thiz, jint nAudioPassthoughInfo);
+
+  void NFUNC(ntSetQuickSwitchAudio)(JNIEnv* env,jobject thiz, jboolean bQuickSwitchAudio);
+  void NFUNC(ntSetQuickSwitchSubtitle)(JNIEnv* env,jobject thiz, jboolean bQuickSwitchSubtitle);
+
 }
 /*
  * internal function
@@ -609,12 +614,39 @@ void NFUNC(ntInitPlayTool)(JNIEnv* env,jobject thiz)
   if(isPassthroughOn)
   {
     AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_PASSTHROUGHDEVICE, strAudioDevice.c_str());
+    if (AndroidRuntime::Get().m_bAudioPassthough)
+    {
+      int AudioPassthoughInfo = AndroidRuntime::Get().m_nAudioPassthoughInfo;
+      if (AudioPassthoughInfo &&0x00001)
+      {
+         AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_DTSPASSTHROUGH, true);
+      }
+      if (AudioPassthoughInfo &&0x00010)
+      {
+         AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_AC3PASSTHROUGH, true);
+      }
+      if (AudioPassthoughInfo &&0x00100)
+      {
+         AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_EAC3PASSTHROUGH, true);
+      }
+      if (AudioPassthoughInfo &&0x01000)
+      {
+         AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_DTSHDPASSTHROUGH, true);
+      }
+      if (AudioPassthoughInfo &&0x10000)
+      {
+         AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_TRUEHDPASSTHROUGH, true);
+      }
+    }
+    else
+    {
+      AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_AC3PASSTHROUGH, true);
+      AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_EAC3PASSTHROUGH, true);
+      AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_DTSPASSTHROUGH, true);
+      AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_TRUEHDPASSTHROUGH, true);
+      AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_DTSHDPASSTHROUGH, true);
+    }
 
-    AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_AC3PASSTHROUGH, true);
-    AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_EAC3PASSTHROUGH, true);
-    AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_DTSPASSTHROUGH, true);
-    AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_TRUEHDPASSTHROUGH, true);
-    AndroidRuntime::Get().m_pVDPlayTool->SetCSettings(VD_CSETTING_ID_AUDIOOUTPUT_DTSHDPASSTHROUGH, true);
   }
   else
   {
@@ -2058,17 +2090,35 @@ void NFUNC(ntSupportDTS)(JNIEnv* env,jobject thiz, jboolean bSupportDTS)
     AndroidRuntime::Get().m_pVDPlayTool->SupportDTS(bSupportDTS);
   }
 }
+void NFUNC(ntSetQuickSwitchAudio)(JNIEnv* env,jobject thiz, jboolean bQuickSwitchAudio)
+{
+  if(AndroidRuntime::Get().m_pVDPlayTool)
+  {
+    AndroidRuntime::Get().m_pVDPlayTool->SetQuickSwitchAudio(bQuickSwitchAudio);
+  }
+}
+void NFUNC(ntSetQuickSwitchSubtitle)(JNIEnv* env,jobject thiz, jboolean bQuickSwitchSubtitle)
+{
+  if(AndroidRuntime::Get().m_pVDPlayTool)
+  {
+    AndroidRuntime::Get().m_pVDPlayTool->SetQuickSwitchSubtitle(bQuickSwitchSubtitle);
+  }
+}
+void NFUNC(ntSetAudioPassthoughInfo)(JNIEnv* env,jobject thiz, jint nAudioPassthoughInfo)
+{
+     AndroidRuntime::Get().m_bAudioPassthough = true;
+     AndroidRuntime::Get().m_nAudioPassthoughInfo = nAudioPassthoughInfo;
+}
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
   AndroidRuntime::Get().m_jvm = vm;
   AndroidRuntime::Get().m_env = NULL;
+#ifdef VDPLAYER_FOR_KODI
+  return JNI_VERSION_1_6;
+#endif
   if (vm->GetEnv((void**) &AndroidRuntime::Get().m_env, JNI_VERSION_1_6) == JNI_OK)
   {
-#ifdef VDPLAYER_FOR_KODI
-    jclass cls = AndroidRuntime::Get().m_env->FindClass("org/xbmc/kodi/VidonPlayer");
-#else
     jclass cls = AndroidRuntime::Get().m_env->FindClass("org/vidonme/player/VidonPlayer");
-#endif
     AndroidRuntime::Get().m_clsVidonplayer = (jclass)AndroidRuntime::Get().m_env->NewGlobalRef(cls);
     //AndroidRuntime::Get().m_env->RegisterNatives(AndroidRuntime::Get().m_clsVidonplayer, gMethods, sizeof(gMethods)/sizeof(JNINativeMethod));
     AndroidRuntime::Get().m_env->DeleteLocalRef(cls);
@@ -2193,6 +2243,8 @@ m_jvm(NULL),
   m_pDownload(NULL),
   m_pDownloadCallback(NULL)
 {
+  m_bAudioPassthough = false;
+  m_nAudioPassthoughInfo = 0;
 }
 
 AndroidRuntime::~AndroidRuntime()

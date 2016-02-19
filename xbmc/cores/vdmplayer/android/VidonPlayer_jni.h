@@ -5,7 +5,7 @@
 #include "threads/SharedSection.h"
 #include "threads/Thread.h"
 
-//#include "VtxInternal.h"
+#include "../VidonCommon.h"
 #include "VidonPlayer_cfg.h"
 #include "../VidonDownLoadInterface.h"
 
@@ -113,6 +113,8 @@ public:
   bool m_bInitPlayerCore;
   IVidonDownloadInterface  *m_pDownload;
   IDownloadCallback        *m_pDownloadCallback;
+  bool                      m_bAudioPassthough;
+  int                       m_nAudioPassthoughInfo;
   static AndroidRuntime& Get();
 };
 

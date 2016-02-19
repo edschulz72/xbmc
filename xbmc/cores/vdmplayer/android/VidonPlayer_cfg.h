@@ -41,6 +41,8 @@ public:
   void OnPlayBackDecodeModeNotify(bool Hw);
   void OnPlayBackSeekState(VD_SeekState state);
   void OnPlayBackHwDecodeFailed();
+  void OnOpenAC3();
+  void OnOpenDTS();
 
 private:
   jmethodID m_OnPlayBackEndedID;
@@ -56,6 +58,8 @@ private:
   jmethodID m_OnPlayBackDecodeModeNotify;
   jmethodID m_OnPlayBackSeekState;
   jmethodID m_OnPlayBackHwDecodeFailed;
+  jmethodID m_OnPlayBackOpenAC3;
+  jmethodID m_OnPlayBackOpenDTS;
 };
 
 class CVDPlayerConfig : public IVDPlayerConfig

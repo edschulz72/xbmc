@@ -72,6 +72,8 @@ struct vidonPlayerParam
   const char*       strSaveFilePath;
   int64_t			      nRemainLen;
   bool              bDownloadOutSubtitle;
+  bool              bBreakPoint;
+  const char*       strOriChannelid;
 
   const char*       strlogPath;
 

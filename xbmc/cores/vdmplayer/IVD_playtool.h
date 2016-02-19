@@ -218,6 +218,14 @@ public:
 
   virtual void SetDefaultSubtitleProperty(unsigned int nSubColor,int  nSubSize,float fSubPos,int nStyle,float fdelay) = 0;
 
+  // Default is false
+  // Plcore would backup all inner audio/subtitle stream's packets that pts > current video's pts(maximum 8 seconds), 
+  // to let switching quick and smooth.
+  // Audio packets backup would cost lots of memory, subtitle cost little.
+  // Vmf audio only be sent one stream at one time, so plcore does not backup it.
+  virtual void SetQuickSwitchAudio(bool on) = 0;
+  virtual void SetQuickSwitchSubtitle(bool on) = 0;
+
 #if defined(VDPLAYER_FOR_KODI)
 	// Kodi client has to call this in its render thread before call Init.
   virtual void BindRenderThreadID(){}

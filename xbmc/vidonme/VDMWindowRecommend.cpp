@@ -35,36 +35,56 @@ CVDMWindowRecommend::CVDMWindowRecommend(void)
 
 	AddonRepo		repo;
 
+	repo.strCountryCode = "Asian";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/Asian.zip";
+	m_vecAddons.push_back(repo);
+
 	repo.strCountryCode = "AU";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/Australian.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/Australian.zip";
+	m_vecAddons.push_back(repo);
+
+	repo.strCountryCode = "Br";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/Brazilian.zip";
 	m_vecAddons.push_back(repo);
 
 	repo.strCountryCode = "CA";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/Canadian.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/Canadian.zip";
 	m_vecAddons.push_back(repo);
 
 	repo.strCountryCode = "DE";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/DE.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/DE.zip";
 	m_vecAddons.push_back(repo);
 
 	repo.strCountryCode = "FR";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/French.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/French.zip";
+	m_vecAddons.push_back(repo);
+
+	repo.strCountryCode = "Es";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/Spanish.zip";
+	m_vecAddons.push_back(repo);
+
+	repo.strCountryCode = "TH";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/Thai.zip";
 	m_vecAddons.push_back(repo);
 
 	repo.strCountryCode = "UK";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/UK.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/UK.zip";
 	m_vecAddons.push_back(repo);
 
 	repo.strCountryCode = "US";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/US1.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/US1.zip";
 	m_vecAddons.push_back(repo);
 
 	repo.strCountryCode = "US";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/US2.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/US2.zip";
 	m_vecAddons.push_back(repo);
 
 	repo.strCountryCode = "US";
-	repo.strPath = "http://raw.github.com/Crazyaddon/AddOnRepo/master/US3.zip";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/US3.zip";
+	m_vecAddons.push_back(repo);
+
+	repo.strCountryCode = "VN";
+	repo.strPath = "https://raw.githubusercontent.com/Crazyaddon/AddOnRepo/master/Vietnamese.zip";
 	m_vecAddons.push_back(repo);
 
 	LoadAddonInstallInfo();

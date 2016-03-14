@@ -9,7 +9,7 @@
 #include "VidonPlayer_cfg.h"
 #include "../VidonDownLoadInterface.h"
 #include <vector>
-using namespace vidonbase;
+//using namespace vidonbase;
 #ifndef NDEBUG
 #define NDEBUG
 #endif
@@ -132,7 +132,7 @@ public:
   bool                      m_bSetOutsubtitleForBOX;
   DownloadNodeList          m_VDownloadList;
   int                       m_DownloadID;
-  vidonbase::CCriticalSection m_lock;
+  CCriticalSection m_lock;
   static AndroidRuntime& Get();
 };
 

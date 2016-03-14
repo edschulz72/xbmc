@@ -133,6 +133,8 @@ extern "C"
 
   void NFUNC(ntSetQuickSwitchAudio)(JNIEnv* env,jobject thiz, jboolean bQuickSwitchAudio);
   void NFUNC(ntSetQuickSwitchSubtitle)(JNIEnv* env,jobject thiz, jboolean bQuickSwitchSubtitle);
+  void NFUNC(ntSetOutsubtitleForBOX)(JNIEnv* env,jobject thiz, jboolean bSetOutsubtitleForBOX);
+  jint NFUNC(ntGetTitleNum)(JNIEnv* env);
 
 }
 /*
@@ -1017,7 +1019,32 @@ void NFUNC(ntConfig)(JNIEnv* env,jobject thiz, jobject owner)
 
   //plcore playback
   AndroidRuntime::Get().m_sConfig.bdPlayMode = bdPlaymode;
-  AndroidRuntime::Get().m_sConfig.playlist = (bdPlaymode==0)?-1:(bdPlaymode==1)?0xfffff:(bdPlaymode==2)?playlist:0xfffff;
+  int nPlaylist = -1;
+  if (bdPlaymode == VD_PLAY_MODE_VIDON_MENU)
+  {
+    nPlaylist = -1;
+  }
+  else if (bdPlaymode == VD_PLAY_MODE_DVDBD_MAINTITLE)
+  {
+    nPlaylist = 0xfffff;
+  }
+  else if (bdPlaymode == VD_PLAY_MODE_DVDBD_OTHERTITLE)
+  {
+    ;
+  }
+  else if (bdPlaymode == VD_PLAY_MODE_VIDON_MENU)
+  {
+    nPlaylist = -1;
+  }
+  else if (bdPlaymode == VD_PLAY_MODE_VIDON_SIMPLE_MOVIES)
+  {
+    nPlaylist = -1;
+  }
+  else if (bdPlaymode == VD_PLAY_MODE_VIDON_SIMPLE_TV)
+  {
+    nPlaylist = playlist;
+  }
+  AndroidRuntime::Get().m_sConfig.playlist = nPlaylist;
   LOGE("Get m_sConfig.playlist :%d", AndroidRuntime::Get().m_sConfig.playlist);
 
   //aesing setting
@@ -1041,6 +1068,8 @@ void NFUNC(ntConfig)(JNIEnv* env,jobject thiz, jobject owner)
   params.sourceType       = (SOURCE_TYPE)sourceType;
   params.bIsad            = isAD;
   params.nMenuMode        = bdPlaymode;
+  params.nPlayList        = nPlaylist;
+  params.bSetOutsubtitleForBOX =   AndroidRuntime::Get().m_bSetOutsubtitleForBOX;
 
   params.deviceParam.fFps              = fps;
   params.deviceParam.deviceresolution  = strdeviceResolution.c_str();//"1920x1080";
@@ -1418,7 +1447,9 @@ jint NFUNC(ntGetCurrentPosition)(JNIEnv* env,jobject thiz)
   //mseconds
   if(AndroidRuntime::Get().m_pVDCorePlayer)
   {
-    return (AndroidRuntime::Get().m_pVDCorePlayer->GetTime())*1000;
+    jint  nowtime =  (AndroidRuntime::Get().m_pVDCorePlayer->GetTime())*1000;
+     LOGE("ntGetCurrentPosition %d.",nowtime); 
+    return nowtime;
   }
   return -1;
 
@@ -2109,6 +2140,24 @@ void NFUNC(ntSetAudioPassthoughInfo)(JNIEnv* env,jobject thiz, jint nAudioPassth
      AndroidRuntime::Get().m_bAudioPassthough = true;
      AndroidRuntime::Get().m_nAudioPassthoughInfo = nAudioPassthoughInfo;
 }
+void NFUNC(ntSetOutsubtitleForBOX)(JNIEnv* env,jobject thiz, jboolean bSetOutsubtitleForBOX)
+{
+  AndroidRuntime::Get().m_bSetOutsubtitleForBOX = bSetOutsubtitleForBOX;
+}
+jint NFUNC(ntGetTitleNum)(JNIEnv* env)
+{
+  int iTitleNum = -1;
+  bool bMainTitle= false;
+  bool bRet = AndroidRuntime::Get().m_pVDCorePlayer->GetTitleInfo(iTitleNum,bMainTitle);
+  if (bRet)
+  {
+    return iTitleNum;
+  }
+  else
+  {
+    return -1;
+  }
+}
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
   AndroidRuntime::Get().m_jvm = vm;
@@ -2127,6 +2176,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
     jclass clsdownload = AndroidRuntime::Get().m_env->FindClass("org/vidonme/player/Vmfdownload");
     AndroidRuntime::Get().m_clsVidonDownload = (jclass)AndroidRuntime::Get().m_env->NewGlobalRef(clsdownload);
     AndroidRuntime::Get().m_env->DeleteLocalRef(clsdownload);
+    //download
   }
   LOGE(" load VidonPlayer.");
   return JNI_VERSION_1_6;
@@ -2141,7 +2191,6 @@ void JNI_OnUnLoad(JavaVM * vm, void * reserved)
     env->DeleteGlobalRef(AndroidRuntime::Get().m_clsVidonplayer);
     env->UnregisterNatives(AndroidRuntime::Get().m_clsVidonDownload);
     env->DeleteGlobalRef(AndroidRuntime::Get().m_clsVidonDownload);
-
   }
   LOGE(" unload VidonPlayer.");
 }
@@ -2239,12 +2288,14 @@ m_jvm(NULL),
   m_pVDCorePlayer(NULL),
   m_pVDPlayerCallback(NULL),
   m_bInitPlayerCore(false),
-  m_pPlcoreCallback(NULL),
-  m_pDownload(NULL),
-  m_pDownloadCallback(NULL)
+  m_pPlcoreCallback(NULL)
+  //m_pDownload(NULL),
+  //m_pDownloadCallback(NULL)
 {
   m_bAudioPassthough = false;
   m_nAudioPassthoughInfo = 0;
+  m_bSetOutsubtitleForBOX = false;
+  m_DownloadID            = 0;
 }
 
 AndroidRuntime::~AndroidRuntime()

@@ -78,7 +78,9 @@ struct vidonPlayerParam
   const char*       strlogPath;
 
   int               nMenuMode;
+  int               nPlayList;
 
+  bool              bSetOutsubtitleForBOX;
   struVidonDevice   deviceParam;
   struVidonSetting  settingParam;
 };

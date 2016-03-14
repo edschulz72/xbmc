@@ -8,7 +8,8 @@
 #include "../VidonCommon.h"
 #include "VidonPlayer_cfg.h"
 #include "../VidonDownLoadInterface.h"
-
+#include <vector>
+using namespace vidonbase;
 #ifndef NDEBUG
 #define NDEBUG
 #endif
@@ -46,7 +47,19 @@ enum media_event_type
   MEDIA_ERROR             = 100,
   BDJ_EVENT_KEYBOARD      = 200,
 };
-
+struct DownloadNode
+{
+  DownloadNode()
+  {
+    m_nDownloadID = -1;
+    m_pDownload   = NULL;
+    m_pDownloadCallback = NULL;
+  }
+  int                      m_nDownloadID;
+  IVidonDownloadInterface  *m_pDownload;
+  IDownloadCallback        *m_pDownloadCallback;
+};
+typedef  std::vector<DownloadNode*>  DownloadNodeList;
 struct SPlayerConfig
 {
   // player type
@@ -100,7 +113,8 @@ public:
   struct SPlayerConfig m_sConfig;
   struct ANativeWindow* m_pNativewindow;
   vidonPlayerParam      m_DownloadParam;
-  
+
+  vidonPlayerParam      m_GetMediaPreParam;
   IVDPlayer* m_pVDPlayer;
   CVDPlcoreCallback* m_pVDPlcoreCallback;
   CVDPlayerConfig* m_pVDPlayerConfig;
@@ -111,10 +125,14 @@ public:
   CVDPlayerCallback* m_pVDPlayerCallback;
   CVDPlcoreCallback* m_pPlcoreCallback;
   bool m_bInitPlayerCore;
-  IVidonDownloadInterface  *m_pDownload;
-  IDownloadCallback        *m_pDownloadCallback;
+  //IVidonDownloadInterface  *m_pDownload;
+  //IDownloadCallback        *m_pDownloadCallback;
   bool                      m_bAudioPassthough;
   int                       m_nAudioPassthoughInfo;
+  bool                      m_bSetOutsubtitleForBOX;
+  DownloadNodeList          m_VDownloadList;
+  int                       m_DownloadID;
+  vidonbase::CCriticalSection m_lock;
   static AndroidRuntime& Get();
 };
 

@@ -71,7 +71,16 @@ enum VD_SeekState
 	VD_SEEK_STATE_GET_FIRST_AV_PACKET,
 	VD_SEEK_STATE_DISPLAY_FIRST_PIC,
 };
-
+enum VD_PlayMode
+{
+  VD_PLAY_MODE_NONE = -1,           // file source
+  VD_PLAY_MODE_DVDBD_MENU,          // dvd/bd menu mode , playlist -1
+  VD_PLAY_MODE_DVDBD_MAINTITLE,     // dvd/bd main title, playlist 0xfffff
+  VD_PLAY_MODE_DVDBD_OTHERTITLE,    // dvd/bd other title, playlist xxx
+  VD_PLAY_MODE_VIDON_MENU,          // vidon dvd/bd menu mode, playlist  -1 (use MKUPlayer)
+  VD_PLAY_MODE_VIDON_SIMPLE_MOVIES, // vidon dvd/bd simple mode ,movie disk, playlist -1  (use DVDPlayer)
+  VD_PLAY_MODE_VIDON_SIMPLE_TV,     // vidon dvd/bd simple mode ,tv disk, playlist xxx  (use MKUPlayer)
+};
 //==========================================================================================================================//
 // ** structs
 
@@ -211,6 +220,7 @@ public:
   virtual bool        GetWhetherScanExternalSubtitle(){ return true; };
 
   virtual bool IsFromUpperKodi(){ return false; };
+  virtual int  GetPlayMode(){ return VD_PLAY_MODE_NONE; };
 };
 
 class IVDFileItem

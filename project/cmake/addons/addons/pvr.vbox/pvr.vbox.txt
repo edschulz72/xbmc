@@ -1,1 +1,1 @@
-pvr.vbox https://github.com/kodi-pvr/pvr.vbox 0b1d571
+pvr.vbox https://raw.githubusercontent.com/kodi-pvr/pvr.vbox/Isengard

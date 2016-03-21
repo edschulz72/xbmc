@@ -1,1 +1,1 @@
-pvr.stalker https://github.com/kodi-pvr/pvr.stalker a89afb8
+pvr.stalker https://raw.githubusercontent.com/kodi-pvr/pvr.stalker/Isengard

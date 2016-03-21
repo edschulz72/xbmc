@@ -1,1 +1,1 @@
-pvr.iptvsimple https://github.com/kodi-pvr/pvr.iptvsimple 23defeb
+pvr.iptvsimple https://raw.githubusercontent.com/kodi-pvr/pvr.iptvsimple/Isengard

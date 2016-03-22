@@ -1,1 +1,1 @@
-audioencoder.wav https://raw.githubusercontent.com/xbmc/audioencoder.wav
+audioencoder.wav https://github.com/xbmc/audioencoder.wav 797c990

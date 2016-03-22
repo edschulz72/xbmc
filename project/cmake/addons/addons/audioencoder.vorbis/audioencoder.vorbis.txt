@@ -1,1 +1,1 @@
-audioencoder.vorbis https://raw.githubusercontent.com/xbmc/audioencoder.vorbis
+audioencoder.vorbis https://github.com/xbmc/audioencoder.vorbis 15d619d

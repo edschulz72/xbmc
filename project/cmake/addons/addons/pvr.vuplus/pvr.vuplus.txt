@@ -1,1 +1,1 @@
-pvr.vuplus https://raw.githubusercontent.com/kodi-pvr/pvr.vuplus/Isengard
+pvr.vuplus https://github.com/kodi-pvr/pvr.vuplus 96115e9

@@ -1,1 +1,1 @@
-pvr.hts https://raw.githubusercontent.com/kodi-pvr/pvr.hts/Isengard
+pvr.hts https://github.com/kodi-pvr/pvr.hts 016b0b3

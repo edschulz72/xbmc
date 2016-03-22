@@ -1,1 +1,1 @@
-pvr.pctv https://raw.githubusercontent.com/kodi-pvr/pvr.pctv/Isengard
+pvr.pctv https://github.com/kodi-pvr/pvr.pctv bca8165

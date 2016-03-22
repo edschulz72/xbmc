@@ -1,1 +1,1 @@
-pvr.njoy https://raw.githubusercontent.com/kodi-pvr/pvr.njoy/Isengard
+pvr.njoy https://github.com/kodi-pvr/pvr.njoy 4f88a09

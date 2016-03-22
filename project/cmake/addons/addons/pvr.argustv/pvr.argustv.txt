@@ -1,1 +1,1 @@
-pvr.argustv https://raw.githubusercontent.com/kodi-pvr/pvr.argustv/Isengard
+pvr.argustv https://github.com/kodi-pvr/pvr.argustv 32f0327

@@ -1,1 +1,1 @@
-pvr.dvblink https://raw.githubusercontent.com/kodi-pvr/pvr.dvblink/Isengard
+pvr.dvblink https://github.com/kodi-pvr/pvr.dvblink cf756e9

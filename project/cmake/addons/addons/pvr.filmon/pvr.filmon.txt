@@ -1,1 +1,1 @@
-pvr.filmon https://raw.githubusercontent.com/kodi-pvr/pvr.filmon/Isengard
+pvr.filmon https://github.com/kodi-pvr/pvr.filmon 67abb56

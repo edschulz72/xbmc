@@ -1,1 +1,1 @@
-audiodecoder.nosefart https://raw.githubusercontent.com/notspiff/audiodecoder.nosefart
+audiodecoder.nosefart https://github.com/notspiff/audiodecoder.nosefart 936313f

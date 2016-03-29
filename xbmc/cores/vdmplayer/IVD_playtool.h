@@ -24,7 +24,7 @@ public:
 	virtual void RenderWndResized(int width, int height) = 0;
 
 	//Return NULL if failed
-	virtual IVDCorePlayer* GetPlayer(IVDPlayCallback* pCallback) = 0;
+	virtual IVDCorePlayer* GetPlayer(IVDPlayCallback* pCallback,bool bAsyncMode = true) = 0;
 	virtual void ReleasePlayer(IVDCorePlayer* pCorePlayer) = 0;
 
 	// Non-Kodi Client can call this to save cpu usage when there is no need for rendering, e.g. when pausing and hiding app.

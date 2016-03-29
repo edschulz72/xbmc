@@ -19,14 +19,17 @@ namespace libvp
 	EC_FILEOPFAILD,
 	EC_FILEDISKNOTENOUGH,
 	EC_CREATDOWNLOADFAILED,
-	EC_OK = 0,
+  EC_DOWNLOADCHANNEL_TOOMANY,
+  EC_DOWNLOADCHANNEL_BREAKPOINT,
+  EC_DOWNLOADCHANNEL_SUBTITLE,
+	EC_OK = 0
   };
   
   class IDownloadCallback
   {
   public:  
     virtual ~IDownloadCallback() {};
-    virtual void OnDownloadStarted() = 0;
+    virtual void OnDownloadStarted(const char* pOrinID) = 0;
     virtual void OnDownloadStoped()  = 0;
 
     virtual void OnDownloadPaused()  = 0;
@@ -52,7 +55,7 @@ namespace libvp
     virtual void GetFileSize(int64_t &nFilesize) = 0;
     virtual void GetProgress(int64_t &nDonesize) = 0;
 	virtual void GetConvertpercent(int &nPercent) = 0;
-	virtual void GetExtension(const char* pExtension) = 0;
+	virtual void GetExtension( char* pExtension) = 0;
   };
 #ifdef __cplusplus
 extern "C" {

@@ -2070,8 +2070,8 @@ bool CVDMPlayer::InitPlayCore(void)
 	m_pConfig->SetLogPath(g_advancedSettings.m_logFolder.c_str());
 	m_pConfig->SetPlcoreRuntimesPath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/").c_str());
 	m_pConfig->SetTempFolderPath(CSpecialProtocol::TranslatePath("special://temp/").c_str());
-	m_pConfig->SetProfileFolderPath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/").c_str());
-	m_pConfig->SetBDJResourcePath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/").c_str());
+	m_pConfig->SetProfileFolderPath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/system/").c_str());
+	m_pConfig->SetBDJResourcePath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/system/").c_str());
 
 	if (!m_pPlcore->Initialize(m_pConfig,s_pPlcoreCallback))
 	{

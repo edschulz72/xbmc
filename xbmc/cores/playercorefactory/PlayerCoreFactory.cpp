@@ -242,7 +242,7 @@ void CPlayerCoreFactory::GetPlayers( const CFileItem& item, VECPLAYERCORES &vecC
 	{
 		bool bUseVDMPlayer = CSettings::Get().GetBool("using.vdmplayer");
 
-		if (bUseVDMPlayer)
+		if (bUseVDMPlayer && !url.IsProtocol("pvr")) //pvr can't use vdmplayer
 		{
 			//if (CVDMPlayer::HandlesType(url.GetFileType()))
 			{

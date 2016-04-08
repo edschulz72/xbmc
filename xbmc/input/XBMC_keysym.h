@@ -45,8 +45,10 @@ typedef enum {
   XBMCK_PAUSE       = 0x13,
 
 #ifdef HAS_VIDONME
-	XBMCK_SUBTITLE		= 0x12,
-	XBMCK_AUDIO				= 0x14,
+  XBMCK_SUBTITLE    = 0x12,
+  XBMCK_AUDIO		= 0x14,
+  XBMCK_TOPMENU		= 0x16,
+  XBMCK_POPMENU		= 0x17,
 #endif
 
   XBMCK_ESCAPE      = 0x1B,

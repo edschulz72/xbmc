@@ -240,10 +240,12 @@ static const XBMCKEYTABLE XBMCKeyTable[] =
 , { XBMCK_BLUE,                   0,    0, XBMCVK_BLUE,          "blue" }
 
 #ifdef HAS_VIDONME
-, { XBMCK_AUDIO,									0,		0, XBMCVK_AUDIO,					"audio" }
-, { XBMCK_SUBTITLE,								0,		0, XBMCVK_SUBTITLE,				"subtitle" }
-, { XBMCK_FASTFORWARD,						0,		0, XBMCVK_FASTFORWARD,		"fastforward" }
-, { XBMCK_REWIND,									0,		0, XBMCVK_REWIND,					"rewind" }
+, { XBMCK_AUDIO,				  0,	0, XBMCVK_AUDIO,		  "audio" }
+, { XBMCK_SUBTITLE,				  0,	0, XBMCVK_SUBTITLE,		  "subtitle" }
+, { XBMCK_FASTFORWARD,			  0,	0, XBMCVK_FASTFORWARD,	  "fastforward" }
+, { XBMCK_REWIND,				  0,	0, XBMCVK_REWIND,		  "rewind" }
+, { XBMCK_TOPMENU,				  0,	0, XBMCVK_TOPMENU,		  "topmenu" }
+, { XBMCK_POPMENU,				  0,	0, XBMCVK_POPMENU,		  "popmenu" }
 #endif
 };
 

@@ -124,6 +124,8 @@
       <audio>AudioNextLanguage</audio>
       <subtitle>nextsubtitle</subtitle>
       <info>info</info>
+      <topmenu>PlayerControl(ShowVideoMenu)</topmenu>
+      <popmenu></popmenu>
       <!--	HAS_VIDONME		End-->
       
       <fastforward>FastForward</fastforward>

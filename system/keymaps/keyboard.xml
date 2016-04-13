@@ -280,6 +280,8 @@
       <!--	HAS_VIDONME		Begin-->
       <audio>AudioNextLanguage</audio>
       <subtitle>nextsubtitle</subtitle>
+      <topmenu>PlayerControl(ShowVideoMenu)</topmenu>
+      <popmenu></popmenu>
       <info>info</info>
 	    <menu>OSD</menu>
       <!--	HAS_VIDONME		End-->

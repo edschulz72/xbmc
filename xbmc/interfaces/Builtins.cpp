@@ -993,6 +993,18 @@ int CBuiltins::Execute(const std::string& execString)
       if( g_application.m_pPlayer->IsPlaying() )
         g_application.m_pPlayer->OnAction(CAction(ACTION_SHOW_VIDEOMENU));
     }
+#ifdef HAS_VIDONME
+	else if (paramlow == "topmenu")
+	{
+		if (g_application.m_pPlayer->IsPlaying())
+			g_application.m_pPlayer->OnAction(CAction(ACTION_SHOW_VIDEOMENU, 1.0, 0.0, "", 0));
+	}
+	else if (paramlow == "topmenu")
+	{
+		if (g_application.m_pPlayer->IsPlaying())
+			g_application.m_pPlayer->OnAction(CAction(ACTION_SHOW_VIDEOMENU, 0.0, 0.0, "", 0));
+	}
+#endif
     else if (paramlow == "record")
     {
       if( g_application.m_pPlayer->IsPlaying() && g_application.m_pPlayer->CanRecord())

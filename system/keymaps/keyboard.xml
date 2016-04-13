@@ -124,8 +124,8 @@
       <audio>AudioNextLanguage</audio>
       <subtitle>nextsubtitle</subtitle>
       <info>info</info>
-      <topmenu>PlayerControl(ShowVideoMenu)</topmenu>
-      <popmenu></popmenu>
+      <topmenu>PlayerControl(topmenu)</topmenu>
+      <popmenu>PlayerControl(popmenu)</popmenu>
       <!--	HAS_VIDONME		End-->
       
       <fastforward>FastForward</fastforward>
@@ -280,8 +280,8 @@
       <!--	HAS_VIDONME		Begin-->
       <audio>AudioNextLanguage</audio>
       <subtitle>nextsubtitle</subtitle>
-      <topmenu>PlayerControl(ShowVideoMenu)</topmenu>
-      <popmenu></popmenu>
+      <topmenu>PlayerControl(topmenu)</topmenu>
+      <popmenu>PlayerControl(popmenu)</popmenu>
       <info>info</info>
 	    <menu>OSD</menu>
       <!--	HAS_VIDONME		End-->

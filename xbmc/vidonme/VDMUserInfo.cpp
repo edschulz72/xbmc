@@ -136,7 +136,7 @@ bool CVDMUserInfo::GetUsernameAndPassword( std::string& strUserName, std::string
     {
 #if defined(TARGET_ANDROID)
 	  strUserDataFile = "/sdcard/Android/data/org.vidonme.mediacenter/files/.vmc/userdata/userdata.xml";
-	  std::string strUserDataFile1 = "/data/data/org.vidonme.cloud.tv/files/userinfo/userdata.xml";
+	  std::string strUserDataFile1 = "/data/data/org.vidonme.cloud.tv/files/userinfo/userinfo.xml";
 	  if( !LoadUserInfoFromFile( strUserDataFile )  && !LoadUserInfoFromFile( strUserDataFile1 ))
       {
         return false;

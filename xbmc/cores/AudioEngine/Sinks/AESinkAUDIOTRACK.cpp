@@ -426,6 +426,7 @@ void CAESinkAUDIOTRACK::EnumerateDevicesEx(AEDeviceInfoList &list, bool force)
       m_info.m_dataFormats.push_back(AE_FMT_EAC3);
       m_info.m_dataFormats.push_back(AE_FMT_TRUEHD);
       m_info.m_dataFormats.push_back(AE_FMT_DTSHD);
+	  CSettings::Get().SetString("audiooutput.passthroughdevice", "AUDIOTRACK:AudioTrack");
   }
 #if 0 //defined(__ARM_NEON__)
   if (g_cpuInfo.GetCPUFeatures() & CPU_FEATURE_NEON)

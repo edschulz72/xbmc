@@ -60,7 +60,7 @@
 #if defined AKEYCODE_MUTE_VOX2
 #undef AKEYCODE_MUTE_VOX2
 #endif
-#define AKEYCODE_MUTE_VOX2 82
+#define AKEYCODE_MUTE_VOX2 164
 
 #endif
 

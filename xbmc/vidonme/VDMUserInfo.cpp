@@ -174,6 +174,11 @@ bool CVDMUserInfo::LoadUserInfoFromFile( const std::string& filepath )
   }
 
   TiXmlElement* pCurrentUserNode = pRoot->FirstChildElement("currentuser");
+  if (!pCurrentUserNode)
+  {
+	  pCurrentUserNode = pRoot->FirstChildElement("userinfo");
+  }
+
   if (pCurrentUserNode)
   {
     TiXmlElement* pElem = pCurrentUserNode->FirstChildElement("username");

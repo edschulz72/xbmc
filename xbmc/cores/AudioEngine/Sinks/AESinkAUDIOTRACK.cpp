@@ -421,7 +421,7 @@ void CAESinkAUDIOTRACK::EnumerateDevicesEx(AEDeviceInfoList &list, bool force)
   m_info.m_dataFormats.push_back(AE_FMT_AC3);
   m_info.m_dataFormats.push_back(AE_FMT_DTS);
   //p200_2G represents s905 for now
-  if(CJNIBuild::PRODUCT == "p200_2G")
+  if (CJNIBuild::PRODUCT == "p200_2G" || CJNIBuild::PRODUCT == "p200")
   {// s905's audiotrack support truehd/dtshd passthrough
       m_info.m_dataFormats.push_back(AE_FMT_EAC3);
       m_info.m_dataFormats.push_back(AE_FMT_TRUEHD);

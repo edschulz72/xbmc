@@ -121,7 +121,11 @@ bool CViewStateSettings::Load(const TiXmlNode *settings)
     if (XMLUtils::GetInt(pElement, XML_SETTINGLEVEL, settingLevel, (const int)SettingLevelBasic, (const int)SettingLevelExpert))
       m_settingLevel = (SettingLevel)settingLevel;
     else
-      m_settingLevel = SettingLevelStandard;
+#ifdef HAS_VIDONME
+		m_settingLevel = SettingLevelExpert;
+#else
+		m_settingLevel = SettingLevelStandard;
+#endif
   }
 
   return true;
@@ -171,7 +175,11 @@ bool CViewStateSettings::Save(TiXmlNode *settings) const
 
 void CViewStateSettings::Clear()
 {
-  m_settingLevel = SettingLevelStandard;
+#ifdef HAS_VIDONME
+	m_settingLevel = SettingLevelExpert;
+#else
+	m_settingLevel = SettingLevelStandard;
+#endif
 }
 
 const CViewState* CViewStateSettings::Get(const std::string &viewState) const

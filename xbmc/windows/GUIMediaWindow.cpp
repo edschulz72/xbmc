@@ -546,8 +546,14 @@ void CGUIMediaWindow::UpdateButtons()
     else
       CONTROL_ENABLE(CONTROL_BTNSORTBY);
 
+#ifdef HAS_VIDONME
+	std::string sortLabel = g_localizeStrings.Get(550);
+	StringUtils::Replace(sortLabel, "%s", g_localizeStrings.Get(m_guiState->GetSortMethodLabel()));
+#else
     std::string sortLabel = StringUtils::Format(g_localizeStrings.Get(550).c_str(),
                                                 g_localizeStrings.Get(m_guiState->GetSortMethodLabel()).c_str());
+#endif
+
     SET_CONTROL_LABEL(CONTROL_BTNSORTBY, sortLabel);
   }
 

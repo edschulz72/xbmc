@@ -1000,7 +1000,12 @@ std::string CGUIWindowVideoBase::GetResumeString(const CFileItem &item)
   GetResumeItemOffset(&item, startOffset, startPart);
   if (startOffset > 0)
   {
+#ifdef HAS_VIDONME
+	  resumeString = g_localizeStrings.Get(12022);
+	  StringUtils::Replace(resumeString, "%s", StringUtils::SecondsToTimeString(startOffset / 75));
+#else
     resumeString = StringUtils::Format(g_localizeStrings.Get(12022).c_str(), StringUtils::SecondsToTimeString(startOffset/75).c_str());
+#endif
     if (startPart > 0)
     {
       std::string partString = StringUtils::Format(g_localizeStrings.Get(23051).c_str(), startPart);

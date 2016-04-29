@@ -446,8 +446,12 @@ void CGUIDialogAudioSubtitleSettings::AudioStreamsOptionFiller(const CSetting *s
 
     if (info.name.length() == 0)
       strItem = strLanguage;
-    else
-      strItem = StringUtils::Format("%s - %s", strLanguage.c_str(), info.name.c_str());
+	else
+#ifdef HAS_VIDONME
+		strItem = StringUtils::Format("%s - %s %s", strLanguage.c_str(), info.audioCodecName.c_str(), info.name.c_str());
+#else
+		strItem = StringUtils::Format("%s - %s", strLanguage.c_str(), info.name.c_str());
+#endif
 
     strItem += StringUtils::Format(" (%i/%i)", i + 1, audioStreamCount);
     list.push_back(make_pair(strItem, i));

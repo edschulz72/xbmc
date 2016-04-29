@@ -1227,6 +1227,7 @@ bool CApplication::Initialize()
 		if (strKey == strCurKey && strKey == "zh_CN")
 		{
 			g_application.SetLanguage(language[strKey]);
+			CSettings::Get().SetString("subtitles.charset", "GBK");
 		}
 	}
 #endif

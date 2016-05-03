@@ -267,6 +267,10 @@ void CSettingConditions::Initialize()
   if (CT_ALLWINNER_A31 == g_cpuInfo.GetCPUType())
     m_simpleConditions.insert("have_a31codec");
 #endif
+#ifdef HAS_LIBHISICODEC
+  if (CT_HISILICON == g_cpuInfo.GetCPUType())
+    m_simpleConditions.insert("have_hisicodec");
+#endif
 #ifdef TARGET_DARWIN_IOS_ATV2
   if (g_sysinfo.IsAppleTV2())
     m_simpleConditions.insert("isappletv2");

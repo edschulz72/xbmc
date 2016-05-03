@@ -32,6 +32,7 @@
 #include "android/jni/AudioManager.h"
 #include "android/jni/AudioTrack.h"
 #include "android/jni/Build.h"
+#include "utils/CPUInfo.h"
 
 using namespace jni;
 
@@ -411,7 +412,7 @@ void CAESinkAUDIOTRACK::EnumerateDevicesEx(AEDeviceInfoList &list, bool force)
   int test_sample_sz = sizeof(test_sample) / sizeof(int);
   for (int i=0; i<test_sample_sz; ++i)
   {
-    if (IsSupported(test_sample[i], CJNIAudioFormat::CHANNEL_OUT_STEREO, CJNIAudioFormat::ENCODING_PCM_16BIT))
+//    if (IsSupported(test_sample[i], CJNIAudioFormat::CHANNEL_OUT_STEREO, CJNIAudioFormat::ENCODING_PCM_16BIT))
     {
       m_info.m_sampleRates.push_back(test_sample[i]);
       CLog::Log(LOGDEBUG, "AESinkAUDIOTRACK - %d supported", test_sample[i]);
@@ -421,7 +422,7 @@ void CAESinkAUDIOTRACK::EnumerateDevicesEx(AEDeviceInfoList &list, bool force)
   m_info.m_dataFormats.push_back(AE_FMT_AC3);
   m_info.m_dataFormats.push_back(AE_FMT_DTS);
   //p200_2G represents s905 for now
-  if (CJNIBuild::PRODUCT == "p200_2G" || CJNIBuild::PRODUCT == "p200")
+  if (CJNIBuild::PRODUCT == "p200_2G" || CJNIBuild::PRODUCT == "p200" || CT_HISILICON == g_cpuInfo.GetCPUType())
   {// s905's audiotrack support truehd/dtshd passthrough
       m_info.m_dataFormats.push_back(AE_FMT_EAC3);
       m_info.m_dataFormats.push_back(AE_FMT_TRUEHD);

@@ -1674,6 +1674,20 @@ bool CApplication::OnSettingUpdate(CSetting* &setting, const char *oldSettingId,
   }
 #endif
 
+#if defined(HAS_LIBHISICODEC)
+  else if (settingId == "videoplayer.usehisicodec")
+  {
+    // Do not permit hisicodec to be used on non-hisi platforms.
+    // The setting will be hidden but the default value is true,
+    // so change it to false.
+    if (CT_HISILICON != g_cpuInfo.GetCPUType())
+    {
+      CSettingBool *usehisicodec = (CSettingBool*)setting;
+      return usehisicodec->SetValue(false);
+    }
+  }
+#endif
+
 #if defined(TARGET_ANDROID)
   if (settingId == "videoplayer.usestagefright")
   {

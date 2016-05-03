@@ -6,7 +6,7 @@ OBJS = libcurl.so \
   libxbogg.so libxbvorbis.so libxbvorbisfile.so libxbmpeg2.so \
   libxbmpeg2convert.so libnfs.so libass.so \
   libbluray.so libsmbclient.so \
-  libCedarX-vidonme.so libCedarX-vidonme4.so libbdjvm.so libdvdvm.so libmkuvm.so libvidonutils.so lib3DMode.so lib3DMode-s905.so libawrender.so librkffplayer.so libplcore.so  libvtx.so libvidonplayer.so 
+  libCedarX-vidonme.so libCedarX-vidonme4.so libbdjvm.so libdvdvm.so libmkuvm.so libvidonutils.so lib3DMode.so lib3DMode-s905.so libawrender.so librkffplayer.so libplcore.so  libvtx.so libvidon_hi_sample_common.so libvidonplayer.so 
 
 PLATFORM_OBJS =
 EXCLUDED_ADDONS = screensaver.rsxs.euphoria visualization.dxspectrum visualization.milkdrop visualization.projectm

@@ -1945,6 +1945,9 @@ for codecs in `echo $add_codecs | sed 's/,/ /g'`; do
     *a31codec*)
         XB_ADD_CODEC([LIBA31CODEC], [a31codec], [$codecs])
         ;;
+    *hisicodec*)
+        XB_ADD_CODEC([LIBHISICODEC], [hisicodec], [$codecs])
+        ;;
     *libstagefright*)
         XB_ADD_CODEC([LIBSTAGEFRIGHT], [libstagefright], [$codecs])
         ;;

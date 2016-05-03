@@ -996,6 +996,11 @@ CPU_TYPE CCPUInfo::GetCPUType()
 		s_type = CT_ROCKCHIPS_RK3368;
 		s_bCPUTypeGot = true;
 	}
+	else if(cpu_hardware.find("bigfish") != std::string::npos)
+	{
+		s_type = CT_HISILICON;
+		s_bCPUTypeGot = true;
+	}
 	else
 	{
 		s_type = CT_UNKNOWN;

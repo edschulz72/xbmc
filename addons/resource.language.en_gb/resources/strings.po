@@ -17257,3 +17257,8 @@ msgstr "Allow hardware acceleration (rkcodec)"
 msgctxt "#70144"
 msgid "Allow hardware acceleration (A31codec)"
 msgstr "Allow hardware acceleration (A31codec)"
+
+#: system/settings/settings.xml
+msgctxt "#70145"
+msgid "Allow hardware acceleration (Hisicodec)"
+msgstr "Allow hardware acceleration (Hisicodec)"

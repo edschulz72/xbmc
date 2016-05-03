@@ -809,6 +809,7 @@ void CSettings::InitializeISettingCallbacks()
   settingSet.insert("videoplayer.useawcodec");
   settingSet.insert("videoplayer.userkcodec");
   settingSet.insert("videoplayer.usea31codec");
+  settingSet.insert("videoplayer.usehisicodec");
 #endif
   settingSet.insert("videoplayer.usemediacodec");
   m_settingsManager->RegisterCallback(&g_application, settingSet);

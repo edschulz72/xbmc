@@ -702,6 +702,15 @@
           </updates>
           <control type="toggle" />
         </setting>
+        <setting id="videoplayer.usehisicodec" type="boolean" label="70145" help="">
+          <requirement>HAVE_HISICODEC</requirement>
+          <level>2</level>
+          <default>true</default>
+          <updates>
+            <update type="change" />
+          </updates>
+          <control type="toggle" />
+        </setting>
 		<!--HAS_VIDONME end-->
         <setting id="videoplayer.usevdpau" type="boolean" label="13425" help="36155">
           <requirement>HAVE_LIBVDPAU</requirement>

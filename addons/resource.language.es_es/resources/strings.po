@@ -13123,3 +13123,7 @@ msgstr "Permitir aceleración de hardware - rkcodec"
 msgctxt "#70144"
 msgid "Allow hardware acceleration - A31codec"
 msgstr "Permitir aceleración de hardware - A31codec"
+
+msgctxt "#70145"
+msgid "Allow hardware acceleration - Hisicodec"
+msgstr "Permitir aceleración de hardware - Hisicodec"

@@ -13,7 +13,7 @@ CONFIGURE = cp -f $(CONFIG_SUB) $(CONFIG_GUESS) build-aux/ ;\
   ./configure --prefix=$(PREFIX) $(DEBUG)
 
 ifeq ($(OS),android)
-CONFIGURE += --enable-codec=libstagefright,amcodec,awcodec,rkcodec,a31codec --enable-breakpad
+CONFIGURE += --enable-codec=libstagefright,amcodec,awcodec,rkcodec,a31codec,hisicodec --enable-breakpad
 endif
 
 ifeq ($(Configuration),Release)

@@ -2175,6 +2175,7 @@ bool CVDMPlayer::InitPlayer(void)
 	SetCSettings("videoplayer.useawcodec", CSettings::Get().GetBool("videoplayer.useawcodec"));
 	SetCSettings("videoplayer.userkcodec", CSettings::Get().GetBool("videoplayer.userkcodec"));
 	SetCSettings("videoplayer.usea31codec", CSettings::Get().GetBool("videoplayer.usea31codec"));
+	SetCSettings("videoplayer.usehisicodec", CSettings::Get().GetBool("videoplayer.usehisicodec"));
 	SetCSettings("videoplayer.usevdpau", CSettings::Get().GetBool("videoplayer.usevdpau"));
 	SetCSettings("videoplayer.usevdpaumixer", CSettings::Get().GetBool("videoplayer.usevdpaumixer"));
 	SetCSettings("videoplayer.usevdpaumpeg2", CSettings::Get().GetBool("videoplayer.usevdpaumpeg2"));

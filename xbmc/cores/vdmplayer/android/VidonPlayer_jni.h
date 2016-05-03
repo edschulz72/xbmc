@@ -202,4 +202,12 @@ bool setup_listener(JNIEnv* env, jobject thiz);
       LOGE("JNU_ExceptionOccurred nothing, from JNI code"); \
     } \
   }
-
+#define  JNU_ExceptionCheck(env, descrption) \
+{ \
+  if(env->ExceptionCheck()) \
+{ \
+  env->ExceptionDescribe(); \
+  env->ExceptionClear(); \
+  LOGE("JNU_ExceptionCheck, from JNI code %s", descrption); \
+} \
+}

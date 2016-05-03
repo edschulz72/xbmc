@@ -740,7 +740,9 @@ void CVDMPlcoreCallback::OnError(VD_ErrorCallbackType type, const char* strLastE
 {
 
 }
-
+void CVDMPlcoreCallback::NotifyDBSCardStatus(VD_DBS_CasSmasrCardStatus event, void *pEventBody)
+{
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

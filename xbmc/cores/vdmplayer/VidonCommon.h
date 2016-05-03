@@ -91,7 +91,7 @@ struct vidonOutInfo
   const char *szResolution;
   int         nBitrate;
   int64_t     nStartTime;
-  int         nOutQuality;
+  int         nOutQuality;//0 convert,1 copy 
 };
 
 }

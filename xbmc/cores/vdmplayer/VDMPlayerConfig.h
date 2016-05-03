@@ -231,6 +231,7 @@ public:
   virtual ~CVDMPlcoreCallback();
 
   virtual void OnError(VD_ErrorCallbackType type, const char* strLastErrorDescription);
+  virtual void NotifyDBSCardStatus(VD_DBS_CasSmasrCardStatus event, void *pEventBody);
 };
 
 class CVDMPlayOptions : public IVDPlayOptions

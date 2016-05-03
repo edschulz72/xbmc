@@ -10,7 +10,7 @@
 // ** structs
 // ** interface
 // ** tool funcs
-
+#pragma warning(disable:4100)
 namespace libvp
 {
 

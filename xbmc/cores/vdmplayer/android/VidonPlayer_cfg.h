@@ -14,12 +14,14 @@ using namespace libvp;
 class CVDPlcoreCallback:public IVDPlcoreCallback
 {
 public:
-  CVDPlcoreCallback() {};
+  CVDPlcoreCallback() ;
   virtual ~CVDPlcoreCallback() {};
 
   virtual void OnError(VD_ErrorCallbackType type, const char* strLastErrorDescription);
+  virtual void NotifyDBSCardStatus(VD_DBS_CasSmasrCardStatus event, void *pEventBody);
 private:
  jmethodID  m_OnPlayBackErrorID;
+ jmethodID  m_OnPlayBackDBSCardStatusID;
 };
 
 class CVDPlayerCallback : public IVDPlayCallback

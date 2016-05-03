@@ -145,7 +145,15 @@ enum VD_ErrorCallbackType
 {
   VD_ERROR_CALLBACK_TYPE_WRONG_USAGE, // Indicates client use plcore's interface in wrong way.
 };
-
+enum VD_DBS_CasSmasrCardStatus
+{
+  VD_DBS_CARD_IN,
+  VD_DBS_CARD_OUT,
+  VD_DBS_CARD_INVERSE,
+  VD_DBS_CARD_CHECKING,
+  VD_DBS_CARD_BUSY,
+  VD_DBS_CARD_ERROR,
+};
 class IVDPlcoreCallback
 {
 public:
@@ -153,9 +161,44 @@ public:
   virtual ~IVDPlcoreCallback() {};
 
   virtual void OnError(VD_ErrorCallbackType type, const char* strLastErrorDescription) = 0;
+  virtual void NotifyDBSCardStatus(VD_DBS_CasSmasrCardStatus event,  void *pEventBody) = 0;
 };
 
+struct VDPlcoreDBStarEntitleInfo
+{
+  char m_OperatorID;
+  int m_ID;
+  char* m_ProductStartTime;
+  char* m_ProductEndTime;
+  char* m_WatchStartTime;
+  char* m_WatchEndTime;
+  int m_LimitTotaltValue;
+  int m_LimitUsedValue;
 
+  VDPlcoreDBStarEntitleInfo* next;
+
+  VDPlcoreDBStarEntitleInfo()
+  {
+    m_OperatorID = 0;
+    m_ID = 0;
+    m_ProductStartTime = NULL;
+    m_ProductEndTime = NULL;
+    m_WatchStartTime = NULL;
+    m_WatchEndTime = NULL;
+    m_LimitTotaltValue = 0;
+    m_LimitUsedValue = 0;
+    next = NULL;
+  }
+
+  ~VDPlcoreDBStarEntitleInfo()
+  {
+    delete[] m_ProductStartTime;
+    delete[] m_ProductEndTime;
+    delete[] m_WatchStartTime;
+    delete[] m_WatchEndTime;
+    delete next;
+  }
+};
 class IVDPlayer
 {
 public:
@@ -252,7 +295,11 @@ public:
   // Release mode would not output LOGDEBUG log.
   virtual void OutputToLogFile( int nLevel, const char* strContent ) = 0;
 
+  virtual char* GetDBStarCardSN() = 0;
 
+  virtual int GetDBStarEntitleCounts() = 0;
+
+  virtual VDPlcoreDBStarEntitleInfo* GetDBStarEntitleInfos() = 0;
 protected:
 
   

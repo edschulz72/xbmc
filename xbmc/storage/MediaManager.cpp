@@ -213,7 +213,12 @@ void CMediaManager::GetNetworkLocations(VECSOURCES &locations, bool autolocation
 #ifdef HAS_UPNP
     std::string strDevices = g_localizeStrings.Get(33040); //"% Devices"
     share.strPath = "upnp://";
+#ifdef HAS_VIDONME
+		share.strName = strDevices; //"UPnP Devices"
+		StringUtils::Replace(share.strName, "%s", "UPnP");
+#else
     share.strName = StringUtils::Format(strDevices.c_str(), "UPnP"); //"UPnP Devices"
+#endif
     locations.push_back(share);
 #endif
     

@@ -3880,7 +3880,19 @@ void CApplication::StopPlaying()
     if ((iWin == WINDOW_VISUALISATION
     ||  iWin == WINDOW_FULLSCREEN_VIDEO)
     && !m_bStop)
+#ifdef HAS_VIDONME
+		{
+			g_windowManager.PreviousWindow();
+
+			iWin = g_windowManager.GetActiveWindow();
+			if ((iWin == WINDOW_VISUALISATION || iWin == WINDOW_FULLSCREEN_VIDEO) && !m_bStop)
+			{
+				g_windowManager.PreviousWindow();
+			}
+		}
+#else
       g_windowManager.PreviousWindow();
+#endif
 
     g_partyModeManager.Disable();
   }

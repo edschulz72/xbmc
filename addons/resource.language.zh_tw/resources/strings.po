@@ -9085,6 +9085,14 @@ msgctxt "#33038"
 msgid "%s day"
 msgstr "%s 天"
 
+msgctxt "#33039"
+msgid "%s streams"
+msgstr "%s 媒體流"
+
+msgctxt "#33040"
+msgid "%s devices"
+msgstr "%s 裝置"
+
 msgctxt "#33049"
 msgid "Alert"
 msgstr "提醒"
@@ -9564,6 +9572,42 @@ msgstr "無可用資訊。"
 msgctxt "#36137"
 msgid "No info available yet."
 msgstr "無可用資訊。"
+
+msgctxt "#36138"
+msgid "Section that contains settings related to videos and how they are handled."
+msgstr "包含與視訊及其處理相關設定的區域。"
+
+msgctxt "#36139"
+msgid "This category contains the settings for how the video library is handled."
+msgstr "此功能區包含視訊資料櫃處理相關設定。"
+
+msgctxt "#36140"
+msgid "Choose which temperature unit is used for displaying temperatures in the user interface."
+msgstr "選擇使用者介面中使用哪種單位顯示溫度。"
+
+msgctxt "#36141"
+msgid "Show plot information for unwatched media in the video library."
+msgstr "顯示視訊資料庫中未觀看媒體的劇情資訊。"
+
+msgctxt "#36142"
+msgid "Choose which speed unit is used for displaying speeds in the user interface."
+msgstr "選擇使用者介面中使用哪種單位顯示速度。"
+
+msgctxt "#36143"
+msgid "Downloads thumbnails for actors from online databases when adding media to the library."
+msgstr "當添加媒體到資料櫃時從線上資料櫃下載演員縮略圖。"  
+
+msgctxt "#36144"
+msgid "Select in which cases you want to hide the season nodes of TV shows. If hidden, selecting a TV show will directly jump into the episodes view."
+msgstr "選擇什麼情況下隱藏劇集的季結點。隱藏時，選擇一個劇集將直接跳到集視圖。"
+
+msgctxt "#36145"
+msgid "Group movies into \"Movie sets\" when browsing the movie library."
+msgstr "流覽電影資料櫃時將電影按“影片集”分組"
+
+msgctxt "#36146"
+msgid "Check for new media files on startup."
+msgstr "啟動時檢查新媒體檔案。"
 
 msgctxt "#36147"
 msgid "Hide the library scanning progress bar during scans."

@@ -38,6 +38,7 @@
 #include "vidonme/VDMUserInfo.h"
 #include "vidonme/VDMDialogVersionCheck.h"
 #include "vidonme/VDMWindowRecommend.h"
+#include "guilib/GUIWindowManager.h"
 #include "guilib/GUIImage.h"
 #include "addons/Skin.h"
 
@@ -76,6 +77,14 @@ bool CGUIWindowHome::OnAction(const CAction &action)
     g_application.SwitchToFullScreen();
     return true;
   }
+
+#ifdef HAS_VIDONME
+	if (action.GetID() == ACTION_NAV_BACK || action.GetID() == ACTION_PREVIOUS_MENU)
+	{
+		g_windowManager.ActivateWindow(WINDOW_DIALOG_BUTTON_MENU);
+	}
+#endif
+
   return CGUIWindow::OnAction(action);
 }
 

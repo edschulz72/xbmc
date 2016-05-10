@@ -226,7 +226,7 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleStream = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %.4f", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleOn = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %.4f", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
 
 	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.audiolanguage"), "original") &&
 		CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream <= 0)
@@ -294,7 +294,7 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 
 	if (abs(m_optionsPlay.GetStartTime() - m_pCorePlayer->GetTime()) > 10)
 	{
-		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Auto Seek OptionTime = %d  CurrentTime = %d", m_optionsPlay.GetStartTime(), m_pCorePlayer->GetTime());
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Auto Seek OptionTime = %.4f  CurrentTime = %.4f", m_optionsPlay.GetStartTime(), m_pCorePlayer->GetTime());
 		m_pCorePlayer->SeekTime(m_optionsPlay.GetStartTime());
 	}
 
@@ -837,7 +837,7 @@ int CVDMPlayer::GetAudioStream()
 
 void CVDMPlayer::SetAudioStream(int iStream)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetAudioStream index = %s", iStream);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetAudioStream index = %d", iStream);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetAudioStream not playing");
@@ -1299,7 +1299,7 @@ std::string CVDMPlayer::GetPlayerState()
 
 bool CVDMPlayer::SetPlayerState(const std::string& state)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetPlayerState state = %s", state);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetPlayerState state = %s", state.c_str());
 	if (!m_pCorePlayer || !IsPlaying())
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetPlayerState not playing");
@@ -2192,7 +2192,7 @@ void CVDMPlayer::SetGraphicContextVideoResolution(RESOLUTION res, bool bForce)
 
 void CVDMPlayer::SetGraphicContextVideoRect(float x1, float y1, float x2, float y2)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextVideoRect x1 = %d     y1 = %d     x2 = %d     y2 = %d", x1, y1, x2, y2);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextVideoRect x1 = %.4f     y1 = %.4f     x2 = %.4f     y2 = %.4f", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextVideoRect PlayTool invalide");
@@ -2228,7 +2228,7 @@ void CVDMPlayer::SetGraphicContextScreenHeight(int n)
 
 void CVDMPlayer::SetGraphicContextScissors(float x1, float y1, float x2, float y2)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextScissors x1 = %d     y1 = %d     x2 = %d     y2 = %d", x1, y1, x2, y2);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextScissors x1 = %.4f     y1 = %.4f     x2 = %.4f     y2 = %.4f", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextScissors PlayTool invalide");
@@ -2240,7 +2240,7 @@ void CVDMPlayer::SetGraphicContextScissors(float x1, float y1, float x2, float y
 
 void CVDMPlayer::SetRenderViewPort(float x1, float y1, float x2, float y2)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetRenderViewPort x1 = %d     y1 = %d     x2 = %d     y2 = %d", x1, y1, x2, y2);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetRenderViewPort x1 = %.4f     y1 = %.4f     x2 = %.4f     y2 = %.4f", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetRenderViewPort PlayTool invalide");

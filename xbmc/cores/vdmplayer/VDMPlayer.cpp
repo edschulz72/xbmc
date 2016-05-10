@@ -702,7 +702,6 @@ int CVDMPlayer::GetSubtitle()
 
 void CVDMPlayer::GetSubtitleStreamInfo(int index, SPlayerSubtitleStreamInfo &info)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::GetSubtitleStreamInfo index = %d", index);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::GetSubtitleStreamInfo not playing");
@@ -1260,7 +1259,11 @@ bool CVDMPlayer::OnAction(const CAction &action)
 
 	if (actionID != VD_ACTION_NONE)
 	{
-		CLog::Log(LOGNOTICE, "******CVDMPlayer::OnAction ID = %d  parm1 = %.4f  parm2 = %.4f", actionID, action.GetAmount(0), action.GetAmount(1));
+		if (actionID != VD_ACTION_MOUSE_MOVE)
+		{
+			CLog::Log(LOGNOTICE, "******CVDMPlayer::OnAction ID = %d  parm1 = %.4f  parm2 = %.4f", actionID, action.GetAmount(0), action.GetAmount(1));
+		}
+
 		bool bRet = m_pCorePlayer->OnAction(actionID, action.GetAmount(0), action.GetAmount(1));
 		if (!bRet)
 		{

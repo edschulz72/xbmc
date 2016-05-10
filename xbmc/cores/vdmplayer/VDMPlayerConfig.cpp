@@ -10,6 +10,7 @@
 #include "ApplicationMessenger.h"
 #include "guilib/GraphicContext.h"
 #include "windowing/WindowingFactory.h"
+#include "utils/log.h"
 
 #include "cores/IPlayer.h"
 #include "cores/vdmplayer/VidonCommon.h"
@@ -44,9 +45,7 @@ CVDMPlcoreConfig::CVDMPlcoreConfig()
 	m_strLogPath.clear();
 	m_strPlcoreRuntimesPath.clear();
 	m_strTempFolderPath.clear();
-	m_strProfileFolderPath.clear();
 	m_strFrameworksFolderPath.clear();
-	m_strHomePath.clear();
 	m_strBDCachePath.clear();
 	m_strBDJResourcePath.clear();
 	m_strBDLibPath.clear();
@@ -102,19 +101,9 @@ void CVDMPlcoreConfig::SetTempFolderPath(const char* strTempFolderPath)
 	m_strTempFolderPath = strTempFolderPath;
 }
 
-void CVDMPlcoreConfig::SetProfileFolderPath(const char* strProfileFolderPath)
-{
-	m_strProfileFolderPath = strProfileFolderPath;
-}
-
 void CVDMPlcoreConfig::SetFrameworksFolderPath(const char* strFrameworksFolderPath)
 {
 	m_strFrameworksFolderPath = strFrameworksFolderPath;
-}
-
-void CVDMPlcoreConfig::SetHomePath(const char* strHomePath)
-{
-	m_strHomePath = strHomePath;
 }
 
 void CVDMPlcoreConfig::SetBDCachePath(const char* strBDCachePath)
@@ -738,7 +727,7 @@ CVDMPlcoreCallback::~CVDMPlcoreCallback()
 
 void CVDMPlcoreCallback::OnError(VD_ErrorCallbackType type, const char* strLastErrorDescription)
 {
-
+	CLog::Log(LOGERROR, "******CVDMPlayCallback::OnError type = %d    Description = %s", type, strLastErrorDescription);
 }
 void CVDMPlcoreCallback::NotifyDBSCardStatus(VD_DBS_CasSmasrCardStatus event, void *pEventBody)
 {

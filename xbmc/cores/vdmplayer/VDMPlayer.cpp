@@ -52,12 +52,16 @@ CVDMPlayer::CVDMPlayer(IPlayerCallback& callback)
 	m_pPlcorePlaytoolCallback = 0;
 	s_pPlcoreCallback = 0;
 	m_nAudioStream = -1;
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::VDMPlayer Construct");
 }
 
 CVDMPlayer::~CVDMPlayer()
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::VDMPlayer Destruct");
 	if (m_bIsPlaying)
 	{
+		CLog::Log(LOGWARNING, "******CVDMPlayer::VDMPlayer Destruct still playing");
 		CloseFile();
 	}
 }
@@ -80,16 +84,21 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 
 	if (IsRunning())
 	{
+		CLog::Log(LOGWARNING, "******CVDMPlayer::OpenFile Thread still running.");
 		StopThread(false);
 	}
 
 	if (m_bIsPlaying)
 	{
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Close last opened file.");
+
 		CloseFile();
 		DeInitPlayer();
 	}
 
 	std::string strPath = file.GetPath();
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile path = %s", strPath.c_str());
 
 	if (URIUtils::IsSmb(strPath) ||
 		StringUtils::EqualsNoCase(StringUtils::Left(strPath, 9).c_str(), "bluray://"))
@@ -111,12 +120,21 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 	m_optionsPlay.SetFullscreen(options.fullscreen);
 	m_optionsPlay.SetVideoOnly(options.video_only);
 
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile path = %s", m_itemPlay.GetPath());
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile type = %s", m_itemPlay.GetMimeType());
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile StartTime = %.4f", m_optionsPlay.GetStartTime());
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile StartPercent = %.4f", m_optionsPlay.GetStartPercent());
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile State = %s", m_optionsPlay.GetState());
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile FullScreen = %d", m_optionsPlay.IsFullscreen());
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile FullScreen = %d", m_optionsPlay.IsVideoOnly());
+
 	m_pPlayToolConfig = new CVDMPlayToolConfig();
 	m_pPlcorePlayerCallback = new CVDMPlayCallback();
 	m_pPlcorePlaytoolCallback = new CVDMPlaytoolCallback();
 
 	if (!m_pPlayToolConfig || !m_pPlcorePlayerCallback || !m_pPlcorePlaytoolCallback)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::OpenFile PlayerConfig create fail");
 		DeInitPlayer();
 
 		return false;
@@ -168,6 +186,7 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 	m_pPlayTool = m_pPlcore->CreatePlayTool(VD_PLAYER_PLCORE, m_pPlayToolConfig, m_pPlcorePlaytoolCallback);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::OpenFile CreatePlayTool fail");
 		DeInitPlayer();
 
 		return false;
@@ -179,6 +198,7 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 
 	if (!m_pPlayTool->Init())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::OpenFile PlayTool init fail");
 		DeInitPlayer();
 
 		return false;
@@ -198,23 +218,32 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 
 	if (!m_bIsPlaying)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::OpenFile open file fail");
 		return false;
 	}
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings AudioStream = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleStream = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %.4f", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleOn = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
 
 	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.audiolanguage"), "original") &&
 		CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream <= 0)
 	{
 		int nAudioStreamCount = GetAudioStreamCount();
+		std::string audio_language = g_langInfo.GetAudioLanguage();
 
-		for (size_t i = 0; i < nAudioStreamCount; i++)
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original audio language and no record. AudioLanguage = %s", audio_language.c_str());
+
+		for (int i = 0; i < nAudioStreamCount; i++)
 		{
 			SPlayerAudioStreamInfo info;
 			GetAudioStreamInfo(i, info);
 
-			std::string audio_language = g_langInfo.GetAudioLanguage();
-
 			if (StringUtils::EqualsNoCase(audio_language, info.language))
 			{
+				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original audio language and no record. Auto select audio stream.");
 				SetAudioStream(i);
 				break;
 			}
@@ -229,16 +258,18 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 		CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream <= 0)
 	{
 		int nSubtitleCount = GetSubtitleCount();
+		std::string subtitle_language = g_langInfo.GetSubtitleLanguage();
 
-		for (size_t i = 0; i < nSubtitleCount; i++)
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original subtitle language and no record. SubtitleLanguage = %s", subtitle_language.c_str());
+
+		for (int i = 0; i < nSubtitleCount; i++)
 		{
-			std::string subtitle_language = g_langInfo.GetSubtitleLanguage();
-
 			SPlayerSubtitleStreamInfo info;
 			GetSubtitleStreamInfo(i, info);
 
 			if (StringUtils::EqualsNoCase(subtitle_language, info.language))
 			{
+				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original subtitle language and no record. Auto select subtitle stream.");
 				SetSubtitle(i);
 				break;
 			}
@@ -263,8 +294,11 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 
 	if (abs(m_optionsPlay.GetStartTime() - m_pCorePlayer->GetTime()) > 10)
 	{
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Auto Seek OptionTime = %d  CurrentTime = %d", m_optionsPlay.GetStartTime(), m_pCorePlayer->GetTime());
 		m_pCorePlayer->SeekTime(m_optionsPlay.GetStartTime());
 	}
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Succeess");
 
 	return true;
 }
@@ -289,13 +323,17 @@ bool CVDMPlayer::CloseFile(bool reopen)
    CSettings::Get().SetString("audiooutput.audiodevice", "AUDIOTRACK:android,audiotrack");
 #endif
 
+	 CLog::Log(LOGNOTICE, "******CVDMPlayer::CloseFile ReOpen = %d", reopen);
+
 	if (!m_bIsPlaying)
 	{
+		CLog::Log(LOGWARNING, "******CVDMPlayer::CloseFile not playing.");
 		return true;
 	}
 
 	if (!m_pCorePlayer)
 	{
+		CLog::Log(LOGWARNING, "******CVDMPlayer::CloseFile CorePlayer invalide.");
 		return false;
 	}
 
@@ -308,6 +346,8 @@ bool CVDMPlayer::CloseFile(bool reopen)
 		SetStereoMode(RENDER_STEREO_MODE_OFF, RENDER_STEREO_VIEW_OFF);
 		SetGraphicContextStereoMode(RENDER_STEREO_MODE_OFF);
 	}
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Succeess");
 
 	DeInitPlayer();
 
@@ -396,8 +436,10 @@ bool CVDMPlayer::CanSeek()
 
 void CVDMPlayer::Seek(bool bPlus, bool bLargeStep, bool bChapterOverride)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::Seek Plus = %d    LargeStep = %d    ChapterOverride = %d", bPlus, bLargeStep, bChapterOverride);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::Seek not playing");
 		return;
 	}
 
@@ -406,18 +448,28 @@ void CVDMPlayer::Seek(bool bPlus, bool bLargeStep, bool bChapterOverride)
 
 bool CVDMPlayer::SeekScene(bool bPlus)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SeekScene Plus = %d", bPlus);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SeekScene not playing");
 		return false;
 	}
 
-	return m_pCorePlayer->SeekScene(bPlus);
+	bool bRet = m_pCorePlayer->SeekScene(bPlus);
+	if (!bRet)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SeekScene CorePlayer SeekScene fail");
+	}
+
+	return bRet;
 }
 
 void CVDMPlayer::SeekPercentage(float fPercent)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SeekPercentage Percent = %.4f", fPercent);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SeekPercentage not playing");
 		return;
 	}
 
@@ -446,8 +498,10 @@ float CVDMPlayer::GetCachePercentage()
 
 void CVDMPlayer::SetMute(bool bOnOff)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetMute mute = %d", bOnOff);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetMute PlayTool Invalide");
 		return;
 	}
 
@@ -456,8 +510,10 @@ void CVDMPlayer::SetMute(bool bOnOff)
 
 void CVDMPlayer::SetVolume(float volume)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SeekPercentage volume = %.4f", volume);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetVolume PlayTool Invalide");
 		return;
 	}
 
@@ -476,14 +532,17 @@ bool CVDMPlayer::ControlsVolume()
 
 void CVDMPlayer::SetDynamicRangeCompression(long drc)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetDynamicRangeCompression drc = %d", drc);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetDynamicRangeCompression PlayTool Invalide");
 		return;
 	}
 
-	m_pPlayTool->SetVolumeAmplification(drc / 100);
+	float fAmplification = drc;
+	fAmplification = fAmplification / 100;
+	m_pPlayTool->SetVolumeAmplification(fAmplification);
 }
-
 
 void CVDMPlayer::GetAudioInfo(std::string& strAudioInfo)
 {
@@ -496,6 +555,10 @@ void CVDMPlayer::GetAudioInfo(std::string& strAudioInfo)
 	if (strInfo)
 	{
 		strAudioInfo = strInfo;
+	}
+	else
+	{
+		CLog::Log(LOGWARNING, "******CVDMPlayer::GetAudioInfo CorePlayer GetAudioInfo fail");
 	}
 
 	m_pCorePlayer->ReleaseAudioInfo(strInfo);
@@ -530,6 +593,10 @@ void CVDMPlayer::GetGeneralInfo(std::string& strGeneralInfo)
 	{
 		strGeneralInfo = strInfo;
 	}
+	else
+	{
+		CLog::Log(LOGWARNING, "******CVDMPlayer::GetGeneralInfo CorePlayer GetGeneralInfo fail");
+	}
 
 	m_pCorePlayer->ReleaseGeneralInfo(strInfo);
 }
@@ -556,18 +623,28 @@ bool CVDMPlayer::IsRecording()
 
 bool CVDMPlayer::Record(bool bOnOff)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::Record value = %d", bOnOff);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::Record not playing");
 		return false;
 	}
 
-	return m_pCorePlayer->Record(bOnOff);
+	bool bRet = m_pCorePlayer->Record(bOnOff);
+	if (!bRet)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::Record CorePlayer Record fail");
+	}
+
+	return bRet;
 }
 
 void CVDMPlayer::SetAVDelay(float fValue)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetAVDelay value = %.4f", fValue);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetAVDelay PlayTool Invalide");
 		return;
 	}
 
@@ -583,8 +660,10 @@ float CVDMPlayer::GetAVDelay()
 
 void CVDMPlayer::SetSubTitleDelay(float fValue)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubTitleDelay value = %.4f", fValue);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubTitleDelay PlayTool Invalide");
 		return;
 	}
 
@@ -623,14 +702,17 @@ int CVDMPlayer::GetSubtitle()
 
 void CVDMPlayer::GetSubtitleStreamInfo(int index, SPlayerSubtitleStreamInfo &info)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::GetSubtitleStreamInfo index = %d", index);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::GetSubtitleStreamInfo not playing");
 		return;
 	}
 
 	VD_PlayerSubtitleStreamInfo* pInfo = m_pCorePlayer->GetSubtitleStreamInfo(index);
 	if (!pInfo)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::GetSubtitleStreamInfo CorePlayer GetSubtitleStreamInfo fail");
 		return;
 	}
 
@@ -642,13 +724,17 @@ void CVDMPlayer::GetSubtitleStreamInfo(int index, SPlayerSubtitleStreamInfo &inf
 
 void CVDMPlayer::SetSubtitle(int iStream)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitle iStream = %d", iStream);
+
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitle not playing");
 		return;
 	}
 
 	if (iStream < 0 || iStream >= m_pCorePlayer->GetSubtitleCount())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitle iStream invalide subtitle count = %d", m_pCorePlayer->GetSubtitleCount());
 		return;
 	}
 
@@ -659,8 +745,10 @@ void CVDMPlayer::SetSubtitle(int iStream)
 
 void CVDMPlayer::SetSubtitleWhetherOverAssOrig(bool bOver)
 {
- 	if (!m_pPlayTool)
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitleWhetherOverAssOrig bOver = %d", bOver);
+	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitleWhetherOverAssOrig PlayTool invalide");
 		return;
 	}
 
@@ -681,8 +769,10 @@ bool CVDMPlayer::GetSubtitleVisible()
 
 void CVDMPlayer::SetSubtitleVisible(bool bVisible)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitleVisible bVisible = %d", bVisible);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitleVisible PlayTool invalide");
 		return;
 	}
 
@@ -693,12 +783,19 @@ void CVDMPlayer::SetSubtitleVisible(bool bVisible)
 
 void CVDMPlayer::AddSubtitle(const std::string& strSubPath)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::AddSubtitle Path = %s", strSubPath.c_str());
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::AddSubtitle not playing");
 		return;
 	}
 
 	int nSubtitleID = m_pCorePlayer->AddSubtitle(strSubPath.c_str());
+	int nSubtitleCount = m_pCorePlayer->GetSubtitleCount(true);
+	if (nSubtitleID < 0 || nSubtitleID >= nSubtitleCount)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::AddSubtitle CorePlayer AddSubtitle return error index = %d    SubtitleCount = %d", nSubtitleID, nSubtitleCount);
+	}
 
 	SetSubtitle(nSubtitleID);
 	SetSubtitleVisible(true);
@@ -740,13 +837,17 @@ int CVDMPlayer::GetAudioStream()
 
 void CVDMPlayer::SetAudioStream(int iStream)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetAudioStream index = %s", iStream);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetAudioStream not playing");
 		return;
 	}
 
-	if (iStream < 0 || iStream >= m_pCorePlayer->GetAudioStreamCount())
+	int nAudioCount = m_pCorePlayer->GetAudioStreamCount();
+	if (iStream < 0 || iStream >= nAudioCount)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetAudioStream index invalide  AudioCount = %d", nAudioCount);
 		return;
 	}
 
@@ -772,6 +873,7 @@ void CVDMPlayer::GetAudioStreamInfo(int index, SPlayerAudioStreamInfo &info)
 	VD_PlayerAudioStreamInfo* pInfo = m_pCorePlayer->GetAudioStreamInfo(nStream);
 	if (!pInfo)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::GetAudioStreamInfo CorePlayer GetAudioStreamInfo invalide  index = %d", index);
 		return;
 	}
 
@@ -853,18 +955,25 @@ int64_t CVDMPlayer::GetChapterPos(int chapterIdx)
 
 int CVDMPlayer::SeekChapter(int iChapter)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SeekChapter index = %d", iChapter);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SeekChapter not playing");
 		return 0;
 	}
 
-	return m_pCorePlayer->SeekChapter(iChapter);
+	int nRet = m_pCorePlayer->SeekChapter(iChapter);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SeekChapter return = %d", nRet);
+
+	return nRet;
 }
 
 void CVDMPlayer::SeekTime(int64_t iTime)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SeekTime Time = %d", iTime);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SeekChapter not playing");
 		return;
 	}
 
@@ -873,6 +982,7 @@ void CVDMPlayer::SeekTime(int64_t iTime)
 
 bool CVDMPlayer::SeekTimeRelative(int64_t iTime)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SeekTimeRelative Time = %d", iTime);
 	SeekTime(GetDisplayTime() + iTime);
 
 	return true;
@@ -915,6 +1025,7 @@ void CVDMPlayer::GetVideoStreamInfo(SPlayerVideoStreamInfo &info)
 	VD_PlayerVideoStreamInfo* pInfo = m_pCorePlayer->GetVideoStreamInfo();
 	if (!pInfo)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::GetVideoStreamInfo CorePlayer GetVideoStreamInfo invalide");
 		return;
 	}
 
@@ -944,8 +1055,10 @@ bool CVDMPlayer::GetStreamDetails(CStreamDetails &details)
 
 void CVDMPlayer::ToFFRW(int iSpeed)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::ToFFRW Speed = %d", iSpeed);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::ToFFRW not playing");
 		return;
 	}
 
@@ -1147,7 +1260,14 @@ bool CVDMPlayer::OnAction(const CAction &action)
 
 	if (actionID != VD_ACTION_NONE)
 	{
-		return m_pCorePlayer->OnAction(actionID, action.GetAmount(0), action.GetAmount(1));
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OnAction ID = %d  parm1 = %.4f  parm2 = %.4f", actionID, action.GetAmount(0), action.GetAmount(1));
+		bool bRet = m_pCorePlayer->OnAction(actionID, action.GetAmount(0), action.GetAmount(1));
+		if (!bRet)
+		{
+			CLog::Log(LOGERROR, "******CVDMPlayer::OnAction CorePlayer OnAction fail");
+		}
+
+		return bRet;
 	}
 
 	return false;
@@ -1167,6 +1287,10 @@ std::string CVDMPlayer::GetPlayerState()
 	{
 		strPlayerState = strState;
 	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::GetPlayerState CorePlayer GetPlayerState fail");
+	}
 
 	m_pCorePlayer->ReleasePlayerState(strState);
 
@@ -1175,12 +1299,20 @@ std::string CVDMPlayer::GetPlayerState()
 
 bool CVDMPlayer::SetPlayerState(const std::string& state)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetPlayerState state = %s", state);
 	if (!m_pCorePlayer || !IsPlaying())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetPlayerState not playing");
 		return false;
 	}
 
-	return m_pCorePlayer->SetPlayerState(state.c_str());
+	bool bRet = m_pCorePlayer->SetPlayerState(state.c_str());
+	if (!bRet)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetPlayerState CorePlayer SetPlayerState fail");
+	}
+
+	return bRet;
 }
 
 std::string CVDMPlayer::GetPlayingTitle()
@@ -1193,6 +1325,7 @@ std::string CVDMPlayer::GetPlayingTitle()
 	char* strTitle = m_pCorePlayer->GetPlayingTitle();
 	if (!strTitle)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::GetPlayingTitle CorePlayer GetPlayingTitle fail");
 		return "";
 	}
 
@@ -1236,8 +1369,10 @@ void CVDMPlayer::Present(void)
 
 void CVDMPlayer::SetPlayMode(DIMENSIONMODE mode)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetPlayMode mode = %d", mode);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetPlayMode PlayTool invalide");
 		return;
 	}
 
@@ -1301,8 +1436,10 @@ void CVDMPlayer::NotifyAudioOutputSettingsChanged()
 
 void CVDMPlayer::SetDeinterlaceMode(EDEINTERLACEMODE mode)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetDeinterlaceMode mode = %d", mode);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetDeinterlaceMode PlayTool invalide");
 		return;
 	}
 
@@ -1311,8 +1448,10 @@ void CVDMPlayer::SetDeinterlaceMode(EDEINTERLACEMODE mode)
 
 void CVDMPlayer::SetInterlaceMethod(EINTERLACEMETHOD mode)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetInterlaceMethod mode = %d", mode);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetInterlaceMethod PlayTool invalide");
 		return;
 	}
 
@@ -1321,8 +1460,10 @@ void CVDMPlayer::SetInterlaceMethod(EINTERLACEMETHOD mode)
 
 void CVDMPlayer::SetScalingMethod(ESCALINGMETHOD mode)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetScalingMethod mode = %d", mode);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetScalingMethod PlayTool invalide");
 		return;
 	}
 
@@ -1331,8 +1472,10 @@ void CVDMPlayer::SetScalingMethod(ESCALINGMETHOD mode)
 
 void CVDMPlayer::SetCustomZoomAmount(float Value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCustomZoomAmount Value = %.4f", Value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCustomZoomAmount PlayTool invalide");
 		return;
 	}
 
@@ -1341,8 +1484,10 @@ void CVDMPlayer::SetCustomZoomAmount(float Value)
 
 void CVDMPlayer::SetCustomPixelRatio(float Value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCustomPixelRatio Value = %.4f", Value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCustomPixelRatio PlayTool invalide");
 		return;
 	}
 
@@ -1351,8 +1496,10 @@ void CVDMPlayer::SetCustomPixelRatio(float Value)
 
 void CVDMPlayer::SetCustomVerticalShift(float Value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCustomVerticalShift Value = %.4f", Value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCustomVerticalShift PlayTool invalide");
 		return;
 	}
 
@@ -1361,8 +1508,10 @@ void CVDMPlayer::SetCustomVerticalShift(float Value)
 
 void CVDMPlayer::SetCustomNonLinStretch(bool Value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCustomNonLinStretch Value = %d", Value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCustomNonLinStretch PlayTool invalide");
 		return;
 	}
 
@@ -1371,8 +1520,10 @@ void CVDMPlayer::SetCustomNonLinStretch(bool Value)
 
 void CVDMPlayer::SetViewMode(ViewMode mode)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetViewMode mode = %d", mode);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetViewMode PlayTool invalide");
 		return;
 	}
 
@@ -1391,8 +1542,10 @@ void CVDMPlayer::NotifyViewModeChanged()
 
 void CVDMPlayer::SetWhetherSupportAC3(bool bSupport)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetWhetherSupportAC3 bSupport = %d", bSupport);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetWhetherSupportAC3 PlayTool invalide");
 		return;
 	}
 
@@ -1421,8 +1574,10 @@ bool CVDMPlayer::GetSubtitleOn()
 
 void CVDMPlayer::SetSubColor(unsigned int color)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubColor color = %d", color);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubColor PlayTool invalide");
 		return;
 	}
 
@@ -1434,12 +1589,20 @@ void CVDMPlayer::SetSubColor(unsigned int color)
 
 bool CVDMPlayer::SetSubtitleSize(int size)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitleSize size = %d", size);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitleSize PlayTool invalide");
 		return false;
 	}
 
-	return 	m_pPlayTool->SetSubtitleSize(size);
+	bool bRet = m_pPlayTool->SetSubtitleSize(size);
+	if (!bRet)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitleSize PlayTool SetSubtitleSize fail");
+	}
+
+	return 	bRet;
 }
 
 void CVDMPlayer::SetSubtitlePos(SubtitleAlign align, float yPos)
@@ -1465,13 +1628,16 @@ void CVDMPlayer::SetSubtitlePos(SubtitleAlign align, float yPos)
 		fYPos = 0.15;
 	}
 
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitlePos align = %d    pos = %.4f", align, yPos);
 	m_pPlayTool->SetSubtitlePos(ChangeSubtitleAlign(align), fYPos);
 }
 
 void CVDMPlayer::SetSubtitleStyle(int nStyle)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitleStyle Style = %d", nStyle);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitleStyle PlayTool invalide");
 		return;
 	}
 
@@ -1480,8 +1646,10 @@ void CVDMPlayer::SetSubtitleStyle(int nStyle)
 
 void CVDMPlayer::SetSubtitleBold(bool bBold)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitleBold bBold = %d", bBold);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitleBold PlayTool invalide");
 		return;
 	}
 
@@ -1490,8 +1658,10 @@ void CVDMPlayer::SetSubtitleBold(bool bBold)
 
 void CVDMPlayer::SetSubtitleItalic(bool bItalic)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitleItalic bItalic = %d", bItalic);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitleItalic PlayTool invalide");
 		return;
 	}
 
@@ -1500,8 +1670,10 @@ void CVDMPlayer::SetSubtitleItalic(bool bItalic)
 
 void CVDMPlayer::SetBrightness(float fBrightness)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetBrightness Brightness = %.4f", fBrightness);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetBrightness PlayTool invalide");
 		return;
 	}
 
@@ -1510,8 +1682,10 @@ void CVDMPlayer::SetBrightness(float fBrightness)
 
 void CVDMPlayer::SetContrast(float fContrast)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetContrast Contrast = %.4f", fContrast);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetContrast PlayTool invalide");
 		return;
 	}
 
@@ -1520,8 +1694,10 @@ void CVDMPlayer::SetContrast(float fContrast)
 
 void CVDMPlayer::SetHue(float fHue)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetHue Hue = %.4f", fHue);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetHue PlayTool invalide");
 		return;
 	}
 
@@ -1530,8 +1706,10 @@ void CVDMPlayer::SetHue(float fHue)
 
 void CVDMPlayer::SetSaturation(float fSaturation)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSaturation Saturation = %.4f", fSaturation);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetSaturation PlayTool invalide");
 		return;
 	}
 
@@ -1540,8 +1718,10 @@ void CVDMPlayer::SetSaturation(float fSaturation)
 
 void CVDMPlayer::SetVdpauNoiseRedution(float f)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetVdpauNoiseRedution value = %.4f", f);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetVdpauNoiseRedution PlayTool invalide");
 		return;
 	}
 
@@ -1550,8 +1730,10 @@ void CVDMPlayer::SetVdpauNoiseRedution(float f)
 
 void CVDMPlayer::SetPostProcessOn(bool on)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetPostProcessOn on = %d", on);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetPostProcessOn PlayTool invalide");
 		return;
 	}
 
@@ -1560,8 +1742,10 @@ void CVDMPlayer::SetPostProcessOn(bool on)
 
 void CVDMPlayer::SetCropOn(bool on)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCropOn on = %d", on);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCropOn PlayTool invalide");
 		return;
 	}
 
@@ -1570,8 +1754,10 @@ void CVDMPlayer::SetCropOn(bool on)
 
 void CVDMPlayer::SetStereoInvert(bool on)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetStereoInvert on = %d", on);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetStereoInvert PlayTool invalide");
 		return;
 	}
 
@@ -1782,8 +1968,10 @@ void CVDMPlayer::RenderManagerManageCaptures()
 
 bool CVDMPlayer::SetCSettings(const char* id, const char* value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCSettings id = %s   value = %s", id, value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCSettings PlayTool invalide");
 		return false;
 	}
 
@@ -1792,8 +1980,10 @@ bool CVDMPlayer::SetCSettings(const char* id, const char* value)
 
 bool CVDMPlayer::SetCSettings(const char* id, double value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCSettings id = %s   value = %.4f", id, value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCSettings PlayTool invalide");
 		return false;
 	}
 
@@ -1802,8 +1992,10 @@ bool CVDMPlayer::SetCSettings(const char* id, double value)
 
 bool CVDMPlayer::SetCSettings(const char* id, int value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCSettings id = %s   value = %d", id, value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCSettings PlayTool invalide");
 		return false;
 	}
 
@@ -1812,8 +2004,10 @@ bool CVDMPlayer::SetCSettings(const char* id, int value)
 
 bool CVDMPlayer::SetCSettings(const char* id, bool value)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetCSettings id = %s   value = %d", id, value);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetCSettings PlayTool invalide");
 		return false;
 	}
 
@@ -1822,8 +2016,10 @@ bool CVDMPlayer::SetCSettings(const char* id, bool value)
 
 void CVDMPlayer::SetScreen(int screen)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetScreen screen = %d", screen);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetScreen PlayTool invalide");
 		return;
 	}
 
@@ -1833,8 +2029,10 @@ void CVDMPlayer::SetScreen(int screen)
 #if defined(HAS_DX)
 void CVDMPlayer::SetAdapter(unsigned int adapter)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetAdapter adapter = %d", adapter);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetAdapter PlayTool invalide");
 		return;
 	}
 
@@ -1843,8 +2041,10 @@ void CVDMPlayer::SetAdapter(unsigned int adapter)
 
 void CVDMPlayer::SetD3DPP(D3DPRESENT_PARAMETERS pp)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetD3DPP");
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetD3DPP PlayTool invalide");
 		return;
 	}
 
@@ -1854,8 +2054,10 @@ void CVDMPlayer::SetD3DPP(D3DPRESENT_PARAMETERS pp)
 
 void CVDMPlayer::SetStereoMode(RENDER_STEREO_MODE mode)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetStereoMode mode = %d", mode);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetStereoMode PlayTool invalide");
 		return;
 	}
 
@@ -1877,8 +2079,10 @@ void CVDMPlayer::SetStereoMode(RENDER_STEREO_MODE mode)
 
 void CVDMPlayer::SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW view)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetStereoMode mode = %d     view = %d", mode, view);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetStereoMode PlayTool invalide");
 		return;
 	}
 
@@ -1902,8 +2106,10 @@ void CVDMPlayer::SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW view)
 
 void CVDMPlayer::SetWindowResolution(int width, int height)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetWindowResolution width = %d     height = %d", width, height);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetWindowResolution PlayTool invalide");
 		return;
 	}
 
@@ -1914,8 +2120,10 @@ void CVDMPlayer::SetWindowResolution(int width, int height)
 
 void CVDMPlayer::SetGraphicContextStereoMode(RENDER_STEREO_MODE mode)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextStereoMode mode = %d", mode);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextStereoMode PlayTool invalide");
 		return;
 	}
 
@@ -1924,8 +2132,10 @@ void CVDMPlayer::SetGraphicContextStereoMode(RENDER_STEREO_MODE mode)
 
 void CVDMPlayer::SetGraphicContextStereoView(RENDER_STEREO_VIEW view)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextStereoView view = %d", view);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextStereoView PlayTool invalide");
 		return;
 	}
 
@@ -1934,8 +2144,10 @@ void CVDMPlayer::SetGraphicContextStereoView(RENDER_STEREO_VIEW view)
 
 void CVDMPlayer::SetGraphicContextFullScreenRoot(bool on)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextFullScreenRoot on = %d", on);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextFullScreenRoot PlayTool invalide");
 		return;
 	}
 
@@ -1944,8 +2156,10 @@ void CVDMPlayer::SetGraphicContextFullScreenRoot(bool on)
 
 void CVDMPlayer::SetGraphicContextFullScreenVideo(bool on)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextFullScreenVideo on = %d", on);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextFullScreenVideo PlayTool invalide");
 		return;
 	}
 
@@ -1954,8 +2168,10 @@ void CVDMPlayer::SetGraphicContextFullScreenVideo(bool on)
 
 void CVDMPlayer::SetGraphicContextCalibrating(bool on)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextCalibrating on = %d", on);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextCalibrating PlayTool invalide");
 		return;
 	}
 
@@ -1964,8 +2180,10 @@ void CVDMPlayer::SetGraphicContextCalibrating(bool on)
 
 void CVDMPlayer::SetGraphicContextVideoResolution(RESOLUTION res, bool bForce)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextVideoResolution res = %d     bForce = %d", res, bForce);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextVideoResolution PlayTool invalide");
 		return;
 	}
 
@@ -1974,8 +2192,10 @@ void CVDMPlayer::SetGraphicContextVideoResolution(RESOLUTION res, bool bForce)
 
 void CVDMPlayer::SetGraphicContextVideoRect(float x1, float y1, float x2, float y2)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextVideoRect x1 = %d     y1 = %d     x2 = %d     y2 = %d", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextVideoRect PlayTool invalide");
 		return;
 	}
 
@@ -1984,8 +2204,10 @@ void CVDMPlayer::SetGraphicContextVideoRect(float x1, float y1, float x2, float 
 
 void CVDMPlayer::SetGraphicContextScreenWidth(int n)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextScreenWidth value = %d", n);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextScreenWidth PlayTool invalide");
 		return;
 	}
 
@@ -1994,8 +2216,10 @@ void CVDMPlayer::SetGraphicContextScreenWidth(int n)
 
 void CVDMPlayer::SetGraphicContextScreenHeight(int n)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextScreenHeight value = %d", n);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextScreenHeight PlayTool invalide");
 		return;
 	}
 
@@ -2004,8 +2228,10 @@ void CVDMPlayer::SetGraphicContextScreenHeight(int n)
 
 void CVDMPlayer::SetGraphicContextScissors(float x1, float y1, float x2, float y2)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextScissors x1 = %d     y1 = %d     x2 = %d     y2 = %d", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextScissors PlayTool invalide");
 		return;
 	}
 
@@ -2014,8 +2240,10 @@ void CVDMPlayer::SetGraphicContextScissors(float x1, float y1, float x2, float y
 
 void CVDMPlayer::SetRenderViewPort(float x1, float y1, float x2, float y2)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetRenderViewPort x1 = %d     y1 = %d     x2 = %d     y2 = %d", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetRenderViewPort PlayTool invalide");
 		return;
 	}
 
@@ -2024,8 +2252,10 @@ void CVDMPlayer::SetRenderViewPort(float x1, float y1, float x2, float y2)
 
 void CVDMPlayer::SetMaxTextureSize(unsigned int size)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetMaxTextureSize size = %d", size);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::SetMaxTextureSize PlayTool invalide");
 		return;
 	}
 
@@ -2044,22 +2274,33 @@ void CVDMPlayer::AEDeviceChange()
 
 bool CVDMPlayer::CaptureRenderImage(const char* strSaveUrl, int nWidth)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::CaptureRenderImage Url = %s    nWidth = %d", strSaveUrl, nWidth);
 	if (!m_pPlayTool)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::CaptureRenderImage PlayTool invalide");
 		return false;
 	}
 
-	return m_pPlayTool->CaptureRenderImage(strSaveUrl, nWidth);
+	bool bRet = m_pPlayTool->CaptureRenderImage(strSaveUrl, nWidth);
+	if (!bRet)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::CaptureRenderImage PlayTool CaptureRenderImage fail");
+	}
+
+	return bRet;
 }
 
 bool CVDMPlayer::InitPlayCore(void)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore");
+
 	m_pPlcore = CreateVDPlayer();
 	m_pConfig = new CVDMPlcoreConfig();
 	s_pPlcoreCallback = new CVDMPlcoreCallback();
 
 	if (!m_pPlcore || !m_pConfig || !s_pPlcoreCallback)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::InitPlayCore CreateVDPlayer fail");
 		DeInitPlayCore();
 
 		return false;
@@ -2070,11 +2311,20 @@ bool CVDMPlayer::InitPlayCore(void)
 	m_pConfig->SetLogPath(g_advancedSettings.m_logFolder.c_str());
 	m_pConfig->SetPlcoreRuntimesPath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/").c_str());
 	m_pConfig->SetTempFolderPath(CSpecialProtocol::TranslatePath("special://temp/").c_str());
-	m_pConfig->SetProfileFolderPath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/system/").c_str());
 	m_pConfig->SetBDJResourcePath(CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/system/").c_str());
+	m_pConfig->SetBDCachePath(CSpecialProtocol::TranslatePath("special://temp/").c_str());
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore FontName = %s", m_pConfig->GetFileName(VD_FILE_TYPE_FONT_FILE));
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore FontPath = %s", m_pConfig->GetPath(VD_PATH_TYPE_FONT_FILE));
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore LogPath = %s", m_pConfig->GetPath(VD_PATH_TYPE_LOG));
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore PlcoreRuntimesPath = %s", m_pConfig->GetPath(VD_PATH_TYPE_RUNTIMES));
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore TempFolderPath = %s", m_pConfig->GetPath(VD_PATH_TYPE_TEMPFOLDER));
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore BDJResourcePath = %s", m_pConfig->GetPath(VD_PATH_TYPE_BDJ_RESOURCE));
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore BDCachePath = %s", m_pConfig->GetPath(VD_PATH_TYPE_BD_CACHE));
 
 	if (!m_pPlcore->Initialize(m_pConfig,s_pPlcoreCallback))
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::InitPlayCore Plcore Initialize fail");
 		DeInitPlayCore();
 
 		return false;
@@ -2094,15 +2344,22 @@ bool CVDMPlayer::InitPlayCore(void)
 	}
 #endif
 
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore Success");
+
 	return true;
 }
 
 void CVDMPlayer::DeInitPlayCore(void)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::DeInitPlayCore");
 	if (m_pPlcore)
 	{
 		ReleaseVDPlayer(m_pPlcore);
 		m_pPlcore = 0;
+	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayCore Plcore invalide");
 	}
 
 	if (m_pConfig)
@@ -2119,14 +2376,25 @@ void CVDMPlayer::DeInitPlayCore(void)
 
 void CVDMPlayer::Process()
 {
-	if (!InitPlayer() || m_bStop)
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::Process");
+
+	if (!InitPlayer())
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::Process InitPlayer fail");
+		m_event.Set();
+		return;
+	}
+
+	if (m_bStop)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::Process thread stoped");
 		m_event.Set();
 		return;
 	}
 
 	if (!m_pCorePlayer->OpenFile(&m_itemPlay, &m_optionsPlay, NULL))
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::Process CorePlayer OpenFile fail");
 		DeInitPlayer();
 		m_event.Set();
 
@@ -2141,10 +2409,14 @@ void CVDMPlayer::Process()
 	m_bIsPlaying = true;
 
 	m_event.Set();
+
+	CLog::Log(LOGERROR, "******CVDMPlayer::Process thread exit");
 }
 
 bool CVDMPlayer::InitPlayer(void)
 {	
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayer");
+
 #if defined(HAS_EGL)
 	m_pPlayToolConfig->SetEGLDisplay(g_Windowing.GetEGLDisplay());
 	m_pPlayToolConfig->SetEGLContext(g_Windowing.GetEGLContext());
@@ -2286,18 +2558,23 @@ bool CVDMPlayer::InitPlayer(void)
 
 	if (!m_pCorePlayer)
 	{
-		DeInitPlayer();
+		CLog::Log(LOGERROR, "******CVDMPlayer::InitPlayer PlayTool GetPlayer fail");
+		DeInitPlayer();	
 
 		return false;
 	}
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayer Success");
 
 	return true;
 }
 
 void CVDMPlayer::DeInitPlayer(void)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::DeInitPlayer");
 	if (m_bIsPlaying)
 	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer playing");
 		CloseFile();
 	}
 
@@ -2306,12 +2583,24 @@ void CVDMPlayer::DeInitPlayer(void)
 		m_pPlayTool->ReleasePlayer(m_pCorePlayer);
 		m_pCorePlayer = 0;
 	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayTool or CorePlayer invalide");
+	}
 
 	if (m_pPlayTool)
 	{
-		m_pPlayTool->UnInit();
+		if (!m_pPlayTool->UnInit())
+		{
+			CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayTool UnInit fail");
+		}
+
 		m_pPlcore->ReleasePlayTool(m_pPlayTool);
 		m_pPlayTool = 0;
+	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayTool invalide");
 	}
 
 	if (m_pPlcorePlayerCallback)
@@ -2319,11 +2608,19 @@ void CVDMPlayer::DeInitPlayer(void)
 		delete m_pPlcorePlayerCallback;
 		m_pPlcorePlayerCallback = 0;
 	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlcorePlayerCallback invalide");
+	}
 
 	if (m_pPlayToolConfig)
 	{
 		delete m_pPlayToolConfig;
 		m_pPlayToolConfig = 0;
+	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayToolConfig invalide");
 	}
 
 	if (m_pPlcorePlaytoolCallback)
@@ -2331,10 +2628,18 @@ void CVDMPlayer::DeInitPlayer(void)
 		delete m_pPlcorePlaytoolCallback;
 		m_pPlcorePlaytoolCallback = 0;
 	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlcorePlaytoolCallback invalide");
+	}
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::DeInitPlayer Success");
 }
 
 void CVDMPlayer::SetSubttileFeatures(void)
 {
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubttileFeatures");
+
 	SetSubtitlePos((SubtitleAlign)CSettings::Get().GetInt("subtitles.align"), 0);
 	SetSubColor(CSettings::Get().GetInt("subtitles.color"));
 	SetSubtitleSize(CSettings::Get().GetInt("subtitles.height"));

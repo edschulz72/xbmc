@@ -30,9 +30,7 @@ public:
 	void SetPlcoreRuntimesPath(const char* strPlcoreHomePath);
 	void SetLogPath(const char* strLogPath);
 	void SetTempFolderPath(const char* strTempFolderPath);
-	void SetProfileFolderPath(const char* strProfileFolderPath);
 	void SetFrameworksFolderPath(const char* strFrameworksFolderPath);
-	void SetHomePath(const char* strHomePath);
 	void SetBDCachePath(const char* strBDCachePath);
 	void SetBDJResourcePath(const char* strBDJResourcePath);
 	void SetBDLibPath(const char* strBDLibPath);
@@ -67,9 +65,7 @@ private:
 	std::string m_strPlcoreRuntimesPath;
 	std::string m_strLogPath;
 	std::string m_strTempFolderPath;
-	std::string m_strProfileFolderPath;
 	std::string m_strFrameworksFolderPath;
-	std::string m_strHomePath;
 	std::string m_strBDCachePath;
 	std::string m_strBDJResourcePath;
 	std::string m_strBDLibPath;

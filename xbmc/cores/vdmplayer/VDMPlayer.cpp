@@ -2195,7 +2195,6 @@ void CVDMPlayer::SetGraphicContextVideoResolution(RESOLUTION res, bool bForce)
 
 void CVDMPlayer::SetGraphicContextVideoRect(float x1, float y1, float x2, float y2)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextVideoRect x1 = %.4f     y1 = %.4f     x2 = %.4f     y2 = %.4f", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextVideoRect PlayTool invalide");

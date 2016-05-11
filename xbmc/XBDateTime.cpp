@@ -279,8 +279,15 @@ CDateTime::CDateTime(const CDateTime& time)
 
 CDateTime::CDateTime(const time_t& time)
 {
-  m_state = ToFileTime(time, m_time) ? valid : invalid;
+	m_state = ToFileTime(time, m_time) ? valid : invalid;
 }
+
+#ifdef HAS_VIDONME
+CDateTime::CDateTime(const int64_t& time)
+{
+	m_state = ToFileTime(time, m_time) ? valid : invalid;
+}
+#endif
 
 CDateTime::CDateTime(const tm& time)
 {
@@ -662,6 +669,18 @@ bool CDateTime::ToFileTime(const time_t& time, FILETIME& fileTime) const
   return true;
 }
 
+#ifdef HAS_VIDONME
+bool CDateTime::ToFileTime(const int64_t& time, FILETIME& fileTime) const
+{
+	LONGLONG ll = time * 10000000 + 0x19DB1DED53E8000LL;
+
+	fileTime.dwLowDateTime = (DWORD)(ll & 0xFFFFFFFF);
+	fileTime.dwHighDateTime = (DWORD)(ll >> 32);
+
+	return true;
+}
+#endif
+
 bool CDateTime::ToFileTime(const tm& time, FILETIME& fileTime) const
 {
   SYSTEMTIME st;
@@ -924,6 +943,14 @@ bool CDateTime::SetFromUTCDateTime(const time_t &dateTime)
   CDateTime tmp(dateTime);
   return SetFromUTCDateTime(tmp);
 }
+
+#ifdef HAS_VIDONME
+bool CDateTime::SetFromUTCDateTime(const int64_t &dateTime)
+{
+	CDateTime tmp(dateTime);
+	return SetFromUTCDateTime(tmp);
+}
+#endif
 
 bool CDateTime::SetFromW3CDate(const std::string &dateTime)
 {

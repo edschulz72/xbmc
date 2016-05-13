@@ -22,6 +22,7 @@
 #include "vidonme/VDMRegionFeature.h"
 #include "settings/Settings.h"
 #include "DLLVidonUtils.h"
+#include "addons/LanguageResource.h"
 
 using namespace XFILE;
 
@@ -75,7 +76,11 @@ bool CVDMVersionCheck::VersionCheck(OUT CVDMVersionInfo& info)
   if( g_DllVidonUtils.IsLoaded() )
   {
     VidonCheckVersionHandle hVersinHandle = g_DllVidonUtils.Vidon_CreateCheckVersionHandle();
-    bRet = g_DllVidonUtils.Vidon_CheckVersion( hVersinHandle, VERSIONCHECK_CLIENTTYPE, GetCurrVersionCode().c_str(), CSettings::Get().GetString("locale.language").c_str() );
+
+		std::string strLanguage = CSettings::Get().GetString("locale.language");
+		std::string strLanguageName = strLanguage;
+		ADDON::CLanguageResource::FindLegacyLanguage(strLanguage, strLanguageName);
+		bRet = g_DllVidonUtils.Vidon_CheckVersion(hVersinHandle, VERSIONCHECK_CLIENTTYPE, GetCurrVersionCode().c_str(), strLanguageName.c_str());
     if( bRet )
     {
       info.bIsBeta = g_DllVidonUtils.Vidon_IsBetaVersion( hVersinHandle );

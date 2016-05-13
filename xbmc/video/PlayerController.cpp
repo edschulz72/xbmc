@@ -240,8 +240,12 @@ bool CPlayerController::OnAction(const CAction &action)
           lan = g_localizeStrings.Get(13205); // Unknown
         if (info.name.empty())
           aud = lan;
-        else
-          aud = StringUtils::Format("%s - %s", lan.c_str(), info.name.c_str());
+				else
+#ifdef HAS_VIDONME
+					aud = StringUtils::Format("%s - %s %s", lan.c_str(), info.audioCodecName.c_str(), info.name.c_str());
+#else
+					aud = StringUtils::Format("%s - %s", lan.c_str(), info.name.c_str());
+#endif
         CGUIDialogKaiToast::QueueNotification(CGUIDialogKaiToast::Info, g_localizeStrings.Get(460), aud, DisplTime, false, MsgTime);
         return true;
       }

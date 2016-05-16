@@ -3,6 +3,8 @@
 
 #pragma once
 
+typedef unsigned char  uint8_t;
+
 #include "cores/vdmplayer/IVD_player.h"
 #include "cores/vdmplayer/IVD_playtool_decls.h"
 #include "cores/vdmplayer/IVD_coreplayer_decls.h"

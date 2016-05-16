@@ -300,6 +300,14 @@ public:
   virtual int GetDBStarEntitleCounts() = 0;
 
   virtual VDPlcoreDBStarEntitleInfo* GetDBStarEntitleInfos() = 0;
+  
+  
+  virtual void InitXDisc(int DVDRegionCode, int BDRegionCode, int LicenseYears, int LicenseMonth, int LicenseDay, bool IsTrialVersionExpired) = 0;
+  virtual void UnInitXDisc() = 0;
+
+  // Default is true.
+  // This method can be called before Initialize().
+   virtual void EnableOutputLogToIDEInDebugMode(bool bEnable) = 0;
 protected:
 
   

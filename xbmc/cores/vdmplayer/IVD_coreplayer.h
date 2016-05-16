@@ -143,6 +143,8 @@ public:
   virtual bool GetTitleInfo(int &iTitleNum, bool &bMainTitle) = 0;
   virtual int  GetErrorNum() = 0;
   virtual void SetEndPlay() = 0;
+  virtual void Set3Dmode(int nMode) = 0;
+
 protected:
 
 };

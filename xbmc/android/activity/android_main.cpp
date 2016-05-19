@@ -88,11 +88,11 @@ extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
 
   std::string appName = CCompileInfo::GetAppName();
   StringUtils::ToLower(appName);
-  std::string mainClass = "org/xbmc/" + appName + "/Main";
-  std::string bcReceiver = "org/xbmc/" + appName + "/XBMCBroadcastReceiver";
-  std::string frameListener = "org/xbmc/" + appName + "/XBMCOnFrameAvailableListener";
-  std::string settingsObserver = "org/xbmc/" + appName + "/XBMCSettingsContentObserver";
-  std::string audioFocusChangeListener = "org/xbmc/" + appName + "/XBMCOnAudioFocusChangeListener";
+  std::string mainClass = "org/vidonme/" + appName + "/Main";
+  std::string bcReceiver = "org/vidonme/" + appName + "/XBMCBroadcastReceiver";
+  std::string frameListener = "org/vidonme/" + appName + "/XBMCOnFrameAvailableListener";
+  std::string settingsObserver = "org/vidonme/" + appName + "/XBMCSettingsContentObserver";
+  std::string audioFocusChangeListener = "org/vidonme/" + appName + "/XBMCOnAudioFocusChangeListener";
 
   jclass cMain = env->FindClass(mainClass.c_str());
   if(cMain)

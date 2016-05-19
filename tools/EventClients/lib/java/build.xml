@@ -49,7 +49,7 @@
     <target name="javadoc" depends="init">
         <mkdir dir="${apidir}"/>
         <javadoc
-            packagenames="org.xbmc.eventclient.*"
+            packagenames="org.vidonme.eventclient.*"
             sourcepath="${srcdir}"
             defaultexcludes="yes"
             destdir="${apidir}"

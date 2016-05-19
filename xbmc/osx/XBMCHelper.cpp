@@ -44,7 +44,7 @@ XBMCHelper* XBMCHelper::smp_instance = 0;
 
 #define XBMC_HELPER_PROGRAM "XBMCHelper"
 #define SOFA_CONTROL_PROGRAM "Sofa Control"
-#define XBMC_LAUNCH_PLIST "org.xbmc.helper.plist"
+#define XBMC_LAUNCH_PLIST "org.vidonme.helper.plist"
 
 static int GetBSDProcessList(kinfo_proc **procList, size_t *procCount);
 

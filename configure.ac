@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT([kodi], [16.1.000], [http://trac.kodi.tv])
+AC_INIT([xbmc], [16.1.000], [http://trac.kodi.tv])
 AC_CONFIG_HEADERS([xbmc/config.h])
 AH_TOP([#pragma once])
 m4_include([m4/ax_prog_cc_for_build.m4])
@@ -2416,13 +2416,13 @@ OUTPUT_FILES="Makefile \
     project/cmake/xbmc-config.cmake \
     tools/android/packaging/xbmc/AndroidManifest.xml \
     tools/android/packaging/Makefile \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/Splash.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/Main.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCBroadcastReceiver.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCOnFrameAvailableListener.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCSettingsContentObserver.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCOnAudioFocusChangeListener.java \
-    tools/android/packaging/xbmc/src/org/xbmc/kodi/XBMCVideoView.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/Splash.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/Main.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCBroadcastReceiver.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCOnFrameAvailableListener.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCSettingsContentObserver.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCOnAudioFocusChangeListener.java \
+    tools/android/packaging/xbmc/src/org/vidonme/xbmc/XBMCVideoView.java \
     tools/android/packaging/xbmc/activity_main.xml \
     tools/android/packaging/xbmc/strings.xml \
     addons/xbmc.addon/addon.xml"

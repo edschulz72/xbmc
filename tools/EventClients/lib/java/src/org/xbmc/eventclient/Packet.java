@@ -16,7 +16,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.xbmc.eventclient;
+package org.vidonme.eventclient;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

@@ -299,7 +299,7 @@ public:
   virtual bool IsCancel(){ return m_bCancle; }
   virtual const char* GetThumbnailPath(int playlist = -1);
   virtual const char* GetMovieImagePath(){ return m_strImgePath.c_str(); }
-  virtual int GetThumbnailPercentTime(){ return m_nThumbnailPercentTime; }
+  virtual float GetThumbnailPercentTime(){ return m_nThumbnailPercentTime; }
   virtual void GetThumbnailSize(int& nWidth, int& nHeight);
   virtual const char* GetMultiThumbnailPath(int nSeekTo, int& nIntervalTime, int playlist = -1);
   virtual int GetMinTimeLengthOfPlaylist(){ return m_nMinTimeLength; }

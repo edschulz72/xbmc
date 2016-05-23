@@ -163,6 +163,18 @@ public:
   // Default is false
   virtual void SetSubtitleItalic(bool bItalic) = 0;
   virtual bool GetSubtitleItalic() = 0;
+
+
+  // value's format has to be ARGB
+  // Default is black
+  // This change works immediately when playing back.
+  virtual void SetSubtitleBorderColor(unsigned int color) = 0;
+
+  // Default is true
+  // This change works immediately when playing back.
+  virtual void SetSubtitleBorder(bool bBorder) = 0;
+
+
 	//Default is 50
 	//0-100
 	//This change works immediately when playing back.
@@ -225,7 +237,9 @@ public:
   // Vmf audio only be sent one stream at one time, so plcore does not backup it.
   virtual void SetQuickSwitchAudio(bool on) = 0;
   virtual void SetQuickSwitchSubtitle(bool on) = 0;
-
+  virtual void SetStereoMode(VD_RenderStereoMode mode, VD_RenderStereoView view) {}
+  virtual void SetGraphicContextStereoMode(VD_RenderStereoMode mode) {}
+  virtual void SetGraphicContextStereoView(VD_RenderStereoView view) {}
 #if defined(VDPLAYER_FOR_KODI)
 	// Kodi client has to call this in its render thread before call Init.
   virtual void BindRenderThreadID(){}
@@ -281,11 +295,10 @@ public:
 	virtual void SetD3DPP(D3DPRESENT_PARAMETERS pp){}
 #endif
 
-	virtual void SetStereoMode(VD_RenderStereoMode mode, VD_RenderStereoView view) {}
+
 	virtual void SetWindowResolution(int width, int height) {}
 
-	virtual void SetGraphicContextStereoMode(VD_RenderStereoMode mode) {}
-	virtual void SetGraphicContextStereoView(VD_RenderStereoView view) {}
+
 	virtual void SetGraphicContextFullScreenRoot(bool on) {}
 
 	// VDPLAYER_FOR_KODI should call this after CGraphicContext::SetFullScreenVideo finished. 
@@ -311,6 +324,15 @@ public:
   // Use render window size in case of ( nWidth <= 0 || nWidth > render window width )
   // Kodi client has to call this in render thread.It is better to call this after RenderManagerRender
   virtual bool CaptureRenderImage(const char* strSaveUrl, int nWidth) = 0;
+  //get rgba data
+  virtual bool CaptureRenderRGB(int nWidth) = 0;
+
+    virtual float GetAspectRatio() = 0;
+
+  // default is true
+  virtual void UseDXVA2ForH264(bool use) = 0;
+  virtual void UseDXVA2ForAC1(bool use) = 0;
+  virtual void UseDXVA2ForMpeg2(bool use) = 0;
 
 protected:
 

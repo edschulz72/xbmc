@@ -380,6 +380,9 @@ enum VD_VSYNC
 //For now only KODI use
 #define VD_CSETTING_ID_VIDEOSCREEN_MONITOR "videoscreen.monitor"
 
+//For 3D file
+#define VD_CSETTING_ID_VIDEOSCREEN_STEREOSCOPICMODE "videoscreen.stereoscopicmode"
+
 //==========================================================================================================================//
 // ** subtitles
 

@@ -30,6 +30,13 @@ namespace libvp
 
 //==========================================================================================================================//
 // ** enums
+ 
+  enum VD_PlayerSourceType
+  {
+    VDAYER_SOURCE_TYPE_FILE,
+    VDAYER_SOURCE_TYPE_FOLDER,
+    VDAYER_SOURCE_TYPE_DISC,
+  };
 
 enum VD_Action 
 {
@@ -239,6 +246,8 @@ public:
 	virtual const char* GetPath() = 0;
   virtual const char* GetKeyPath() {return NULL;};
 	virtual const char* GetMimeType() = 0;
+  virtual VD_PlayerSourceType GetSourceType() { return VDAYER_SOURCE_TYPE_FILE; }
+
 };
 
 
@@ -268,6 +277,10 @@ public:
   virtual void OnOpenAC3() {};
   // Current audio stream is DTS
   virtual void OnOpenDTS() {};
+  
+  //capture render data
+  virtual void OnCaptureResult(uint8_t* RGBA, int Width, int Height){}
+
 };
 
 }

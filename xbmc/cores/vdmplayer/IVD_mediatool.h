@@ -72,7 +72,7 @@ public:
   * @return percent of thumbnail time in (0-100)%
   */
 
-  virtual int GetThumbnailPercentTime() = 0;
+  virtual float  GetThumbnailPercentTime() = 0;
 
 /**
   * get size of thumbnail
@@ -87,6 +87,14 @@ public:
   * @return int
   */
   virtual int GetMinTimeLengthOfPlaylist() = 0;
+
+#ifdef TARGET_WINDOWS
+  virtual bool IsNeedSaveBMP(){ return false; }
+
+  virtual void SetThumbnailBMP(uint32_t pBMP) {}
+
+#endif
+
 
 };
 

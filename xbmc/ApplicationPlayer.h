@@ -188,6 +188,7 @@ public:
 	void SetSubColor(unsigned int color);
 	bool SetSubtitleSize(int size);
 	void SetSubtitlePos(SubtitleAlign align, float yPos);
+	void SetSubtitlePos(int nPos);
 	void SetSubtitleStyle(int nStyle);
 	void SetSubtitleBold(bool bBold);
 	void SetSubtitleItalic(bool bItalic);

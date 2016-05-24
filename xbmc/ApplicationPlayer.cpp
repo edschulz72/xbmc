@@ -908,6 +908,13 @@ void CApplicationPlayer::SetSubtitlePos(SubtitleAlign align, float yPos)
 		player->SetSubtitlePos(align, yPos);
 }
 
+void CApplicationPlayer::SetSubtitlePos(int nPos)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSubtitlePos(nPos);
+}
+
 void CApplicationPlayer::SetSubtitleStyle(int nStyle)
 {
 	std::shared_ptr<IPlayer> player = GetInternal();

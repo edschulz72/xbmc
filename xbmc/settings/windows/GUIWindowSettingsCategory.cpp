@@ -266,7 +266,33 @@ void CGUIWindowSettingsCategory::OnSettingChanged(const CSetting *setting)
 	}
 	else if (settingId == "subtitles.align")
 	{
-		g_application.m_pPlayer->SetSubtitlePos((SubtitleAlign)static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue()), 0);
+		SubtitleAlign eAlign = (SubtitleAlign)static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue());
+		g_application.m_pPlayer->SetSubtitlePos(eAlign, 0);
+
+		switch (eAlign)
+		{
+		case SUBTITLE_ALIGN_MANUAL:
+			break;
+		case SUBTITLE_ALIGN_BOTTOM_INSIDE:
+			CSettings::Get().SetInt("subtitles.align_vidon", 15);
+			break;
+		case SUBTITLE_ALIGN_BOTTOM_OUTSIDE:
+			CSettings::Get().SetInt("subtitles.align_vidon", 0);
+			break;
+		case SUBTITLE_ALIGN_TOP_INSIDE:
+			CSettings::Get().SetInt("subtitles.align_vidon", 85);
+			break;
+		case SUBTITLE_ALIGN_TOP_OUTSIDE:
+			CSettings::Get().SetInt("subtitles.align_vidon", 95);
+			break;
+		default:
+			break;
+		}
+	}
+	else if (settingId == "subtitles.align_vidon")
+	{
+		int nPos = static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue());
+		g_application.m_pPlayer->SetSubtitlePos(nPos);
 	}
 	else if (settingId == "subtitles.color")
 	{

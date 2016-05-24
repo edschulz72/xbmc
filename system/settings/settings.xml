@@ -926,6 +926,16 @@
           </constraints>
           <control type="list" format="string" />
         </setting>
+        <setting id="subtitles.align_vidon" type="integer" label="21460" help="36192"> <!--HAS_VIDONME-->
+          <level>1</level>
+          <default>0</default>
+          <constraints>
+            <minimum>0</minimum>
+            <step>1</step>
+            <maximum>100</maximum>
+          </constraints>
+          <control type="spinner" format="integer" delayed="true"/>
+        </setting>
         <setting id="subtitles.stereoscopicdepth" type="integer" label="36545" help="36546">
           <level>0</level>
           <default>0</default>

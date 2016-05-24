@@ -304,6 +304,7 @@ public:
 	virtual void SetSubColor(unsigned int color) {}
 	virtual bool SetSubtitleSize(int size) { return false;  }
 	virtual void SetSubtitlePos(SubtitleAlign align, float yPos) {}
+	virtual void SetSubtitlePos(int nPos) {}
 	virtual void SetSubtitleStyle(int nStyle){}
 	virtual void SetSubtitleBold(bool bBold) {}
 	virtual void SetSubtitleItalic(bool bItalic) {}

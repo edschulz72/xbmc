@@ -1635,6 +1635,19 @@ void CVDMPlayer::SetSubtitlePos(SubtitleAlign align, float yPos)
 	m_pPlayTool->SetSubtitlePos(ChangeSubtitleAlign(align), fYPos);
 }
 
+void CVDMPlayer::SetSubtitlePos(int nPos)
+{
+	if (!m_pPlayTool)
+	{
+		return;
+	}
+
+	float fYPos = (float)nPos/100;
+
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitlePos pos = %d", nPos);
+	m_pPlayTool->SetSubtitlePos(VD_SUBTITLE_ALIGN_MANUAL, fYPos);
+}
+
 void CVDMPlayer::SetSubtitleStyle(int nStyle)
 {
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetSubtitleStyle Style = %d", nStyle);

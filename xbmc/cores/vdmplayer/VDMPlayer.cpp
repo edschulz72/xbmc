@@ -2440,7 +2440,12 @@ bool CVDMPlayer::InitPlayer(void)
 	SetCSettings("window.height", CSettings::Get().GetInt("window.height"));
 
 	// videoplayer
-	SetCSettings("locale.audiolanguage", CSettings::Get().GetString("locale.audiolanguage").c_str());
+	std::string strAudioLanguage = CSettings::Get().GetString("locale.audiolanguage");
+	if (strAudioLanguage == "Chinese (Simple)" || strAudioLanguage == "Chinese (Traditional)")
+	{
+		strAudioLanguage = "Chinese";
+	}
+	SetCSettings("locale.audiolanguage", strAudioLanguage.c_str());
 	SetCSettings("videoplayer.preferdefaultflag", CSettings::Get().GetBool("videoplayer.preferdefaultflag"));
 	SetCSettings("videoplayer.autoplaynextitem", CSettings::Get().GetBool("videoplayer.autoplaynextitem"));
 	SetCSettings("videoplayer.seeksteps", CSettings::Get().GetInt("videoplayer.seeksteps"));
@@ -2482,7 +2487,12 @@ bool CVDMPlayer::InitPlayer(void)
 	SetCSettings("videoplayer.usestagefright", CSettings::Get().GetBool("videoplayer.usestagefright"));
 
 	// subtitles
-	SetCSettings("locale.subtitlelanguage", CSettings::Get().GetString("locale.subtitlelanguage").c_str());
+	std::string strSubtitleLanguage = CSettings::Get().GetString("locale.subtitlelanguage");
+	if (strSubtitleLanguage == "Chinese (Simple)" || strSubtitleLanguage == "Chinese (Traditional)")
+	{
+		strSubtitleLanguage = "Chinese";
+	}
+	SetCSettings("locale.subtitlelanguage", strSubtitleLanguage.c_str());
 	SetCSettings("subtitles.parsecaptions", CSettings::Get().GetBool("subtitles.parsecaptions"));
 	SetCSettings("subtitles.align", CSettings::Get().GetInt("subtitles.align"));
 	SetCSettings("subtitles.stereoscopicdepth", CSettings::Get().GetInt("subtitles.stereoscopicdepth"));

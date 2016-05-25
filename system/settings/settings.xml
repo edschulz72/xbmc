@@ -3373,7 +3373,7 @@
         </setting>
         <setting id="upgrade.bluraylib" type="string" label="70124" help="0">
           <level>0</level>
-          <default>1.0.3.0</default>
+          <default>1.0.3.1</default>
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
           </dependencies>
@@ -3381,7 +3381,7 @@
         </setting>
         <setting id="upgrade.dvdlib" type="string" label="70125" help="0">
           <level>0</level>
-          <default>1.0.0.7</default>
+          <default>1.0.1.3</default>
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
           </dependencies>
@@ -3389,7 +3389,7 @@
         </setting>
         <setting id="upgrade.vdmplayer" type="string" label="70126" help="0">
           <level>0</level>
-          <default>2.0.1.5-2015.7.6-fcabe0e</default>
+          <default>2.0.2016-05-25-9d89634</default>
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
           </dependencies>

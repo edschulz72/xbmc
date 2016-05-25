@@ -246,8 +246,11 @@ private:
 	int m_nAudioStream;
 
 private:
+	IVDPlayTool* m_pPlayTool;
 	IVDCorePlayer* m_pCorePlayer;
 	CVDMPlayCallback* m_pPlcorePlayerCallback;
+	CVDMPlayToolConfig* m_pPlayToolConfig;
+	CVDMPlaytoolCallback* m_pPlcorePlaytoolCallback;
 };
 
 #endif

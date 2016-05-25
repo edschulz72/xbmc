@@ -28,10 +28,6 @@
 #include "LangInfo.h"
 #include "GUIUserMessages.h"
 
-IVDPlayTool* m_pPlayTool;
-CVDMPlayToolConfig* m_pPlayToolConfig;
-CVDMPlaytoolCallback* m_pPlcorePlaytoolCallback;
-
 IVDPlayer* m_pPlcore;
 CVDMPlcoreConfig* m_pConfig;
 CVDMPlcoreCallback* s_pPlcoreCallback = NULL;
@@ -48,8 +44,12 @@ CVDMPlayer::CVDMPlayer(IPlayerCallback& callback)
 	m_bIsPlaying = false;
 	m_bStreamInfoChanged = false;
 
+	m_pPlayTool = 0;
 	m_pCorePlayer = 0;
 	m_pPlcorePlayerCallback = 0;
+	m_pPlayToolConfig = 0;
+	m_pPlcorePlaytoolCallback = 0;
+	s_pPlcoreCallback = 0;
 	m_nAudioStream = -1;
 
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::VDMPlayer Construct");
@@ -127,15 +127,47 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile FullScreen = %d", m_optionsPlay.IsFullscreen());
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile FullScreen = %d", m_optionsPlay.IsVideoOnly());
 
+	m_pPlayToolConfig = new CVDMPlayToolConfig();
 	m_pPlcorePlayerCallback = new CVDMPlayCallback();
+	m_pPlcorePlaytoolCallback = new CVDMPlaytoolCallback();
 
-	if (!m_pPlcorePlayerCallback)
+	if (!m_pPlayToolConfig || !m_pPlcorePlayerCallback || !m_pPlcorePlaytoolCallback)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::OpenFile PlayerConfig create fail");
 		DeInitPlayer();
 
 		return false;
 	}
+
+	m_pPlayToolConfig->SetRenderVendor(g_Windowing.GetRenderVendor().c_str());
+	m_pPlayToolConfig->SetRenderRenderer(g_Windowing.GetRenderRenderer().c_str());
+
+	unsigned int major, minor;
+	g_Windowing.GetRenderVersion(major, minor);
+	m_pPlayToolConfig->SetRenderVersion(major, minor);
+	m_pPlayToolConfig->SetRenderCaps(g_Windowing.GetRenderCaps());
+	m_pPlayToolConfig->SetMaxTextureSize(g_Windowing.GetMaxTextureSize());
+	m_pPlayToolConfig->SetScreen(g_Windowing.GetCurrentScreen());
+
+
+#if defined(HAS_DX)
+	m_pPlayToolConfig->SetD3d9(g_Windowing.GetD3D());
+	m_pPlayToolConfig->SetD3d9Device(g_Windowing.Get3DDevice());
+	m_pPlayToolConfig->SetAIdentifier(g_Windowing.GetAIdentifier());
+	m_pPlayToolConfig->SetDefaultD3DUsage(g_Windowing.DefaultD3DUsage());
+	m_pPlayToolConfig->SetDefaultD3DPool(g_Windowing.DefaultD3DPool());
+	m_pPlayToolConfig->SetD3DPP(g_Windowing.GetD3DPP());
+#endif
+
+#if defined(HAS_GL) || defined(HAS_GLES)
+	//m_pPlayToolConfig->SetRenderExtensions(g_Windowing.GetRenderExtensions());
+	m_pPlayToolConfig->SetRenderExtensions(" ");
+#endif
+
+#if defined(HAS_EGL)
+	m_pPlayToolConfig->SetEGLDisplay(g_Windowing.GetEGLDisplay());
+	m_pPlayToolConfig->SetEGLContext(g_Windowing.GetEGLContext());
+#endif
 
 #if defined(TARGET_ANDROID)
 	if (1)
@@ -150,11 +182,26 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 		//	vidonconfig.pNativeWindows = (ANativeWindow *)(*(CXBMCApp::GetNativeWindow (30000)));
 	}
 #endif
-	
+	m_pPlayTool = m_pPlcore->CreatePlayTool(VD_PLAYER_PLCORE, m_pPlayToolConfig, m_pPlcorePlaytoolCallback);
+	if (!m_pPlayTool)
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::OpenFile CreatePlayTool fail");
+		DeInitPlayer();
+
+		return false;
+	}
+
 #ifdef HAS_VIDEO_PLAYBACK
 	g_renderManager.PreInit();
 #endif
 
+	if (!m_pPlayTool->Init())
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::OpenFile PlayTool init fail");
+		DeInitPlayer();
+
+		return false;
+	}
 	m_event.Reset();
 
 	Create();
@@ -2297,67 +2344,18 @@ bool CVDMPlayer::InitPlayCore(void)
 		return false;
 	}
 
-	m_pPlayToolConfig = new CVDMPlayToolConfig();
-	m_pPlcorePlaytoolCallback = new CVDMPlaytoolCallback();
-
-	if (!m_pPlayToolConfig || !m_pPlcorePlaytoolCallback)
+#if defined(TARGET_ANDROID)
+	if (1)
 	{
-		CLog::Log(LOGERROR, "******CVDMPlayer::InitPlayCore PlayerConfig create fail");
-		DeInitPlayCore();
+		AndroidRuntime::Get().m_pNativewindow = (ANativeWindow *)(*(CXBMCApp::GetNativeWindow(30000)));
 
-		return false;
+		AndroidRuntime::Get().m_sConfig.handle = (void**)&(AndroidRuntime::Get().m_pNativewindow);
+		AndroidRuntime::Get().m_sConfig.nWidth = AndroidRuntime::Get().m_pNativewindow ? ANativeWindow_getWidth(AndroidRuntime::Get().m_pNativewindow) : 0;
+		AndroidRuntime::Get().m_sConfig.nHeight = AndroidRuntime::Get().m_pNativewindow ? ANativeWindow_getHeight(AndroidRuntime::Get().m_pNativewindow) : 0;
+
+		//	vidonconfig.pNativeActivity = CXBMCApp::GetCurrentActivity();
+		//	vidonconfig.pNativeWindows = (ANativeWindow *)(*(CXBMCApp::GetNativeWindow (30000)));
 	}
-
-	m_pPlayToolConfig->SetRenderVendor(g_Windowing.GetRenderVendor().c_str());
-	m_pPlayToolConfig->SetRenderRenderer(g_Windowing.GetRenderRenderer().c_str());
-
-	unsigned int major, minor;
-	g_Windowing.GetRenderVersion(major, minor);
-	m_pPlayToolConfig->SetRenderVersion(major, minor);
-	m_pPlayToolConfig->SetRenderCaps(g_Windowing.GetRenderCaps());
-	m_pPlayToolConfig->SetMaxTextureSize(g_Windowing.GetMaxTextureSize());
-	m_pPlayToolConfig->SetScreen(g_Windowing.GetCurrentScreen());
-
-
-#if defined(HAS_DX)
-	m_pPlayToolConfig->SetD3d9(g_Windowing.GetD3D());
-	m_pPlayToolConfig->SetD3d9Device(g_Windowing.Get3DDevice());
-	m_pPlayToolConfig->SetAIdentifier(g_Windowing.GetAIdentifier());
-	m_pPlayToolConfig->SetDefaultD3DUsage(g_Windowing.DefaultD3DUsage());
-	m_pPlayToolConfig->SetDefaultD3DPool(g_Windowing.DefaultD3DPool());
-	m_pPlayToolConfig->SetD3DPP(g_Windowing.GetD3DPP());
-#endif
-
-#if defined(HAS_GL) || defined(HAS_GLES)
-	//m_pPlayToolConfig->SetRenderExtensions(g_Windowing.GetRenderExtensions());
-	m_pPlayToolConfig->SetRenderExtensions(" ");
-#endif
-
-#if defined(HAS_EGL)
-	m_pPlayToolConfig->SetEGLDisplay(g_Windowing.GetEGLDisplay());
-	m_pPlayToolConfig->SetEGLContext(g_Windowing.GetEGLContext());
-#endif
-
-	m_pPlayTool = m_pPlcore->CreatePlayTool(VD_PLAYER_PLCORE, m_pPlayToolConfig, m_pPlcorePlaytoolCallback);
-	if (!m_pPlayTool)
-	{
-		CLog::Log(LOGERROR, "******CVDMPlayer::InitPlayCore CreatePlayTool fail");
-		DeInitPlayCore();
-
-		return false;
-	}
-
-	if (!m_pPlayTool->Init())
-	{
-		CLog::Log(LOGERROR, "******CVDMPlayer::InitPlayCore PlayTool init fail");
-		DeInitPlayCore();
-
-		return false;
-	}
-
-#if defined(HAS_DX)
-	m_pPlayTool->SetD3DPP(g_Windowing.GetD3DPP());
-	m_pPlayTool->SetAdapter(g_Windowing.GetAdapter());
 #endif
 
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::InitPlayCore Success");
@@ -2368,42 +2366,6 @@ bool CVDMPlayer::InitPlayCore(void)
 void CVDMPlayer::DeInitPlayCore(void)
 {
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::DeInitPlayCore");
-
-	if (m_pPlayTool)
-	{
-		if (!m_pPlayTool->UnInit())
-		{
-			CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayCore PlayTool UnInit fail");
-		}
-
-		m_pPlcore->ReleasePlayTool(m_pPlayTool);
-		m_pPlayTool = 0;
-	}
-	else
-	{
-		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayCore PlayTool invalide");
-	}
-
-	if (m_pPlayToolConfig)
-	{
-		delete m_pPlayToolConfig;
-		m_pPlayToolConfig = 0;
-	}
-	else
-	{
-		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayCore PlayToolConfig invalide");
-	}
-
-	if (m_pPlcorePlaytoolCallback)
-	{
-		delete m_pPlcorePlaytoolCallback;
-		m_pPlcorePlaytoolCallback = 0;
-	}
-	else
-	{
-		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayCore PlcorePlaytoolCallback invalide");
-	}
-
 	if (m_pPlcore)
 	{
 		ReleaseVDPlayer(m_pPlcore);
@@ -2583,6 +2545,20 @@ bool CVDMPlayer::InitPlayer(void)
 
 	NotifyAudioOutputSettingsChanged();
 
+	/*
+	if (!m_pPlayTool->Init())
+	{
+		DeInitPlayer();
+
+		return false;
+	}
+	*/
+
+#if defined(HAS_DX)
+	m_pPlayTool->SetD3DPP(g_Windowing.GetD3DPP());
+	m_pPlayTool->SetAdapter(g_Windowing.GetAdapter());
+#endif
+
 	SetDeinterlaceMode(CMediaSettings::Get().GetCurrentVideoSettings().m_DeinterlaceMode);
 	SetInterlaceMethod(CMediaSettings::Get().GetCurrentVideoSettings().m_InterlaceMethod);
 	SetScalingMethod(CMediaSettings::Get().GetCurrentVideoSettings().m_ScalingMethod);
@@ -2636,6 +2612,21 @@ void CVDMPlayer::DeInitPlayer(void)
 		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayTool or CorePlayer invalide");
 	}
 
+	if (m_pPlayTool)
+	{
+		if (!m_pPlayTool->UnInit())
+		{
+			CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayTool UnInit fail");
+		}
+
+		m_pPlcore->ReleasePlayTool(m_pPlayTool);
+		m_pPlayTool = 0;
+	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayTool invalide");
+	}
+
 	if (m_pPlcorePlayerCallback)
 	{
 		delete m_pPlcorePlayerCallback;
@@ -2644,6 +2635,26 @@ void CVDMPlayer::DeInitPlayer(void)
 	else
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlcorePlayerCallback invalide");
+	}
+
+	if (m_pPlayToolConfig)
+	{
+		delete m_pPlayToolConfig;
+		m_pPlayToolConfig = 0;
+	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlayToolConfig invalide");
+	}
+
+	if (m_pPlcorePlaytoolCallback)
+	{
+		delete m_pPlcorePlaytoolCallback;
+		m_pPlcorePlaytoolCallback = 0;
+	}
+	else
+	{
+		CLog::Log(LOGERROR, "******CVDMPlayer::DeInitPlayer PlcorePlaytoolCallback invalide");
 	}
 
 	CLog::Log(LOGNOTICE, "******CVDMPlayer::DeInitPlayer Success");

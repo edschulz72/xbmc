@@ -3884,10 +3884,9 @@ void CApplication::StopPlaying()
 		{
 			g_windowManager.PreviousWindow();
 
-			iWin = g_windowManager.GetActiveWindow();
-			if ((iWin == WINDOW_VISUALISATION || iWin == WINDOW_FULLSCREEN_VIDEO) && !m_bStop)
+			if (g_windowManager.HasDialogOnScreen() && !m_bStop)
 			{
-				g_windowManager.PreviousWindow();
+				g_windowManager.CloseDialogs();
 			}
 		}
 #else

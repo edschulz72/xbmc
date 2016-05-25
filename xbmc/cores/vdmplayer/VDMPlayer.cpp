@@ -928,7 +928,7 @@ void CVDMPlayer::SeekTime(int64_t iTime)
 		return;
 	}
 
-	m_pCorePlayer->SeekTime(iTime / 1000);
+	m_pCorePlayer->SeekTime(iTime / 1000, false);
 }
 
 bool CVDMPlayer::SeekTimeRelative(int64_t iTime)

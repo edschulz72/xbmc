@@ -2304,6 +2304,8 @@ void CVDMPlayer::PlayBackStart(void)
 	SetSubtitleWhetherOverAssOrig(CSettings::Get().GetBool("subtitles.overrideassfonts"));
 	SetSubttileFeatures();
 
+	g_dataCacheCore.SignalVideoInfoChange();
+	g_dataCacheCore.SignalAudioInfoChange();
 }
 
 bool CVDMPlayer::InitPlayCore(void)

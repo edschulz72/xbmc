@@ -733,7 +733,6 @@ void CVDMPlayer::SetSubtitle(int iStream)
 	if (iStream < 0 || iStream >= m_pCorePlayer->GetSubtitleCount())
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetSubtitle iStream invalide subtitle count = %d", m_pCorePlayer->GetSubtitleCount());
-		return;
 	}
 
 	m_pCorePlayer->SetSubtitle(iStream);
@@ -846,7 +845,6 @@ void CVDMPlayer::SetAudioStream(int iStream)
 	if (iStream < 0 || iStream >= nAudioCount)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetAudioStream index invalide  AudioCount = %d", nAudioCount);
-		return;
 	}
 
 	m_nAudioStream = iStream;

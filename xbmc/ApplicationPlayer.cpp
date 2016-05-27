@@ -1285,4 +1285,11 @@ bool CApplicationPlayer::CaptureRenderImage(const char* strSaveUrl, int nWidth)
 	return false;
 }
 
+void CApplicationPlayer::PlayBackStart()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->PlayBackStart();
+}
+
 #endif 

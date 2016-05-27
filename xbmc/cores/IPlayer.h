@@ -371,6 +371,7 @@ public:
 
 	virtual bool CaptureRenderImage(const char* strSaveUrl, int nWidth) { return false; }
 
+	virtual void PlayBackStart(void){}
 #endif 
 
 protected:

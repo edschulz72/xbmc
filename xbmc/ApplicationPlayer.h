@@ -256,5 +256,6 @@ public:
 
 	bool CaptureRenderImage(const char* strSaveUrl, int nWidth);
 
+	void PlayBackStart(void);
 #endif 
 };

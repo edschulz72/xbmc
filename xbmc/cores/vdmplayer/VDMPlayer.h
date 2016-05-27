@@ -211,6 +211,8 @@ public:
 
 	virtual bool CaptureRenderImage(const char* strSaveUrl, int nWidth);
 
+	virtual void PlayBackStart(void);
+
 public:
 	static bool InitPlayCore(void);
 	static void DeInitPlayCore(void);

@@ -3471,11 +3471,6 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
   {
 #ifdef HAS_VIDONME
 		m_strLastPlayedFile = item.GetPath();
-
-		if (m_pPlayer)
-		{
-			AddExternalSubtitles();
-		}
 #endif
 
     if (m_pPlayer->GetPlaySpeed() != 1)
@@ -4259,6 +4254,14 @@ bool CApplication::OnMessage(CGUIMessage& message)
         }
 #endif
       }
+
+#ifdef HAS_VIDONME
+			if (m_pPlayer)
+			{
+				m_pPlayer->PlayBackStart();
+				AddExternalSubtitles();
+			}
+#endif
 
       return true;
     }

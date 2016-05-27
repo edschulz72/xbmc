@@ -221,69 +221,6 @@ bool CVDMPlayer::OpenFile(const CFileItem& file, const CPlayerOptions &options)
 		return false;
 	}
 
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings AudioStream = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream);
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleStream = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %.4f", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleOn = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %.4f", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
-
-	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.audiolanguage"), "original") &&
-		CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream <= 0)
-	{
-		int nAudioStreamCount = GetAudioStreamCount();
-		std::string audio_language = g_langInfo.GetAudioLanguage();
-
-		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original audio language and no record. AudioLanguage = %s", audio_language.c_str());
-
-		for (int i = 0; i < nAudioStreamCount; i++)
-		{
-			SPlayerAudioStreamInfo info;
-			GetAudioStreamInfo(i, info);
-
-			if (StringUtils::EqualsNoCase(audio_language, info.language))
-			{
-				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original audio language and no record. Auto select audio stream.");
-				SetAudioStream(i);
-				break;
-			}
-		}
-	}
-	else
-	{
-		SetAudioStream(CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream);
-	}
-
-	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.subtitlelanguage"), "original") &&
-		CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream <= 0)
-	{
-		int nSubtitleCount = GetSubtitleCount();
-		std::string subtitle_language = g_langInfo.GetSubtitleLanguage();
-
-		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original subtitle language and no record. SubtitleLanguage = %s", subtitle_language.c_str());
-
-		for (int i = 0; i < nSubtitleCount; i++)
-		{
-			SPlayerSubtitleStreamInfo info;
-			GetSubtitleStreamInfo(i, info);
-
-			if (StringUtils::EqualsNoCase(subtitle_language, info.language))
-			{
-				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original subtitle language and no record. Auto select subtitle stream.");
-				SetSubtitle(i);
-				break;
-			}
-		}
-	}
-	else
-	{
-		SetSubtitle(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
-	}
-
-	SetSubTitleDelay(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
-	SetSubtitleVisible(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
-	SetSubtitleWhetherOverAssOrig(CSettings::Get().GetBool("subtitles.overrideassfonts"));
-	SetSubttileFeatures();
-	
 	g_graphicsContext.SetFullScreenVideo(true);
 
 	g_dataCacheCore.SignalVideoInfoChange();
@@ -2300,6 +2237,73 @@ bool CVDMPlayer::CaptureRenderImage(const char* strSaveUrl, int nWidth)
 	}
 
 	return bRet;
+}
+
+void CVDMPlayer::PlayBackStart(void)
+{
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings AudioStream = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleStream = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %.4f", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleOn = %d", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
+	CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile CurrentVideoSettings SubtitleDelay = %.4f", CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
+
+	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.audiolanguage"), "original") &&
+		CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream <= 0)
+	{
+		int nAudioStreamCount = GetAudioStreamCount();
+		std::string audio_language = g_langInfo.GetAudioLanguage();
+
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original audio language and no record. AudioLanguage = %s", audio_language.c_str());
+
+		for (int i = 0; i < nAudioStreamCount; i++)
+		{
+			SPlayerAudioStreamInfo info;
+			GetAudioStreamInfo(i, info);
+
+			if (StringUtils::EqualsNoCase(audio_language, info.language))
+			{
+				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original audio language and no record. Auto select audio stream.");
+				SetAudioStream(i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		SetAudioStream(CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream);
+	}
+
+	if (!StringUtils::EqualsNoCase(CSettings::Get().GetString("locale.subtitlelanguage"), "original") &&
+		CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream <= 0)
+	{
+		int nSubtitleCount = GetSubtitleCount();
+		std::string subtitle_language = g_langInfo.GetSubtitleLanguage();
+
+		CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original subtitle language and no record. SubtitleLanguage = %s", subtitle_language.c_str());
+
+		for (int i = 0; i < nSubtitleCount; i++)
+		{
+			SPlayerSubtitleStreamInfo info;
+			GetSubtitleStreamInfo(i, info);
+
+			if (StringUtils::EqualsNoCase(subtitle_language, info.language))
+			{
+				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original subtitle language and no record. Auto select subtitle stream.");
+				SetSubtitle(i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		SetSubtitle(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream);
+	}
+
+	SetSubTitleDelay(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleDelay);
+	SetSubtitleVisible(CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleOn);
+	SetSubtitleWhetherOverAssOrig(CSettings::Get().GetBool("subtitles.overrideassfonts"));
+	SetSubttileFeatures();
+
 }
 
 bool CVDMPlayer::InitPlayCore(void)

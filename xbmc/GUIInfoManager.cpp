@@ -1667,6 +1667,9 @@ std::string CGUIInfoManager::GetLabel(int info, int contextWindow, std::string *
     if(g_application.m_pPlayer->IsPlaying())
     {
       strLabel = m_audioInfo.audioCodecName;
+#ifdef HAS_VIDONME
+			StringUtils::ToLower(strLabel);
+#endif
     }
     break;
   case VIDEOPLAYER_VIDEO_ASPECT:

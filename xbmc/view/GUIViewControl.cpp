@@ -329,7 +329,12 @@ void CGUIViewControl::UpdateViewAsControl(const std::string &viewLabel)
   g_windowManager.SendMessage(msg, m_parentWindow);
 
   // otherwise it's just a normal button
+#ifdef HAS_VIDONME
+  std::string label = g_localizeStrings.Get(534);// View: %s
+  StringUtils::Replace(label, "%s", viewLabel.c_str());
+#else
   std::string label = StringUtils::Format(g_localizeStrings.Get(534).c_str(), viewLabel.c_str()); // View: %s
+#endif
   CGUIMessage msgSet(GUI_MSG_LABEL_SET, m_parentWindow, m_viewAsControl);
   msgSet.SetLabel(label);
   g_windowManager.SendMessage(msgSet, m_parentWindow);

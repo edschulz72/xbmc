@@ -96,7 +96,10 @@ public:
   CDateTime(const FILETIME& time);
   CDateTime(const time_t& time);
   CDateTime(const tm& time);
-  CDateTime(int year, int month, int day, int hour, int minute, int second);
+	CDateTime(int year, int month, int day, int hour, int minute, int second);
+#ifdef HAS_VIDONME
+	CDateTime(const int64_t& time);
+#endif
   virtual ~CDateTime() {}
 
   bool SetFromDateString(const std::string &date);
@@ -177,6 +180,9 @@ public:
   bool SetFromW3CDateTime(const std::string &date, bool ignoreTimezone = false);
   bool SetFromUTCDateTime(const CDateTime &dateTime);
   bool SetFromUTCDateTime(const time_t &dateTime);
+#ifdef HAS_VIDONME
+	bool SetFromUTCDateTime(const int64_t &dateTime);
+#endif
   bool SetFromRFC1123DateTime(const std::string &dateTime);
 
   /*! \brief set from a database datetime format YYYY-MM-DD HH:MM:SS
@@ -211,6 +217,9 @@ private:
   bool ToFileTime(const SYSTEMTIME& time, FILETIME& fileTime) const;
   bool ToFileTime(const time_t& time, FILETIME& fileTime) const;
   bool ToFileTime(const tm& time, FILETIME& fileTime) const;
+#ifdef HAS_VIDONME
+	bool ToFileTime(const int64_t& time, FILETIME& fileTime) const;
+#endif
 
   void ToULargeInt(ULARGE_INTEGER& time) const;
   void FromULargeInt(const ULARGE_INTEGER& time);

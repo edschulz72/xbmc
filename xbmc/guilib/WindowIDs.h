@@ -169,3 +169,11 @@
 #define WINDOW_ADDON_START                14000
 #define WINDOW_ADDON_END                  14099
 
+#ifdef HAS_VIDONME
+#define VDM_WINDOW_IDALOG_OK							20000
+#define VDM_WINDOW_DIALOG_LOGIN           20001
+#define VDM_WINDOW_SETTINGS_VIDONME				20002
+#define VDM_DIALOG_VERSIONCHECK           20003
+#define VDM_WINDOW_RECOMMEND							20004
+#endif
+

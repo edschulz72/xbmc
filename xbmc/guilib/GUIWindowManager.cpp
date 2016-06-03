@@ -142,6 +142,12 @@
 #include "peripherals/dialogs/GUIDialogPeripheralSettings.h"
 #include "addons/AddonCallbacksGUI.h"
 
+#ifdef HAS_VIDONME
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/VDMDialogVersionCheck.h"
+#include "vidonme/VDMWindowRecommend.h"
+#endif
+
 using namespace PVR;
 using namespace PERIPHERALS;
 using namespace KODI::MESSAGING;
@@ -285,6 +291,12 @@ void CGUIWindowManager::CreateWindows()
   Add(new CGUIWindowSplash);
 
   Add(new CGUIWindowEventLog);
+
+#ifdef HAS_VIDONME
+	Add(new CVDMDialogLogin);
+	Add(new CVDMDialogVersionCheck);
+	Add(new CVDMWindowRecommend);
+#endif
 }
 
 bool CGUIWindowManager::DestroyWindows()
@@ -386,6 +398,12 @@ bool CGUIWindowManager::DestroyWindows()
     Delete(WINDOW_PICTURES);
     Delete(WINDOW_WEATHER);
 
+#ifdef HAS_VIDONME
+		Delete(VDM_DIALOG_VERSIONCHECK);
+		Delete(VDM_WINDOW_DIALOG_LOGIN);
+		Delete(VDM_WINDOW_RECOMMEND);
+#endif
+
     Delete(WINDOW_SETTINGS_MYPICTURES);
     Remove(WINDOW_SETTINGS_MYPROGRAMS);
     Remove(WINDOW_SETTINGS_MYWEATHER);
@@ -400,7 +418,9 @@ bool CGUIWindowManager::DestroyWindows()
     Remove(WINDOW_DIALOG_SEEK_BAR);
     Remove(WINDOW_DIALOG_VOLUME_BAR);
 
-    Delete(WINDOW_EVENT_LOG);
+#ifdef HAS_VIDONME
+		Remove(VDM_WINDOW_SETTINGS_VIDONME);
+#endif
   }
   catch (...)
   {
@@ -642,7 +662,15 @@ void CGUIWindowManager::PreviousWindow()
       ActivateWindow(WINDOW_HOME);
     }
     return;
-  }
+	}
+
+#ifdef HAS_VIDONME
+	if (GetActiveWindow() == WINDOW_HOME)
+	{
+		return;
+	}
+#endif
+
   m_windowHistory.pop();
   int previousWindow = GetActiveWindow();
   m_windowHistory.push(currentWindow);

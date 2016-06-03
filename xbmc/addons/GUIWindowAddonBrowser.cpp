@@ -266,6 +266,13 @@ bool CGUIWindowAddonBrowser::OnClick(int iItem)
   if (item->IsPath("addons://search/"))
     return Update(item->GetPath());
 
+#ifdef HAS_VIDONME
+	if (item->IsPath("addons://recommend/"))
+	{
+		g_windowManager.ActivateWindow(VDM_WINDOW_RECOMMEND);
+	}
+#endif
+
   return CGUIMediaWindow::OnClick(iItem);
 }
 

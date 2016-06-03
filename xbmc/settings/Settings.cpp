@@ -86,6 +86,10 @@
 #include "view/ViewStateSettings.h"
 #include "input/InputManager.h"
 
+#ifdef HAS_VIDONME
+#include "vidonme/VDMSettingsManager.h"
+#endif
+
 #define SETTINGS_XML_FOLDER "special://xbmc/system/settings/"
 #define SETTINGS_XML_ROOT   "settings"
 
@@ -618,6 +622,10 @@ void CSettings::Uninitialize()
   m_settingsManager->UnregisterCallback(&ActiveAE::CActiveAEDSP::GetInstance());
   m_settingsManager->UnregisterCallback(&CWakeOnAccess::GetInstance());
 
+#ifdef HAS_VIDONME
+	m_settingsManager->UnregisterCallback(&CVDMSettingsManager::Get());
+#endif
+
   // cleanup the settings manager
   m_settingsManager->Clear();
 
@@ -693,6 +701,13 @@ bool CSettings::GetBool(const std::string &id) const
 
 bool CSettings::SetBool(const std::string &id, bool value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value);
+	}
+#endif
+
   return m_settingsManager->SetBool(id, value);
 }
 
@@ -708,6 +723,13 @@ int CSettings::GetInt(const std::string &id) const
 
 bool CSettings::SetInt(const std::string &id, int value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value);
+	}
+#endif
+
   return m_settingsManager->SetInt(id, value);
 }
 
@@ -718,6 +740,13 @@ double CSettings::GetNumber(const std::string &id) const
 
 bool CSettings::SetNumber(const std::string &id, double value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value);
+	}
+#endif
+
   return m_settingsManager->SetNumber(id, value);
 }
 
@@ -728,6 +757,13 @@ std::string CSettings::GetString(const std::string &id) const
 
 bool CSettings::SetString(const std::string &id, const std::string &value)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetCSettings(id.c_str(), value.c_str());
+	}
+#endif
+
   return m_settingsManager->SetString(id, value);
 }
 
@@ -896,9 +932,11 @@ void CSettings::InitializeDefaults()
   #endif
 #endif
 
+#ifndef HAS_VIDONME
 #if !defined(TARGET_WINDOWS)
   ((CSettingString*)m_settingsManager->GetSetting(CSettings::SETTING_AUDIOOUTPUT_AUDIODEVICE))->SetDefault(CAEFactory::GetDefaultDevice(false));
   ((CSettingString*)m_settingsManager->GetSetting(CSettings::SETTING_AUDIOOUTPUT_PASSTHROUGHDEVICE))->SetDefault(CAEFactory::GetDefaultDevice(true));
+#endif
 #endif
 
   if (g_application.IsStandAlone())
@@ -987,6 +1025,10 @@ void CSettings::InitializeISettingsHandlers()
   m_settingsManager->RegisterSettingsHandler(&g_timezone);
 #endif
   m_settingsManager->RegisterSettingsHandler(&CMediaSettings::GetInstance());
+
+#ifdef HAS_VIDONME
+	m_settingsManager->RegisterSettingsHandler(&CVDMSettingsManager::Get());
+#endif
 }
 
 void CSettings::InitializeISubSettings()
@@ -998,6 +1040,10 @@ void CSettings::InitializeISubSettings()
   m_settingsManager->RegisterSubSettings(&CSkinSettings::GetInstance());
   m_settingsManager->RegisterSubSettings(&g_sysinfo);
   m_settingsManager->RegisterSubSettings(&CViewStateSettings::GetInstance());
+
+#ifdef HAS_VIDONME
+	m_settingsManager->RegisterSubSettings(&CVDMSettingsManager::Get());
+#endif
 }
 
 void CSettings::InitializeISettingCallbacks()
@@ -1086,6 +1132,13 @@ void CSettings::InitializeISettingCallbacks()
   settingSet.insert(CSettings::SETTING_VIDEOPLAYER_USEAMCODEC);
   settingSet.insert(CSettings::SETTING_VIDEOPLAYER_USEMEDIACODEC);
   settingSet.insert(CSettings::SETTING_VIDEOPLAYER_USEMEDIACODECSURFACE);
+
+#ifdef HAS_VIDONME
+  settingSet.insert("videoplayer.useawcodec");
+  settingSet.insert("videoplayer.userkcodec");
+  settingSet.insert("videoplayer.usea31codec");
+  settingSet.insert("videoplayer.usehisicodec");
+#endif
   m_settingsManager->RegisterCallback(&g_application, settingSet);
 
   settingSet.clear();
@@ -1199,6 +1252,20 @@ void CSettings::InitializeISettingCallbacks()
   settingSet.clear();
   settingSet.insert(CSettings::SETTING_POWERMANAGEMENT_WAKEONACCESS);
   m_settingsManager->RegisterCallback(&CWakeOnAccess::GetInstance(), settingSet);
+  
+#ifdef HAS_VIDONME
+	settingSet.clear();
+	settingSet.insert("d3.mode");
+	settingSet.insert("audiooutput.truehdpassthrough");
+	settingSet.insert("audiooutput.dtshdpassthrough");
+	settingSet.insert("debugging.upload");
+	settingSet.insert("debugging.viewlog");
+	settingSet.insert("usercenter.switchuser");
+	settingSet.insert("upgrade.website");
+	settingSet.insert("upgrade.forum");
+	settingSet.insert("upgrade.versioncheck");
+	m_settingsManager->RegisterCallback(&CVDMSettingsManager::Get(), settingSet);
+#endif
 }
 
 bool CSettings::Reset()

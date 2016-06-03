@@ -135,6 +135,9 @@ bool CGUIWindowFullScreen::OnAction(const CAction &action)
 
   switch (action.GetID())
   {
+#ifdef HAS_VIDONME
+	case ACTION_CONTEXT_MENU:
+#endif
   case ACTION_SHOW_OSD:
     ToggleOSD();
     return true;

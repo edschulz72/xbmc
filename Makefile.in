@@ -39,6 +39,7 @@ DIRECTORY_ARCHIVES=$(DVDPLAYER_ARCHIVES) \
                    xbmc/cores/VideoRenderers/VideoShaders/VideoShaders.a \
                    xbmc/cores/cores.a \
                    xbmc/cores/paplayer/paplayer.a \
+                   xbmc/cores/vdmplayer/vdmplayer.a \
                    xbmc/cores/playercorefactory/playercorefactory.a \
                    xbmc/dbwrappers/dbwrappers.a \
                    xbmc/dialogs/dialogs.a \
@@ -209,6 +210,7 @@ SKIN_DIRS+=$(TOUCH_SKIN_MEDIA)
 endif
 
 LIBS=@LIBS@
+LIBS+= -lvidonplayer
 CFLAGS=@CFLAGS@
 CXXFLAGS=@CXXFLAGS@
 LDFLAGS=@LDFLAGS@

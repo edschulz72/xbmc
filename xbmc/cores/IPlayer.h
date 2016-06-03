@@ -26,6 +26,13 @@
 #include "guilib/Geometry.h"
 #include <string>
 
+#ifdef HAS_VIDONME
+#include "settings/VideoSettings.h"
+#include "rendering/RenderSystem.h"
+#include "guilib/Resolution.h"
+#include "cores/VideoRenderers/OverlayRendererGUI.h"
+#endif
+
 #define CURRENT_STREAM -1
 
 struct TextCacheStruct_t;
@@ -282,6 +289,107 @@ public:
    \brief define the subtitle capabilities of the player
    */
   virtual void GetSubtitleCapabilities(std::vector<int> &subCaps) { subCaps.assign(1,IPC_SUBS_ALL); };
+
+#ifdef HAS_VIDONME
+
+	virtual void Present(){};
+	virtual bool IsSelfPresent() { return false; }
+	virtual void SetPlayMode(DIMENSIONMODE mode) { return; }
+	virtual void UpdateWindowSize(void) { return; }
+
+	virtual void SetScreen(int screen){}
+
+	virtual bool SetCSettings(const char* id, const char* value){ return false; }
+	virtual bool SetCSettings(const char* id, double value){ return false; }
+	virtual bool SetCSettings(const char* id, int value){ return false; }
+	virtual bool SetCSettings(const char* id, bool value){ return false; }
+
+	virtual void NotifyAudioOutputSettingsChanged() {}
+	virtual void SetDeinterlaceMode(EDEINTERLACEMODE mode) {}
+
+	virtual void SetInterlaceMethod(EINTERLACEMETHOD mode) {}
+	virtual void SetScalingMethod(ESCALINGMETHOD mode) {}
+	virtual void SetCustomZoomAmount(float Value) {}
+	virtual void SetCustomPixelRatio(float Value) {}
+	virtual void SetCustomVerticalShift(float Value) {}
+	virtual void SetCustomNonLinStretch(bool Value) {}
+	virtual void SetViewMode(ViewMode mode) {}
+	virtual void NotifyViewModeChanged() {}
+	virtual void SetWhetherSupportAC3(bool bSupport) {}
+	virtual float GetAudioDelay() { return 0; }
+	virtual bool GetSubtitleOn() { return false; }
+	virtual void SetSubColor(unsigned int color) {}
+	virtual bool SetSubtitleSize(int size) { return false; }
+	virtual void SetSubtitlePos(SubtitleAlign align, float yPos) {}
+	virtual void SetSubtitlePos(int nPos) {}
+	virtual void SetSubtitleStyle(int nStyle){}
+	virtual void SetSubtitleBold(bool bBold) {}
+	virtual void SetSubtitleItalic(bool bItalic) {}
+	virtual void SetBrightness(float fBrightness) {}
+	virtual void SetContrast(float fContrast) {}
+	virtual void SetHue(float fHue) {}
+	virtual void SetSaturation(float fSaturation) {}
+	virtual void SetVdpauNoiseRedution(float f) {}
+	virtual void SetPostProcessOn(bool on) {}
+	virtual void SetCropOn(bool on) {}
+	virtual void SetStereoInvert(bool on) {}
+
+	virtual void BindRenderThreadID() {}
+	virtual void RenderManagerRender(bool clear, unsigned int flags = 0, unsigned int alpha = 255) {}
+	virtual void RenderManagerFlush() {}
+	virtual void RenderManagerFrameMove() {}
+	virtual bool RenderManagerIsStarted() { return false; }
+	virtual void RenderManagerFrameFinish() {}
+	virtual void RenderManagerUpdate() {}
+	virtual RESOLUTION RenderManagerGetResolution() { return RES_INVALID; }
+	virtual void RenderManagerSetupScreenshot() {}
+	virtual float RenderManagerGetAspectRatio() { return 0; }
+
+	virtual bool RenderManagerSupports(EDEINTERLACEMODE mode) { return false; }
+	virtual bool RenderManagerSupports(EINTERLACEMETHOD mode) { return false; }
+	virtual bool RenderManagerSupports(ERENDERFEATURE mode) { return false; }
+	virtual bool RenderManagerSupports(ESCALINGMETHOD mode) { return false; }
+
+	virtual void RenderManagerSetViewMode(ViewMode mode) {}
+
+	virtual std::string RenderManagerGetVSyncState() { return ""; }
+
+	virtual void RenderManagerFrameWait(int ms) {}
+	virtual void RenderManagerUpdateResolution() {}
+	virtual void RenderManagerManageCaptures() {}
+
+#if defined(HAS_DX)
+	virtual void SetAdapter(unsigned int adapter) {}
+	virtual void SetD3DPP(D3DPRESENT_PARAMETERS pp){}
+#endif
+
+	virtual void SetStereoMode(RENDER_STEREO_MODE mode) {}
+	virtual void SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW view) {}
+	virtual void SetWindowResolution(int width, int height) {}
+
+	virtual void SetGraphicContextStereoMode(RENDER_STEREO_MODE mode) {}
+	virtual void SetGraphicContextStereoView(RENDER_STEREO_VIEW view) {}
+	virtual void SetGraphicContextFullScreenRoot(bool on) {}
+
+	virtual void SetGraphicContextFullScreenVideo(bool on) {}
+	virtual void SetGraphicContextCalibrating(bool on) {}
+
+	virtual void SetGraphicContextVideoResolution(RESOLUTION res, bool bForce = true) {}
+
+	virtual void SetGraphicContextVideoRect(float x1, float y1, float x2, float y2) {}
+	virtual void SetGraphicContextScreenWidth(int n) {}
+	virtual void SetGraphicContextScreenHeight(int n) {}
+	virtual void SetGraphicContextScissors(float x1, float y1, float x2, float y2){}
+
+	virtual void SetRenderViewPort(float x1, float y1, float x2, float y2) {}
+	virtual void SetMaxTextureSize(unsigned int size) {}
+
+	virtual void AEDeviceChange() {}
+
+	virtual bool CaptureRenderImage(const char* strSaveUrl, int nWidth) { return false; }
+
+	virtual void PlayBackStart(void){}
+#endif 
 
 protected:
   IPlayerCallback& m_callback;

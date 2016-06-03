@@ -51,6 +51,10 @@
 #include "TextureCache.h"
 #include "messaging/ApplicationMessenger.h"
 #include "settings/Settings.h"
+#ifdef HAS_VIDONME
+#include "filesystem/SpecialProtocol.h"
+#endif
+
 #include <string>
 #include <vector>
 
@@ -276,6 +280,7 @@ void CGUIDialogVideoBookmarks::OnRefreshList()
     items.push_back(item);
   }
 
+#ifndef HAS_VIDONME
   // add chapters if around
   for (int i = 1; i <= g_application.m_pPlayer->GetChapterCount(); ++i)
   {
@@ -311,6 +316,7 @@ void CGUIDialogVideoBookmarks::OnRefreshList()
     item->SetProperty("ischapter", "true");
     items.push_back(item);
   }
+#endif
 
   // sort items by resume point
   std::sort(items.begin(), items.end(), [](const CFileItemPtr &item1, const CFileItemPtr &item2) {
@@ -435,6 +441,17 @@ bool CGUIDialogVideoBookmarks::AddBookmark(CVideoInfoTag* tag)
     height = BOOKMARK_THUMB_WIDTH;
     width = (int)(BOOKMARK_THUMB_WIDTH * aspectRatio);
   }
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		Crc32 crc;
+		crc.ComputeFromLowerCase(g_application.CurrentFile());
+		bookmark.thumbNailImage = StringUtils::Format("%08x_%i.jpg", (unsigned __int32)crc, (int)bookmark.timeInSeconds);
+		bookmark.thumbNailImage = URIUtils::AddFileToFolder(CProfilesManager::GetInstance().GetBookmarksThumbFolder(), bookmark.thumbNailImage);
+		g_application.m_pPlayer->CaptureRenderImage(CSpecialProtocol::TranslatePath(bookmark.thumbNailImage).c_str(), width);
+	}
+#else
   {
 #ifdef HAS_VIDEO_PLAYBACK
     CRenderCapture* thumbnail = g_renderManager.AllocRenderCapture();
@@ -467,6 +484,9 @@ bool CGUIDialogVideoBookmarks::AddBookmark(CVideoInfoTag* tag)
     }
 #endif
   }
+
+#endif
+
   videoDatabase.Open();
   if (tag)
     videoDatabase.AddBookMarkForEpisode(*tag, bookmark);

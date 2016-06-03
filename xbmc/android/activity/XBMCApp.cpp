@@ -81,10 +81,55 @@
 
 #include "CompileInfo.h"
 
+#ifdef HAS_VIDONME
+#include "utils/StringUtils.h"
+#include "client/linux/handler/exception_handler.h"
+#include "client/linux/handler/minidump_descriptor.h"
+#include "android/jni/Intent.h"
+#endif
+
 #define GIGABYTES       1073741824
 
 using namespace std;
 using namespace KODI::MESSAGING;
+
+#ifdef HAS_VIDONME
+
+static bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
+	void* context,
+	bool succeeded)
+{
+	g_application.EndRecord();
+
+	CXBMCApp::android_printf("Dump path: %s", descriptor.path());
+	MoveFile(descriptor.path(), StringUtils::Format("%s/kodi.dmp", getenv("HOME")).c_str());
+
+	FILE* process = popen("logcat -d", "r");
+	FILE* file = fopen(StringUtils::Format("%s/kodi.logcat", getenv("HOME")).c_str(), "w+");
+
+	char buf[1024];
+	int nRead = fread(buf, sizeof(char), sizeof(buf), process);
+	while (nRead > 0)
+	{
+		fwrite(buf, sizeof(char), nRead, file);
+		nRead = fread(buf, sizeof(char), sizeof(buf), process);
+	}
+
+	pclose(process);
+	fclose(file);
+
+	return succeeded;
+	return false;
+}
+
+static void InitDump()
+{
+	static google_breakpad::MinidumpDescriptor descriptor(getenv("HOME"));
+	static google_breakpad::ExceptionHandler exceptionHandler(descriptor, NULL, DumpCallback, NULL, true, -1);
+}
+
+#endif
+
 
 template<class T, void(T::*fn)()>
 void* thread_run(void* obj)
@@ -104,6 +149,9 @@ bool CXBMCApp::m_headsetPlugged = false;
 CCriticalSection CXBMCApp::m_applicationsMutex;
 std::vector<androidPackage> CXBMCApp::m_applications;
 
+#ifdef HAS_VIDONME
+bool CXBMCApp::m_InvokedByFileManager = NULL;
+#endif
 
 CXBMCApp::CXBMCApp(ANativeActivity* nativeActivity)
   : CJNIMainActivity(nativeActivity)
@@ -201,11 +249,19 @@ void CXBMCApp::onPause()
 #endif
 
   EnableWakeLock(false);
+
+#ifdef HAS_VIDONME
+	g_application.EndRecord();
+#endif
 }
 
 void CXBMCApp::onStop()
 {
   android_printf("%s: ", __PRETTY_FUNCTION__);
+
+#ifdef HAS_VIDONME
+	g_application.EndRecord();
+#endif
 }
 
 void CXBMCApp::onDestroy()
@@ -377,6 +433,11 @@ void CXBMCApp::run()
   SetupEnv();
   XBMC::Context context;
 
+#ifdef HAS_VIDONME
+	InitDump();
+	m_InvokedByFileManager = false;
+#endif
+
   CJNIIntent startIntent = getIntent();
 
   android_printf("%s Started with action: %s\n", CCompileInfo::GetAppName(), startIntent.getAction().c_str());
@@ -393,6 +454,10 @@ void CXBMCApp::run()
 
     CAppParamParser appParamParser;
     appParamParser.Parse((const char **)argv, argc);
+
+#ifdef HAS_VIDONME
+		m_InvokedByFileManager = true;
+#endif
 
     free(argv);
   }
@@ -567,6 +632,39 @@ bool CXBMCApp::HasLaunchIntent(const string &package)
 // Note intent, dataType, dataURI all default to ""
 bool CXBMCApp::StartActivity(const string &package, const string &intent, const string &dataType, const string &dataURI)
 {
+#ifdef HAS_VIDONME
+
+	if (package == "com.android.browser")
+	{
+		CJNIIntent newIntent = GetPackageManager().getLaunchIntentForPackage(package);
+
+		if (!newIntent)
+			return false;
+
+		if (!dataURI.empty())
+		{
+			CJNIURI jniURI = CJNIURI::parse(dataURI);
+
+			if (!jniURI)
+				return false;
+
+			newIntent.setAction("android.intent.action.VIEW");
+			newIntent.setData(jniURI);
+			startActivity(newIntent);
+		}
+
+		if (xbmc_jnienv()->ExceptionCheck())
+		{
+			CLog::Log(LOGERROR, "CXBMCApp::StartActivity - ExceptionOccurred launching %s", package.c_str());
+			xbmc_jnienv()->ExceptionClear();
+			return false;
+		}
+
+		return true;
+	}
+
+#endif
+
   CJNIIntent newIntent = intent.empty() ?
     GetPackageManager().getLaunchIntentForPackage(package) :
     CJNIIntent(intent);
@@ -897,3 +995,22 @@ const ANativeWindow** CXBMCApp::GetNativeWindow(int timeout)
   m_windowCreated.WaitMSec(timeout);
   return (const ANativeWindow**)&m_window;
 }
+
+#ifdef HAS_VIDONME
+
+ANativeActivity *CXBMCApp::GetCurrentActivity()
+{
+	return m_activity;
+}
+
+CJNIPackageInfo CXBMCApp::GetPackageInfo(const std::string& packageName)
+{
+	return CJNIContext::GetPackageManager().getPackageInfo(packageName, 0);
+}
+
+bool CXBMCApp::InvokedByFileManager()
+{
+	return m_InvokedByFileManager;
+}
+
+#endif

@@ -104,8 +104,15 @@ std::string CGUIWindowPVRRecordings::GetResumeString(const CFileItem& item)
     }
 
     // Suppress resume from 0
-    if (positionInSeconds > 0)
-      resumeString = StringUtils::Format(g_localizeStrings.Get(12022).c_str(), StringUtils::SecondsToTimeString(positionInSeconds).c_str());
+		if (positionInSeconds > 0)
+#ifdef HAS_VIDONME
+		{
+			resumeString = g_localizeStrings.Get(12022);
+			StringUtils::Replace(resumeString, "%s", StringUtils::SecondsToTimeString(positionInSeconds));
+		}
+#else
+			resumeString = StringUtils::Format(g_localizeStrings.Get(12022).c_str(), StringUtils::SecondsToTimeString(positionInSeconds).c_str());
+#endif
   }
   return resumeString;
 }

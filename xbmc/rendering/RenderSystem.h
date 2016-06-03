@@ -150,6 +150,10 @@ public:
   unsigned int GetMinDXTPitch() const { return m_minDXTPitch; }
   unsigned int GetRenderQuirks() const { return m_renderQuirks; }
 
+#ifdef HAS_VIDONME
+	unsigned int GetRenderCaps() const { return m_renderCaps; }
+#endif
+
 protected:
   bool                m_bRenderCreated;
   RenderingSystemType m_enumRenderingSystem;

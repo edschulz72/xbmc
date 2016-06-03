@@ -36,6 +36,17 @@ typedef enum {
   XBMCVK_RETURN         = 0x0D,
   XBMCVK_ESCAPE         = 0x1B,
 
+#ifdef HAS_VIDONME
+  XBMCVK_FASTFORWARD	= 0x0A,
+  XBMCVK_REWIND			= 0x0B,
+  XBMCVK_SUBTITLE		= 0x12,
+  XBMCVK_AUDIO			= 0x14,
+  XBMCVK_TOPMENU		= 0x16,
+  XBMCVK_POPMENU		= 0x17,
+  XBMCVK_ZOOMIN			= 0x18,
+  XBMCVK_ZOOMOUT		= 0x19,
+#endif
+
   XBMCVK_SPACE          = 0x20,
   XBMCVK_EXCLAIM        = 0x21,
   XBMCVK_QUOTEDBL       = 0x22,

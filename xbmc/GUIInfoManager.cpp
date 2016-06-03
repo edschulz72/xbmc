@@ -1773,7 +1773,7 @@ std::string CGUIInfoManager::GetLabel(int info, int contextWindow, std::string *
       strLabel = m_videoInfo.videoCodecName;
     }
     break;
-  case VIDEOPLAYER_VIDEO_RESOLUTION:
+	case VIDEOPLAYER_VIDEO_RESOLUTION:
     if(g_application.m_pPlayer->IsPlaying())
     {
       return CStreamDetails::VideoDimsToResolutionDescription(m_videoInfo.width, m_videoInfo.height);
@@ -1782,7 +1782,10 @@ std::string CGUIInfoManager::GetLabel(int info, int contextWindow, std::string *
   case VIDEOPLAYER_AUDIO_CODEC:
     if(g_application.m_pPlayer->IsPlaying())
     {
-      strLabel = m_audioInfo.audioCodecName;
+			strLabel = m_audioInfo.audioCodecName;
+#ifdef HAS_VIDONME
+			StringUtils::ToLower(strLabel);
+#endif
     }
     break;
   case VIDEOPLAYER_VIDEO_ASPECT:
@@ -5406,7 +5409,17 @@ std::string CGUIInfoManager::GetItemLabel(const CFileItem *item, int info, std::
         *fallback = item->GetIconImage();
       return strThumb;
     }
-  case LISTITEM_OVERLAY:
+	case LISTITEM_OVERLAY:
+#ifdef HAS_VIDONME
+	{
+		if (item->HasVideoInfoTag() && item->GetVideoInfoTag()->m_resumePoint.timeInSeconds > 0)
+		{
+			return "";
+		}
+
+		return item->GetOverlayImage();
+	}
+#endif
     return item->GetOverlayImage();
   case LISTITEM_THUMB:
     return item->GetArt("thumb");

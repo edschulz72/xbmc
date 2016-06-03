@@ -23,6 +23,10 @@
 #include "Application.h"
 #include "settings/MediaSettings.h"
 
+#ifdef HAS_VIDONME
+#include "guilib/GraphicContext.h"
+#endif
+
 CApplicationPlayer::CApplicationPlayer()
 {
   m_iPlayerOPSeq = 0;
@@ -737,3 +741,576 @@ int CApplicationPlayer::GetPlaySpeed() const
 {
   return m_iPlaySpeed;
 }
+
+
+#ifdef HAS_VIDONME
+
+void CApplicationPlayer::Present()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->Present();
+}
+
+bool CApplicationPlayer::IsSelfPresent()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->IsSelfPresent();
+
+	return false;
+}
+
+void CApplicationPlayer::SetPlayMode(DIMENSIONMODE mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetPlayMode(mode);
+}
+
+void CApplicationPlayer::UpdateWindowSize()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->UpdateWindowSize();
+}
+
+bool CApplicationPlayer::SetCSettings(const char* id, const char* value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->SetCSettings(id, value);
+
+	return false;
+}
+
+bool CApplicationPlayer::SetCSettings(const char* id, double value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->SetCSettings(id, value);
+
+	return false;
+}
+
+bool CApplicationPlayer::SetCSettings(const char* id, int value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->SetCSettings(id, value);
+
+	return false;
+}
+
+bool CApplicationPlayer::SetCSettings(const char* id, bool value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->SetCSettings(id, value);
+
+	return false;
+}
+
+void CApplicationPlayer::NotifyAudioOutputSettingsChanged()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->NotifyAudioOutputSettingsChanged();
+}
+
+void CApplicationPlayer::SetDeinterlaceMode(EDEINTERLACEMODE mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetDeinterlaceMode(mode);
+}
+
+void CApplicationPlayer::SetInterlaceMethod(EINTERLACEMETHOD mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetInterlaceMethod(mode);
+}
+
+void CApplicationPlayer::SetScalingMethod(ESCALINGMETHOD mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetScalingMethod(mode);
+}
+
+void CApplicationPlayer::SetCustomZoomAmount(float Value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetCustomZoomAmount(Value);
+}
+
+void CApplicationPlayer::SetCustomPixelRatio(float Value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetCustomPixelRatio(Value);
+}
+
+void CApplicationPlayer::SetCustomVerticalShift(float Value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetCustomVerticalShift(Value);
+}
+
+void CApplicationPlayer::SetCustomNonLinStretch(bool Value)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetCustomNonLinStretch(Value);
+}
+
+void CApplicationPlayer::SetViewMode(ViewMode mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetViewMode(mode);
+}
+
+void CApplicationPlayer::NotifyViewModeChanged()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->NotifyViewModeChanged();
+}
+
+void CApplicationPlayer::SetWhetherSupportAC3(bool bSupport)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetWhetherSupportAC3(bSupport);
+}
+
+float CApplicationPlayer::GetAudioDelay()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->GetAudioDelay();
+
+	return 0;
+}
+
+bool CApplicationPlayer::GetSubtitleOn()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->GetSubtitleOn();
+
+	return false;
+}
+
+void CApplicationPlayer::SetSubColor(unsigned int color)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSubColor(color);
+}
+
+bool CApplicationPlayer::SetSubtitleSize(int size)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->SetSubtitleSize(size);
+
+	return false;
+}
+
+void CApplicationPlayer::SetSubtitlePos(SubtitleAlign align, float yPos)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSubtitlePos(align, yPos);
+}
+
+void CApplicationPlayer::SetSubtitlePos(int nPos)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSubtitlePos(nPos);
+}
+
+void CApplicationPlayer::SetSubtitleStyle(int nStyle)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSubtitleStyle(nStyle);
+}
+
+void CApplicationPlayer::SetSubtitleBold(bool bBold)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSubtitleBold(bBold);
+}
+
+void CApplicationPlayer::SetSubtitleItalic(bool bItalic)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSubtitleItalic(bItalic);
+}
+
+void CApplicationPlayer::SetBrightness(float fBrightness)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetBrightness(fBrightness);
+}
+
+void CApplicationPlayer::SetContrast(float fContrast)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetContrast(fContrast);
+}
+
+void CApplicationPlayer::SetHue(float fHue)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetHue(fHue);
+}
+
+void CApplicationPlayer::SetSaturation(float fSaturation)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetSaturation(fSaturation);
+}
+
+void CApplicationPlayer::SetVdpauNoiseRedution(float f)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetVdpauNoiseRedution(f);
+}
+
+void CApplicationPlayer::SetPostProcessOn(bool on)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetPostProcessOn(on);
+}
+
+void CApplicationPlayer::SetCropOn(bool on)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetCropOn(on);
+}
+
+void CApplicationPlayer::SetStereoInvert(bool on)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetStereoInvert(on);
+}
+
+void CApplicationPlayer::BindRenderThreadID()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->BindRenderThreadID();
+}
+
+void CApplicationPlayer::RenderManagerRender(bool clear, unsigned int flags, unsigned int alpha)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerRender(clear, flags, alpha);
+}
+
+void CApplicationPlayer::RenderManagerFlush()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerFlush();
+}
+
+void CApplicationPlayer::RenderManagerFrameMove()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerFrameMove();
+}
+
+bool CApplicationPlayer::RenderManagerIsStarted()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerIsStarted();
+
+	return false;
+}
+
+void CApplicationPlayer::RenderManagerFrameFinish()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerFrameFinish();
+}
+
+void CApplicationPlayer::RenderManagerUpdate()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerUpdate();
+}
+
+RESOLUTION CApplicationPlayer::RenderManagerGetResolution()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerGetResolution();
+
+	return RES_INVALID;
+}
+
+void CApplicationPlayer::RenderManagerSetupScreenshot()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerSetupScreenshot();
+}
+
+float CApplicationPlayer::RenderManagerGetAspectRatio()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerGetAspectRatio();
+
+	return 0;
+}
+
+bool CApplicationPlayer::RenderManagerSupports(EDEINTERLACEMODE mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerSupports(mode);
+
+	return false;
+}
+
+bool CApplicationPlayer::RenderManagerSupports(EINTERLACEMETHOD mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerSupports(mode);
+
+	return false;
+}
+
+bool CApplicationPlayer::RenderManagerSupports(ERENDERFEATURE mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerSupports(mode);
+
+	return false;
+}
+
+bool CApplicationPlayer::RenderManagerSupports(ESCALINGMETHOD mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerSupports(mode);
+
+	return false;
+}
+
+void CApplicationPlayer::RenderManagerSetViewMode(ViewMode mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerSetViewMode(mode);
+}
+
+std::string CApplicationPlayer::RenderManagerGetVSyncState()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->RenderManagerGetVSyncState();
+
+	return "";
+}
+
+void CApplicationPlayer::RenderManagerFrameWait(int ms)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerFrameWait(ms);
+}
+
+void CApplicationPlayer::RenderManagerUpdateResolution()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerUpdateResolution();
+}
+
+void CApplicationPlayer::RenderManagerManageCaptures()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->RenderManagerManageCaptures();
+}
+
+void CApplicationPlayer::SetScreen(int screen)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetScreen(screen);
+}
+
+#if defined(HAS_DX)
+void CApplicationPlayer::SetAdapter(unsigned int adapter)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetAdapter(adapter);
+}
+
+void CApplicationPlayer::SetD3DPP(D3DPRESENT_PARAMETERS pp)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetD3DPP(pp);
+}
+#endif
+
+void CApplicationPlayer::SetStereoMode(RENDER_STEREO_MODE mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetStereoMode(mode);
+}
+
+void CApplicationPlayer::SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW view)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetStereoMode(mode, view);
+}
+
+void CApplicationPlayer::SetWindowResolution(int width, int height)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetWindowResolution(width, height);
+}
+
+void CApplicationPlayer::SetGraphicContextStereoMode(RENDER_STEREO_MODE mode)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextStereoMode(mode);
+}
+
+void CApplicationPlayer::SetGraphicContextStereoView(RENDER_STEREO_VIEW view)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextStereoView(view);
+}
+
+void CApplicationPlayer::SetGraphicContextFullScreenRoot(bool on)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextFullScreenRoot(on);
+}
+
+void CApplicationPlayer::SetGraphicContextFullScreenVideo(bool on)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextFullScreenVideo(on);
+}
+
+void CApplicationPlayer::SetGraphicContextCalibrating(bool on)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextCalibrating(on);
+}
+
+void CApplicationPlayer::SetGraphicContextVideoResolution(RESOLUTION res, bool bForce)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player && g_graphicsContext.IsFullScreenVideo())
+		player->SetGraphicContextVideoResolution(res, bForce);
+}
+
+void CApplicationPlayer::SetGraphicContextVideoRect(float x1, float y1, float x2, float y2)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextVideoRect(x1, y1, x2, y2);
+}
+
+void CApplicationPlayer::SetGraphicContextScreenWidth(int n)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextScreenWidth(n);
+}
+
+void CApplicationPlayer::SetGraphicContextScreenHeight(int n)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextScreenHeight(n);
+}
+
+void CApplicationPlayer::SetGraphicContextScissors(float x1, float y1, float x2, float y2)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetGraphicContextScissors(x1, y1, x2, y2);
+}
+
+void CApplicationPlayer::SetRenderViewPort(float x1, float y1, float x2, float y2)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player && g_graphicsContext.IsFullScreenVideo())
+		player->SetRenderViewPort(x1, y1, x2, y2);
+}
+
+void CApplicationPlayer::SetMaxTextureSize(unsigned int size)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->SetMaxTextureSize(size);
+}
+
+void CApplicationPlayer::AEDeviceChange()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->AEDeviceChange();
+}
+
+bool CApplicationPlayer::CaptureRenderImage(const char* strSaveUrl, int nWidth)
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		return player->CaptureRenderImage(strSaveUrl, nWidth);
+
+	return false;
+}
+
+void CApplicationPlayer::PlayBackStart()
+{
+	std::shared_ptr<IPlayer> player = GetInternal();
+	if (player)
+		player->PlayBackStart();
+}
+
+#endif 

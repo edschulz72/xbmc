@@ -142,6 +142,14 @@ bool CGUIFont::UpdateScrollInfo(const vecText &text, CScrollInfo &scrollInfo)
   // move along by the appropriate scroll amount
   float scrollAmount = fabs(scrollInfo.GetPixelsPerFrame() * g_graphicsContext.GetGUIScaleX());
 
+#if defined(HAS_VIDONME) && defined(TARGET_ANDROID)
+	if (scrollAmount > 0.8)
+	{
+		scrollAmount = 0.8;
+	}
+#endif
+
+
   if (!scrollInfo.m_widthValid)
   {
     /* Calculate the pixel width of the complete string */

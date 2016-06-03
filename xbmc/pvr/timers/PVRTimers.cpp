@@ -542,7 +542,11 @@ bool CPVRTimers::InstantTimer(const CPVRChannelPtr &channel)
                                                  newTimer->EndAsLocalTime().GetAsLocalizedTime("", false).c_str());
   }
 
-  CDateTime startTime(0);
+#ifdef HAS_VIDONME
+	CDateTime startTime(0L);
+#else
+	CDateTime startTime(0);
+#endif
   newTimer->SetStartFromUTC(startTime);
   newTimer->m_iMarginStart = 0; /* set the start margin to 0 for instant timers */
 

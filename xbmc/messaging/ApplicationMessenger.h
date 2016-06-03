@@ -111,6 +111,10 @@
 #define TMSG_GUI_ADDON_DIALOG             TMSG_MASK_WINDOWMANAGER + 6
 #define TMSG_GUI_MESSAGE                  TMSG_MASK_WINDOWMANAGER + 7
 
+#ifdef HAS_VIDONME
+#define TMSG_SETFULLSCREEN								TMSG_MASK_WINDOWMANAGER + 8
+#endif
+
 /*!
   \def TMSG_GUI_DIALOG_YESNO
   \brief Message sent through CApplicationMessenger to open a yes/no dialog box

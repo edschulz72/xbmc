@@ -31,6 +31,21 @@
 #include "Application.h"
 #include "utils/StringUtils.h"
 
+#ifdef HAS_VIDONME
+
+#include "GUIUserMessages.h"
+#include "vidonme/VDMUserInfo.h"
+#include "vidonme/VDMUserInfo.h"
+#include "vidonme/VDMDialogVersionCheck.h"
+#include "vidonme/VDMWindowRecommend.h"
+#include "guilib/GUIWindowManager.h"
+#include "guilib/GUIImage.h"
+#include "addons/Skin.h"
+
+#define CONTROL_IMAGE_LOGO 101
+
+#endif
+
 using namespace ANNOUNCEMENT;
 
 CGUIWindowHome::CGUIWindowHome(void) : CGUIWindow(WINDOW_HOME, "Home.xml"), 
@@ -39,7 +54,11 @@ CGUIWindowHome::CGUIWindowHome(void) : CGUIWindow(WINDOW_HOME, "Home.xml"),
 {
   m_updateRA = (Audio | Video | Totals);
   m_loadType = KEEP_IN_MEMORY;
-  
+
+#ifdef HAS_VIDONME
+	m_bFirstRun = true;
+#endif
+
   CAnnouncementManager::GetInstance().AddAnnouncer(this);
 }
 
@@ -58,6 +77,14 @@ bool CGUIWindowHome::OnAction(const CAction &action)
     g_application.SwitchToFullScreen();
     return true;
   }
+
+#ifdef HAS_VIDONME
+	if (action.GetID() == ACTION_NAV_BACK || action.GetID() == ACTION_PREVIOUS_MENU)
+	{
+		g_windowManager.ActivateWindow(WINDOW_DIALOG_BUTTON_MENU);
+	}
+#endif
+
   return CGUIWindow::OnAction(action);
 }
 
@@ -70,7 +97,29 @@ void CGUIWindowHome::OnInitWindow()
     m_updateRA = (Audio | Video | Totals);
   AddRecentlyAddedJobs( m_updateRA );
 
+#ifdef HAS_VIDONME
+	UpdateVidonLogo();
+	CVDMWindowRecommend::SetCanActive(true);
+#endif
+
   CGUIWindow::OnInitWindow();
+
+#ifdef HAS_VIDONME
+	if (m_bFirstRun)
+	{
+		std::string strUserName;
+		std::string strPassword;
+
+		if (CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword))
+		{
+			CVDMUserInfo::Instance().DoLogin(strUserName, strPassword, false);
+			g_vdmVersionUpdate.CheckVersionInBackground();
+
+		}
+
+		m_bFirstRun = false;
+	}
+#endif
 }
 
 void CGUIWindowHome::Announce(AnnouncementFlag flag, const char *sender, const char *message, const CVariant &data)
@@ -174,9 +223,49 @@ bool CGUIWindowHome::OnMessage(CGUIMessage& message)
     }
     break;
 
+#ifdef HAS_VIDONME
+	case GUI_MSG_UPDATE_VIDON_LOGO:
+	{
+		UpdateVidonLogo();
+	}
+	break;
+	case GUI_MSG_UPDATE_HASNEWVERSION:
+	{
+		CVDMVersionInfo* pInfo = (CVDMVersionInfo*)message.GetPointer();
+		if (NULL != pInfo)
+		{
+			CVDMDialogVersionCheck::ShowNewVersionDialog(*pInfo);
+			delete pInfo;
+			pInfo = NULL;
+		}
+	}
+	break;
+#endif
+
   default:
     break;
   }
 
   return CGUIWindow::OnMessage(message);
 }
+
+#ifdef HAS_VIDONME
+void CGUIWindowHome::UpdateVidonLogo()
+{
+	if (g_SkinInfo->ID() == "skin.confluence" && g_SkinInfo->IsInUse())
+	{
+		CGUIImage* pLogoImage = (CGUIImage*)GetControl(CONTROL_IMAGE_LOGO);
+		if (pLogoImage != NULL)
+		{
+			if (CVDMUserInfo::Instance().MaybeProVersion())
+			{
+				pLogoImage->SetFileName("special://xbmc/media/VDMResource/vidonxbmc_logo_pro.png");
+			}
+			else
+			{
+				pLogoImage->SetFileName("kodi-logo.png");
+			}
+		}
+	}
+}
+#endif

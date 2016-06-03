@@ -32,11 +32,28 @@
 #include "URL.h"
 #include "utils/Variant.h"
 
+
+#ifdef HAS_VIDONME
+
+#include "PlayListPlayer.h"
+#include "Application.h"
+#include "utils/StringUtils.h"
+#include "guilib/LocalizeStrings.h"
+#include "windows/GUIMediaWindow.h"
+#include "playlists/PlayList.h"
+#include "GUIUserMessages.h"
+
+using namespace PLAYLIST;
+
+#endif
+
 bool CGUIDialogSimpleMenu::ShowPlaySelection(CFileItem& item)
 {
+#ifndef HAS_VIDONME
   /* if asked to resume somewhere, we should not show anything */
   if (item.m_lStartOffset || (item.HasVideoInfoTag() && item.GetVideoInfoTag()->m_iBookmarkId > 0))
     return true;
+#endif
 
   if (CSettings::GetInstance().GetInt(CSettings::SETTING_DISC_PLAYBACK) != BD_PLAYBACK_SIMPLE_MENU)
     return true;
@@ -83,11 +100,105 @@ bool CGUIDialogSimpleMenu::ShowPlaySelection(CFileItem& item, const std::string&
 
   CFileItemList items;
 
+#ifdef HAS_VIDONME
+
+	CFileItemPtr pItem;
+	std::string originPath = item.GetPath();
+	std::string strFolerType = item.GetProperty("type").asString();
+
+	pItem.reset(new CFileItem());
+
+	if (CSettings::GetInstance().GetBool("using.vdmplayer"))
+	{
+		if (URIUtils::GetFileName(originPath) == "index.bdmv" ||
+			URIUtils::GetFileName(originPath) == "MovieObject.bdmv")
+		{
+			std::string strParentPath = URIUtils::GetParentPath(originPath);
+			URIUtils::RemoveSlashAtEnd(strParentPath);
+
+			if (URIUtils::GetFileName(strParentPath) == "BDMV")
+			{
+				std::string strTmpPath = URIUtils::AddFileToFolder(strParentPath, "PLAYLIST");
+				strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "1048575.mpls");
+				pItem->SetPath(strTmpPath);
+				pItem->SetProperty("original_listitem_url", URIUtils::GetParentPath(strParentPath));
+			}
+		}
+		else if (URIUtils::GetExtension(originPath) == ".iso")
+		{
+			std::string strTmpPath = URIUtils::AddFileToFolder(originPath, "BDMV");
+			strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "PLAYLIST");
+			strTmpPath = URIUtils::AddFileToFolder(strTmpPath, "1048575.mpls");
+			pItem->SetPath(strTmpPath);
+		}
+
+		if (g_application.GetLastPlayedFile() == pItem->GetPath())
+		{
+			pItem->Select(true);
+		}
+
+		pItem->m_bIsFolder = false;
+		pItem->SetLabel(g_localizeStrings.Get(70095) /* MainTitle */);
+		pItem->SetIconImage("DefaultVideo.png");
+		pItem->SetProperty("chooseitem", "maintitle");
+		items.Add(pItem);
+
+		pItem.reset(new CFileItem());
+		pItem->SetPath(URIUtils::AddFileToFolder(directory, "titles"));
+		pItem->m_bIsFolder = true;
+		pItem->SetLabel(g_localizeStrings.Get(25002) /* All titles */);
+		pItem->SetIconImage("DefaultVideoPlaylists.png");
+		pItem->SetProperty("chooseitem", "alltitle");
+		items.Add(pItem);
+
+		pItem.reset(new CFileItem());
+		pItem->SetPath(originPath + "/Menu");
+		pItem->m_bIsFolder = false;
+		pItem->SetLabel(g_localizeStrings.Get(25003) /* BDMenus */);
+		pItem->SetProperty("chooseitem", "menu");
+		pItem->SetIconImage("DefaultProgram.png");
+		if (g_application.GetLastPlayedFile() == originPath)
+		{
+			pItem->Select(true);
+		}
+		items.Add(pItem);
+	}
+	else
+	{
+		if (!XFILE::CDirectory::GetDirectory(directory, items, XFILE::CDirectory::CHints(), true))
+		{
+			CLog::Log(LOGERROR, "CGUIWindowVideoBase::ShowPlaySelection - Failed to get play directory for %s", directory.c_str());
+			return false;
+		}
+	}
+
+#else
+
   if (!XFILE::CDirectory::GetDirectory(directory, items, XFILE::CDirectory::CHints(), true))
   {
     CLog::Log(LOGERROR, "CGUIWindowVideoBase::ShowPlaySelection - Failed to get play directory for %s", directory.c_str());
     return true;
   }
+
+#endif
+
+#ifdef HAS_VIDONME
+
+	pItem.reset(new CFileItem());
+
+	if (strFolerType == "BDFolder" || strFolerType == "DVDFolder")
+	{
+		pItem.reset(new CFileItem());
+		std::string strFolderPath = StringUtils::Left(originPath, originPath.size() - 15);
+		pItem->SetPath(strFolderPath + "/openfolder");
+		pItem->m_bIsFolder = true;
+		pItem->SetLabel(g_localizeStrings.Get(70096) /* Open Folder */);
+		pItem->SetIconImage("DefaultFolder.png");
+		pItem->SetProperty("chooseitem", "update");
+		items.Add(pItem);
+	}
+
+#endif
 
   if (items.IsEmpty())
   {
@@ -102,7 +213,76 @@ bool CGUIDialogSimpleMenu::ShowPlaySelection(CFileItem& item, const std::string&
     dialog->SetHeading(CVariant{25006}); // Select playback item
     dialog->SetItems(items);
     dialog->SetUseDetails(true);
-    dialog->Open();
+
+#ifdef HAS_VIDONME
+		CFileItemPtr item_new;
+
+		if (item.m_lStartOffset == STARTOFFSET_RESUME)
+		{
+			item_new = items.Get(0);
+			item_new->SetProperty("type", item.GetProperty("type"));
+			
+			if (!CSettings::GetInstance().GetBool("using.vdmplayer") && 
+				(item.GetProperty("type") == "BDFolder" || 
+				item.GetProperty("type") == "DVDFolder"))
+			{
+				item_new->SetProperty("original_listitem_url", item.GetProperty("original_listitem_url"));
+			}
+
+			item_new->m_lStartOffset = STARTOFFSET_RESUME;
+		}
+		else if (g_playlistPlayer.GetPlaylist(PLAYLIST_VIDEO).size() > 1 && g_playlistPlayer.HasPlayedFirstFile())
+		{
+			if (!g_application.IsPlayWithMenu())
+			{
+				item.SetPath(items.Get(0)->GetPath());
+			}
+			return true;
+		}
+		else
+		{
+			dialog->Open();
+			item_new = dialog->GetSelectedItem();
+
+			if (!dialog->IsConfirmed() || !item_new || dialog->GetSelectedLabel() < 0)
+			{
+				CLog::Log(LOGDEBUG, "CGUIWindowVideoBase::ShowPlaySelection - User aborted %s", directory.c_str());
+				break;
+			}
+		}
+
+		if (item_new->GetProperty("chooseitem").asString() == "update")
+		{
+			std::string strRealPath = item_new->GetPath();
+			strRealPath = StringUtils::Left(strRealPath, strRealPath.find("/openfolder"));
+			item_new->SetPath(strRealPath);
+
+			item.SetProperty("chooseitem", item_new->GetProperty("chooseitem").asString());
+			item.SetPath(item_new->GetPath());
+
+			CGUIMessage msg(GUI_MSG_NOTIFY_ALL, 0, 0, GUI_MSG_UPDATE);
+			msg.SetStringParam(item.GetPath());
+			g_windowManager.SendThreadMessage(msg);
+
+			return false;
+		}
+
+		if (item_new->GetProperty("chooseitem").asString() == "menu")
+		{
+			std::string strRealPath = item_new->GetPath();
+			strRealPath = StringUtils::Left(strRealPath, strRealPath.find("/Menu"));
+			item_new->SetPath(strRealPath);
+
+			g_application.SetPlayWithMenu(true);
+		}
+		else
+		{
+			g_application.SetPlayWithMenu(false);
+		}
+
+#else
+
+		dialog->Open();
 
     CFileItemPtr item_new = dialog->GetSelectedItem();
     if (!item_new || dialog->GetSelectedLabel() < 0)
@@ -111,11 +291,18 @@ bool CGUIDialogSimpleMenu::ShowPlaySelection(CFileItem& item, const std::string&
       break;
     }
 
+#endif
+
     if (item_new->m_bIsFolder == false)
     {
       std::string original_path = item.GetPath();
       item.Reset();
-      item = *item_new;
+			item = *item_new;
+
+#ifdef HAS_VIDONME
+			if (item.GetProperty("type") != "DVDFolder" && item.GetProperty("type") != "BDFolder")
+#endif
+
       item.SetProperty("original_listitem_url", original_path);
       return true;
     }

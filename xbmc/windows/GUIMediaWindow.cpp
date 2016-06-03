@@ -69,6 +69,10 @@
 #include "utils/Variant.h"
 #include "video/VideoLibraryQueue.h"
 
+#ifdef HAS_VIDONME
+#include "vidonme/VDMWindowRecommend.h"
+#endif
+
 #define CONTROL_BTNVIEWASICONS       2
 #define CONTROL_BTNSORTBY            3
 #define CONTROL_BTNSORTASC           4
@@ -96,6 +100,10 @@ CGUIMediaWindow::CGUIMediaWindow(int id, const char *xmlFile)
   m_iLastControl = -1;
   m_iSelectedItem = -1;
   m_canFilterAdvanced = false;
+
+#ifdef HAS_VIDONME
+	m_bCheckFolder = false;
+#endif
 
   m_guiState.reset(CGUIViewState::GetViewState(GetID(), *m_vecItems));
 }
@@ -539,8 +547,14 @@ void CGUIMediaWindow::UpdateButtons()
     else
       CONTROL_ENABLE(CONTROL_BTNSORTBY);
 
+#ifdef HAS_VIDONME
+	std::string sortLabel = g_localizeStrings.Get(550);
+	StringUtils::Replace(sortLabel, "%s", g_localizeStrings.Get(m_guiState->GetSortMethodLabel()));
+#else
     std::string sortLabel = StringUtils::Format(g_localizeStrings.Get(550).c_str(),
                                                 g_localizeStrings.Get(m_guiState->GetSortMethodLabel()).c_str());
+#endif
+
     SET_CONTROL_LABEL(CONTROL_BTNSORTBY, sortLabel);
   }
 
@@ -722,6 +736,51 @@ bool CGUIMediaWindow::Update(const std::string &strDirectory, bool updateFilterP
   if (strDirectory == "?")
     return false;
 
+#ifdef HAS_VIDONME
+
+	if (!CVDMWindowRecommend::AddonInstalled() &&
+		CVDMWindowRecommend::CanActive() &&
+		(strDirectory == "addons://sources/video/" ||
+		strDirectory == "addons://sources/image/" ||
+		strDirectory == "addons://sources/audio/" ||
+		strDirectory == "addons://sources/executable/" ||
+		strDirectory == "library://video/addons.xml/"))
+	{
+		g_windowManager.ActivateWindow(VDM_WINDOW_RECOMMEND);
+		return true;
+	}
+
+	if (m_bCheckFolder)
+	{
+		std::string strDVDFolderPath, strBDFolderPath;
+
+		strDVDFolderPath = URIUtils::AddFileToFolder(strDirectory, "VIDEO_TS");
+		strDVDFolderPath = URIUtils::AddFileToFolder(strDVDFolderPath, "VIDEO_TS.IFO");
+		strBDFolderPath = URIUtils::AddFileToFolder(strDirectory, "BDMV");
+		strBDFolderPath = URIUtils::AddFileToFolder(strBDFolderPath, "index.bdmv");
+
+		if (XFILE::CFile::Exists(strDVDFolderPath))
+		{
+			m_itemType = "DVDFolder";
+			m_bCheckFolder = false;
+			return true;
+		}
+		else if (XFILE::CFile::Exists(strBDFolderPath))
+		{
+			m_itemType = "BDFolder";
+			m_bCheckFolder = false;
+			return true;
+		}
+		else
+		{
+			m_itemType = "NONE";
+		}
+	}
+
+	m_bCheckFolder = false;
+
+#endif
+
   // get selected item
   int iItem = m_viewControl.GetSelectedItem();
   std::string strSelectedItem;
@@ -898,6 +957,10 @@ bool CGUIMediaWindow::OnClick(int iItem)
   if ( iItem < 0 || iItem >= (int)m_vecItems->Size() ) return true;
   CFileItemPtr pItem = m_vecItems->Get(iItem);
 
+#ifdef HAS_VIDONME
+	m_bCheckFolder = pItem->GetLabel() != "..";
+#endif
+
   if (pItem->IsParentFolder())
   {
     GoParentFolder();
@@ -978,6 +1041,31 @@ bool CGUIMediaWindow::OnClick(int iItem)
     CFileItem directory(*pItem);
     if (!Update(directory.GetPath()))
       ShowShareErrorMessage(&directory);
+
+#ifdef HAS_VIDONME
+		if (m_itemType == "DVDFolder" || m_itemType == "BDFolder")
+		{
+			std::string strPath = pItem->GetPath();
+
+			pItem->SetProperty("original_listitem_url", strPath);
+
+			if (m_itemType == "DVDFolder")
+			{
+				strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS");
+				strPath = URIUtils::AddFileToFolder(strPath, "VIDEO_TS.IFO");
+			}
+			else if (m_itemType == "BDFolder")
+			{
+				strPath = URIUtils::AddFileToFolder(strPath, "BDMV");
+				strPath = URIUtils::AddFileToFolder(strPath, "index.bdmv");
+			}
+
+			pItem->SetPath(strPath);
+
+			pItem->SetProperty("type", m_itemType);
+			return OnPlayMedia(iItem);
+		}
+#endif
 
     return true;
   }

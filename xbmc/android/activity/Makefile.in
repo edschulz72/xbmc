@@ -19,6 +19,9 @@ SRCS      += EventLoop.cpp
 SRCS      += XBMCApp.cpp
 SRCS      += JNIMainActivity.cpp
 
+# HAS_VIDONME
+SRCS      += SettingsBase.cpp
+
 OBJS      += $(APP_GLUE) $(CPU_OBJ)
 
 LIB        = activity.a

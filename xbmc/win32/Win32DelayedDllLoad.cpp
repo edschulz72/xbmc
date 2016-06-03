@@ -94,6 +94,38 @@ FARPROC WINAPI delayHookNotifyFunc (unsigned dliNotify, PDelayLoadInfo pdli)
         HMODULE hMod = LoadLibraryEx(strDll.c_str(), 0, LOAD_WITH_ALTERED_SEARCH_PATH);
         return (FARPROC)hMod;
       }
+#ifdef HAS_VIDONME
+			if (stricmp(pdli->szDll, "PlcoreKodid.dll") == 0)
+			{
+				std::string strDll = CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/PlcoreKodid.dll");
+				HMODULE hMod = LoadLibraryEx(strDll.c_str(), 0, LOAD_WITH_ALTERED_SEARCH_PATH);
+				return (FARPROC)hMod;
+			}
+			if (stricmp(pdli->szDll, "PlcoreKodi.dll") == 0)
+			{
+				std::string strDll = CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/PlcoreKodi.dll");
+				HMODULE hMod = LoadLibraryEx(strDll.c_str(), 0, LOAD_WITH_ALTERED_SEARCH_PATH);
+				return (FARPROC)hMod;
+			}
+			if (stricmp(pdli->szDll, "VdplayerKodid.dll") == 0)
+			{
+				std::string strDll = CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/VdplayerKodid.dll");
+				HMODULE hMod = LoadLibraryEx(strDll.c_str(), 0, LOAD_WITH_ALTERED_SEARCH_PATH);
+				return (FARPROC)hMod;
+			}
+			if (stricmp(pdli->szDll, "VdplayerKodi.dll") == 0)
+			{
+				std::string strDll = CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/VdplayerKodi.dll");
+				HMODULE hMod = LoadLibraryEx(strDll.c_str(), 0, LOAD_WITH_ALTERED_SEARCH_PATH);
+				return (FARPROC)hMod;
+			}
+			if (stricmp(pdli->szDll, "libvtx.dll") == 0)
+			{
+				std::string strDll = CSpecialProtocol::TranslatePath("special://xbmcbin/system/players/vdmplayer/libvtx.dll");
+				HMODULE hMod = LoadLibraryEx(strDll.c_str(), 0, LOAD_WITH_ALTERED_SEARCH_PATH);
+				return (FARPROC)hMod;
+			}
+#endif
       break;
   }
   return NULL;

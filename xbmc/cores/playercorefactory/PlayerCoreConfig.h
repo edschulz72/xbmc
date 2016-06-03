@@ -30,6 +30,11 @@
 #endif
 #include "utils/log.h"
 
+#ifdef HAS_VIDONME
+#include "cores/vdmplayer/VDMPlayer.h"
+#include "settings/Settings.h"
+#endif 
+
 class CPlayerCoreConfig
 {
 friend class CPlayerCoreFactory;
@@ -95,7 +100,10 @@ public:
     {
       case EPC_MPLAYER:
       case EPC_DVDPLAYER: pPlayer = new CDVDPlayer(callback); break;
-      case EPC_PAPLAYER: pPlayer = new PAPlayer(callback); break;
+			case EPC_PAPLAYER: pPlayer = new PAPlayer(callback); break;
+#ifdef HAS_VIDONME
+			case EPC_VDMPLAYER: pPlayer = new CVDMPlayer(callback); break;
+#endif
       case EPC_EXTPLAYER: pPlayer = new CExternalPlayer(callback); break;
 #if defined(HAS_UPNP)
       case EPC_UPNPPLAYER: pPlayer = new UPNP::CUPnPPlayer(callback, m_id.c_str()); break;

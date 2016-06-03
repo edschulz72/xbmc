@@ -70,10 +70,23 @@ CFileItemPtr CBlurayDirectory::GetTitle(const BLURAY_TITLE_INFO* title, const st
   int duration = (int)(title->duration / 90000);
   item->GetVideoInfoTag()->m_duration = duration;
   item->GetVideoInfoTag()->m_iTrack = title->playlist;
+#ifdef HAS_VIDONME
+	buf = label;
+	std::string strTmp = StringUtils::Format("%d", title->playlist);
+	StringUtils::Replace(buf, "%d", strTmp);
+#else
   buf = StringUtils::Format(label.c_str(), title->playlist);
+#endif
   item->m_strTitle = buf;
   item->SetLabel(buf);
+#ifdef HAS_VIDONME
+	chap = g_localizeStrings.Get(25007);
+	strTmp = StringUtils::Format("%u", title->chapter_count);
+	StringUtils::Replace(chap, "%u", strTmp);
+	StringUtils::Replace(chap, "%s", StringUtils::SecondsToTimeString(duration));
+#else
   chap = StringUtils::Format(g_localizeStrings.Get(25007).c_str(), title->chapter_count, StringUtils::SecondsToTimeString(duration).c_str());
+#endif
   item->SetProperty("Addon.Summary", chap);
   item->m_dwSize = 0;
   item->SetIconImage("DefaultVideo.png");

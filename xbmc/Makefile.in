@@ -36,6 +36,16 @@ SRCS=Application.cpp \
      XBDateTime.cpp \
      xbmc.cpp \
      XbmcContext.cpp \
+     vidonme/VDMSettingsManager.cpp \
+     vidonme/VDMUserInfo.cpp \
+     vidonme/VDMDialogLogin.cpp \
+     vidonme/VDMRegionFeature.cpp \
+     vidonme/VDMVersionUpdate.cpp \
+     vidonme/VDMDialogVersionCheck.cpp \
+     vidonme/VDMLogReportUpload.cpp \
+     vidonme/SynchroMethod.cpp \
+     vidonme/VDMUserRecord.cpp \
+     vidonme/VDMWindowRecommend.cpp \
 
 LIB=xbmc.a
 

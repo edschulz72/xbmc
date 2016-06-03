@@ -462,3 +462,22 @@ void CGUIListItem::AppendProperties(const CGUIListItem &item)
   for (PropertyMap::const_iterator i = item.m_mapProperties.begin(); i != item.m_mapProperties.end(); ++i)
     SetProperty(i->first, i->second);
 }
+
+#ifdef HAS_VIDONME
+std::string CGUIListItem::GetPropertiesAsString() const
+{
+	std::string strProperties;
+
+	PropertyMap::const_iterator iter = m_mapProperties.begin();
+	for (; iter != m_mapProperties.end(); ++iter)
+	{
+		strProperties += "{";
+		strProperties += (*iter).first.c_str();
+		strProperties += ":";
+		strProperties += (*iter).second.asString();
+		strProperties += "}";
+	}
+
+	return strProperties;
+}
+#endif

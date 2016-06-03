@@ -42,6 +42,15 @@
 #include "utils/StringUtils.h"
 #include "utils/Variant.h"
 
+#ifdef HAS_VIDONME
+#include "vidonme/VDMVersionUpdate.h"
+#include "vidonme/VDMRegionFeature.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "settings/Settings.h"
+#include "guilib/StereoscopicsManager.h"
+#include "settings/MediaSettings.h"
+#endif
+
 #if defined(TARGET_WINDOWS) // disable 4355: 'this' used in base member initializer list
 #pragma warning(push)
 #pragma warning(disable: 4355)
@@ -58,6 +67,12 @@
 #define CONTROL_DEFAULT_EDIT            12
 #define CONTROL_DEFAULT_SLIDER          13
 #define CONTROL_DEFAULT_SETTING_LABEL   14
+
+#ifdef HAS_VIDONME
+#define USERCENTER_CATEGORY_ID          "usercenter"
+#define UPGRADE_CATEGORY_ID             "upgrade"
+#endif
+
 
 CGUIDialogSettingsBase::CGUIDialogSettingsBase(int windowId, const std::string &xmlFile)
     : CGUIDialog(windowId, xmlFile),
@@ -540,10 +555,35 @@ std::set<std::string> CGUIDialogSettingsBase::CreateSettings()
     if (separatorBelowGroupLabel && !hideSeparator)
       AddSeparator(group->GetWidth(), iControlID);
 
+#ifdef HAS_VIDONME
+		bool bEmail = false;
+#endif
+
     for (SettingList::const_iterator settingIt = settings.begin(); settingIt != settings.end(); ++settingIt)
     {
       CSetting *pSetting = *settingIt;
-      settingMap.insert(pSetting->GetId());
+			settingMap.insert(pSetting->GetId());
+
+#ifdef HAS_VIDONME
+			if (pSetting->GetId() == "usercenter.email")
+			{
+				if (!pSetting->IsDefault())
+				{
+					bEmail = true;
+				}
+			}
+			if (pSetting->GetId() == "usercenter.switchuser")
+			{
+				if (!bEmail)
+				{
+					pSetting->SetLabel(70014);
+				}
+				else
+				{
+					pSetting->SetLabel(70061);
+				}
+			}
+#endif
       AddSetting(pSetting, group->GetWidth(), iControlID);
     }
   }
@@ -551,8 +591,17 @@ std::set<std::string> CGUIDialogSettingsBase::CreateSettings()
   if (AllowResettingSettings() && !settingMap.empty())
   {
     // add "Reset" control
-    AddSeparator(group->GetWidth(), iControlID);
-    AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+#ifdef HAS_VIDONME
+		if (0 != strcmp(category->GetId().c_str(), USERCENTER_CATEGORY_ID) &&
+			0 != strcmp(category->GetId().c_str(), UPGRADE_CATEGORY_ID))
+		{
+			AddSeparator(group->GetWidth(), iControlID);
+			AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+		}
+#else
+		AddSeparator(group->GetWidth(), iControlID);
+		AddSetting(m_resetSetting, group->GetWidth(), iControlID);
+#endif
   }
   
   // update our settings (turns controls on/off as appropriate)
@@ -576,7 +625,34 @@ void CGUIDialogSettingsBase::UpdateSettings()
     if (pSetting == NULL || pControl == NULL)
       continue;
 
+#ifdef HAS_VIDONME
+		if (pSetting->GetId() == "upgrade.currVerName")
+		{
+			std::string strVersionName = CVDMVersionCheck::GetCurrVersionName();
+
+			int nIndex = strVersionName.find_first_of('.');
+			strVersionName = StringUtils::Left(strVersionName, nIndex) + StringUtils::Mid(strVersionName, nIndex + 1);
+
+			((CSettingString*)pSetting)->SetValue(strVersionName);
+		}
+		if (pSetting->GetId() == "upgrade.currVerTime")
+		{
+			((CSettingString*)pSetting)->SetValue(CVDMVersionCheck::GetCurrVersionTime());
+		}
+#endif
+
     pSettingControl->Update();
+
+#ifdef HAS_VIDONME
+		if (pSetting->GetId() == "upgrade.website")
+		{
+			((CGUIButtonControl*)pControl)->SetLabel2(CVDMRegionFeature::Get().GetWebSite());
+		}
+		else if (pSetting->GetId() == "upgrade.forum")
+		{
+			((CGUIButtonControl*)pControl)->SetLabel2(CVDMRegionFeature::Get().GetForum());
+		}
+#endif
   }
 }
 
@@ -797,6 +873,20 @@ void CGUIDialogSettingsBase::OnClick(BaseSettingControlPtr pSettingControl)
 
     return;
   }
+
+#ifdef HAS_VIDONME
+	if (pSettingControl->GetSetting()->GetId() == "audio.digitalanalog" && !CSettings::GetInstance().GetBool("audiooutput.passthrough"))
+	{
+		if (!CVDMDialogLogin::ShowLoginTip())
+		{
+			static_cast<CSettingBool*>(pSettingControl->GetSetting())->SetValue(false);
+			pSettingControl->Update();
+			return;
+		}
+
+		g_application.AddAdvanceFeatureUse("PassThrough");
+	}
+#endif
 
   // if changing the setting fails
   // we need to restore the proper state

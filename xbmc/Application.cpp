@@ -225,6 +225,25 @@
 #include "pictures/GUIWindowSlideShow.h"
 #include "windows/GUIWindowLoginScreen.h"
 
+#ifdef HAS_VIDONME
+#include "vidonme/VDMSettingsManager.h"
+#include "vidonme/VDMDialogLogin.h"
+#include "vidonme/VDMUserInfo.h"
+#include "vidonme/DLLVidonUtils.h"
+#include "vidonme/VDMRegionFeature.h"
+#include "vidonme/VDMLogReportUpload.h"
+#include "vidonme/VDMUserRecord.h"
+#include "vidonme/VDMVersionUpdate.h"
+#include "network/DNSNameCache.h"
+#include "filesystem/CurlFile.h"
+#include "cores/vdmplayer/VDMPlayer.h"
+
+#if defined(TARGET_ANDROID)
+#include "android/activity/SettingsBase.h"
+#endif
+
+#endif
+
 using namespace ADDON;
 using namespace XFILE;
 #ifdef HAS_DVD_DRIVE
@@ -312,7 +331,11 @@ CApplication::CApplication(void)
   m_bTestMode = false;
 
   m_muted = false;
-  m_volumeLevel = VOLUME_MAXIMUM;
+	m_volumeLevel = VOLUME_MAXIMUM;
+
+#ifdef HAS_VIDONME
+	m_bPlayWithMenu = false;
+#endif
 }
 
 CApplication::~CApplication(void)
@@ -336,8 +359,15 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
   switch(newEvent.type)
   {
     case XBMC_QUIT:
-      if (!g_application.m_bStop)
-        CApplicationMessenger::GetInstance().PostMsg(TMSG_QUIT);
+			if (!g_application.m_bStop)
+#ifdef HAS_VIDONME
+			{
+				g_application.StopPlaying();
+				CApplicationMessenger::GetInstance().PostMsg(TMSG_QUIT);
+			}
+#else
+				CApplicationMessenger::GetInstance().PostMsg(TMSG_QUIT);
+#endif
       break;
     case XBMC_VIDEORESIZE:
       if (g_windowManager.Initialized() &&
@@ -347,7 +377,14 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
         g_graphicsContext.SetVideoResolution(RES_WINDOW, true);
         CSettings::GetInstance().SetInt(CSettings::SETTING_WINDOW_WIDTH, newEvent.resize.w);
         CSettings::GetInstance().SetInt(CSettings::SETTING_WINDOW_HEIGHT, newEvent.resize.h);
-        CSettings::GetInstance().Save();
+				CSettings::GetInstance().Save();
+
+#ifdef HAS_VIDONME
+				if (g_application.m_pPlayer)
+				{
+					g_application.m_pPlayer->UpdateWindowSize();
+				}
+#endif
       }
       break;
     case XBMC_VIDEOMOVE:
@@ -1130,6 +1167,55 @@ bool CApplication::Initialize()
   // initialize (and update as needed) our databases
   CDatabaseManager::GetInstance().Initialize();
 
+#ifdef HAS_VIDONME
+
+	g_DllVidonUtils.Load();
+	if (g_DllVidonUtils.IsLoaded())
+	{
+		libVidonUtils::LibVidonUtilsConfig config;
+		std::string strUserData = CSpecialProtocol::TranslatePath(CProfilesManager::GetInstance().GetUserDataFolder());
+		std::string strBinPath = CSpecialProtocol::TranslatePath("special://xbmc/system/");
+
+		strncpy(config.bindatapath, strBinPath.c_str(), sizeof(config.bindatapath) / sizeof(config.bindatapath[0]));
+		strncpy(config.userdatapath, strUserData.c_str(), sizeof(config.userdatapath) / sizeof(config.userdatapath[0]));
+		g_DllVidonUtils.LibVidonUtilsInit(&config);
+	}
+
+#if defined(TARGET_ANDROID)
+	std::map<std::string, std::string> language;
+	if (language.empty())
+	{
+		language["en_US"] = "English";
+		language["fr_FR"] = "French";
+		language["zh_CN"] = "Chinese (Simple)";
+		language["zh_TW"] = "Chinese (Traditional)";
+		language["de_DE"] = "German";
+		language["ja_JP"] = "Japanese";
+		language["es_ES"] = "Spanish";
+		language["pt_PT"] = "Portuguese (Brazil)";
+		language["ru_RU"] = "Russian";
+		language["ko_KR"] = "Korean";
+		language["da_DK"] = "Danish";
+		language["vi_VN"] = "Vietnamese";
+		language["th_TH"] = "Thai";
+	}
+
+	std::string	strCurKey = CSettingsBase::getCurrLanguage().strKey;
+	CSettingsBase::LangNodes	vecLangNode = CSettingsBase::getLanguageList();
+
+	for (int i = 0; i < vecLangNode.size(); ++i)
+	{
+		std::string	strKey = vecLangNode[i].strKey;
+		if (strKey == strCurKey && strKey == "zh_CN")
+		{
+			g_application.SetLanguage(language[strKey]);
+			CSettings::GetInstance().SetString("subtitles.charset", "GBK");
+		}
+	}
+#endif
+
+#endif
+
   StartServices();
 
   // Init DPMS, before creating the corresponding setting control.
@@ -1243,6 +1329,60 @@ bool CApplication::Initialize()
     CGUIMessage msg(GUI_MSG_NOTIFY_ALL, 0, 0, GUI_MSG_UI_READY);
     g_windowManager.SendThreadMessage(msg);
   }
+
+#ifdef HAS_VIDONME
+
+	Locate();
+
+	std::string strHomePath;
+
+#if defined(TARGET_DARWIN)
+	strHomePath = getenv("HOME");
+#else
+	CUtil::GetHomePath(strHomePath);
+#endif
+
+	std::string strDumpFile = URIUtils::AddFileToFolder(strHomePath, "kodi.dmp");
+	if (XFILE::CFile::Exists(strDumpFile))
+	{
+		std::string strUserName;
+		std::string strPassword;
+		if (!CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword))
+		{
+			strUserName = "unknown username";
+		}
+
+		std::string strEmail = CSettings::GetInstance().GetString("usercenter.email");
+
+		Method_LogReportUpload* LogUpload = new Method_LogReportUpload(strUserName, strEmail);
+		SynchroMethodCall(std::shared_ptr<MethodPtr>(new MethodPtr(LogUpload)));
+
+		XFILE::CFile::Delete(strDumpFile);
+	}
+
+	std::string strUserName, strPassword;
+	CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword);
+	CVDMUserRecord::Instance().SetUserName(strUserName);
+
+	std::string strEmail = CSettings::GetInstance().GetString("usercenter.email");
+	if (strEmail == "E-Mail")
+	{
+		strEmail.clear();
+	}
+	CVDMUserRecord::Instance().SetUserEmail(strEmail);
+	CVDMUserRecord::Instance().UploadRecord();
+
+	CVDMUserRecord::Instance().SetStartTime(CDateTime::GetCurrentDateTime());
+	SaveRecord();
+
+	m_RecordUploadTimer.StartZero();
+
+	if (CVDMPlayer::InitPlayCore())
+	{
+		CLog::Log(LOGERROR, "InitPlayCore failed!");
+	}
+
+#endif
 
   return true;
 }
@@ -1409,7 +1549,7 @@ void CApplication::OnSettingChanged(const CSetting *setting)
     g_windowManager.SendThreadMessage(msg);
   }
   else if (StringUtils::StartsWithNoCase(settingId, "audiooutput."))
-  {
+	{
     if (settingId == CSettings::SETTING_AUDIOOUTPUT_DSPADDONSENABLED)
     {
       if (((CSettingBool *) setting)->GetValue())
@@ -1438,7 +1578,14 @@ void CApplication::OnSettingChanged(const CSetting *setting)
     else if (settingId == CSettings::SETTING_AUDIOOUTPUT_PASSTHROUGH)
     {
       CApplicationMessenger::GetInstance().PostMsg(TMSG_MEDIA_RESTART);
-    }
+		}
+
+#ifdef HAS_VIDONME
+		if (m_pPlayer)
+		{
+			m_pPlayer->NotifyAudioOutputSettingsChanged();
+		}
+#endif
   }
   else if (StringUtils::EqualsNoCase(settingId, CSettings::SETTING_MUSICPLAYER_REPLAYGAINTYPE))
     m_replayGainSettings.iType = ((CSettingInt*)setting)->GetValue();
@@ -1496,6 +1643,63 @@ bool CApplication::OnSettingUpdate(CSetting* &setting, const char *oldSettingId,
     }
   }
 #endif
+
+#if defined(HAS_LIBAWCODEC)
+	if (setting->GetId() == "videoplayer.useawcodec")
+	{
+		// Do not permit awcodec to be used on non-aml platforms.
+		// The setting will be hidden but the default value is true,
+		// so change it to false.
+		if (CT_ALLWINNER_H3 != g_cpuInfo.GetCPUType())
+		{
+			CSettingBool *useawcodec = (CSettingBool*)setting;
+			return useawcodec->SetValue(false);
+		}
+}
+#endif
+
+#if defined(HAS_LIBRKCODEC)
+	if (setting->GetId() == "videoplayer.userkcodec")
+	{
+		// Do not permit rkcodec to be used on non-aml platforms.
+		// The setting will be hidden but the default value is true,
+		// so change it to false.
+		if (CT_ROCKCHIPS_RK3368 != g_cpuInfo.GetCPUType())
+		{
+			CSettingBool *userkcodec = (CSettingBool*)setting;
+			return userkcodec->SetValue(false);
+		}
+	}
+#endif
+
+#if defined(HAS_LIBA31CODEC)
+	if (setting->GetId() == "videoplayer.usea31codec")
+	{
+		// Do not permit a31codec to be used on non-aml platforms.
+		// The setting will be hidden but the default value is true,
+		// so change it to false.
+		if (CT_ALLWINNER_A31 != g_cpuInfo.GetCPUType())
+		{
+			CSettingBool *usea31codec = (CSettingBool*)setting;
+			return usea31codec->SetValue(false);
+		}
+	}
+#endif
+
+#if defined(HAS_LIBHISICODEC)
+	else if (setting->GetId() == "videoplayer.usehisicodec")
+	{
+		// Do not permit hisicodec to be used on non-hisi platforms.
+		// The setting will be hidden but the default value is true,
+		// so change it to false.
+		if (CT_HISILICON != g_cpuInfo.GetCPUType())
+		{
+			CSettingBool *usehisicodec = (CSettingBool*)setting;
+			return usehisicodec->SetValue(false);
+		}
+	}
+#endif
+
 #if defined(TARGET_ANDROID)
   if (setting->GetId() == CSettings::SETTING_VIDEOPLAYER_USESTAGEFRIGHT)
   {
@@ -1967,6 +2171,11 @@ void CApplication::Render()
 
   CDirtyRegionList dirtyRegions;
 
+#ifdef HAS_VIDONME
+	// render video layer
+	g_windowManager.RenderEx();
+#endif
+
   // render gui layer
   if (!m_skipGuiRender)
   {
@@ -1994,8 +2203,10 @@ void CApplication::Render()
     g_windowManager.AfterRender();
   }
 
+#ifndef HAS_VIDONME
   // render video layer
   g_windowManager.RenderEx();
+#endif
 
   g_Windowing.EndRender();
 
@@ -2103,7 +2314,15 @@ bool CApplication::OnAction(const CAction &action)
 
   if (action.GetID() == ACTION_TOGGLE_FULLSCREEN)
   {
-    g_graphicsContext.ToggleFullScreenRoot();
+		g_graphicsContext.ToggleFullScreenRoot();
+
+#ifdef HAS_VIDONME
+		if (m_pPlayer)
+		{
+			m_pPlayer->UpdateWindowSize();
+		}
+#endif
+
     return true;
   }
 
@@ -2754,6 +2973,20 @@ void CApplication::OnApplicationMessage(ThreadMessage* pMsg)
     CGUIWindowLoginScreen::LoadProfile(pMsg->param1);
     break;
 
+
+#ifdef HAS_VIDONME
+	case TMSG_SETFULLSCREEN:
+	{
+		bool bFull = pMsg->param1 != 0;
+
+		g_graphicsContext.Lock();
+		g_graphicsContext.SetFullScreenVideo(bFull);
+		g_graphicsContext.Unlock();
+
+		break;
+	}
+#endif
+
   default:
     CLog::Log(LOGERROR, "%s: Unhandled threadmessage sent, %u", __FUNCTION__, pMsg->dwMessage);
     break;
@@ -2857,7 +3090,15 @@ void CApplication::FrameMove(bool processEvents, bool processGUI)
 bool CApplication::Cleanup()
 {
   try
-  {
+	{
+#ifdef HAS_VIDONME
+
+		EndRecord();
+
+		CVDMPlayer::DeInitPlayCore();
+
+#endif
+
     g_windowManager.DestroyWindows();
 
     CAddonMgr::GetInstance().DeInit();
@@ -2911,6 +3152,16 @@ bool CApplication::Cleanup()
     delete m_network;
     m_network = NULL;
 
+#ifdef HAS_VIDONME
+
+		if (g_DllVidonUtils.IsLoaded())
+		{
+			g_DllVidonUtils.LibVidonUtilsDeInit();
+		}
+		g_DllVidonUtils.Unload();
+
+#endif
+
     return true;
   }
   catch (...)
@@ -2955,8 +3206,12 @@ void CApplication::Stop(int exitCode)
     m_ExitCode = exitCode;
     CLog::Log(LOGNOTICE, "stop all");
 
-    // cancel any jobs from the jobmanager
-    CJobManager::GetInstance().CancelJobs();
+#ifdef HAS_VIDONME
+		CJobManager::GetInstance().ClearJobs();
+#else
+		// cancel any jobs from the jobmanager
+		CJobManager::GetInstance().CancelJobs();
+#endif
 
     // stop scanning before we kill the network and so on
     if (m_musicInfoScanner->IsScanning())
@@ -3340,6 +3595,19 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
       return PLAYBACK_CANCELED;
   }
 
+#ifdef HAS_VIDONME
+	if (IsPlayBDMenu(item))
+	{
+		CVDMUserInfo::Instance().WaitLoginInBackground();
+		if (!CVDMDialogLogin::ShowLoginTip())
+		{
+			return PLAYBACK_CANCELED;
+		}
+
+		g_application.AddAdvanceFeatureUse("Menu");
+	}
+#endif
+
 #ifdef HAS_UPNP
   if (URIUtils::IsUPnP(item.GetPath()))
   {
@@ -3398,8 +3666,12 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
         CBookmark bookmark;
         std::string path = item.GetPath();
         if (item.HasVideoInfoTag() && StringUtils::StartsWith(item.GetVideoInfoTag()->m_strFileNameAndPath, "removable://"))
-          path = item.GetVideoInfoTag()->m_strFileNameAndPath;
-        else if (item.HasProperty("original_listitem_url") && URIUtils::IsPlugin(item.GetProperty("original_listitem_url").asString()))
+					path = item.GetVideoInfoTag()->m_strFileNameAndPath;
+#ifdef HAS_VIDONME
+				else if (item.HasProperty("original_listitem_url"))
+#else
+				else if (item.HasProperty("original_listitem_url") && URIUtils::IsPlugin(item.GetProperty("original_listitem_url").asString()))
+#endif
           path = item.GetProperty("original_listitem_url").asString();
         if(dbs.GetResumeBookMark(path, bookmark))
         {
@@ -3534,7 +3806,11 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
   }
 
   if(iResult == PLAYBACK_OK)
-  {
+	{
+#ifdef HAS_VIDONME
+		m_strLastPlayedFile = item.GetPath();
+#endif
+
     if (m_pPlayer->GetPlaySpeed() != 1)
     {
       int iSpeed = m_pPlayer->GetPlaySpeed();
@@ -3898,8 +4174,24 @@ void CApplication::LoadVideoSettings(const CFileItem& item)
   {
     CLog::Log(LOGDEBUG, "Loading settings for %s", CURL::GetRedacted(item.GetPath()).c_str());
 
-    // Load stored settings if they exist, otherwise use default
-    if (!dbs.GetVideoSettings(item, CMediaSettings::GetInstance().GetCurrentVideoSettings()))
+#ifdef HAS_VIDONME
+		std::string strPath = item.GetPath();
+		if (URIUtils::GetFileName(strPath) == "1048575.mpls")
+		{
+			strPath = URIUtils::GetParentPath(strPath);
+			strPath = URIUtils::GetParentPath(strPath);
+			strPath = URIUtils::GetParentPath(strPath);
+			URIUtils::RemoveSlashAtEnd(strPath);
+			if (!StringUtils::EndsWithNoCase(strPath, ".iso"))
+			{
+				URIUtils::AddSlashAtEnd(strPath);
+			}
+		}
+		if (!dbs.GetVideoSettings(strPath, CMediaSettings::GetInstance().GetCurrentVideoSettings()))
+#else
+		// Load stored settings if they exist, otherwise use default
+		if (!dbs.GetVideoSettings(item, CMediaSettings::GetInstance().GetCurrentVideoSettings()))
+#endif
       CMediaSettings::GetInstance().GetCurrentVideoSettings() = CMediaSettings::GetInstance().GetDefaultVideoSettings();
 
     dbs.Close();
@@ -3916,8 +4208,19 @@ void CApplication::StopPlaying()
     // turn off visualisation window when stopping
     if ((iWin == WINDOW_VISUALISATION
     ||  iWin == WINDOW_FULLSCREEN_VIDEO)
-    && !m_bStop)
-      g_windowManager.PreviousWindow();
+		&& !m_bStop)
+#ifdef HAS_VIDONME
+		{
+			g_windowManager.PreviousWindow();
+
+			if (g_windowManager.HasDialogOnScreen() && !m_bStop)
+			{
+				g_windowManager.CloseDialogs();
+			}
+		}
+#else
+		g_windowManager.PreviousWindow();
+#endif
 
     g_partyModeManager.Disable();
   }
@@ -4262,6 +4565,15 @@ bool CApplication::OnMessage(CGUIMessage& message)
       param["player"]["speed"] = 1;
       param["player"]["playerid"] = g_playlistPlayer.GetCurrentPlaylist();
       CAnnouncementManager::GetInstance().Announce(Player, "xbmc", "OnPlay", m_itemCurrentFile, param);
+
+#ifdef HAS_VIDONME
+			if (m_pPlayer)
+			{
+				m_pPlayer->PlayBackStart();
+				AddExternalSubtitles();
+			}
+#endif
+
       return true;
     }
     break;
@@ -4397,6 +4709,13 @@ bool CApplication::OnMessage(CGUIMessage& message)
         WakeUpScreenSaverAndDPMS();
         g_windowManager.PreviousWindow();
       }
+
+#if defined(HAS_VIDONME) && defined(TARGET_ANDROID)
+			if (CXBMCApp::InvokedByFileManager())
+			{
+				CApplicationMessenger::GetInstance().PostMsg(TMSG_QUIT);
+			}
+#endif
 
       if (IsEnableTestMode())
         CApplicationMessenger::GetInstance().PostMsg(TMSG_QUIT);
@@ -4539,6 +4858,18 @@ void CApplication::Process()
     m_slowTimer.Reset();
     ProcessSlow();
   }
+
+#ifdef HAS_VIDONME
+
+	if (m_RecordUploadTimer.GetElapsedMilliseconds() > 10000)
+	{
+		SaveRecord(true);
+
+		m_RecordUploadTimer.Reset();
+		m_RecordUploadTimer.Stop();
+	}
+
+#endif
 
   g_cpuInfo.getUsedPercentage(); // must call it to recalculate pct values
 }
@@ -4829,6 +5160,13 @@ int CApplication::GetSubtitleDelay() const
 
 int CApplication::GetAudioDelay() const
 {
+#ifdef HAS_VIDONME
+	if (m_pPlayer && m_pPlayer->IsSelfPresent())
+	{
+		return (int)m_pPlayer->GetAudioDelay();
+	}
+#endif
+
   // converts audio delay to a percentage
   return int(((float)(CMediaSettings::GetInstance().GetCurrentVideoSettings().m_AudioDelay + g_advancedSettings.m_videoAudioDelayRange)) / (2 * g_advancedSettings.m_videoAudioDelayRange)*100.0f + 0.5f);
 }
@@ -5296,3 +5634,176 @@ bool CApplication::NotifyActionListeners(const CAction &action) const
   
   return false;
 }
+
+#ifdef HAS_VIDONME
+
+const std::string CApplication::GetLastPlayedFile(void)
+{
+	return m_strLastPlayedFile;
+}
+
+bool CApplication::IsPlayBDMenu(const CFileItem& item)
+{
+	std::string strFilepath = item.GetPath();
+	if (StringUtils::EndsWith(strFilepath, "BDMV/MovieObject.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV/index.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV\\MovieObject.bdmv")
+		|| StringUtils::EndsWith(strFilepath, "BDMV\\index.bdmv"))
+	{
+		return true;
+	}
+	//refer to bool CGUIWindowVideoBase::ShowPlaySelection(CFileItemPtr& item)
+	if (URIUtils::HasExtension(item.GetPath(), ".iso|.img"))
+	{
+		CURL url2("udf://");
+		url2.SetHostName(item.GetPath());
+		url2.SetFileName("BDMV/index.bdmv");
+		if (CFile::Exists(url2.Get()))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void CApplication::AddAdvanceFeatureUse(const std::string& strFeatureType)
+{
+	CVDMUserRecord::Instance().AddAdvanceFeatureUseRecord(strFeatureType, CDateTime::GetCurrentDateTime().GetAsDBDateTime());
+
+	SaveRecord();
+}
+
+void CApplication::EndRecord(void)
+{
+	CVDMUserRecord::Instance().SetEndTime(CDateTime::GetCurrentDateTime());
+	SaveRecord();
+}
+
+void CApplication::SaveRecord(bool bUpload)
+{
+	if (CSettings::GetInstance().GetBool("debugging.record"))
+	{
+		std::string strVersionName = CVDMVersionCheck::GetCurrVersionName();
+		CVDMUserRecord::Instance().SetVersion(strVersionName);
+
+		CVDMUserRecord::Instance().SetUserLogin(CVDMUserInfo::Instance().IsLogin());
+
+		std::string strUserName, strPassword;
+		CVDMUserInfo::Instance().GetUsernameAndPassword(strUserName, strPassword);
+		CVDMUserRecord::Instance().SetUserName(strUserName);
+
+		std::string strEmail = CSettings::GetInstance().GetString("usercenter.email");
+		if (strEmail == "E-Mail")
+		{
+			strEmail.clear();
+		}
+		CVDMUserRecord::Instance().SetUserEmail(strEmail);
+
+		std::string strLanguage = CSettings::GetInstance().GetString("locale.language");
+		CVDMUserRecord::Instance().SetUserLanguage(strLanguage);
+
+		std::string strIP;
+		CNetworkInterface* iface = g_application.getNetwork().GetFirstConnectedInterface();
+
+		if (!m_strPublicIP.empty() && inet_addr(m_strPublicIP.c_str()) > 0)
+		{
+			strIP = m_strPublicIP;
+		}
+		else if (iface)
+		{
+			strIP = iface->GetCurrentIPAddress();
+		}
+
+		CVDMUserRecord::Instance().SetUserIP(strIP);
+
+		std::string strMac;
+		if (iface)
+		{
+			strMac = iface->GetMacAddress();
+		}
+
+		CVDMUserRecord::Instance().SetUserMacAdress(strMac);
+
+		std::string strVendorName = g_DllVidonUtils.Vidon_GetVendorName();
+		CVDMUserRecord::Instance().SetBoxType(strVendorName);
+
+		std::string strRecordInforPath = URIUtils::AddFileToFolder(CSpecialProtocol::TranslatePath(g_advancedSettings.m_logFolder), "RecordInfo");
+		CVDMUserRecord::Instance().SetFirstRun(!XFILE::CFile::Exists(strRecordInforPath));
+
+		CVDMUserRecord::Instance().SaveRecord(bUpload);
+	}
+}
+
+void CApplication::Locate(void)
+{
+	std::string strHostName = "www.ip138.com";
+	CDNSNameCache::Lookup(strHostName, m_strPublicIP);
+}
+
+void CApplication::AddSubtitle(std::string strSubtitlePath)
+{
+	if (!m_pPlayer || !m_pPlayer->IsSelfPresent())
+	{
+		return;
+	}
+
+	std::string strCurrentFile = CurrentFile();
+	std::vector<std::string> vecSubtitles = m_mapExternalSubtitleMap[strCurrentFile];
+	bool bExist = false;
+
+	for (size_t i = 0; i < vecSubtitles.size(); i++)
+	{
+		if (strSubtitlePath == vecSubtitles[i])
+		{
+			bExist = true;
+			break;
+		}
+	}
+
+	if (!bExist)
+	{
+		vecSubtitles.push_back(strSubtitlePath);
+	}
+
+	m_mapExternalSubtitleMap[strCurrentFile] = vecSubtitles;
+
+	CMediaSettings::GetInstance().GetCurrentVideoSettings().m_SubtitleOn = true;
+	CMediaSettings::GetInstance().GetCurrentVideoSettings().m_SubtitleStream = m_pPlayer->GetSubtitle();
+}
+
+void CApplication::AddExternalSubtitles(void)
+{
+	if (!m_pPlayer || !m_pPlayer->IsSelfPresent())
+	{
+		return;
+	}
+
+	int nSubtitleID = CMediaSettings::GetInstance().GetCurrentVideoSettings().m_SubtitleStream;
+
+	bool bShowExternalSubtitle = nSubtitleID >= m_pPlayer->GetSubtitleCount();
+	std::vector<std::string> vecSubtitles = m_mapExternalSubtitleMap[CurrentFile()];
+
+	for (size_t i = 0; i < vecSubtitles.size(); i++)
+	{
+		m_pPlayer->AddSubtitle(vecSubtitles[i]);
+	}
+
+	if (bShowExternalSubtitle)
+	{
+		m_pPlayer->SetSubtitle(nSubtitleID);
+		m_pPlayer->SetSubtitleVisible(true);
+	}
+}
+
+void CApplication::SetPlayWithMenu(bool bPlayWithMenu)
+{
+	m_bPlayWithMenu = bPlayWithMenu;
+}
+
+bool CApplication::IsPlayWithMenu(void)
+{
+	return m_bPlayWithMenu;
+}
+
+#endif

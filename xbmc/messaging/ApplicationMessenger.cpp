@@ -18,7 +18,7 @@
  *
  */
 
-#include "ApplicationMessenger.h"
+#include "messaging/ApplicationMessenger.h"
 
 #include <memory>
 #include <utility>

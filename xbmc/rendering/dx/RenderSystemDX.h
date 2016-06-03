@@ -119,6 +119,12 @@ public:
 
   static std::string GetErrorDescription(HRESULT hr);
 
+#if 0 //def HAS_VIDONME
+	LPDIRECT3D9 GetD3D() { return m_pD3D; }
+	D3DPRESENT_PARAMETERS GetD3DPP() { return m_D3DPP; }
+	unsigned int GetAdapter(){ return m_adapter; }
+#endif
+
 protected:
   bool CreateDevice();
   void DeleteDevice();

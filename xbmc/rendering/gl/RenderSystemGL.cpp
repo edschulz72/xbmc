@@ -35,6 +35,10 @@
 #include "utils/MathUtils.h"
 #include "utils/StringUtils.h"
 
+#ifdef HAS_VIDONME
+#include "Application.h"
+#endif
+
 CRenderSystemGL::CRenderSystemGL() : CRenderSystemBase()
 {
   m_enumRenderingSystem = RENDERING_SYSTEM_OPENGL;
@@ -587,7 +591,14 @@ void CRenderSystemGL::SetViewPort(CRect& viewPort)
   m_viewPort[0] = viewPort.x1;
   m_viewPort[1] = m_height - viewPort.y1 - viewPort.Height();
   m_viewPort[2] = viewPort.Width();
-  m_viewPort[3] = viewPort.Height();
+	m_viewPort[3] = viewPort.Height();
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetRenderViewPort(viewPort.x1, viewPort.y1, viewPort.x2, viewPort.y2);
+	}
+#endif
 }
 
 void CRenderSystemGL::SetScissors(const CRect &rect)
@@ -708,6 +719,12 @@ void CRenderSystemGL::SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW 
       glDrawBuffer(GL_BACK_RIGHT);
   }
 
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetStereoMode(mode, view);
+	}
+#endif
 }
 
 bool CRenderSystemGL::SupportsStereo(RENDER_STEREO_MODE mode)

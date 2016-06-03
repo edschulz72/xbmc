@@ -29,6 +29,14 @@
 #include "settings/lib/SettingSection.h"
 #include "view/ViewStateSettings.h"
 
+#ifdef HAS_VIDONME
+#include "guilib/GUIButtonControl.h"
+#include "settings/windows/GUIControlSettings.h"
+#include "vidonme/VDMVersionUpdate.h"
+#include "vidonme/VDMRegionFeature.h"
+#include "utils/StringUtils.h"
+#endif
+
 #define SETTINGS_PICTURES               WINDOW_SETTINGS_MYPICTURES - WINDOW_SETTINGS_START
 #define SETTINGS_PROGRAMS               WINDOW_SETTINGS_MYPROGRAMS - WINDOW_SETTINGS_START
 #define SETTINGS_WEATHER                WINDOW_SETTINGS_MYWEATHER - WINDOW_SETTINGS_START
@@ -38,6 +46,10 @@
 #define SETTINGS_SERVICE                WINDOW_SETTINGS_SERVICE - WINDOW_SETTINGS_START
 #define SETTINGS_APPEARANCE             WINDOW_SETTINGS_APPEARANCE - WINDOW_SETTINGS_START
 #define SETTINGS_PVR                    WINDOW_SETTINGS_MYPVR - WINDOW_SETTINGS_START
+
+#ifdef HAS_VIDONME
+#define SETTINGS_VIDONME                VDM_WINDOW_SETTINGS_VIDONME - WINDOW_SETTINGS_START
+#endif
 
 #define CONTRL_BTN_LEVELS               20
 
@@ -54,6 +66,9 @@ static const SettingGroup s_settingGroupMap[] = { { SETTINGS_PICTURES,    "pictu
                                                   { SETTINGS_VIDEOS,      "videos" },
                                                   { SETTINGS_SERVICE,     "services" },
                                                   { SETTINGS_APPEARANCE,  "appearance" },
+#ifdef HAS_VIDONME
+																									{ SETTINGS_VIDONME,			"vidonme" },
+#endif
                                                   { SETTINGS_PVR,         "pvr" } };
                                                   
 #define SettingGroupSize sizeof(s_settingGroupMap) / sizeof(SettingGroup)
@@ -76,11 +91,43 @@ CGUIWindowSettingsCategory::CGUIWindowSettingsCategory()
   m_idRange.push_back(WINDOW_SETTINGS_MYVIDEOS);
   m_idRange.push_back(WINDOW_SETTINGS_SERVICE);
   m_idRange.push_back(WINDOW_SETTINGS_APPEARANCE);
-  m_idRange.push_back(WINDOW_SETTINGS_MYPVR);
+	m_idRange.push_back(WINDOW_SETTINGS_MYPVR);
+
+#ifdef HAS_VIDONME
+	m_idRange.push_back(VDM_WINDOW_SETTINGS_VIDONME);
+#endif
 }
 
 CGUIWindowSettingsCategory::~CGUIWindowSettingsCategory()
 { }
+
+#ifdef HAS_VIDONME
+void CGUIWindowSettingsCategory::FrameMove()
+{
+	CGUIDialogSettingsManagerBase::FrameMove();
+
+	for (std::vector<BaseSettingControlPtr>::iterator it = m_settingControls.begin(); it != m_settingControls.end(); it++)
+	{
+		BaseSettingControlPtr pSettingControl = *it;
+		CSetting *pSetting = pSettingControl->GetSetting();
+		CGUIControl *pControl = pSettingControl->GetControl();
+		if (pSetting == NULL || pControl == NULL)
+			continue;
+
+		if (pSetting->GetId() == "upgrade.versioncheck")
+		{
+			std::string strShowing;
+
+			if (g_vdmVersionUpdate.running())
+			{
+				strShowing = StringUtils::Format("%s: %d%%", g_localizeStrings.Get(70076).c_str(), g_vdmVersionUpdate.progress());
+			}
+
+			((CGUIButtonControl*)pControl)->SetLabel2(strShowing);
+		}
+	}
+}
+#endif
 
 bool CGUIWindowSettingsCategory::OnMessage(CGUIMessage &message)
 {
@@ -204,3 +251,88 @@ void CGUIWindowSettingsCategory::Save()
 {
   m_settings.Save();
 }
+
+#ifdef HAS_VIDONME
+void CGUIWindowSettingsCategory::OnSettingChanged(const CSetting *setting)
+{
+	const std::string &settingId = setting->GetId();
+	
+	if (settingId == "subtitles.height")
+	{
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetSubtitleSize(static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue()));
+		}
+	}
+	else if (settingId == "subtitles.align")
+	{
+		SubtitleAlign eAlign = (SubtitleAlign)static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue());
+		g_application.m_pPlayer->SetSubtitlePos(eAlign, 0);
+
+		switch (eAlign)
+		{
+		case SUBTITLE_ALIGN_MANUAL:
+			break;
+		case SUBTITLE_ALIGN_BOTTOM_INSIDE:
+			CSettings::GetInstance().SetInt("subtitles.align_vidon", 15);
+			break;
+		case SUBTITLE_ALIGN_BOTTOM_OUTSIDE:
+			CSettings::GetInstance().SetInt("subtitles.align_vidon", 0);
+			break;
+		case SUBTITLE_ALIGN_TOP_INSIDE:
+			CSettings::GetInstance().SetInt("subtitles.align_vidon", 85);
+			break;
+		case SUBTITLE_ALIGN_TOP_OUTSIDE:
+			CSettings::GetInstance().SetInt("subtitles.align_vidon", 95);
+			break;
+		default:
+			break;
+		}
+	}
+	else if (settingId == "subtitles.align_vidon")
+	{
+		int nPos = static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue());
+		g_application.m_pPlayer->SetSubtitlePos(nPos);
+	}
+	else if (settingId == "subtitles.color")
+	{
+		g_application.m_pPlayer->SetSubColor(static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue()));
+	}
+	else if (settingId == "subtitles.style")
+	{
+		int nStyle = static_cast<const CSettingInt*>(setting)->GetValue();
+		g_application.m_pPlayer->SetSubtitleStyle(nStyle);
+		switch (nStyle)
+		{
+		case 0:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(false);
+			g_application.m_pPlayer->SetSubtitleItalic(false);
+			break;
+		}
+		case 1:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(true);
+			g_application.m_pPlayer->SetSubtitleItalic(false);
+			break;
+		}
+		case 2:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(false);
+			g_application.m_pPlayer->SetSubtitleItalic(true);
+			break;
+		}
+		case 3:
+		{
+			g_application.m_pPlayer->SetSubtitleBold(true);
+			g_application.m_pPlayer->SetSubtitleItalic(true);
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	
+	return CGUIDialogSettingsManagerBase::OnSettingChanged(setting);
+}
+#endif

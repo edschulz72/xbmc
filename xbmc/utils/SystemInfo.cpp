@@ -72,6 +72,7 @@
 #elif defined(TARGET_LINUX)
 #include <linux/version.h>
 #endif
+#include "settings/Settings.h"
 
 /* Expand macro before stringify */
 #define STR_MACRO(x) #x
@@ -867,6 +868,12 @@ bool CSysInfo::HasHW3DInterlaced()
 {
 #if defined(TARGET_ANDROID)
   if (aml_hw3d_present())
+    return true;
+#endif
+#if defined(HAS_LIBA31CODEC)
+  if(CSettings::GetInstance().GetBool("videoplayer.usea31codec"))
+    return true;
+	if(CSettings::GetInstance().GetBool("videoplayer.usehisicodec"))
     return true;
 #endif
   return false;

@@ -234,6 +234,23 @@ void CPlayerCoreFactory::GetPlayers( const CFileItem& item, VECPLAYERCORES &vecC
   /* make our list unique, preserving first added players */
   unique(vecCores);
 
+#ifdef HAS_VIDONME
+	if (vecCores.size() > 0 && EPC_DVDPLAYER == vecCores[0])
+	{
+		bool bUseVDMPlayer = CSettings::GetInstance().GetBool("using.vdmplayer");
+
+		if (bUseVDMPlayer && !url.IsProtocol("pvr")) //pvr can't use vdmplayer
+		{
+			//if (CVDMPlayer::HandlesType(url.GetFileType()))
+			{
+				CLog::Log(LOGINFO, "CPlayerCoreFactory::GetPlayers: force using VDMPlayer (%d)", EPC_VDMPLAYER);
+				vecCores.clear();
+				vecCores.push_back(EPC_VDMPLAYER);
+			}
+		}
+	}
+#endif
+
   CLog::Log(LOGDEBUG, "CPlayerCoreFactory::GetPlayers: added %" PRIuS" players", vecCores.size());
 }
 
@@ -331,6 +348,12 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
     CPlayerCoreConfig* paplayer = new CPlayerCoreConfig("PAPlayer", EPC_PAPLAYER, NULL);
     paplayer->m_bPlaysAudio = true;
     m_vecCoreConfigs.push_back(paplayer);
+
+#ifdef HAS_VIDONME
+		CPlayerCoreConfig* vdmplayer = new CPlayerCoreConfig("VDMPlayer", EPC_VDMPLAYER, NULL);
+		vdmplayer->m_bPlaysVideo = true;
+		m_vecCoreConfigs.push_back(vdmplayer);
+#endif
 
     for(std::vector<CPlayerSelectionRule *>::iterator it = m_vecCoreSelectionRules.begin(); it != m_vecCoreSelectionRules.end(); ++it)
       delete *it;

@@ -1521,6 +1521,13 @@ void CRenderSystemDX::SetViewPort(CRect& viewPort)
 
   m_pContext->RSSetViewports(1, &m_viewPort);
   m_pGUIShader->SetViewPort(m_viewPort);
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetRenderViewPort(viewPort.x1, viewPort.y1, viewPort.x2, viewPort.y2);
+	}
+#endif
 }
 
 void CRenderSystemDX::RestoreViewPort()
@@ -1662,7 +1669,14 @@ void CRenderSystemDX::SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW 
 
     float blendFactors[] = { 0.0f, 0.0f, 0.0f, 0.0f };
     m_pContext->OMSetBlendState(m_BlendEnabled ? m_BlendEnableState : m_BlendDisableState, blendFactors, 0xFFFFFFFF);
-  }
+	}
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetStereoMode(mode, view);
+	}
+#endif
 }
 
 bool CRenderSystemDX::SupportsStereo(RENDER_STEREO_MODE mode) const

@@ -1864,6 +1864,18 @@ for codecs in `echo $add_codecs | sed 's/,/ /g'`; do
         AC_CHECK_HEADER([amcodec/codec_error.h],, AC_MSG_ERROR($missing_headers))
         XB_ADD_CODEC([LIBAMCODEC], [amcodec], [$codecs])
         ;;
+     *awcodec*)
+         XB_ADD_CODEC([LIBAWCODEC], [awcodec], [$codecs])
+         ;;
+     *rkcodec*)
+         XB_ADD_CODEC([LIBRKCODEC], [rkcodec], [$codecs])
+         ;;
+    *a31codec*)
+        XB_ADD_CODEC([LIBA31CODEC], [a31codec], [$codecs])
+        ;;
+    *hisicodec*)
+        XB_ADD_CODEC([LIBHISICODEC], [hisicodec], [$codecs])
+        ;;
     *libstagefright*)
         XB_ADD_CODEC([LIBSTAGEFRIGHT], [libstagefright], [$codecs])
         ;;
@@ -2365,6 +2377,7 @@ OUTPUT_FILES="Makefile \
     xbmc/cores/dvdplayer/DVDSubtitles/Makefile \
     xbmc/cores/AudioEngine/Makefile \
     xbmc/cores/paplayer/Makefile \
+    xbmc/cores/vdmplayer/Makefile \
     xbmc/cores/omxplayer/Makefile \
     xbmc/cores/playercorefactory/Makefile \
     xbmc/messaging/Makefile \

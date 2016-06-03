@@ -75,7 +75,11 @@ bool CFile::Copy(const std::string& strFileName, const std::string& strDest, XFI
   return Copy(pathToUrl, pathToUrlDest, pCallback, pContext);
 }
 
+#ifdef HAS_VIDONME
+bool CFile::Copy_Internal(const CURL& url2, const CURL& dest, XFILE::IFileCallback* pCallback, void* pContext, bool bKeepCache)
+#else
 bool CFile::Copy(const CURL& url2, const CURL& dest, XFILE::IFileCallback* pCallback, void* pContext)
+#endif
 {
   CFile file;
 
@@ -121,13 +125,34 @@ bool CFile::Copy(const CURL& url2, const CURL& dest, XFILE::IFileCallback* pCall
         }
       }
     }
+
+#ifdef HAS_VIDONME
+		bool bExistsDest = CFile::Exists(dest);
+		if (!bKeepCache && bExistsDest)
+		{
+			CFile::Delete(dest);
+			bExistsDest = false;
+		}
+		if (!newFile.OpenForWrite(dest, !bExistsDest))  // overwrite always
+		{
+			file.Close();
+			return false;
+		}
+
+		if (bExistsDest)
+		{
+			newFile.Seek(-1, SEEK_END);
+			file.Seek(newFile.GetPosition(), SEEK_CUR);
+		}
+#else
     if (CFile::Exists(dest))
       CFile::Delete(dest);
     if (!newFile.OpenForWrite(dest, true))  // overwrite always
     {
       file.Close();
       return false;
-    }
+		}
+#endif
 
     int iBufferSize = GetChunkSize(file.GetChunkSize(), 128 * 1024);
 
@@ -135,7 +160,13 @@ bool CFile::Copy(const CURL& url2, const CURL& dest, XFILE::IFileCallback* pCall
     ssize_t iRead, iWrite;
 
     UINT64 llFileSize = file.GetLength();
-    UINT64 llPos = 0;
+
+#ifdef HAS_VIDONME
+		UINT64 llStartPos = bExistsDest ? newFile.GetPosition() : 0;
+		UINT64 llPos = llStartPos;
+#else
+		UINT64 llPos = 0;
+#endif
 
     CStopWatch timer;
     timer.StartZero();
@@ -179,7 +210,11 @@ bool CFile::Copy(const CURL& url2, const CURL& dest, XFILE::IFileCallback* pCall
       {
         start = end;
 
-        float averageSpeed = llPos / end;
+#ifdef HAS_VIDONME
+				float averageSpeed = (llPos - llStartPos) / end;
+#else
+				float averageSpeed = llPos / end;
+#endif
         int ipercent = 0;
         if(llFileSize)
           ipercent = 100 * llPos / llFileSize;
@@ -199,14 +234,40 @@ bool CFile::Copy(const CURL& url2, const CURL& dest, XFILE::IFileCallback* pCall
 
     /* verify that we managed to completed the file */
     if (llFileSize && llPos != llFileSize)
-    {
-      CFile::Delete(dest);
+		{
+#ifdef HAS_VIDONME
+			if (llPos>llFileSize)
+				CFile::Delete(dest);
+#else
+			CFile::Delete(dest);
+#endif
       return false;
     }
     return true;
   }
   return false;
 }
+
+#ifdef HAS_VIDONME
+
+bool CFile::Copy_Internal(const std::string& strFileName, const std::string& strDest, XFILE::IFileCallback* pCallback, void* pContext, bool bKeepCache)
+{
+	const CURL pathToUrl(strFileName);
+	const CURL pathToUrlDest(strDest);
+	return Copy_Internal(pathToUrl, pathToUrlDest, pCallback, pContext, bKeepCache);
+}
+
+bool CFile::Copy(const CURL& file, const CURL& dest, XFILE::IFileCallback* pCallback, void* pContext)
+{
+	return Copy_Internal(file, dest, pCallback, pContext, false);
+}
+
+bool CFile::KeepCopy(const CURL& file, const CURL& dest, XFILE::IFileCallback* pCallback, void* pContext)
+{
+	return Copy_Internal(file, dest, pCallback, pContext, true);
+}
+
+#endif
 
 //*********************************************************************************************
 bool CFile::Open(const std::string& strFileName, const unsigned int flags)

@@ -31,6 +31,8 @@
 #include "android/jni/AudioFormat.h"
 #include "android/jni/AudioManager.h"
 #include "android/jni/AudioTrack.h"
+#include "android/jni/Build.h"
+#include "utils/CPUInfo.h"
 
 using namespace jni;
 
@@ -184,6 +186,12 @@ static jni::CJNIAudioTrack *CreateAudioTrack(int sampleRate, int channelMask, in
 
 
 CAEDeviceInfo CAESinkAUDIOTRACK::m_info;
+
+#ifdef HAS_VIDONME
+CAEDeviceInfo CAESinkAUDIOTRACK::m_info_hdmi;
+CAEDeviceInfo CAESinkAUDIOTRACK::m_info_spdif;
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 CAESinkAUDIOTRACK::CAESinkAUDIOTRACK()
 {
@@ -385,22 +393,31 @@ void CAESinkAUDIOTRACK::EnumerateDevicesEx(AEDeviceInfoList &list, bool force)
   m_info.m_dataFormats.push_back(AE_FMT_S16LE);
   m_info.m_sampleRates.push_back(CJNIAudioTrack::getNativeOutputSampleRate(CJNIAudioManager::STREAM_MUSIC));
 
-  if (!CXBMCApp::IsHeadsetPlugged())
-  {
-    m_info.m_deviceType = AE_DEVTYPE_HDMI;
-    int test_sample[] = { 44100, 48000, 96000, 192000 };
-    int test_sample_sz = sizeof(test_sample) / sizeof(int);
-    for (int i=0; i<test_sample_sz; ++i)
-    {
-      if (IsSupported(test_sample[i], CJNIAudioFormat::CHANNEL_OUT_STEREO, CJNIAudioFormat::ENCODING_PCM_16BIT))
-      {
-        m_info.m_sampleRates.push_back(test_sample[i]);
-        CLog::Log(LOGDEBUG, "AESinkAUDIOTRACK - %d supported", test_sample[i]);
-      }
-    }
-    m_info.m_dataFormats.push_back(AE_FMT_AC3);
-    m_info.m_dataFormats.push_back(AE_FMT_DTS);
-  }
+	if (!CXBMCApp::IsHeadsetPlugged())
+	{
+		m_info.m_deviceType = AE_DEVTYPE_HDMI;
+		int test_sample[] = { 44100, 48000, 96000, 192000 };
+		int test_sample_sz = sizeof(test_sample) / sizeof(int);
+		for (int i = 0; i < test_sample_sz; ++i)
+		{
+			if (IsSupported(test_sample[i], CJNIAudioFormat::CHANNEL_OUT_STEREO, CJNIAudioFormat::ENCODING_PCM_16BIT))
+			{
+				m_info.m_sampleRates.push_back(test_sample[i]);
+				CLog::Log(LOGDEBUG, "AESinkAUDIOTRACK - %d supported", test_sample[i]);
+			}
+		}
+		m_info.m_dataFormats.push_back(AE_FMT_S16LE);
+		m_info.m_dataFormats.push_back(AE_FMT_AC3);
+		m_info.m_dataFormats.push_back(AE_FMT_DTS);
+		//p200_2G represents s905 for now
+		if (CJNIBuild::PRODUCT == "p200_2G" || CJNIBuild::PRODUCT == "p200" || CT_HISILICON == g_cpuInfo.GetCPUType())
+		{// s905's audiotrack support truehd/dtshd passthrough
+			m_info.m_dataFormats.push_back(AE_FMT_EAC3);
+			m_info.m_dataFormats.push_back(AE_FMT_TRUEHD);
+			m_info.m_dataFormats.push_back(AE_FMT_DTSHD);
+			CSettings::GetInstance().SetString("audiooutput.passthroughdevice", "AUDIOTRACK:AudioTrack");
+		}
+	}
 #if 0 //defined(__ARM_NEON__)
   if (g_cpuInfo.GetCPUFeatures() & CPU_FEATURE_NEON)
     m_info.m_dataFormats.push_back(AE_FMT_FLOAT);

@@ -105,8 +105,15 @@ public:
 
   bool GetZipList(const CURL& url, std::vector<SZipEntry>& items);
   bool GetZipEntry(const CURL& url, SZipEntry& item);
-  bool ExtractArchive(const std::string& strArchive, const std::string& strPath);
-  bool ExtractArchive(const CURL& archive, const std::string& strPath);
+
+#ifdef HAS_VIDONME
+	bool ExtractArchive(const std::string& strArchive, const std::string& strPath, bool bShowProcess = false, const std::string&  strTile = "");
+	bool ExtractArchive(const CURL& archive, const std::string& strPath, bool bShowProcess = false, const std::string&  strTile = "");
+#else
+	bool ExtractArchive(const std::string& strArchive, const std::string& strPath);
+	bool ExtractArchive(const CURL& archive, const std::string& strPath);
+#endif
+
   void release(const std::string& strPath); // release resources used by list zip
   static void readHeader(const char* buffer, SZipEntry& info);
   static void readCHeader(const char* buffer, SZipEntry& info);

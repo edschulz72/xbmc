@@ -76,7 +76,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>..\..\;..\..\xbmc\;..\..\xbmc\cores\dvdplayer;..\..\xbmc\win32;..\..\lib;..\..\lib\win32\ffmpeg;..\..\lib\libUPnP;..\..\lib\libUPnP\Platinum\Source\Devices\MediaRenderer;..\..\lib\libUPnP\Platinum\Source\Devices\MediaConnect;..\..\lib\libUPnP\Platinum\Source\Devices\MediaServer;..\..\lib\libUPnP\Platinum\Source\Platinum;..\..\lib\libUPnP\Platinum\Source\Core;..\..\lib\libUPnP\Platinum\Source\Extras;..\..\lib\libUPnP\Neptune\Source\Core;..\..\lib\libUPnP\Neptune\Source\System\Win32;..\..\lib\win32\pcre;..\..\lib\win32\Effects11\inc;..\..\lib\win32;..\..\xbmc\cores\AudioEngine\;..\..\addons\library.kodi.guilib;..\..\addons\library.xbmc.addon;..\..\addons\library.xbmc.pvr;..\..\addons\library.xbmc.codec;shaders;..\..\tools\depends\native\libsquish-native\src;%(AdditionalIncludeDirectories);XBMC\$(Configuration);..\..\addons\library.xbmc.adsp</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;_USE_32BIT_TIME_T;HAS_DX;D3D_DEBUG_INFO;__STDC_CONSTANT_MACROS;_SECURE_SCL=0;TAGLIB_STATIC;NPT_CONFIG_ENABLE_LOGGING;PLT_HTTP_DEFAULT_USER_AGENT="UPnP/1.0 DLNADOC/1.50 Kodi";PLT_HTTP_DEFAULT_SERVER="UPnP/1.0 DLNADOC/1.50 Kodi";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_USE_32BIT_TIME_T;HAS_DX;D3D_DEBUG_INFO;__STDC_CONSTANT_MACROS;_SECURE_SCL=0;TAGLIB_STATIC;NPT_CONFIG_ENABLE_LOGGING;PLT_HTTP_DEFAULT_USER_AGENT="UPnP/1.0 DLNADOC/1.50 Kodi";PLT_HTTP_DEFAULT_SERVER="UPnP/1.0 DLNADOC/1.50 Kodi";HAS_VIDONME;VDPLAYER_FOR_KODI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -86,18 +86,18 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/IGNORE:4089 /ignore:4254 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>d3d11.lib;DInput8.lib;DSound.lib;winmm.lib;CrossGuidd.lib;Mpr.lib;Iphlpapi.lib;PowrProf.lib;setupapi.lib;dwmapi.lib;yajl.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;DInput8.lib;DSound.lib;winmm.lib;CrossGuidd.lib;Mpr.lib;Iphlpapi.lib;PowrProf.lib;setupapi.lib;dwmapi.lib;yajl.lib;dxguid.lib;VdplayerKodid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <IgnoreSpecificDefaultLibraries>libcpmt;libc;msvcrt;libcmt;msvcrtd;msvcprtd;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <DelayLoadDLLs>libxslt.dll;dnssd.dll;dwmapi.dll;ssh.dll;sqlite3.dll;avcodec-56.dll;avfilter-5.dll;avformat-56.dll;avutil-54.dll;postproc-53.dll;swresample-1.dll;swscale-3.dll;d3dcompiler_47.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>libxslt.dll;dnssd.dll;dwmapi.dll;ssh.dll;sqlite3.dll;avcodec-56.dll;avfilter-5.dll;avformat-56.dll;avutil-54.dll;postproc-53.dll;swresample-1.dll;swscale-3.dll;d3dcompiler_47.dll;PlcoreKodid.dll;VdplayerKodid.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
       <EntryPointSymbol>
       </EntryPointSymbol>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <AdditionalLibraryDirectories>..\..\lib\win32\ffmpeg\.libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\xbmc\cores\vdmplayer;..\..\lib\win32\ffmpeg\.libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -105,9 +105,6 @@
       <EnableDPIAwareness>true</EnableDPIAwareness>
     </Manifest>
     <FxCompile />
-    <PostBuildEvent>
-      <Command>copy “$(WindowsSdkDir)redist\d3d\x86\D3DCompile*.DLL” “$(TargetDir)”</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Testsuite|Win32'">
     <ClCompile>
@@ -267,6 +264,8 @@
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDInputStreams\DVDInputStreamBluray.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDInputStreams\DVDInputStreamPVRManager.cpp" />
     <ClCompile Include="..\..\xbmc\cores\FFmpeg.cpp" />
+    <ClCompile Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.cpp" />
+    <ClCompile Include="..\..\xbmc\cores\vdmplayer\VDMPlayerConfig.cpp" />
     <ClCompile Include="..\..\xbmc\cores\VideoRenderers\OverlayRendererGUI.cpp" />
     <ClCompile Include="..\..\xbmc\cores\VideoRenderers\RenderCapture.cpp" />
     <ClCompile Include="..\..\xbmc\cores\VideoRenderers\VideoShaders\WinVideoFilter.cpp" />
@@ -938,6 +937,18 @@
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDDemuxers\DVDDemuxCC.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDDemuxers\DVDDemuxCDDA.h" />
     <ClInclude Include="..\..\xbmc\cores\FFmpeg.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_addon.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_aesink.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_coreplayer.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_coreplayer_decls.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_mediainfo.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_mediatool.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_player.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_playtool.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\IVD_playtool_decls.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VDMPlayer.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VDMPlayerConfig.h" />
+    <ClInclude Include="..\..\xbmc\cores\vdmplayer\VidonCommon.h" />
     <ClInclude Include="..\..\xbmc\cores\VideoRenderers\OverlayRendererGUI.h" />
     <ClInclude Include="..\..\xbmc\dialogs\GUIDialogKeyboardGeneric.h" />
     <ClInclude Include="..\..\xbmc\DbUrl.h" />
@@ -1584,6 +1595,16 @@
     <ClCompile Include="..\..\xbmc\video\windows\GUIWindowVideoBase.cpp" />
     <ClCompile Include="..\..\xbmc\video\windows\GUIWindowVideoNav.cpp" />
     <ClCompile Include="..\..\xbmc\video\windows\GUIWindowVideoPlaylist.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\SynchroMethod.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogLogin.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMLogReportUpload.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMRegionFeature.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMSettingsManager.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserInfo.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMUserRecord.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMVersionUpdate.cpp" />
+    <ClCompile Include="..\..\xbmc\vidonme\VDMWindowRecommend.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewControl.cpp" />
     <ClCompile Include="..\..\xbmc\view\GUIViewState.cpp" />
     <ClCompile Include="..\..\xbmc\view\ViewDatabase.cpp" />
@@ -2233,6 +2254,19 @@
     <ClInclude Include="..\..\xbmc\video\windows\GUIWindowVideoBase.h" />
     <ClInclude Include="..\..\xbmc\video\windows\GUIWindowVideoNav.h" />
     <ClInclude Include="..\..\xbmc\video\windows\GUIWindowVideoPlaylist.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\CommonHeader.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\DLLVidonUtils.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\libVidonUtils.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\SynchroMethod.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogLogin.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMDialogVersionCheck.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMLogReportUpload.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMRegionFeature.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMSettingsManager.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserInfo.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMUserRecord.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMVersionUpdate.h" />
+    <ClInclude Include="..\..\xbmc\vidonme\VDMWindowRecommend.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewControl.h" />
     <ClInclude Include="..\..\xbmc\view\GUIViewState.h" />
     <ClInclude Include="..\..\xbmc\view\ViewDatabase.h" />

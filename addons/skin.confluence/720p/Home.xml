@@ -1155,7 +1155,7 @@
 		</control>
 		<control type="group">
 			<depth>DepthHeader</depth>
-			<control type="image">
+			<control type="image" id="101">
 				<description>LOGO</description>
 				<left>10</left>
 				<top>5</top>

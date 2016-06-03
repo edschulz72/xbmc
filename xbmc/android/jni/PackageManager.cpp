@@ -85,3 +85,11 @@ CJNIResources CJNIPackageManager::getResourcesForApplication(const CJNIApplicati
     "getResourcesForApplication", "(Landroid/content/pm/ApplicationInfo;)Landroid/content/res/Resources;",
     info.get_raw());
 }
+
+#ifdef HAS_VIDONME
+CJNIPackageInfo CJNIPackageManager::getPackageInfo(std::string packageName, int flags)
+{
+	return call_method<jhobject>(m_object, "getPackageInfo", "(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;" \
+		,	jcast<jhstring>(packageName), flags);
+}
+#endif

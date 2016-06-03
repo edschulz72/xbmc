@@ -40,7 +40,11 @@ CVideoSettings::CVideoSettings()
   m_AudioStream = -1;
   m_SubtitleStream = -1;
   m_SubtitleDelay = 0.0f;
-  m_SubtitleOn = true;
+#ifdef HAS_VIDONME
+	m_SubtitleOn = false;
+#else
+	m_SubtitleOn = true;
+#endif
   m_SubtitleCached = false;
   m_Brightness = 50.0f;
   m_Contrast = 50.0f;

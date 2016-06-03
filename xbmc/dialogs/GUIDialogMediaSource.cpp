@@ -254,7 +254,12 @@ void CGUIDialogMediaSource::OnPathBrowse(int item)
     extraShares.push_back(share1);
 
     share1.strPath = "sap://";
+#ifdef HAS_VIDONME
+		share1.strName = strStreams;//"SAP Streams"
+		StringUtils::Replace(share1.strName, "%s", "SAP");
+#else
     share1.strName = StringUtils::Format(strStreams.c_str(), "SAP"); //"SAP Streams"
+#endif
     extraShares.push_back(share1);
 
     if (CSettings::GetInstance().GetString(CSettings::SETTING_AUDIOCDS_RECORDINGPATH) != "")
@@ -286,7 +291,12 @@ void CGUIDialogMediaSource::OnPathBrowse(int item)
     extraShares.push_back(share1);
 
     share1.strPath = "sap://";
+#ifdef HAS_VIDONME
+		share1.strName = strStreams;//"SAP Streams"
+		StringUtils::Replace(share1.strName, "%s", "SAP");
+#else
     share1.strName = StringUtils::Format(strStreams.c_str(), "SAP"); //"SAP Streams"
+#endif
     extraShares.push_back(share1);
 
     // add the recordings dir as needed

@@ -2,8 +2,8 @@
 <!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.vidonme.@APP_NAME_LC@"
-    android:versionCode="@APP_VERSION_CODE@"
-    android:versionName="@APP_VERSION@" >
+    android:versionCode="1610"
+    android:versionName="1.6.1.0" >
 
     <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="22" />
 
@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     <uses-feature android:name="android.hardware.screen.landscape" android:required="true" />

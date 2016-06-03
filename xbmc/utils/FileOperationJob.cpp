@@ -43,6 +43,9 @@ CFileOperationJob::CFileOperationJob()
     m_currentOperation(),
     m_currentFile(),
     m_displayProgress(false),
+#ifdef HAS_VIDONME
+		m_bKeepCache(false),
+#endif
     m_heading(0),
     m_line(0)
 { }
@@ -93,8 +96,16 @@ bool CFileOperationJob::DoWork()
   double opWeight = 100.0 / totalTime;
   double current = 0.0;
 
+#ifdef HAS_VIDONME
+	for (unsigned int i = 0; i < size && success; i++)
+	{
+		ops[i].m_bKeepCache = m_bKeepCache;
+		success &= ops[i].ExecuteOperation(this, current, opWeight);
+	}
+#else
   for (unsigned int i = 0; i < size && success; i++)
     success &= ops[i].ExecuteOperation(this, current, opWeight);
+#endif
 
   MarkFinished();
 
@@ -273,13 +284,21 @@ bool CFileOperationJob::CFileOperation::ExecuteOperation(CFileOperationJob *base
   {
     case ActionCopy:
     case ActionReplace:
+#ifdef HAS_VIDONME
+			bResult = CFile::Copy_Internal(m_strFileA, m_strFileB, this, &data, m_bKeepCache);
+#else
       bResult = CFile::Copy(m_strFileA, m_strFileB, this, &data);
+#endif
       break;
 
     case ActionMove:
       if (CanBeRenamed(m_strFileA, m_strFileB))
         bResult = CFile::Rename(m_strFileA, m_strFileB);
+#ifdef HAS_VIDONME
+			else if (CFile::Copy_Internal(m_strFileA, m_strFileB, this, &data, m_bKeepCache))
+#else
       else if (CFile::Copy(m_strFileA, m_strFileB, this, &data))
+#endif
         bResult = CFile::Delete(m_strFileA);
       else
         bResult = false;

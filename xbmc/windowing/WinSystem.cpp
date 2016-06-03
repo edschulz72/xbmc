@@ -28,6 +28,9 @@
 #include "guilib/GUIFontTTFGL.h"
 #endif
 
+#ifdef HAS_VIDONME
+#include "Application.h"
+#endif
 CWinSystemBase::CWinSystemBase()
 {
   m_eWindowSystem = WINDOW_SYSTEM_WIN32; // this is the 0 value enum
@@ -119,6 +122,13 @@ void CWinSystemBase::SetWindowResolution(int width, int height)
   window.iScreenHeight = height;
   window.iSubtitles = (int)(0.965 * window.iHeight);
   g_graphicsContext.ResetOverscan(window);
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->SetWindowResolution(width, height);
+	}
+#endif
 }
 
 int CWinSystemBase::DesktopResolution(int screen)

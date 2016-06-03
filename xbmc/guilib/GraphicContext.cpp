@@ -292,6 +292,13 @@ void CGraphicContext::SetScissors(const CRect &rect)
   m_scissors = rect;
   m_scissors.Intersect(CRect(0,0,(float)m_iScreenWidth, (float)m_iScreenHeight));
   g_Windowing.SetScissors(StereoCorrection(m_scissors));
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->SetGraphicContextScissors(rect.x1, rect.y1, rect.x2, rect.y2);
+	}
+#endif
 }
 
 void CGraphicContext::ResetScissors()
@@ -321,6 +328,13 @@ void CGraphicContext::SetViewWindow(float left, float top, float right, float bo
   m_videoRect.y1 = ScaleFinalYCoord(left, top);
   m_videoRect.x2 = ScaleFinalXCoord(right, bottom);
   m_videoRect.y2 = ScaleFinalYCoord(right, bottom);
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->SetGraphicContextVideoRect(m_videoRect.x1, m_videoRect.y1, m_videoRect.x2, m_videoRect.y2);
+	}
+#endif
 }
 
 void CGraphicContext::SetFullScreenVideo(bool bOnOff)
@@ -343,6 +357,13 @@ void CGraphicContext::SetFullScreenVideo(bool bOnOff)
     SetVideoResolution(RES_WINDOW);
 #endif
 
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->SetGraphicContextFullScreenVideo(bOnOff);
+	}
+#endif
+
   Unlock();
 }
 
@@ -359,6 +380,14 @@ bool CGraphicContext::IsCalibrating() const
 void CGraphicContext::SetCalibrating(bool bOnOff)
 {
   m_bCalibrating = bOnOff;
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->SetGraphicContextCalibrating(bOnOff);
+	}
+#endif
+
 }
 
 bool CGraphicContext::IsValidResolution(RESOLUTION res)
@@ -376,7 +405,14 @@ void CGraphicContext::SetVideoResolution(RESOLUTION res, bool forceUpdate)
 {
   if (g_application.IsCurrentThread())
   {
-    SetVideoResolutionInternal(res, forceUpdate);
+		SetVideoResolutionInternal(res, forceUpdate);
+
+#ifdef HAS_VIDONME
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetGraphicContextVideoResolution(res, forceUpdate);
+		}
+#endif
   }
   else
   {
@@ -462,6 +498,14 @@ void CGraphicContext::SetVideoResolutionInternal(RESOLUTION res, bool forceUpdat
   m_scissors.SetRect(0, 0, (float)m_iScreenWidth, (float)m_iScreenHeight);
   m_Resolution    = res;
   m_fFPSOverride = 0 ;
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->SetGraphicContextScreenWidth(m_iScreenWidth);
+		g_application.m_pPlayer->SetGraphicContextScreenHeight(m_iScreenHeight);
+	}
+#endif
 
   if (g_advancedSettings.m_fullScreen)
   {
@@ -864,6 +908,13 @@ void CGraphicContext::SetStereoView(RENDER_STEREO_VIEW view)
   g_Windowing.SetStereoMode(m_stereoMode, m_stereoView);
   g_Windowing.SetViewPort(viewport);
   g_Windowing.SetScissors(viewport);
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->SetGraphicContextStereoView(view);
+	}
+#endif
 }
 
 void CGraphicContext::InvertFinalCoords(float &x, float &y) const
@@ -1097,3 +1148,15 @@ void CGraphicContext::SetFPS(float fps)
 {
   m_fFPSOverride = fps;
 }
+
+#ifdef HAS_VIDONME
+void CGraphicContext::SetStereoMode(RENDER_STEREO_MODE mode)
+{
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->SetGraphicContextStereoMode(mode);
+	}
+
+	m_nextStereoMode = mode;
+}
+#endif

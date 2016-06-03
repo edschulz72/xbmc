@@ -42,6 +42,10 @@ public:
 
 private:
   static std::set<std::string> GetRemovableDrives();
-  std::string unescape(const std::string& str);
-  std::set<std::string> m_removableDrives;
+	std::string unescape(const std::string& str);
+	std::set<std::string> m_removableDrives;
+
+#ifdef HAS_VIDONME
+  void ConvertDeviceName(std::string &strName);
+#endif
 };

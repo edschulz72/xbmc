@@ -44,6 +44,11 @@
 #include "linux/RBP.h"
 #endif
 
+#ifdef HAS_VIDONME
+#include "PlayListPlayer.h"
+#include "vidonme/DLLVidonUtils.h"
+#endif
+
   CXBMCRenderManager g_renderManager;
   CLangCodeExpander  g_LangCodeExpander;
   CLocalizeStrings   g_localizeStrings;
@@ -76,4 +81,8 @@
   CZipManager g_ZipManager;
 
   CDataCacheCore g_dataCacheCore;
+
+#ifdef HAS_VIDONME
+	DLLVidonUtils g_DllVidonUtils;
+#endif
 

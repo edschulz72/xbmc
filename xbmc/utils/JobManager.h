@@ -238,6 +238,9 @@ public:
    */
   void CancelJobs();
 
+#ifdef HAS_VIDONME
+	void ClearJobs();
+#endif
   /*!
    \brief Re-start accepting jobs again
    Called after calling CancelJobs() to allow this manager to accept more jobs

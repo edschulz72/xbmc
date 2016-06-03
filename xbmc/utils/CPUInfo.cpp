@@ -964,4 +964,56 @@ bool CCPUInfo::HasNeon()
   return has_neon == 1;
 }
 
+#if defined(TARGET_VIDONME_BOX)
+CPU_TYPE CCPUInfo::GetCPUType()
+{
+	static CPU_TYPE s_type = CT_UNKNOWN;
+	static bool s_bCPUTypeGot = false;
+	if (s_bCPUTypeGot)
+	{
+		return s_type;
+	}
+	std::string cpu_hardware = g_cpuInfo.getCPUHardware();
+	if (cpu_hardware.find("Amlogic") != std::string::npos)
+	{
+		if (cpu_hardware.find("Meson8") != std::string::npos)
+		{
+			s_type = CT_AMLOGIC_M8;
+			s_bCPUTypeGot = true;
+		}
+	}
+	else if (cpu_hardware.find("sun6i") != std::string::npos)
+	{
+		s_type = CT_ALLWINNER_A31;
+		s_bCPUTypeGot = true;
+	}
+	else if (cpu_hardware.find("sun7i") != std::string::npos)
+	{
+		s_type = CT_ALLWINNER_A20;
+		s_bCPUTypeGot = true;
+	}
+	else if (cpu_hardware.find("sun8i") != std::string::npos)
+	{
+		s_type = CT_ALLWINNER_H3;
+		s_bCPUTypeGot = true;
+	}
+	else if (cpu_hardware.find("rk3368") != std::string::npos)
+	{
+		s_type = CT_ROCKCHIPS_RK3368;
+		s_bCPUTypeGot = true;
+	}
+	else if (cpu_hardware.find("bigfish") != std::string::npos)
+	{
+		s_type = CT_HISILICON;
+		s_bCPUTypeGot = true;
+	}
+	else
+	{
+		s_type = CT_UNKNOWN;
+	}
+	s_bCPUTypeGot = false;
+	return s_type;
+}
+#endif
+
 CCPUInfo g_cpuInfo;

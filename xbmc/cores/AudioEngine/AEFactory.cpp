@@ -28,6 +28,10 @@
 #include "settings/Settings.h"
 #include "utils/StringUtils.h"
 
+#ifdef HAS_VIDONME
+#include "Application.h"
+#endif
+
 IAE* CAEFactory::AE = NULL;
 static float  g_fVolume = 1.0f;
 static bool   g_bMute = false;
@@ -396,4 +400,11 @@ void CAEFactory::DeviceChange()
 {
   if (AE)
     AE->DeviceChange();
+
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer)
+	{
+		g_application.m_pPlayer->AEDeviceChange();
+	}
+#endif
 }

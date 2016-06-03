@@ -38,6 +38,10 @@ public:
   // specialization of CGUIWindow
   virtual bool IsDialog() const { return false; }
 
+#ifdef HAS_VIDONME
+	virtual void FrameMove();
+#endif
+
 protected:
   // specialization of CGUIWindow
   virtual void OnWindowLoaded();
@@ -50,4 +54,8 @@ protected:
   CSettings& m_settings;
   int m_iSection;
   bool m_returningFromSkinLoad; // true if we are returning from loading the skin
+
+#ifdef HAS_VIDONME
+	virtual void OnSettingChanged(const CSetting *setting);
+#endif
 };

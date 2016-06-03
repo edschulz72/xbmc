@@ -40,6 +40,9 @@ CSeekHandler::CSeekHandler()
   m_seekSize(0),
   m_seekStep(0)
 {
+#ifdef HAS_VIDONME
+	m_requireSeekBigStep = false;
+#endif
 }
 
 CSeekHandler::~CSeekHandler()
@@ -166,6 +169,28 @@ void CSeekHandler::Seek(bool forward, float amount, float duration /* = 0 */, bo
   {
     m_seekStep += forward ? 1 : -1;
     int seekSeconds = GetSeekStepSize(type, m_seekStep);
+
+#ifdef HAS_VIDONME
+		int nSeekTime = 0;
+		int nCurTime = g_application.m_pPlayer->GetTime();
+		int nTotalTime = g_application.m_pPlayer->GetTotalTime() / 1000;
+		if (g_application.m_pPlayer)
+		{
+			nSeekTime = nCurTime + seekSeconds;
+			if (nSeekTime < 0)
+			{
+				seekSeconds = -nCurTime;
+				m_seekStep += 1;
+			}
+
+			if (nSeekTime > nTotalTime)
+			{
+				seekSeconds = nTotalTime - nCurTime;
+				m_seekStep -= 1;
+			}
+		}
+#endif
+
     if (seekSeconds != 0)
     {
       m_seekSize = seekSeconds;
@@ -202,11 +227,22 @@ int CSeekHandler::GetSeekSize() const
 
 bool CSeekHandler::InProgress() const
 {
+#ifdef HAS_VIDONME
+	return m_requireSeek || m_requireSeekBigStep;
+#endif
   return m_requireSeek;
 }
 
 void CSeekHandler::Process()
 {
+#ifdef HAS_VIDONME
+	if (m_timerSeekBigStep.GetElapsedMilliseconds() >= 2000 && m_requireSeekBigStep)
+	{
+		m_requireSeekBigStep = false;
+		m_timerSeekBigStep.Stop();
+	}
+#endif
+
   if (m_timer.GetElapsedMilliseconds() >= m_seekDelay && m_requireSeek)
   {
     CSingleLock lock(m_critSection);
@@ -267,13 +303,23 @@ bool CSeekHandler::OnAction(const CAction &action)
     }
     case ACTION_BIG_STEP_BACK:
     case ACTION_CHAPTER_OR_BIG_STEP_BACK:
-    {
+		{
+#ifdef HAS_VIDONME
+			m_requireSeekBigStep = true;
+			m_timerSeekBigStep.StartZero();
+#endif
+
       g_application.m_pPlayer->Seek(false, true, action.GetID() == ACTION_CHAPTER_OR_BIG_STEP_BACK);
       return true;
     }
     case ACTION_BIG_STEP_FORWARD:
     case ACTION_CHAPTER_OR_BIG_STEP_FORWARD:
     {
+#ifdef HAS_VIDONME
+			m_requireSeekBigStep = true;
+			m_timerSeekBigStep.StartZero();
+#endif
+
       g_application.m_pPlayer->Seek(true, true, action.GetID() == ACTION_CHAPTER_OR_BIG_STEP_FORWARD);
       return true;
     }

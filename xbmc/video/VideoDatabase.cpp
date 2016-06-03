@@ -826,6 +826,14 @@ int CVideoDatabase::AddFile(const std::string& strFileNameAndPath)
     std::string strFileName, strPath;
     SplitPath(strFileNameAndPath,strPath,strFileName);
 
+#ifdef HAS_VIDONME
+		if (strFileName.empty())
+		{
+			strPath = URIUtils::GetParentPath(strFileNameAndPath);
+			strFileName = StringUtils::Mid(strFileNameAndPath, strPath.size());
+		}
+#endif
+
     int idPath = AddPath(strPath);
     if (idPath < 0)
       return -1;
@@ -1006,6 +1014,14 @@ int CVideoDatabase::GetFileId(const std::string& strFilenameAndPath)
     if (NULL == m_pDS.get()) return -1;
     std::string strPath, strFileName;
     SplitPath(strFilenameAndPath,strPath,strFileName);
+
+#ifdef HAS_VIDONME
+		if (strFileName.empty())
+		{
+			strPath = URIUtils::GetParentPath(strFilenameAndPath);
+			strFileName = StringUtils::Mid(strFilenameAndPath, strPath.size());
+		}
+#endif
 
     int idPath = GetPathId(strPath);
     if (idPath >= 0)

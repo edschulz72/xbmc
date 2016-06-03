@@ -91,6 +91,19 @@ VECSOURCES& CGUIViewStateAddonBrowser::GetSources()
     share.strName = g_localizeStrings.Get(24041);
     m_sources.push_back(share);
   }
+
+#ifdef HAS_VIDONME
+
+	{
+		CMediaSource share;
+		share.strPath = "addons://recommend/";
+		share.m_iDriveType = CMediaSource::SOURCE_TYPE_LOCAL;
+		share.strName = g_localizeStrings.Get(70131);
+		m_sources.push_back(share);
+	}
+
+#endif
+
   {
     CMediaSource share;
     share.strPath = "addons://search/";

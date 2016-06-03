@@ -390,6 +390,22 @@ public:
    */
   void UnregisterActionListener(IActionListener *listener);
 
+#ifdef HAS_VIDONME
+
+	bool IsPlayBDMenu(const CFileItem& item);
+	const std::string GetLastPlayedFile(void);
+
+	void AddAdvanceFeatureUse(const std::string& strFeatureType);
+	void EndRecord(void);
+	void SaveRecord(bool bUpload = false);
+	void Locate(void);
+
+	void AddSubtitle(std::string strSubtitlePath);
+	void AddExternalSubtitles(void);
+	void SetPlayWithMenu(bool bPlayWithMenu);
+	bool IsPlayWithMenu(void);
+#endif
+
 protected:
   virtual bool OnSettingsSaving() const override;
 
@@ -509,7 +525,19 @@ protected:
   std::vector<IActionListener *> m_actionListeners;
 
   bool m_fallbackLanguageLoaded;
-  
+
+#ifdef HAS_VIDONME
+
+	std::string m_strLastPlayedFile;
+	std::string	m_strPublicIP;
+
+	CStopWatch	m_RecordUploadTimer;
+
+	std::map<std::string, std::vector<std::string>> m_mapExternalSubtitleMap;
+
+	bool m_bPlayWithMenu;
+#endif
+
 private:
   CCriticalSection                m_critSection;                 /*!< critical section for all changes to this class, except for changes to triggers */
 };

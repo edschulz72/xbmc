@@ -40,6 +40,10 @@
 #include "cores/VideoRenderers/RenderManager.h"
 #endif
 
+#ifdef HAS_VIDONME
+#include "Application.h"
+#include "cores/DataCacheCore.h"
+#endif
 #define SETTING_VIDEO_VIEW_MODE           "video.viewmode"
 #define SETTING_VIDEO_ZOOM                "video.zoom"
 #define SETTING_VIDEO_PIXEL_RATIO         "video.pixelratio"
@@ -81,12 +85,45 @@ void CGUIDialogVideoSettings::OnSettingChanged(const CSetting *setting)
   CVideoSettings &videoSettings = CMediaSettings::GetInstance().GetCurrentVideoSettings();
 
   const std::string &settingId = setting->GetId();
+
+#ifdef HAS_VIDONME
+
+	if (settingId == SETTING_VIDEO_DEINTERLACEMODE)
+	{
+		videoSettings.m_DeinterlaceMode = static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue());
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetDeinterlaceMode(videoSettings.m_DeinterlaceMode);
+		}
+	}
+	else if (settingId == SETTING_VIDEO_INTERLACEMETHOD)
+	{
+		videoSettings.m_InterlaceMethod = static_cast<EINTERLACEMETHOD>(static_cast<const CSettingInt*>(setting)->GetValue());
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetInterlaceMethod(videoSettings.m_InterlaceMethod);
+		}
+	}
+	else if (settingId == SETTING_VIDEO_SCALINGMETHOD)
+	{
+		videoSettings.m_ScalingMethod = static_cast<ESCALINGMETHOD>(static_cast<const CSettingInt*>(setting)->GetValue());
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetScalingMethod(videoSettings.m_ScalingMethod);
+		}
+	}
+
+#else
+
   if (settingId == SETTING_VIDEO_DEINTERLACEMODE)
     videoSettings.m_DeinterlaceMode = static_cast<EDEINTERLACEMODE>(static_cast<const CSettingInt*>(setting)->GetValue());
   else if (settingId == SETTING_VIDEO_INTERLACEMETHOD)
     videoSettings.m_InterlaceMethod = static_cast<EINTERLACEMETHOD>(static_cast<const CSettingInt*>(setting)->GetValue());
   else if (settingId == SETTING_VIDEO_SCALINGMETHOD)
     videoSettings.m_ScalingMethod = static_cast<ESCALINGMETHOD>(static_cast<const CSettingInt*>(setting)->GetValue());
+
+#endif
+
 #ifdef HAS_VIDEO_PLAYBACK
   else if (settingId == SETTING_VIDEO_VIEW_MODE)
   {
@@ -100,20 +137,71 @@ void CGUIDialogVideoSettings::OnSettingChanged(const CSetting *setting)
     m_settingsManager->SetNumber(SETTING_VIDEO_VERTICAL_SHIFT, videoSettings.m_CustomVerticalShift);
     m_settingsManager->SetBool(SETTING_VIDEO_NONLIN_STRETCH, videoSettings.m_CustomNonLinStretch);
     m_viewModeChanged = false;
+
+#ifdef HAS_VIDONME
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetViewMode((ViewMode)videoSettings.m_ViewMode);
+			g_application.m_pPlayer->SetCustomZoomAmount(videoSettings.m_CustomZoomAmount);
+			g_application.m_pPlayer->SetCustomVerticalShift(videoSettings.m_CustomVerticalShift);
+			g_application.m_pPlayer->SetCustomPixelRatio(videoSettings.m_CustomPixelRatio);
+			g_application.m_pPlayer->SetCustomNonLinStretch(videoSettings.m_CustomNonLinStretch);
+		}
+#endif
+
   }
   else if (settingId == SETTING_VIDEO_ZOOM ||
            settingId == SETTING_VIDEO_VERTICAL_SHIFT ||
            settingId == SETTING_VIDEO_PIXEL_RATIO ||
            settingId == SETTING_VIDEO_NONLIN_STRETCH)
   {
-    if (settingId == SETTING_VIDEO_ZOOM)
-      videoSettings.m_CustomZoomAmount = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
-    else if (settingId == SETTING_VIDEO_VERTICAL_SHIFT)
-      videoSettings.m_CustomVerticalShift = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
-    else if (settingId == SETTING_VIDEO_PIXEL_RATIO)
-      videoSettings.m_CustomPixelRatio = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
-    else if (settingId == SETTING_VIDEO_NONLIN_STRETCH)
-      videoSettings.m_CustomNonLinStretch = static_cast<const CSettingBool*>(setting)->GetValue();
+#ifdef HAS_VIDONME
+
+		if (settingId == SETTING_VIDEO_ZOOM)
+		{
+			videoSettings.m_CustomZoomAmount = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+			if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+			{
+				g_application.m_pPlayer->SetCustomZoomAmount(videoSettings.m_CustomZoomAmount);
+			}
+		}
+		else if (settingId == SETTING_VIDEO_VERTICAL_SHIFT)
+		{
+			videoSettings.m_CustomVerticalShift = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+			if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+			{
+				g_application.m_pPlayer->SetCustomVerticalShift(videoSettings.m_CustomVerticalShift);
+			}
+		}
+		else if (settingId == SETTING_VIDEO_PIXEL_RATIO)
+		{
+			videoSettings.m_CustomPixelRatio = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+			if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+			{
+				g_application.m_pPlayer->SetCustomPixelRatio(videoSettings.m_CustomPixelRatio);
+			}
+		}
+		else if (settingId == SETTING_VIDEO_NONLIN_STRETCH)
+		{
+			videoSettings.m_CustomNonLinStretch = static_cast<const CSettingBool*>(setting)->GetValue();
+			if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+			{
+				g_application.m_pPlayer->SetCustomNonLinStretch(videoSettings.m_CustomNonLinStretch);
+			}
+		}
+
+#else
+
+		if (settingId == SETTING_VIDEO_ZOOM)
+			videoSettings.m_CustomZoomAmount = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+		else if (settingId == SETTING_VIDEO_VERTICAL_SHIFT)
+			videoSettings.m_CustomVerticalShift = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+		else if (settingId == SETTING_VIDEO_PIXEL_RATIO)
+			videoSettings.m_CustomPixelRatio = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+		else if (settingId == SETTING_VIDEO_NONLIN_STRETCH)
+			videoSettings.m_CustomNonLinStretch = static_cast<const CSettingBool*>(setting)->GetValue();
+
+#endif
 
     if (!m_viewModeChanged)
     {
@@ -125,23 +213,95 @@ void CGUIDialogVideoSettings::OnSettingChanged(const CSetting *setting)
         g_renderManager.SetViewMode(videoSettings.m_ViewMode);
     }
   }
-  else if (settingId == SETTING_VIDEO_POSTPROCESS)
-    videoSettings.m_PostProcess = static_cast<const CSettingBool*>(setting)->GetValue();
-  else if (settingId == SETTING_VIDEO_BRIGHTNESS)
-    videoSettings.m_Brightness = static_cast<float>(static_cast<const CSettingInt*>(setting)->GetValue());
-  else if (settingId == SETTING_VIDEO_CONTRAST)
-    videoSettings.m_Contrast = static_cast<float>(static_cast<const CSettingInt*>(setting)->GetValue());
+
+#ifdef HAS_VIDONME
+
+	else if (settingId == SETTING_VIDEO_POSTPROCESS)
+	{
+		videoSettings.m_PostProcess = static_cast<const CSettingBool*>(setting)->GetValue();
+
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetPostProcessOn(videoSettings.m_PostProcess);
+		}
+	}
+	else if (settingId == SETTING_VIDEO_BRIGHTNESS)
+	{
+		videoSettings.m_Brightness = static_cast<float>(static_cast<const CSettingInt*>(setting)->GetValue());
+
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetBrightness(videoSettings.m_Brightness);
+		}
+	}
+	else if (settingId == SETTING_VIDEO_CONTRAST)
+	{
+		videoSettings.m_Contrast = static_cast<float>(static_cast<const CSettingInt*>(setting)->GetValue());
+
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetContrast(videoSettings.m_Contrast);
+		}
+	}
+
+#else
+	
+	else if (settingId == SETTING_VIDEO_POSTPROCESS)
+		videoSettings.m_PostProcess = static_cast<const CSettingBool*>(setting)->GetValue();
+	else if (settingId == SETTING_VIDEO_BRIGHTNESS)
+		videoSettings.m_Brightness = static_cast<float>(static_cast<const CSettingInt*>(setting)->GetValue());
+	else if (settingId == SETTING_VIDEO_CONTRAST)
+		videoSettings.m_Contrast = static_cast<float>(static_cast<const CSettingInt*>(setting)->GetValue());
+
+#endif
+
   else if (settingId == SETTING_VIDEO_GAMMA)
     videoSettings.m_Gamma = static_cast<float>(static_cast<const CSettingInt*>(setting)->GetValue());
-  else if (settingId == SETTING_VIDEO_VDPAU_NOISE)
-    videoSettings.m_NoiseReduction = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+	else if (settingId == SETTING_VIDEO_VDPAU_NOISE)
+#ifdef HAS_VIDONME
+	{
+		videoSettings.m_NoiseReduction = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetVdpauNoiseRedution(videoSettings.m_NoiseReduction);
+		}
+	}
+#else
+		videoSettings.m_NoiseReduction = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
+#endif
   else if (settingId == SETTING_VIDEO_VDPAU_SHARPNESS)
     videoSettings.m_Sharpness = static_cast<float>(static_cast<const CSettingNumber*>(setting)->GetValue());
 #endif
-  else if (settingId == SETTING_VIDEO_STEREOSCOPICMODE)
-    videoSettings.m_StereoMode = static_cast<const CSettingInt*>(setting)->GetValue();
-  else if (settingId == SETTING_VIDEO_STEREOSCOPICINVERT)
-    videoSettings.m_StereoInvert = static_cast<const CSettingBool*>(setting)->GetValue();
+
+#ifdef HAS_VIDONME
+
+	else if (settingId == SETTING_VIDEO_STEREOSCOPICMODE)
+	{
+		videoSettings.m_StereoMode = static_cast<const CSettingInt*>(setting)->GetValue();
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetStereoMode((RENDER_STEREO_MODE)videoSettings.m_StereoMode);
+
+			g_dataCacheCore.SignalVideoInfoChange();
+		}
+	}
+	else if (settingId == SETTING_VIDEO_STEREOSCOPICINVERT)
+	{
+		videoSettings.m_StereoInvert = static_cast<const CSettingBool*>(setting)->GetValue();
+		if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+		{
+			g_application.m_pPlayer->SetStereoInvert(videoSettings.m_StereoInvert);
+		}
+	}
+
+#else
+
+	else if (settingId == SETTING_VIDEO_STEREOSCOPICMODE)
+		videoSettings.m_StereoMode = static_cast<const CSettingInt*>(setting)->GetValue();
+	else if (settingId == SETTING_VIDEO_STEREOSCOPICINVERT)
+		videoSettings.m_StereoInvert = static_cast<const CSettingBool*>(setting)->GetValue();
+
+#endif
 }
 
 void CGUIDialogVideoSettings::OnSettingAction(const CSetting *setting)

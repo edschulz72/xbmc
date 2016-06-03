@@ -1196,7 +1196,14 @@ void CLangInfo::SettingOptionsShortDateFormatsFiller(const CSetting *setting, st
 
   CDateTime now = CDateTime::GetCurrentDateTime();
 
-  list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), now.GetAsLocalizedDate(g_langInfo.m_currentRegion->m_strDateFormatShort).c_str()), SETTING_REGIONAL_DEFAULT));
+#ifdef HAS_VIDONME
+	std::string strItem = g_localizeStrings.Get(20035);
+	StringUtils::Replace(strItem, "%s", now.GetAsLocalizedDate(g_langInfo.m_currentRegion->m_strDateFormatShort));
+	list.push_back(std::make_pair(strItem, SETTING_REGIONAL_DEFAULT));
+#else
+	list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), now.GetAsLocalizedDate(g_langInfo.m_currentRegion->m_strDateFormatShort).c_str()), SETTING_REGIONAL_DEFAULT));
+#endif
+
   if (shortDateFormatSetting == SETTING_REGIONAL_DEFAULT)
   {
     match = true;
@@ -1226,7 +1233,14 @@ void CLangInfo::SettingOptionsLongDateFormatsFiller(const CSetting *setting, std
 
   CDateTime now = CDateTime::GetCurrentDateTime();
 
-  list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), now.GetAsLocalizedDate(g_langInfo.m_currentRegion->m_strDateFormatLong).c_str()), SETTING_REGIONAL_DEFAULT));
+#ifdef HAS_VIDONME
+	std::string strItem = g_localizeStrings.Get(20035);
+	StringUtils::Replace(strItem, "%s", now.GetAsLocalizedDate(g_langInfo.m_currentRegion->m_strDateFormatLong));
+	list.push_back(std::make_pair(strItem, SETTING_REGIONAL_DEFAULT));
+#else
+	list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), now.GetAsLocalizedDate(g_langInfo.m_currentRegion->m_strDateFormatLong).c_str()), SETTING_REGIONAL_DEFAULT));
+#endif
+
   if (longDateFormatSetting == SETTING_REGIONAL_DEFAULT)
   {
     match = true;
@@ -1257,7 +1271,14 @@ void CLangInfo::SettingOptionsTimeFormatsFiller(const CSetting *setting, std::ve
   CDateTime now = CDateTime::GetCurrentDateTime();
   bool use24hourFormat = g_langInfo.Use24HourClock();
 
-  list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), ToSettingTimeFormat(now, g_langInfo.m_currentRegion->m_strTimeFormat).c_str()), SETTING_REGIONAL_DEFAULT));
+#ifdef HAS_VIDONME
+	std::string strItem = g_localizeStrings.Get(20035);
+	StringUtils::Replace(strItem, "%s", ToSettingTimeFormat(now, g_langInfo.m_currentRegion->m_strTimeFormat));
+	list.push_back(std::make_pair(strItem, SETTING_REGIONAL_DEFAULT));
+#else
+	list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), ToSettingTimeFormat(now, g_langInfo.m_currentRegion->m_strTimeFormat).c_str()), SETTING_REGIONAL_DEFAULT));
+#endif
+
   if (timeFormatSetting == SETTING_REGIONAL_DEFAULT)
   {
     match = true;
@@ -1324,7 +1345,15 @@ void CLangInfo::SettingOptions24HourClockFormatsFiller(const CSetting *setting, 
 
   // determine the 24-hour clock format of the regional setting
   int regionalClock24HourFormatLabel = DetermineUse24HourClockFromTimeFormat(g_langInfo.m_currentRegion->m_strTimeFormat) ? 12384 : 12383;
-  list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), g_localizeStrings.Get(regionalClock24HourFormatLabel).c_str()), SETTING_REGIONAL_DEFAULT));
+
+#ifdef HAS_VIDONME
+	std::string strItem = g_localizeStrings.Get(20035);
+	StringUtils::Replace(strItem, "%s", g_localizeStrings.Get(regionalClock24HourFormatLabel));
+	list.push_back(std::make_pair(strItem, SETTING_REGIONAL_DEFAULT));
+#else
+	list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), g_localizeStrings.Get(regionalClock24HourFormatLabel).c_str()), SETTING_REGIONAL_DEFAULT));
+#endif
+
   if (clock24HourFormatSetting == SETTING_REGIONAL_DEFAULT)
   {
     match = true;
@@ -1354,7 +1383,14 @@ void CLangInfo::SettingOptionsTemperatureUnitsFiller(const CSetting *setting, st
   bool match = false;
   const std::string& temperatureUnitSetting = static_cast<const CSettingString*>(setting)->GetValue();
 
-  list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), GetTemperatureUnitString(g_langInfo.m_currentRegion->m_tempUnit).c_str()), SETTING_REGIONAL_DEFAULT));
+#ifdef HAS_VIDONME
+	std::string strItem = g_localizeStrings.Get(20035);
+	StringUtils::Replace(strItem, "%s", GetTemperatureUnitString(g_langInfo.m_currentRegion->m_tempUnit));
+	list.push_back(std::make_pair(strItem, SETTING_REGIONAL_DEFAULT));
+#else
+	list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), GetTemperatureUnitString(g_langInfo.m_currentRegion->m_tempUnit).c_str()), SETTING_REGIONAL_DEFAULT));
+#endif
+
   if (temperatureUnitSetting == SETTING_REGIONAL_DEFAULT)
   {
     match = true;
@@ -1382,7 +1418,14 @@ void CLangInfo::SettingOptionsSpeedUnitsFiller(const CSetting *setting, std::vec
   bool match = false;
   const std::string& speedUnitSetting = static_cast<const CSettingString*>(setting)->GetValue();
 
-  list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), GetSpeedUnitString(g_langInfo.m_currentRegion->m_speedUnit).c_str()), SETTING_REGIONAL_DEFAULT));
+#ifdef HAS_VIDONME
+	std::string strItem = g_localizeStrings.Get(20035);
+	StringUtils::Replace(strItem, "%s", GetSpeedUnitString(g_langInfo.m_currentRegion->m_speedUnit));
+	list.push_back(std::make_pair(strItem, SETTING_REGIONAL_DEFAULT));
+#else
+	list.push_back(std::make_pair(StringUtils::Format(g_localizeStrings.Get(20035).c_str(), GetSpeedUnitString(g_langInfo.m_currentRegion->m_speedUnit).c_str()), SETTING_REGIONAL_DEFAULT));
+#endif
+
   if (speedUnitSetting == SETTING_REGIONAL_DEFAULT)
   {
     match = true;

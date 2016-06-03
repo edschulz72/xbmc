@@ -47,4 +47,9 @@ private:
 
   bool m_recentlyAddedRunning;
   int m_cumulativeUpdateFlag;
+
+#ifdef HAS_VIDONME
+	void UpdateVidonLogo();
+	bool m_bFirstRun;
+#endif
 };

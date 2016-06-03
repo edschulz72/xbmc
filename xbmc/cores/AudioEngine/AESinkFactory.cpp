@@ -25,6 +25,7 @@
   #include "Sinks/AESinkDirectSound.h"
 #elif defined(TARGET_ANDROID)
   #include "Sinks/AESinkAUDIOTRACK.h"
+  #include "Sinks/AESinkVidonDummy.h"
 #elif defined(TARGET_RASPBERRY_PI)
   #include "Sinks/AESinkPi.h"
   #include "Sinks/AESinkALSA.h"
@@ -64,6 +65,7 @@ void CAESinkFactory::ParseDevice(std::string &device, std::string &driver)
         driver == "DIRECTSOUND" ||
 #elif defined(TARGET_ANDROID)
         driver == "AUDIOTRACK"  ||
+	driver == "VIDONME"     ||
 #elif defined(TARGET_RASPBERRY_PI)
         driver == "PI"          ||
         driver == "ALSA"        ||
@@ -192,6 +194,12 @@ void CAESinkFactory::EnumerateEx(AESinkInfoList &list, bool force)
   info.m_deviceInfoList.clear();
   info.m_sinkName = "AUDIOTRACK";
   CAESinkAUDIOTRACK::EnumerateDevicesEx(info.m_deviceInfoList, force);
+  if(!info.m_deviceInfoList.empty())
+    list.push_back(info);
+  //Enumerate VIDONME devices, in AESinkVidonDummy by xiaolei.zhang
+  info.m_deviceInfoList.clear();
+  info.m_sinkName = "VIDONME";
+  CAESinkVidonDummy::EnumerateDevicesEx(info.m_deviceInfoList, force);
   if(!info.m_deviceInfoList.empty())
     list.push_back(info);
 

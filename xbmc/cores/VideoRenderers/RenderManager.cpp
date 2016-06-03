@@ -140,6 +140,18 @@ void CXBMCRenderManager::GetVideoRect(CRect &source, CRect &dest, CRect &view)
 
 float CXBMCRenderManager::GetAspectRatio()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		float ratio = g_application.m_pPlayer->RenderManagerGetAspectRatio();
+
+		if (ratio > 0)
+		{
+			return ratio;
+		}
+	}
+#endif
+
   CSharedLock lock(m_sharedSection);
   if (m_pRenderer)
     return m_pRenderer->GetAspectRatio();
@@ -226,6 +238,18 @@ void CXBMCRenderManager::WaitPresentTime(double presenttime)
 
 std::string CXBMCRenderManager::GetVSyncState()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		std::string strState = g_application.m_pPlayer->RenderManagerGetVSyncState();
+
+		if (!strState.empty())
+		{
+			return strState;
+		}
+	}
+#endif
+
   double avgerror = 0.0;
   for (int i = 0; i < ERRORBUFFSIZE; i++)
     avgerror += m_errorbuff[i];
@@ -325,7 +349,15 @@ bool CXBMCRenderManager::IsConfigured() const
 
 void CXBMCRenderManager::Update()
 {
-  CRetakeLock<CExclusiveLock> lock(m_sharedSection);
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerUpdate();
+		return;
+	}
+#endif
+
+	CRetakeLock<CExclusiveLock> lock(m_sharedSection);
 
   if (m_pRenderer)
     m_pRenderer->Update();
@@ -333,6 +365,14 @@ void CXBMCRenderManager::Update()
 
 void CXBMCRenderManager::FrameWait(int ms)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerFrameWait(ms);
+		return;
+	}
+#endif
+
   XbmcThreads::EndTime timeout(ms);
   CSingleLock lock(m_presentlock);
   while(m_presentstep == PRESENT_IDLE && !timeout.IsTimePast())
@@ -350,6 +390,14 @@ bool CXBMCRenderManager::HasFrame()
 
 void CXBMCRenderManager::FrameMove()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerFrameMove();
+		return;
+	}
+#endif
+
   { CSharedLock lock(m_sharedSection);
     CSingleLock lock2(m_presentlock);
 
@@ -402,6 +450,14 @@ void CXBMCRenderManager::FrameMove()
 
 void CXBMCRenderManager::FrameFinish()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerFrameFinish();
+		return;
+	}
+#endif
+
   /* wait for this present to be valid */
   SPresent& m = m_Queue[m_presentsource];
 
@@ -446,6 +502,13 @@ unsigned int CXBMCRenderManager::PreInit()
   m_errorindex  = 0;
   memset(m_errorbuff, 0, sizeof(m_errorbuff));
 
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->BindRenderThreadID();
+	}
+#endif
+
   m_bIsStarted = false;
   if (!m_pRenderer)
   {
@@ -488,6 +551,14 @@ void CXBMCRenderManager::UnInit()
 
 bool CXBMCRenderManager::Flush()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerFlush();
+		return true;
+	}
+#endif
+
   if (!m_pRenderer)
     return true;
 
@@ -525,6 +596,14 @@ bool CXBMCRenderManager::Flush()
 
 void CXBMCRenderManager::SetupScreenshot()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerSetupScreenshot();
+		return;
+	}
+#endif
+
   CSharedLock lock(m_sharedSection);
   if (m_pRenderer)
     m_pRenderer->SetupScreenshot();
@@ -597,6 +676,14 @@ void CXBMCRenderManager::Capture(CRenderCapture* capture, unsigned int width, un
 
 void CXBMCRenderManager::ManageCaptures()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerManageCaptures();
+		return;
+	}
+#endif
+
   //no captures, return here so we don't do an unnecessary lock
   if (!m_hasCaptures)
     return;
@@ -668,6 +755,15 @@ void CXBMCRenderManager::RemoveCapture(CRenderCapture* capture)
 
 void CXBMCRenderManager::SetViewMode(int iViewMode)
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerSetViewMode((ViewMode)iViewMode);
+		g_application.m_pPlayer->NotifyViewModeChanged();
+		return;
+	}
+#endif
+
   CSharedLock lock(m_sharedSection);
   if (m_pRenderer)
     m_pRenderer->SetViewMode(iViewMode);
@@ -765,7 +861,20 @@ void CXBMCRenderManager::Reset()
 
 RESOLUTION CXBMCRenderManager::GetResolution()
 {
-  CSharedLock lock(m_sharedSection);
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		RESOLUTION res = g_application.m_pPlayer->RenderManagerGetResolution();
+
+		if (res != RES_INVALID)
+		{
+			return res;
+		}
+	}
+#endif
+
+	CSharedLock lock(m_sharedSection);
+
   if (m_pRenderer)
     return m_pRenderer->GetResolution();
   else
@@ -801,7 +910,15 @@ void CXBMCRenderManager::RegisterRenderFeaturesCallBack(const void *ctx, RenderF
 
 void CXBMCRenderManager::Render(bool clear, DWORD flags, DWORD alpha, bool gui)
 {
-  CSharedLock lock(m_sharedSection);
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerRender(clear, flags, alpha);
+		return;
+	}
+#endif
+
+	CSharedLock lock(m_sharedSection);
 
   if (!gui && m_pRenderer->IsGuiLayer())
     return;
@@ -929,6 +1046,14 @@ void CXBMCRenderManager::UpdateDisplayLatency()
 
 void CXBMCRenderManager::UpdateResolution()
 {
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		g_application.m_pPlayer->RenderManagerUpdateResolution();
+		return;
+	}
+#endif
+
   if (m_bReconfigured)
   {
     CRetakeLock<CExclusiveLock> lock(m_sharedSection);
@@ -1037,7 +1162,15 @@ int CXBMCRenderManager::AddVideoPicture(DVDVideoPicture& pic)
 
 bool CXBMCRenderManager::Supports(ERENDERFEATURE feature)
 {
-  CSharedLock lock(m_sharedSection);
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		return g_application.m_pPlayer->RenderManagerSupports(feature);
+	}
+#endif
+
+	CSharedLock lock(m_sharedSection);
+
   if (m_pRenderer)
     return m_pRenderer->Supports(feature);
   else
@@ -1046,7 +1179,15 @@ bool CXBMCRenderManager::Supports(ERENDERFEATURE feature)
 
 bool CXBMCRenderManager::Supports(EDEINTERLACEMODE method)
 {
-  CSharedLock lock(m_sharedSection);
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		return g_application.m_pPlayer->RenderManagerSupports(method);
+	}
+#endif
+
+	CSharedLock lock(m_sharedSection);
+
   if (m_pRenderer)
     return m_pRenderer->Supports(method);
   else
@@ -1055,7 +1196,15 @@ bool CXBMCRenderManager::Supports(EDEINTERLACEMODE method)
 
 bool CXBMCRenderManager::Supports(EINTERLACEMETHOD method)
 {
-  CSharedLock lock(m_sharedSection);
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		return g_application.m_pPlayer->RenderManagerSupports(method);
+	}
+#endif
+
+	CSharedLock lock(m_sharedSection);
+
   if (m_pRenderer)
     return m_pRenderer->Supports(method);
   else
@@ -1064,7 +1213,15 @@ bool CXBMCRenderManager::Supports(EINTERLACEMETHOD method)
 
 bool CXBMCRenderManager::Supports(ESCALINGMETHOD method)
 {
-  CSharedLock lock(m_sharedSection);
+#ifdef HAS_VIDONME
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		return g_application.m_pPlayer->RenderManagerSupports(method);
+	}
+#endif
+
+	CSharedLock lock(m_sharedSection);
+
   if (m_pRenderer)
     return m_pRenderer->Supports(method);
   else
@@ -1233,3 +1390,17 @@ bool CXBMCRenderManager::GetStats(double &sleeptime, double &pts, int &queued, i
   discard  = m_discard.size();
   return true;
 }
+
+#ifdef HAS_VIDONME
+bool CXBMCRenderManager::IsStarted()
+{
+	if (g_application.m_pPlayer && g_application.m_pPlayer->IsSelfPresent())
+	{
+		return g_application.m_pPlayer->RenderManagerIsStarted();
+	}
+	else
+	{
+		return m_bIsStarted;
+	}
+}
+#endif

@@ -24,6 +24,13 @@
 #include "threads/SystemClock.h"
 #include "cores/playercorefactory/PlayerCoreFactory.h"
 
+#ifdef HAS_VIDONME
+#include "settings/VideoSettings.h"
+#include "rendering/RenderSystem.h"
+#include "guilib/Resolution.h"
+#include "cores/VideoRenderers/OverlayRendererGUI.h"
+#endif
+
 typedef enum
 {
   PLAYBACK_CANCELED = -1,
@@ -155,4 +162,103 @@ public:
   void  SetVolume(float volume);
   bool  SwitchChannel(const PVR::CPVRChannelPtr &channel);
   void  ToFFRW(int iSpeed = 0);
+
+#ifdef HAS_VIDONME
+	void Present();
+	bool IsSelfPresent();
+	void SetPlayMode(DIMENSIONMODE mode);
+	void UpdateWindowSize(void);
+
+	bool SetCSettings(const char* id, const char* value);
+	bool SetCSettings(const char* id, double value);
+	bool SetCSettings(const char* id, int value);
+	bool SetCSettings(const char* id, bool value);
+
+	void NotifyAudioOutputSettingsChanged();
+	void SetDeinterlaceMode(EDEINTERLACEMODE mode);
+
+	void SetInterlaceMethod(EINTERLACEMETHOD mode);
+	void SetScalingMethod(ESCALINGMETHOD mode);
+	void SetCustomZoomAmount(float Value);
+	void SetCustomPixelRatio(float Value);
+	void SetCustomVerticalShift(float Value);
+	void SetCustomNonLinStretch(bool Value);
+	void SetViewMode(ViewMode mode);
+	void NotifyViewModeChanged();
+	void SetWhetherSupportAC3(bool bSupport);
+	float GetAudioDelay();
+	bool GetSubtitleOn();
+	void SetSubColor(unsigned int color);
+	bool SetSubtitleSize(int size);
+	void SetSubtitlePos(SubtitleAlign align, float yPos);
+	void SetSubtitlePos(int nPos);
+	void SetSubtitleStyle(int nStyle);
+	void SetSubtitleBold(bool bBold);
+	void SetSubtitleItalic(bool bItalic);
+	void SetBrightness(float fBrightness);
+	void SetContrast(float fContrast);
+	void SetHue(float fHue);
+	void SetSaturation(float fSaturation);
+	void SetVdpauNoiseRedution(float f);
+	void SetPostProcessOn(bool on);
+	void SetCropOn(bool on);
+	void SetStereoInvert(bool on);
+
+	void BindRenderThreadID();
+	void RenderManagerRender(bool clear, unsigned int flags = 0, unsigned int alpha = 255);
+	void RenderManagerFlush();
+	void RenderManagerFrameMove();
+	bool RenderManagerIsStarted();
+	void RenderManagerFrameFinish();
+	void RenderManagerUpdate();
+	RESOLUTION RenderManagerGetResolution();
+	void RenderManagerSetupScreenshot();
+	float RenderManagerGetAspectRatio();
+
+	bool RenderManagerSupports(EDEINTERLACEMODE mode);
+	bool RenderManagerSupports(EINTERLACEMETHOD mode);
+	bool RenderManagerSupports(ERENDERFEATURE mode);
+	bool RenderManagerSupports(ESCALINGMETHOD mode);
+
+	void RenderManagerSetViewMode(ViewMode mode);
+
+	std::string RenderManagerGetVSyncState();
+
+	void RenderManagerFrameWait(int ms);
+	void RenderManagerUpdateResolution();
+	void RenderManagerManageCaptures();
+
+	void SetScreen(int screen);
+
+#if defined(HAS_DX)
+	void SetAdapter(unsigned int adapter);
+	void SetD3DPP(D3DPRESENT_PARAMETERS pp);
+#endif
+	void SetStereoMode(RENDER_STEREO_MODE mode);
+	void SetStereoMode(RENDER_STEREO_MODE mode, RENDER_STEREO_VIEW view);
+	void SetWindowResolution(int width, int height);
+
+	void SetGraphicContextStereoMode(RENDER_STEREO_MODE mode);
+	void SetGraphicContextStereoView(RENDER_STEREO_VIEW view);
+	void SetGraphicContextFullScreenRoot(bool on);
+
+	void SetGraphicContextFullScreenVideo(bool on);
+	void SetGraphicContextCalibrating(bool on);
+
+	void SetGraphicContextVideoResolution(RESOLUTION res, bool bForce = true);
+
+	void SetGraphicContextVideoRect(float x1, float y1, float x2, float y2);
+	void SetGraphicContextScreenWidth(int n);
+	void SetGraphicContextScreenHeight(int n);
+	void SetGraphicContextScissors(float x1, float y1, float x2, float y2);
+
+	void SetRenderViewPort(float x1, float y1, float x2, float y2);
+	void SetMaxTextureSize(unsigned int size);
+
+	void AEDeviceChange();
+
+	bool CaptureRenderImage(const char* strSaveUrl, int nWidth);
+
+	void PlayBackStart(void);
+#endif 
 };

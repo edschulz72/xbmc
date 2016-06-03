@@ -58,6 +58,14 @@ SRCS      += Resources.cpp
 SRCS      += PackageItemInfo.cpp
 SRCS      += DisplayMetrics.cpp
 SRCS      += KeyEvent.cpp
+SRCS      += PackageInfo.cpp
+SRCS      += Locale.cpp
+SRCS      += DataManager.cpp
+SRCS      += Settings.cpp
+SRCS      += AlarmManager.cpp
+SRCS      += Calendar.cpp
+SRCS      += DisplayManager.cpp
+SRCS      += DisplayManagerGlobal.cpp
 
 LIB        = jni.a
 

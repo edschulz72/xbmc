@@ -612,6 +612,21 @@ void CActiveAESink::EnumerateOutputDevices(AEDeviceList &devices, bool passthrou
       if (passthrough && devInfo.m_deviceType == AE_DEVTYPE_PCM)
         continue;
 
+#if defined(TARGET_ANDROID) && defined(HAS_VIDONME)
+			//modify ui:audio passthrough devices list by xiaolei.zhang
+			if (passthrough && (devInfo.m_deviceType == AE_DEVTYPE_PCM || devInfo.m_deviceType == AE_DEVTYPE_PCM_HDMI))
+				continue;
+/*
+			if (!passthrough && (devInfo.m_deviceType == AE_DEVTYPE_PASSTHROUGH_HDMI || devInfo.m_deviceType == AE_DEVTYPE_PASSTHROUGH_IEC958))
+				continue;
+			if (passthrough && devInfo.m_deviceType != AE_DEVTYPE_PASSTHROUGH_HDMI && devInfo.m_deviceType != AE_DEVTYPE_PASSTHROUGH_IEC958)
+				continue;
+*/
+      //modify ui:audio devices list by xiaolei.zhang
+      if (!passthrough && (devInfo.m_deviceType == AE_DEVTYPE_PASSTHROUGH_HDMI || devInfo.m_deviceType == AE_DEVTYPE_PASSTHROUGH_IEC958) )
+        continue;
+#endif
+
       std::string device = sinkInfo.m_sinkName + ":" + devInfo.m_deviceName;
 
       std::stringstream ss;

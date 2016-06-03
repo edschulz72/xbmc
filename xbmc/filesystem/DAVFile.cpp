@@ -60,6 +60,9 @@ bool CDAVFile::Execute(const CURL& url)
   SetCommonOptions(m_state);
   SetRequestHeaders(m_state);
 
+#ifdef HAS_VIDONME
+	SetRequestFormList(m_state);
+#endif
   m_lastResponseCode = m_state->Connect(m_bufferSize);
   if (m_lastResponseCode < 0 || m_lastResponseCode >= 400)
     return false;

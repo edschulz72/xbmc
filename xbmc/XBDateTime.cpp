@@ -944,14 +944,6 @@ bool CDateTime::SetFromUTCDateTime(const time_t &dateTime)
   return SetFromUTCDateTime(tmp);
 }
 
-#ifdef HAS_VIDONME
-bool CDateTime::SetFromUTCDateTime(const int64_t &dateTime)
-{
-	CDateTime tmp(dateTime);
-	return SetFromUTCDateTime(tmp);
-}
-#endif
-
 bool CDateTime::SetFromW3CDate(const std::string &dateTime)
 {
   std::string date;

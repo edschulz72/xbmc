@@ -180,9 +180,6 @@ public:
   bool SetFromW3CDateTime(const std::string &date, bool ignoreTimezone = false);
   bool SetFromUTCDateTime(const CDateTime &dateTime);
   bool SetFromUTCDateTime(const time_t &dateTime);
-#ifdef HAS_VIDONME
-	bool SetFromUTCDateTime(const int64_t &dateTime);
-#endif
   bool SetFromRFC1123DateTime(const std::string &dateTime);
 
   /*! \brief set from a database datetime format YYYY-MM-DD HH:MM:SS

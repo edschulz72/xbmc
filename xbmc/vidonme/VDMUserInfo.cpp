@@ -610,8 +610,7 @@ void CVDMUserInfo::SaveSettingsUserInfo()
     {
       std::string strLicenseID = m_pCurrentLicenseInfo->lid;
       CSettings::GetInstance().SetString( "usercenter.licenseid", strLicenseID );
-      CDateTime endtime;
-      endtime.SetFromUTCDateTime( m_pCurrentLicenseInfo->end );
+			CDateTime endtime(m_pCurrentLicenseInfo->end);
       std::string strEndTime = endtime.GetAsLocalizedDate();
       CSettings::GetInstance().SetString( "usercenter.licensetime", strEndTime );
     }
@@ -631,8 +630,7 @@ std::string CVDMUserInfo::GetCurrentLicenseEndTime()
   std::string strEndTime;
   if( NULL != m_pCurrentLicenseInfo )
   {
-    CDateTime endtime;
-    endtime.SetFromUTCDateTime( m_pCurrentLicenseInfo->end );
+		CDateTime endtime(m_pCurrentLicenseInfo->end);
     strEndTime = endtime.GetAsLocalizedDate();
   }
 
@@ -649,8 +647,7 @@ void CVDMUserInfo::NotifyUser()
     }
     else if( this->IsCurrentLicenseAvailable() )
     {
-      CDateTime endtime;
-      endtime.SetFromUTCDateTime( m_pCurrentLicenseInfo->end );
+			CDateTime endtime(m_pCurrentLicenseInfo->end);
       const CDateTime now = CDateTime::GetUTCDateTime();
       CDateTimeSpan span = endtime - now;
       if( endtime > now && span.GetDays() < 7 )  //will be expired.

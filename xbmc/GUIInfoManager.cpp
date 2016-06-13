@@ -1785,6 +1785,10 @@ std::string CGUIInfoManager::GetLabel(int info, int contextWindow, std::string *
 			strLabel = m_audioInfo.audioCodecName;
 #ifdef HAS_VIDONME
 			StringUtils::ToLower(strLabel);
+			StringUtils::Replace(strLabel, "-", "");
+			StringUtils::TrimRight(strLabel);
+			StringUtils::TrimLeft(strLabel);
+			StringUtils::Replace(strLabel, " ", "_");
 #endif
     }
     break;
@@ -1806,6 +1810,7 @@ std::string CGUIInfoManager::GetLabel(int info, int contextWindow, std::string *
     {
       SPlayerAudioStreamInfo info;
       g_application.m_pPlayer->GetAudioStreamInfo(CURRENT_STREAM, info);
+
       strLabel = info.language;
     }
     break;

@@ -27,6 +27,7 @@
 #include "PasswordManager.h"
 #include "LangInfo.h"
 #include "GUIUserMessages.h"
+#include "utils/LangCodeExpander.h"
 
 IVDPlayer* m_pPlcore;
 CVDMPlcoreConfig* m_pConfig;
@@ -2260,7 +2261,7 @@ void CVDMPlayer::PlayBackStart(void)
 			SPlayerAudioStreamInfo info;
 			GetAudioStreamInfo(i, info);
 
-			if (StringUtils::EqualsNoCase(audio_language, info.language))
+			if (g_LangCodeExpander.CompareISO639Codes(audio_language, info.language))
 			{
 				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original audio language and no record. Auto select audio stream.");
 				SetAudioStream(i);
@@ -2286,7 +2287,7 @@ void CVDMPlayer::PlayBackStart(void)
 			SPlayerSubtitleStreamInfo info;
 			GetSubtitleStreamInfo(i, info);
 
-			if (StringUtils::EqualsNoCase(subtitle_language, info.language))
+			if (g_LangCodeExpander.CompareISO639Codes(subtitle_language, info.language))
 			{
 				CLog::Log(LOGNOTICE, "******CVDMPlayer::OpenFile Original subtitle language and no record. Auto select subtitle stream.");
 				SetSubtitle(i);

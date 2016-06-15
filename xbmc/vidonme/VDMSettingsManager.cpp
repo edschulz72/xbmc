@@ -131,14 +131,9 @@ bool CVDMSettingsManager::OnSettingChanging(const CSetting *setting)
 		CSettingBool* pSettingsTmp = (CSettingBool*)setting;
 		if (pSettingsTmp->GetValue())
 		{
-			if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
+			if (!CVDMDialogLogin::ShowLoginTip())
 			{
-				CVDMDialogLogin::ShowLoginTip();
-				if (!CVDMUserInfo::Instance().IsCurrentLicenseAvailable())
-				{
-					pSettingsTmp->SetValue(false);
-				}
-
+				pSettingsTmp->SetValue(false);
 				g_application.AddAdvanceFeatureUse("PassThrough");
 			}
 		}

@@ -2083,7 +2083,6 @@ void CVDMPlayer::SetGraphicContextStereoMode(RENDER_STEREO_MODE mode)
 
 void CVDMPlayer::SetGraphicContextStereoView(RENDER_STEREO_VIEW view)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetGraphicContextStereoView view = %d", view);
 	if (!m_pPlayTool)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetGraphicContextStereoView PlayTool invalide");
@@ -2190,7 +2189,6 @@ void CVDMPlayer::SetGraphicContextScissors(float x1, float y1, float x2, float y
 
 void CVDMPlayer::SetRenderViewPort(float x1, float y1, float x2, float y2)
 {
-	CLog::Log(LOGNOTICE, "******CVDMPlayer::SetRenderViewPort x1 = %.4f     y1 = %.4f     x2 = %.4f     y2 = %.4f", x1, y1, x2, y2);
 	if (!m_pPlayTool)
 	{
 		CLog::Log(LOGERROR, "******CVDMPlayer::SetRenderViewPort PlayTool invalide");

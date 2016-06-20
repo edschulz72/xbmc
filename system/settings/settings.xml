@@ -3389,7 +3389,7 @@
         </setting>
         <setting id="upgrade.vdmplayer" type="string" label="70126" help="0">
           <level>0</level>
-          <default>2.0.2016-05-25-9d89634</default>
+          <default>2.0.2016-06-20-0a11fcc</default>
           <dependencies>
             <dependency type="enable" on="property" name="IsEnabled" setting="upgrade.versioncheck" />
           </dependencies>

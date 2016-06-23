@@ -1045,6 +1045,7 @@ bool CGUIMediaWindow::OnClick(int iItem)
 #ifdef HAS_VIDONME
 		if (m_itemType == "DVDFolder" || m_itemType == "BDFolder")
 		{
+			std::string strOriginalPath = pItem->GetPath();
 			std::string strPath = pItem->GetPath();
 
 			pItem->SetProperty("original_listitem_url", strPath);
@@ -1063,7 +1064,9 @@ bool CGUIMediaWindow::OnClick(int iItem)
 			pItem->SetPath(strPath);
 
 			pItem->SetProperty("type", m_itemType);
-			return OnPlayMedia(iItem);
+			bool bRet = OnPlayMedia(iItem);
+			pItem->SetPath(strOriginalPath);
+			return bRet;
 		}
 #endif
 

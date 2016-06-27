@@ -546,8 +546,10 @@ void CStreamDetails::DetermineBestStreams(void)
 
 std::string CStreamDetails::VideoDimsToResolutionDescription(int iWidth, int iHeight)
 {
+#ifndef HAS_VIDONME
   if (iWidth == 0 || iHeight == 0)
     return "";
+#endif
 
   else if (iWidth <= 720 && iHeight <= 480)
     return "480";
@@ -567,7 +569,11 @@ std::string CStreamDetails::VideoDimsToResolutionDescription(int iWidth, int iHe
   else if (iWidth * iHeight >= 6000000)
     return "4K";
   else
-    return "";
+#ifdef HAS_VIDONME
+		return "1080";
+#else
+		return "";
+#endif
 }
 
 std::string CStreamDetails::VideoAspectToAspectDescription(float fAspect)

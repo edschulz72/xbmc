@@ -743,7 +743,7 @@ bool CXBMCApp::GetExternalStorage(std::string &path, const std::string &type /* 
 
 bool CXBMCApp::GetStorageUsage(const std::string &path, std::string &usage)
 {
-#define PATH_MAXLEN 50
+#define PATH_MAXLEN 40   //HAS_VIDONME 50
 
   if (path.empty())
   {

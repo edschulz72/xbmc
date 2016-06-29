@@ -548,10 +548,11 @@ std::string CStreamDetails::VideoDimsToResolutionDescription(int iWidth, int iHe
 {
 #ifndef HAS_VIDONME
   if (iWidth == 0 || iHeight == 0)
-    return "";
+		return "";
+	else if (iWidth <= 720 && iHeight <= 480)
+#else
+	if (iWidth <= 720 && iHeight <= 480)
 #endif
-
-  else if (iWidth <= 720 && iHeight <= 480)
     return "480";
   // 720x576 (PAL) (768 when rescaled for square pixels)
   else if (iWidth <= 768 && iHeight <= 576)
